@@ -5,7 +5,9 @@
 ## 项目阶段
 
 - `Part1_learning_basic/`：基础能力建设，已创建。
-- 后续计划：网络结构、内容生成、语言模型、强化学习等。
+- `Part2_network_architecture/`：网络结构（CNN、RNN、LSTM/GRU、Seq2Seq、Attention、ResNet、Transformer），进行中。
+- `glossary.md`：全局名词解释术语表，跨阶段共用。
+- 后续计划：内容生成、语言模型、强化学习等。
 
 ## 使用方式
 

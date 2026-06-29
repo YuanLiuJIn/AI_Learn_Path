@@ -17,24 +17,59 @@ PyTorch 是当前深度学习和大模型研究、训练、微调中最常用的
 
 ## 2. Tensor
 
-Tensor 是 PyTorch 的基本数据结构。
+Tensor 是 PyTorch 的基本数据结构，本质是一个“能放到 GPU 上、能自动求梯度的多维数组”。
+
+### 2.1 按维度理解
+
+“维度”就是这个数字容器嵌套了几层：
+
+```text
+0 维：标量    5              一个 loss 值
+1 维：向量    [1, 2, 3]      一个样本的特征
+2 维：矩阵    [[1,2],[3,4]]  一批样本
+3 维及以上    图片、视频、文本批次
+```
+
+### 2.2 三个必看属性
 
 ```python
 import torch
 
 x = torch.tensor([[1.0, 2.0], [3.0, 4.0]])
-print(x.shape)
-print(x.dtype)
-print(x.device)
+print(x.shape)   # torch.Size([2, 2])  形状：几行几列、几维
+print(x.dtype)   # torch.float32       数据类型
+print(x.device)  # cpu                 在 CPU 还是 GPU
 ```
 
-需要重点关注三个属性：
+很多 PyTorch 错误都来自这三者不匹配：
 
-- `shape`：形状是否正确。
-- `dtype`：数据类型是否正确。
-- `device`：在 CPU 还是 GPU。
+- `shape`：维度对不上，矩阵乘法报错。
+- `dtype`：类型不对，例如分类标签要 `torch.long`。
+- `device`：一个在 CPU 一个在 GPU 不能一起算。
 
-很多 PyTorch 错误都来自这三者不匹配。
+### 2.3 和 list / NumPy 的区别
+
+```text
+Python list   -> 只能存数据，不能算梯度，不能上 GPU
+NumPy array   -> 能高效计算，但不能算梯度，不能上 GPU
+PyTorch Tensor-> 能计算、能自动求梯度、能上 GPU  ← 深度学习需要
+```
+
+神经网络里的数据和参数全都是 Tensor。
+
+### 2.4 batch 维度
+
+训练时通常一次喂一小批样本，这“一批”就是在 Tensor 最前面加一个维度：
+
+```text
+单条表格样本：[特征数]            例如 [10]
+一批 32 条：  [32, 10]           ← 第一维 32 就是 batch_size
+
+单张图片：    [通道, 高, 宽]      例如 [3, 224, 224]
+一批 32 张：  [32, 3, 224, 224]  ← 第一维 32 是 batch
+```
+
+看任何 PyTorch 代码的习惯：先看 Tensor 的 `shape`，**第一维通常就是 batch_size**，后面才是数据本身的形状。
 
 ## 3. 自动求导 autograd
 
@@ -61,7 +96,7 @@ PyTorch 会自动算出这个梯度。
 
 ## 4. nn.Module
 
-所有复杂模型通常继承 `nn.Module`。
+`nn.Module` 是 PyTorch 中所有神经网络模型的“父类/模板”。你写任何模型都继承它，它会帮你自动管理层、参数、设备、训练/评估模式等繁琐事务。你只需做两件事：在 `__init__` 里声明用到哪些层，在 `forward` 里定义数据怎么从输入流到输出。
 
 ```python
 import torch
@@ -69,22 +104,41 @@ from torch import nn
 
 class MLP(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
-        super().__init__()
-        self.net = nn.Sequential(
+        super().__init__()                     # 必须调用，初始化父类
+        self.net = nn.Sequential(              # 第1步：声明有哪些层
             nn.Linear(input_dim, hidden_dim),
             nn.ReLU(),
             nn.Linear(hidden_dim, output_dim),
         )
 
-    def forward(self, x):
+    def forward(self, x):                      # 第2步：定义前向传播
         return self.net(x)
+```
+
+使用：
+
+```python
+model = MLP(input_dim=10, hidden_dim=64, output_dim=2)
+
+x = torch.randn(32, 10)   # 一批数据：32 个样本，每个 10 维
+output = model(x)         # 用 model(x)，不要 model.forward(x)
+print(output.shape)       # torch.Size([32, 2])
 ```
 
 重要规则：
 
-- 在 `__init__` 中定义层。
-- 在 `forward` 中定义前向计算。
-- 不要手动调用 `forward`，而是调用 `model(x)`。
+- 层在 `__init__` 中定义，前向计算在 `forward` 中写。
+- 调用模型用 `model(x)`，不要手动调用 `model.forward(x)`（前者还会执行 PyTorch 的内部钩子）。
+
+继承 `nn.Module` 后，它自动帮你做：
+
+```python
+model.parameters()   # 自动收集所有参数，交给优化器
+model.to("cuda")     # 一行把整个模型搬到 GPU
+model.train()        # 切训练模式（Dropout、BatchNorm 生效）
+model.eval()         # 切评估模式
+model.state_dict()   # 打包所有参数，方便保存
+```
 
 ## 5. Dataset 与 DataLoader
 
@@ -106,6 +160,25 @@ class SimpleDataset(Dataset):
 
 loader = DataLoader(SimpleDataset(x, y), batch_size=32, shuffle=True)
 ```
+
+### epoch、batch、step 的关系
+
+这三个概念会在下面的训练循环里反复出现：
+
+- batch：一次喂给模型的一小批样本（如 32 条），对应 Tensor 的第一维。
+- step：处理完一个 batch、更新一次参数，叫一个 step。
+- epoch：模型完整看完一遍训练集，叫一个 epoch。
+
+它们的换算：
+
+```text
+假设训练样本 = 1000，batch_size = 100
+
+steps_per_epoch = 1000 / 100 = 10   （1 个 epoch 包含 10 个 step）
+训练 5 个 epoch  = 5 × 10 = 50 个 step
+```
+
+为什么要多个 epoch：模型看一遍数据通常学不充分，多看几遍才能把损失降下来。但 epoch 太少会欠拟合，太多会过拟合（训练 loss 继续降，验证 loss 反而上升），这时用 early stopping、正则化等手段控制。
 
 ## 6. 标准训练循环
 

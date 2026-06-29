@@ -93,13 +93,106 @@ GPU 有自己的显存。训练模型时，显存主要用于存放：
 
 显存不够时会出现 out of memory。
 
-常见解决方法：
+理解优化方法前，先记住显存被这几块占用，且训练时往往是激活值和优化器状态最吃显存：
 
-- 减小 batch size。
-- 使用 mixed precision。
-- 梯度累积。
-- gradient checkpointing。
-- 模型并行或 ZeRO 优化。
+```text
+1. 模型参数
+2. 梯度（和参数一样大）
+3. 优化器状态（Adam 给每个参数额外存动量、方差 2 份）
+4. 中间激活值（前向每层输出，留着给反向用，和 batch_size 成正比）
+5. 输入 batch 数据
+```
+
+下面 5 种方法各自针对其中某一块。
+
+### 6.1 减小 batch size
+
+原理：`batch_size` 越大，中间激活值越多。调小 batch 直接减少激活值显存。
+
+```python
+train_loader = DataLoader(dataset, batch_size=16)  # 从 64 改小
+```
+
+代价：最简单见效快，但 batch 太小会让梯度噪声变大、BatchNorm 统计不准、GPU 可能喂不饱。常与梯度累积配合。
+
+### 6.2 混合精度（mixed precision）
+
+原理：默认 `float32`（4 字节）改用 `float16`/`bfloat16`（2 字节）做大部分计算，省一半显存，现代 GPU 还更快。称为“混合”是因为关键部分仍用 32 位保证数值稳定，并配合 loss scaling（放大 loss 防止小梯度下溢为 0）。
+
+```python
+from torch.cuda.amp import autocast, GradScaler
+
+scaler = GradScaler()
+for x, y in train_loader:
+    optimizer.zero_grad()
+    with autocast():
+        loss = loss_fn(model(x), y)
+    scaler.scale(loss).backward()
+    scaler.step(optimizer)
+    scaler.update()
+```
+
+大模型训练几乎是标配，`bfloat16` 动态范围更大，大模型更常用。
+
+### 6.3 梯度累积（gradient accumulation）
+
+原理：想要大 batch 的效果，但显存只够小 batch。把大 batch 拆成多个小 batch 分别前向反向，梯度先累加不更新，攒够再统一更新一次，等效于大 batch。
+
+```python
+accum_steps = 4   # 等效 batch = 实际 batch * 4
+
+for i, (x, y) in enumerate(train_loader):
+    loss = loss_fn(model(x), y) / accum_steps   # 注意除以步数
+    loss.backward()                              # 梯度累加，不清零
+    if (i + 1) % accum_steps == 0:
+        optimizer.step()
+        optimizer.zero_grad()
+```
+
+代价：用小显存达到大 batch 效果，但训练变慢（多次前向反向才更新一次）。
+
+### 6.4 梯度检查点（gradient checkpointing）
+
+原理：用时间换空间。普通做法会保存前向每一层的激活值等反向用；checkpointing 只保存少数“检查点”，反向传播需要中间激活时**临时重新前向计算**。
+
+```python
+from torch.utils.checkpoint import checkpoint
+
+def forward(self, x):
+    x = checkpoint(self.block1, x)   # 这段中间激活不长期保存
+    x = checkpoint(self.block2, x)
+    return x
+```
+
+代价：激活显存大幅下降（深层网络明显），但要重算前向，训练时间约增加 20%~30%。
+
+### 6.5 模型并行 / ZeRO 优化
+
+前面 4 种是“单卡省显存”。当模型大到单卡放不下时，需要把模型或状态拆到多卡。
+
+- 模型并行：把一个模型切开放到不同 GPU。
+  - 张量并行：把一个大矩阵乘法横向切开，多卡各算一部分再合并。
+  - 流水线并行：不同层段放不同卡，像流水线接力。
+- ZeRO（来自微软 DeepSpeed）：数据并行时每张卡都存了完整的参数/梯度/优化器状态，存在大量重复。ZeRO 把这些切片分到各卡，需要时再同步。
+
+```text
+ZeRO-1：切分优化器状态
+ZeRO-2：再切分梯度
+ZeRO-3：再切分模型参数本身
+```
+
+通常用现成框架（DeepSpeed、PyTorch FSDP、Hugging Face accelerate），代价是增加卡间通信开销，需要高速互联（NVLink、InfiniBand）。
+
+### 6.6 实战选择顺序
+
+```text
+1. 先开混合精度（几乎无脑收益，省一半还更快）
+2. 还不够 -> 减小 batch size + 梯度累积（维持等效 batch）
+3. 还不够 -> 加 gradient checkpointing（深层网络很有效）
+4. 单卡彻底装不下 -> 多卡 ZeRO / FSDP / 模型并行
+```
+
+前 4 步在单张消费级显卡上就能用到，第 5 类属于后续大模型工程内容。
 
 ## 7. 计算瓶颈与内存瓶颈
 

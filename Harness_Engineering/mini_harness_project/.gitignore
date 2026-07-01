@@ -1,0 +1,4 @@
+# 运行产物
+**/.trace.jsonl
+__pycache__/
+*.pyc

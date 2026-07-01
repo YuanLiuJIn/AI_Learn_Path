@@ -6,8 +6,12 @@
 
 - `Part1_learning_basic/`：基础能力建设，已创建。
 - `Part2_network_architecture/`：网络结构（CNN、RNN、LSTM/GRU、Seq2Seq、Attention、ResNet、Transformer），进行中。
+- `Part3_content_generation/`：内容生成（VAE、GAN、Diffusion、Flow Matching、文生图、视频生成）。
+- `Part4_language_models/`：语言模型（Word2Vec→BERT、GPT、T5、多模态 CLIP→Flamingo）。
+- `Part5_reinforcement_learning/`：强化学习（MC/TD、SARSA/Q-Learning、Actor-Critic、PPO、AlphaGo/AlphaZero）。
+- `Part6_building_llm/`：打造 LLM（架构演进、数据与 Tokenization、多卡训练、高性能推理）。
+- `Harness_Engineering/`：专题——为 AI Agent 设计外部控制系统（含教学讲解与研究报告）。
 - `glossary.md`：全局名词解释术语表，跨阶段共用。
-- 后续计划：内容生成、语言模型、强化学习等。
 
 ## 使用方式
 

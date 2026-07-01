@@ -1,0 +1,5 @@
+{
+  "name": "fizzbuzz-bugfix",
+  "description": "solution.py 中的 fizzbuzz 函数有 bug，请修改源代码让所有测试通过（不要修改测试文件）。",
+  "test_module": "test_solution"
+}

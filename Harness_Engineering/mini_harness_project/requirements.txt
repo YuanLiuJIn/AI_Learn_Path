@@ -1,0 +1,10 @@
+# MiniHarness 依赖说明
+#
+# 核心功能零第三方依赖即可运行：
+#   - 测试运行使用标准库 unittest
+#   - LLM 调用使用标准库 urllib（OpenAI 兼容接口）
+#
+# 因此默认（ScriptedLLM）模式下，直接 `python run.py --task tasks/fizzbuzz` 即可。
+#
+# 可选：如果你想用官方 openai SDK 而非内置 urllib 调用，可自行安装：
+# openai>=1.0.0

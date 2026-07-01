@@ -186,4 +186,44 @@
 
 ---
 
+## 10. Harness Engineering（Agent 外部控制系统）
+
+入门见 `Harness_Engineering/harness_engineering_guide.md`，进阶系统设计见 `Harness_Engineering/harness_engineering_advanced.md`，实践见 `Harness_Engineering/mini_harness_project/`。
+
+| 名词 | 一句话解释 |
+|---|---|
+| Harness Engineering | 为 AI Agent 设计模型之外的外部控制系统（引导/约束/反馈/治理）|
+| Agent = Model + Harness | 一个 Agent 除模型外的一切都是 harness |
+| 确定性外壳 / 非确定性内核 | 用可预测的外壳(harness)包裹概率性的模型内核 |
+| Engineer the Harness | Agent 犯错时工程化解决方案，让它以后不再犯同类错误 |
+| test harness | 传统软件工程概念：把被测代码放进可控环境喂输入、装断言、收日志 |
+| Guides（前馈控制）| 行动前引导，如 AGENTS.md、规范、工具说明、示例轨迹 |
+| Sensors（反馈控制）| 行动后检查，如测试、lint、类型检查、LLM-as-judge、人工 review |
+| 计算型 / 推断型 sensor | 便宜确定的（测试/lint）/ 昂贵不确定的（语义审查/LLM判分）|
+| 执行环境 (Sandbox) | Docker/K8s、git worktree、浏览器环境等可隔离可回滚的运行场所 |
+| Task Loop | 长任务执行引擎，是运行在模型外部的显式状态机 |
+| 状态机 (State Machine) | INIT→PLANNING→EXECUTING→QA→FIXING→HUMAN_REVIEW→DONE/FAILED |
+| Checkpoint（检查点）| 周期性持久化任务状态，支持中断后断点续跑 |
+| 幂等性 (Idempotency) | 重放操作不产生重复副作用（发邮件/支付需 idempotency key）|
+| Context Reset / Compaction / Handoff | 清空历史 / 会话内摘要 / 用结构化文档向新会话交接状态 |
+| Heartbeat / Watchdog | 健康信号上报 / 独立进程监控并在异常时告警恢复 |
+| 五大子系统 | Environment / Tools / Control / Memory / Evaluation |
+| Planner / Generator / Evaluator | Anthropic 三 Agent：规划 / 生成 / 独立 QA |
+| Human-in-the-Loop | 高风险/不可逆操作进入审批状态由人拍板 |
+| LLM-as-judge | 用一个 LLM 给另一个模型/Agent 的输出打分 |
+| Big Model vs Big Harness | 关于“更强模型”还是“更好脚手架”更关键的路线之争 |
+| Eval Engineering | 设计衡量输出质量的评测 |
+| HELM | Stanford 的多场景多指标语言模型整体评测 |
+| lm-evaluation-harness | EleutherAI 统一评测框架，名字即 harness |
+| SWE-bench | 用真实 GitHub issue 评测 coding agent 能否改代码通过测试 |
+| WebArena | 自托管真实 Web 环境，评测 browser agent |
+| AgentBench | 用 8 类交互环境评测 LLM-as-Agent |
+| ToolBench / ToolLLM | 大规模工具/API 学习与评测平台 |
+| ReAct | Reason→Act→Observe 的 Agent 交互范式 |
+| Toolformer | 模型自学何时/如何调用工具 |
+| AutoGen / OpenHands | 多 Agent 框架 / 自托管 coding agent 控制台 |
+| Stripe Minions / Cursor / OpenAI Codex | 工业级 harness 实践代表案例 |
+
+---
+
 > 维护原则：每当新章节引入新名词，就回填到本表对应分类，保持一处可查。

@@ -226,4 +226,119 @@
 
 ---
 
+## 11. Hermes Agent（长寿命自进化 Agent）
+
+入门见 `Hermes/README.md`，全面架构见 `Hermes/01_hermes_overview.md`。
+
+| 名词 | 一句话解释 |
+|---|---|
+| Hermes Agent | Nous Research 的长寿命、会自我进化的 AI Agent 系统 |
+| 三段式架构 | 同步内核（主线对话）+ 异步外壳（多平台接入）+ 自学习闭环（暗线复盘）|
+| 双消息轨 | messages（永久历史）vs api_messages（API 临时副本），各司其职防污染 |
+| 桥接工具 | tool_search/describe/call 三个工具，让模型渐进式发现 60+ 工具而不炸上下文 |
+| 双通路记忆 | 内置层（MEMORY.md/USER.md 快照→System Prompt）+ 外部 Provider（围栏→User Message）|
+| Background Review | 暗线机制：每 N 轮异步 fork 影子 Agent 复盘对话，自动写记忆/建技能 |
+| Curator | 周级知识生命周期管理：状态流转（active→stale→archived）+ 伞状合并零散技能 |
+| Prompt 分层（Stable/Context/Volatile） | 按变化频率从低到高排列 System Prompt，最大化 Prompt Cache 命中率 |
+| 上下文压缩流水线 | 预剪枝（零 LLM 成本）→ 保护头尾 → LLM 总结中段 → 重组防护 |
+| 冻结快照 | 记忆文件读取后拍照冻结，会话期间不刷新，仅压缩时重建（保缓存命中）|
+| SOUL.md | Hermes 的人格定义文件，写入 System Prompt 的 Stable 层 |
+| delegate_task | Hermes 的子 Agent 委派工具，只回传 summary 不污染父上下文 |
+| leaf / orchestrator | 子 Agent 角色：纯执行单元（不能套娃）vs 可再派发的协调者 |
+| Skill 静态扫描 | 安装前按威胁类别检测（数据窃取/注入/破坏性操作...），按来源分级处置 |
+| Review 白名单 | Background Review Agent 只能调用 memory + skills 工具，Prompt+Runtime 双重限制 |
+| Kanban 看板 | Hermes 多 Agent 间的通讯方式（卡片状态流转），而非 spawn/send |
+| Gateway | Hermes 的消息网关，管理 20+ 平台（企微/飞书/Slack）的接入与分发 |
+| Hatchery | Hermes 的 Go 语言控制面，管理 Agent 生命周期 |
+
+### 与 OpenClaw 对比关键概念
+
+| 名词 | 一句话解释 |
+|---|---|
+| OpenClaw | 连接一切的多端 Agent 协作平台（定位：多 Agent、生态广）|
+| spawn / send | OpenClaw 的主子 Agent 通讯协议：派单 / 补充信息 |
+| ClawHub | OpenClaw 的 Skill 市场（即插即用，无需重启 Agent）|
+| Agent Team | OpenClaw 的多 Agent 团队打包（开发中功能）|
+
+### Cloud Harness (ADP) 关键概念
+
+| 名词 | 一句话解释 |
+|---|---|
+| ADP (腾讯云智能体平台) | 云端解耦的 Agent Harness 平台（腾讯云出品）|
+| 云端解耦设计 | Agent Loop/Memory/Sandbox/Tools 分离为独立云服务 |
+| AGS Cube | ADP 使用的内核级安全沙箱（独立 Guest OS，100ms 冷启动）|
+| HTTP-as-Boundary | 工具执行层从 Agent 进程抽离为独立 HTTP 服务 |
+| AGUI 事件协议 | ADP 的异步 Agent 事件协议（流式反馈、断线重连、过程恢复）|
+| 三级分层权限 | 企业级 → 空间级 → 应用级 的权限架构 |
+| Claw 模式 | ADP 的托管智能体模式（企业预配置 Agent，通过 API 调用）|
+
+---
+
+## 12. GUI Agent（图形界面操作 Agent）
+
+入门见 `GUI_Agent/README.md`，原理见 `GUI_Agent/01_gui_agent_overview.md`。
+
+| 名词 | 一句话解释 |
+|---|---|
+| GUI Agent | 通过"看屏幕截图+理解语义+模拟键鼠"来操作图形界面的 AI Agent |
+| 感知-决策-执行循环 | GUI Agent 的核心工作模式：截屏→多模态模型推理→执行操作→循环 |
+| 四大模块 | 感知系统（看）+ 推理系统（想）+ 执行系统（做）+ 记忆系统（记） |
+| 多模态模型 | 同时理解文字和图片的模型（Claude/Gemini/GPT-4o），GUI Agent 的核心引擎 |
+| 截图识别方案 | 截图→多模态模型→识别元素→输出坐标（通用但慢） |
+| DOM 文本化方案 | 提取 DOM→转为编号文本→文本模型→输出编号（Web专用，快准便宜） |
+| OmniParser | 微软开源的 UI 截图结构化识别工具（目标检测+语义标签） |
+| Page-Agent | 阿里开源的纯前端 JS GUI Agent，DOM 文本化路线的代表作（14K+ Stars） |
+| Claude Computer Use | Anthropic 的商业产品，Claude 直接操控桌面（看屏幕+动键鼠） |
+| Open-AutoGLM | 智谱开源的手机端 GUI Agent |
+| UI-TARS Desktop | 字节开源的桌面端 GUI Agent（34K Stars） |
+| browser-use | Python 库，一行代码让 AI 操作浏览器 |
+| pyautogui | Python 键鼠模拟库（截图/点击/输入/滚动），GUI Agent 的执行层常用工具 |
+| ADB (Android Debug Bridge) | 安卓调试桥，手机端 GUI Agent 通过它截屏和模拟触控 |
+
+### GRPO 训练相关（GUI Agent 特定场景训练）
+
+| 名词 | 一句话解释 |
+|---|---|
+| GRPO (Group Relative Policy Optimization) | 不需要 Critic 的强化学习算法，用"组内相对比较"替代价值评估 |
+| 相对优势 (Ai) | (单个奖励 - 组内平均奖励) / 组内标准差，正→强化，负→弱化 |
+| 三阶段训练 | 感知预训练(SFT) → 单步GRPO(原子操作精化) → 任务级GRPO(全局规划) |
+| GUI-R1 | GRPO 训练 GUI Agent 的基础论文（统一动作空间+跨平台，3K样本） |
+| Mobile-R1 | 三阶段 RL 训练手机 GUI Agent（含自纠错机制，4635轨迹） |
+| GUI-Critic-R1 | 术前批评机制：执行每个操作前先判断正确性 |
+| MobileGUI-RL | 在线自主探索学习：Agent 自己生成训练任务 |
+| S-GRPO | 带"建议奖励"的 GRPO 变体（用于 GUI-Critic-R1） |
+| MobGRPO | MobileGUI-RL 的 GRPO 变体（轨迹级优势估计+复合奖励） |
+
+---
+
+## 13. KM 实战补充新增术语
+
+这些术语来自结合 KM 文章整理后的 Part1-Part6 直接内容补充章节。
+
+| 名词 | 一句话解释 | 出处 |
+|---|---|---|
+| launch-bound | GPU 不是算得慢，而是 CPU 发射大量小 kernel 的调度开销造成 GPU 空闲 | Part1/10, Part6/10 |
+| CUDA Graph | 把一串 GPU kernel 发射过程捕获成图，后续 replay 减少 CPU launch 开销 | Part1/10, Part6/10 |
+| Breakable CUDA Graph | 将稳定片段 graph 化，动态片段仍用 eager 执行的分段 graph 策略 | Part1/10, Part6/10 |
+| AngelFT | 大模型训练稳定性平台，覆盖感知、诊断、恢复与自动续训 | Part1/10, Part6/10 |
+| Pre-LN / Post-LN | LayerNorm 放在子层前/后，Pre-LN 是现代 LLM 常用稳定训练结构 | Part2/10 |
+| DeepNorm | 通过残差缩放和初始化支持超深 Transformer 训练的方法 | Part2/10 |
+| ReZero | 将残差分支缩放系数初始化为 0，让网络从恒等映射开始学习 | Part2/10 |
+| Attention Residuals | 用跨层注意力选择历史层信息，而非简单残差相加 | Part2/10 |
+| 3D 因果 VAE | 视频生成中同时压缩空间和时间维度、且不偷看未来帧的 VAE | Part3/10 |
+| SSTA 稀疏注意力 | HunyuanVideo 1.5 中通过时空块划分和动态 mask 提升视频生成效率的注意力机制 | Part3/10 |
+| RSCB | 内容理解 SFT 中对标签和理由进行解耦加权的训练方法 | Part4/10 |
+| PIF | 引入负例反馈以缓解多选题选择偏差的方法 | Part4/10 |
+| RLLR | 标签敏感奖励，适合“标签+理由”类 NLU 任务的 RLHF 变体 | Part4/10 |
+| OPD | 在线策略蒸馏，用动态策略/反馈替代固定答案式 SFT | Part4/10 |
+| Agentic-RL | 让 Agent 通过环境交互和奖励反馈学习任务策略的强化学习范式 | Part5/11 |
+| Verl | 大模型强化学习训练框架，常用于 RLHF/GRPO/RLVR 工程实践 | Part5/11 |
+| FalconGEMM | 基于低复杂度矩阵乘法和 Group 并行融合的 GEMM 加速框架 | Part6/10 |
+| LCMA | Low-Complexity Matrix Multiplication，用数学变换减少乘法复杂度 | Part6/10 |
+| PD 分离 | 将推理的 Prefill 和 Decode 分离部署与调度，以优化吞吐和延迟 | Part6/10 |
+| MTP | Multi-Token Prediction，一次预测多个 token，配合异步调度提升推理效率 | Part6/10 |
+| W4A8 量化 | 权重 4bit、激活 8bit 的推理量化方案 | Part6/10 |
+
+---
+
 > 维护原则：每当新章节引入新名词，就回填到本表对应分类，保持一处可查。

@@ -10,14 +10,16 @@
 - `Part4_language_models/`：语言模型（Word2Vec→BERT、GPT、T5、多模态 CLIP→Flamingo）。
 - `Part5_reinforcement_learning/`：强化学习（MC/TD、SARSA/Q-Learning、Actor-Critic、PPO、AlphaGo/AlphaZero）。
 - `Part6_building_llm/`：打造 LLM（架构演进、数据与 Tokenization、多卡训练、高性能推理）。
-- `Harness_Engineering/`：专题——为 AI Agent 设计外部控制系统（含教学讲解与研究报告）。
+- `Harness_Engineering/`：专题——为 AI Agent 设计外部控制系统（含入门/进阶/子系统深挖/实战案例/云端架构）。
+- `Hermes/`：专题——长寿命自进化 AI Agent（与 Harness Engineering 互补，深入底层原理与工程实现）。
+- `GUI_Agent/`：专题——通过"看屏幕+动键鼠"自动化图形界面的 AI Agent（含原理/模型/训练/Page-Agent 详解）。
 - `glossary.md`：全局名词解释术语表，跨阶段共用。
 
 ## 使用方式
 
 1. 先读 `Part1_learning_basic/README.md`，了解学习顺序。
 2. 按章节阅读，每章做最少一个小练习。
-3. 遇到公式不要只背结论，要能解释“为什么需要这个公式”，必要时查 `09_math_foundations_for_ml.md`。
+3. 遇到公式不要只背结论，要能解释"为什么需要这个公式"，必要时查 `09_math_foundations_for_ml.md`。
 4. 每学完一个主题，用 `08_practice_projects.md` 中的小项目验证理解。
 
 ## 学习原则

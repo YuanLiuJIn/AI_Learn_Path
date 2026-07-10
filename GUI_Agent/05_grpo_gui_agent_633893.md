@@ -1,8 +1,5 @@
 # 05. 精读：GRPO for GUI Agent（KM:633893）
 
-> 源文章：[万字长文 | 强化学习在UI自动化上的应用: GRPO for GUI Agent](https://km.woa.com/articles/show/633893)
-> 作者：zishanshi | 阅读：2126 | 点赞：50 | 收藏：124 | KM 推荐 + 头条
-> 本文档是对该万字长文的精读与结构化梳理。
 
 ## 1. 文章解决了什么问题？
 

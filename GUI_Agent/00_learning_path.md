@@ -29,7 +29,6 @@
 
 第 5 步：精读实战（1h）
   05_grpo_gui_agent_633893.md
-  → KM 万字长文精读
   → GUI-R1 / Mobile-R1 / MobileGUI-RL 论文解读
 ```
 

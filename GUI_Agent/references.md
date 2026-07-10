@@ -41,24 +41,6 @@
 | MiniCPM-V 系列 | 面壁智能 | 端侧部署，离线可用 |
 | Florence-2 | 微软 | 轻量级 UI 理解（0.23B） |
 
-## 腾讯内部文章（KM）
-
-| 标题 | 作者 | 日期 | 阅读量 |
-|---|---|---|---|
-| **万字长文：GRPO for GUI Agent** ⭐ | zishanshi | 2025-07 | 2126 |
-| **从原理到实践：从0到1手搓GUI Agent** ⭐ | zishanshi | 2025-12 | 2385 |
-| **模型驱动·多端落地：跨平台GUI Agent测试提效** ⭐ | kaelyezhang | 2026-01 | 3911 |
-| **LLM下半场是"行动"：基于Pydantic AI+OmniParser** | aidenmo | 2026-01 | 621 |
-| **GUI Agent：从"能跑"到"能用"的11场仗** | alisdonwang | 2026-06 | 17 |
-| **给视觉感知加一道哨兵：YOLO浮层态检测** | leenjiang | 2026-03 | 148 |
-| **Florence-2模型在GUI Agent中的微调实践** | leenjiang | 2026-01 | 165 |
-| **GUI Agent精准定位进化之路** | kevinzhguo | 2025-11 | 273 |
-| **端侧大模型崛起到GUI Agent** | tobiazhang | 2026-01 | 340 |
-| **豆包手机GUI平替：Open-AutoGLM简析** | yangyychen | 2026-01 | 70 |
-| **Online强化学习构建更鲁棒的GUI Agent** | wenhaowyu | 2025-08 | 279 |
-| **Visual GUI Agent** | hanrycai | 2024-11 | 299 |
-| **GUI Agent多步在线强化学习** | zhongpuwang | 2025-11 | 55 |
-| **万字长文GUI AGENT实践与效果** | kangqin | 2025-11 | 102 |
 
 ## 工具链
 
@@ -76,7 +58,6 @@
 入门（4h）:
   1. 01_gui_agent_overview.md（1h）
   2. 02_base_models_and_platforms.md（45min）
-  3. KM:649442 从0到1手搓（2h 动手）
 
 进阶（4h）:
   4. 03_training_and_fine_tuning.md（1.5h）

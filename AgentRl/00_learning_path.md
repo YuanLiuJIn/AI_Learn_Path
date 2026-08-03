@@ -1,63 +1,81 @@
-# 00. Agent RL 学习路线
+# 00. Agent RL 学习路线（论文驱动版）
 
-> 目标：从 RL 基础到多轮 Agent RL 训练，建立系统认知。
+> 目标：从"读得懂论文"到"训得动 Agent"。本路线强调：**先建立统一的框架概念，再读代表论文，最后动手**。
 
 ## 1. 推荐学习顺序
 
 ```text
-第一阶段：理解"为什么需要 Agent RL"
-  → 01_agent_rl_overview.md
-  搞清楚 Chatbot → SFT Agent → RL Agent 的进化逻辑
+阶段 0｜建立统一语言（最重要，别跳过）
+  → 01_agent_rl_overview.md（MDP vs POMDP 形式化）
+  → 01b_Landscape_Survey_详解.md（总纲综述逐章讲解）
+  目的：搞懂"Agentic RL 到底在解决什么"，以及 Survey 的
+        "能力 × 任务"双重分类法，后面所有论文都挂在这张地图上
 
-第二阶段：掌握 RL 基础算法
+阶段 1｜夯实 RL 算法
   → 02_rl_foundations.md
-  理解 PPO、RLHF、RLVR、GRPO 的核心区别
+  要求：能手写出 PPO / DPO / GRPO 的目标函数区别
+        知道 DAPO/GSPO/Dr.GRPO 各自改了什么
 
-第三阶段：深入多轮 Agent RL
+阶段 2｜深入多轮训练
   → 03_multi_turn_agent_rl.md
-  理解多轮任务中 RL 的特殊挑战和解决方案
+  要求：说清 AgentRL / RAGEN / AgentGym-RL 解决的核心痛点
+        理解 Re-tokenize、变长 episode、轨迹过滤
 
-第四阶段：动手实践
-  → 04_rl_frameworks.md
-  选一个开源框架跑通 RL 训练流程
+阶段 3｜跑通框架
+  → 04_rl_frameworks.md → 选一个跑 demo
 
-第五阶段：奖励设计与环境
-  → 05_reward_design.md
-  → 06_environment_and_benchmark.md
-  理解奖励设计哲学和评测体系
+阶段 4｜奖励与环境
+  → 05_reward_design.md → 06_environment_and_benchmark.md
+  要求：能为一个真实任务设计 outcome + process 奖励
 
-第六阶段：前沿论文
-  → 07_papers_projects.md
-  跟进最新 Agent RL 论文
+阶段 5｜读论文、跟前沿
+  → 07_papers_projects.md（按分类选读）→ references.md（追新）
 ```
 
-## 2. 前置知识
-
-建议先掌握：
+## 2. 前置知识自查
 
 ```text
-强化学习基础：MDP、Policy、Value Function、Reward
-大模型训练基础：SFT、RLHF、DPO
-Agent 基础：ReAct、工具调用、Agent Loop
+❑ 强化学习基础：MDP、Policy、Value、Reward、Credit Assignment
+   推荐：Part5_reinforcement_learning/ 或 Sutton & Barto 前 3 章
+
+❑ 大模型后训练：SFT、RLHF、DPO 的基本流程
+   推荐：Part6_building_llm/ 或 InstructGPT 论文
+
+❑ Agent 基础：ReAct、Tool Calling、Agent Loop、MCP
+   推荐：Agent系统设计/ 或 ReAct (Yao et al. 2022) 论文
+
+❑ 一点工程常识：Ray / vLLM / 分布式训练的基本概念（读 04 时补充即可）
 ```
 
-如果还没学过，建议先看 `AI_Learn_Path/Part5_reinforcement_learning/` 和 `AI_Learn_Path/Agent/`。
+## 3. 怎么"读论文"才学得到东西（本专题的方法论）
 
-## 3. 学习原则
+不要只读摘要。按这个模板拆解每篇论文：
 
 ```text
-1. 先理解"为什么 RL 能突破 SFT 上限"，再学具体算法
-   关键是理解"探索-验证-再探索"的飞轮机制
+读一篇 Agent RL 论文的 6 问：
+1. 它把 Agent 建模成什么？单步 MDP 还是多步 POMDP？
+2. 它的 Action Space 是什么？纯文本 / 工具调用 / GUI 操作？
+3. Reward 从哪来？可验证规则 / Reward Model / 过程奖励？
+4. 它用哪个算法？PPO / GRPO / DPO / 自研？
+5. 它解决了哪个具体痛点？（稳定性？信用分配？环境？）
+6. 在 Survey 的哪一类下？（能力视角？任务视角？）
+```
 
-2. 带着对比思维学习
-   RLHF vs DPO vs GRPO 各有什么优势和局限？
-   单轮 RL vs 多轮 RL 有什么区别？
+## 4. 学习原则
 
-3. 关注工程实践
-   Agent RL 不只是算法，更是 Infra 问题
-   Ray、vLLM、Megatron 的协同至关重要
+```text
+1. 先建框架，再塞细节
+   Survey 的双重分类法就是你的"文件夹结构"，
+   每读一篇论文就归到某个能力/任务下，知识才不会散。
 
-4. 先跑通一个小 demo，再深入理论
-   用 OpenRLHF 跑一个简单的 RLHF 训练
-   再尝试多轮任务
+2. 带着"对比"读书
+   PPO vs GRPO、Outcome vs Process、单步 vs 多步、
+   OpenRLHF vs veRL vs Slime ——对比让概念更锋利。
+
+3. 读原文，不只读二手
+   本专题给的讲解是"导读"，真正吸收要靠你点开 arxiv 链接读 §Method。
+
+4. 先跑通小 demo，再钻理论
+   用 OpenRLHF + GRPO 跑一个数学题 Agent，
+   看到 reward 曲线涨起来，理论才有锚点。
 ```

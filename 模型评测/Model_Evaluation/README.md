@@ -14,6 +14,7 @@
 | `04_llm_as_judge.md` | LLM 做裁判：MT-Bench、AlpacaEval、偏好泄漏 | 1.5h |
 | `05_evaluation_frameworks.md` | 工业化评测框架：HELM、lm-eval-harness、OpenCompass | 1.5h |
 | `06_agent_evaluation.md` | Agent 评测：SWE-bench、WebArena、AgentBench | 1h |
+| `06b_agent_evaluation_deepdive.md` | Agent 评测方法论详解 + 9 大场景全集（Web/编程/对话/搜索/研究/科学/电脑/手机/游戏）、评分器三类、评估系统组成、发展趋势 | 2h |
 | `07_practical_guide.md` | 动手：跑一个评测、设计自定义评测 | 1h |
 | `08_projects_and_papers.md` | 论文索引、开源项目、学习路线 | 15min |
 

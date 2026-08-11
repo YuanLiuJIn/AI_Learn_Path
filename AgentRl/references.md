@@ -18,7 +18,7 @@
 - DPO (Rafailov et al., 2023): https://arxiv.org/abs/2305.18290
 - GRPO / DeepSeekMath (Shao et al., 2024): https://arxiv.org/abs/2402.03300
 - DAPO (Dynamic Sampling + Clip-Higher): https://arxiv.org/abs/2503.14476
-- Dr.GRPO: https://arxiv.org/abs/2503.24412
+- Dr.GRPO: https://arxiv.org/abs/2503.20783
 - GSPO (Group Sequence Policy Optimization): https://arxiv.org/abs/2507.18071
 - R1 类推理模型: DeepSeek-R1 https://arxiv.org/abs/2501.12948
 

@@ -1,0 +1,52 @@
+# Search-R1 复刻 · veRL GRPO 配置（Qwen2.5-14B / 4×H200）
+# 模板性质：字段以 veRL 0.1.x + Search-R1 为准；若用更新版 veRL，
+# 请以 Search-R1 仓库 train_grpo.sh 的参数为权威，本文件用于理解结构。
+
+data:
+  train_files: /data/searchr1/nq_train.parquet
+  val_files: /data/searchr1/nq_test.parquet
+  train_batch_size: 128          # 每步 prompt 数；GRPO 实际样本 = batch * rollout.n
+  val_batch_size: 256
+  max_prompt_length: 2048        # 搜索上下文较长，给足
+  max_response_length: 4096      # 多轮 推理+检索+作答
+  filter_overlong_prompts: True  # 变长 episode 过滤（对应 03 §5 轨迹过滤）
+
+actor_rollout_ref:
+  model:
+    path: Qwen/Qwen2.5-14B
+  actor:
+    optim:
+      lr: 1e-6
+      warmup_steps: 10
+    ppo_mini_batch_size: 64
+    ppo_micro_batch_size_per_gpu: 2
+    use_kl_in_reward: True        # GRPO 常用 KL 约束参考策略
+    kl_loss_coef: 0.001
+    kl_loss_type: low_var_kl
+  rollout:
+    name: vllm
+    tensor_model_parallel_size: 2 # 14B→14GB/卡，4 卡富余
+    gpu_memory_utilization: 0.5   # 给同卡上的训练留余量
+    n: 5                          # GRPO 组内样本数（group size）
+    temperature: 1.0
+    top_p: 1.0
+    enable_search: True           # Search-R1 专用：开启搜索工具调用
+  ref:
+    log_prob_micro_batch_size_per_gpu: 2
+    input_ids_override: True
+
+algorithm:
+  adv_estimator: grpo             # 组内相对优势，省 Critic（对应 02 / 05）
+  kl_ctrl:
+    kl_coef: 0.001
+
+trainer:
+  n_gpus_per_node: 4
+  nnodes: 1
+  total_epochs: 3
+  save_freq: 50
+  test_freq: 20
+  save_checkpoint_path: /data/ckpt/search_r1_14b
+  logger: ['console', 'wandb']
+  project_name: search_r1_14b
+  experiment_name: qwen25-14b-grpo-4xh200

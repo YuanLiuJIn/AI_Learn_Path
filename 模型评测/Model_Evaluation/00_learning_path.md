@@ -31,11 +31,15 @@
   → HELM 多维全景评测
   → OpenCompass 中文评测
 
-第 6 步：怎么评测 Agent？（1h）
+第 6 步：怎么评测 Agent？（1h + 2h 深入）
   06_agent_evaluation.md
   → SWE-bench：代码能否通过测试？
   → WebArena：能不能操作真实网页？
   → AgentBench：8 类交互环境
+  06b_agent_evaluation_deepdive.md（深入版）
+  → Agent 是什么 / 评估系统组成 / 评估维度（pass@k、pass^k）
+  → 评分器三类（规则 / 模型 / 人工）+ 9 大场景全集与 benchmark
+  → 发展趋势：环境 / 代理 / 评估者 / 指标 四视角
 
 第 7 步：动手实践（1h）
   07_practical_guide.md

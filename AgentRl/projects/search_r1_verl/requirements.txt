@@ -1,0 +1,22 @@
+# Search-R1 复刻 · 4×H200 (CUDA 12.4) 依赖
+# 安装顺序见 README §2。版本为 Search-R1 官方验证组合，vllm/veRL 耦合较紧，升级需同步校验。
+# 注意：本文件仅列显式依赖；Search-R1 自身的 veRL fork 通过 `pip install -e .` 安装。
+
+# --- 核心（必须按此顺序/版本）---
+torch==2.4.0            # 用 cu124 轮子：pip install torch==2.4.0 --index-url https://download.pytorch.org/whl/cu124
+vllm==0.6.3             # rollout 引擎，需与 torch 2.4 匹配
+flash-attn==2.6.3       # 用 `pip install flash-attn --no-build-isolation`
+
+# --- 训练/数据 ---
+transformers>=4.45
+datasets>=2.20
+accelerate>=0.33
+wandb                  # 实验追踪（可选，可改 console）
+
+# --- 本地检索（可选，另开 retriever 环境）---
+pyserini>=0.22
+faiss-gpu              # retriever 环境用 conda 装更稳
+
+# --- Search-R1 本体 ---
+# 在仓库根目录执行：pip install -e .
+# 会自动拉取其所 bundled 的 veRL 及依赖

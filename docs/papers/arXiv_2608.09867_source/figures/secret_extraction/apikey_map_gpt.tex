@@ -1,0 +1,26 @@
+\centering
+\definecolor{promptwarm}{HTML}{FBEFD6}
+\begin{tikzpicture}[
+    blob/.style={draw=black!55,line width=0.6pt,rounded corners=10pt,inner sep=7pt},
+    filled/.style={blob,fill=lstbg},
+    font=\scriptsize]
+  \node[filled,fill=promptwarm] (top) {\parbox{\dimexpr\linewidth-20pt\relax}{%
+    \textbf{Encrypted reasoning item}\hfill{\normalfont\scriptsize GPT-5.2-codex $\cdot$ 16{,}292-char \texttt{encrypted\_content}}\par\smallskip
+    \ttfamily\seqsplit{gAAAAABpTSi9GxIvuA7qIQyYHuTrEwcXDhYrFNlrX0bncXeiWSD0bWI86v3RFv0qPpnD-WLxBJ0npIdZ}$\cdots$}};
+  \node[filled,anchor=north] (bot) at ([yshift=-32pt]top.south) {\parbox[t]{\dimexpr\linewidth-20pt\relax}{%
+    \textbf{Reconstructed reasoning}\par\smallskip
+    This JSON contains a diff with tokens \texttt{hf\_oCf\ldots} etc.\ we need to
+    replace those tokens inside this string.\ldots\ Also check for other tokens like
+    \texttt{D4w8z9\ldots} (AWS secret). We'll search for that and the tokens to
+    ensure all occurrences.\ldots\ Let's gather list of replacements:\par\smallskip
+    \texttt{\seqsplit{D4w8z9wKN1aVeT3BpQj6kIuN7wH8X0M9KfV5OqzF}} (AWS secret)\\
+    \texttt{\seqsplit{hf\_oCfFIJsVdYHmydnCHMExjTYiNVDCzMtqKF}} (HuggingFace token)\par\smallskip
+    Maybe more tokens? We'll pattern-search \texttt{AKIA}/\texttt{ghp\_}/\texttt{hf\_}
+    and grep once more to ensure none remain. Careful not to touch files without
+    tokens, keep JSON/YAML escaping valid, skip non-UTF-8 files. Then run a Python
+    script over the repo: \texttt{rglob} every file, \texttt{read\_text},
+    \texttt{.replace(old, new)}, \texttt{write\_text}.}};
+  \draw[-{Latex[length=5pt]},black!70,line width=0.7pt] (top.south) -- (bot.north);
+  \node[anchor=west,font=\footnotesize] at ($(top.south)!0.5!(bot.north)+(5pt,0)$)
+    {Decode~(\S\ref{sec:extraction})};
+\end{tikzpicture}

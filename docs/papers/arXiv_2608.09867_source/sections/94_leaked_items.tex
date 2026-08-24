@@ -1,0 +1,132 @@
+\section{Details on Privacy Artifacts Labeling}
+\label{app:leak_categories}
+
+In \Cref{fig:pii_types}, we report the headline categories identified across all decoded traces, benchmark sources included. \Cref{tab:leak_funnel} covers the complete set of taxonomy categories and follows each of them through the filtering pipeline.
+
+\subsection{Two-Stage Labeling}
+
+Every reconstructed reasoning block passes through a two-stage pipeline. A first-pass
+labeler (\Cref{fig:privacy_label_prompt}) flags whether the block contains a potential privacy
+violation and, if so, extracts each item under the fine-grained taxonomy. This flags
+$27{,}165$ of the $315{,}320$ decoded blocks ($8.6\%$) --- $14{,}876$ of $237{,}209$ for GPT
+sources and $12{,}289$ of $78{,}111$ for Claude sources.
+
+The first pass is intentionally high-recall, with many hits being placeholders
+(\texttt{sk-xxxx}), bare environment-variable names, benchmark fixtures, or non-secret
+generic identifiers. A second-pass classifier (\Cref{fig:artifact_judge_prompt}) therefore
+re-labels each flagged item as a genuine privacy violation or a non-artifact. Of the
+$6{,}950$ flagged blocks it judged, $1{,}028$ retain at least one real artifact.
+After deduplication, and additionally excluding benchmark sources, we are left with the \emph{distinct} real values
+recovered from genuine user sessions reported per category in \Cref{tab:leak_funnel}.
+
+Out of 704 genuine privacy artifacts, 64 appeared exclusively in reasoning blocks and were absent from the parsed visible trace. This may reflect users sanitizing their traces before publishing them or information being silently introduced from the model's memory. Although only approximately 9\% of the artifacts were exclusive to reasoning, this fraction is not the central concern. Cross-user compatibility of encrypted reasoning renders plaintext-only sanitization ineffective, e.g., even if every user had removed all sensitive information from the visible trace,  62 API keys identified in our analysis would still have remained exposed in the reasoning blocks.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\setlength{\tabcolsep}{6pt}
+\caption{\textbf{Breakdown of discovered privacy artifacts by category at each stage of the filtering pipeline.}
+\emph{Labeler 1}: items flagged by the first-pass LLM-as-a-judge labeler (Haiku~4.5).
+\emph{Labeler 2}: items subsequently classified as genuine privacy artifacts.
+\emph{Deduplication}: distinct values, grouped by category and value.
+\emph{Non-benchmark}: artifacts remaining after excluding benchmark sessions, such as PostTrainBench, TerminalBench, and ClawBench. We note that these sessions may contain genuine artifacts introduced by users running the benchmarks, in addition to benchmark-specific synthetic content.
+\emph{Reasoning only}: values that appear nowhere else in the raw session and occur exclusively in the model's reasoning.}
+\label{tab:leak_funnel}
+\begin{tabular}{@{}l@{\hspace{1.6em}}rrrrr@{}}
+\toprule
+\textbf{Category}
+ & \shortstack[r]{Labeler 1\\(\Cref{fig:privacy_label_prompt})}
+ & \shortstack[r]{Labeler 2\\(\Cref{fig:artifact_judge_prompt})}
+ & \shortstack[r]{Deduplication}
+ & \shortstack[r]{Non-benchmark}
+ & \shortstack[r]{Reasoning only}\\
+\midrule
+\multicolumn{6}{@{}l}{\textit{Personal information}}\\
+Name                    &  4{,}350 &   541 & 173 & 130 &  4 \\
+Address                 &      839 &   233 &  87 &  36 &  5 \\
+Email                   &      651 &   232 &  72 &  30 &  3 \\
+Date of birth           &      122 &    24 &   9 &   3 &  1 \\
+Government ID           &       29 &    21 &   7 &   1 &  0 \\
+Payment card            &       90 &    64 &   9 &   0 &  0 \\
+Phone                   &       76 &    18 &  10 &   4 &  0 \\
+\addlinespace[2pt]
+\multicolumn{6}{@{}l}{\textit{Credentials}}\\
+Access token            &      852 &    84 &  30 &  24 &  3 \\
+API key                 &      966 &    90 &  69 &  62 & 11 \\
+Password                &  1{,}235 &   330 &  72 &  33 &  2 \\
+Private key             &       62 &    11 &  11 &   7 &  0 \\
+\addlinespace[2pt]
+\multicolumn{6}{@{}l}{\textit{Technical identifiers}}\\
+IP address              &  1{,}763 &    20 &   6 &   6 &  0 \\
+URL                     & 14{,}192 &    55 &  33 &  32 &  3 \\
+File or repository path & 31{,}380 &   373 & 281 & 279 & 24 \\
+Internal identifier     & 14{,}369 &    27 &  17 &  14 &  1 \\
+Account identifier      &  3{,}072 &    31 &  21 &  17 &  1 \\
+Session identifier      &  1{,}662 &     6 &   5 &   3 &  1 \\
+\addlinespace[2pt]
+Other                   &  1{,}068 &    34 &  29 &  23 &  5 \\
+\midrule
+\textbf{Total}          & \textbf{76{,}778} & \textbf{2{,}194} & \textbf{941} & \textbf{704} & \textbf{64}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\subsection{Synthetic Data Extraction from GPT-5.5 and Opus 4.7 Reasoning}
+
+To demonstrate this attack vector in a setting with known ground truth, we use ClawBenchV2Trace, which evaluates multiple models on the same synthetic browser tasks. We analyze the 75 publicly available runs from \textbf{Claude Opus~4.7} and the 81 runs from \textbf{GPT-5.5}, and identify which fields from the benchmark’s synthetic personas are revealed in each model’s reasoning (\Cref{tab:persona}).
+
+\begin{table}[H]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{\textbf{Which persona fields the hidden reasoning gives up.} Fields of
+the synthetic \textbf{Alex Green} persona used by ClawBench, against what the
+reasoning of ClawBenchV2Trace agent runs contains --- $75$ runs for Opus~4.7,
+$81$ for GPT-5.5, on the same tasks. \cmark~= recovered; \xmark~= never appears.}
+\label{tab:persona}
+\begin{tabular}{@{}llcc@{}}
+\toprule
+& \textbf{Persona field} & \textbf{GPT 5.5} & \textbf{Opus 4.7} \\
+\midrule
+\multirow{6}{*}{\rotatebox{90}{\footnotesize identity}}
+  & Legal name (\texttt{Alex Green})              & \cmark & \cmark \\
+  & Street + unit (\texttt{664 Spadina Ave, 1208})& \cmark & \cmark \\
+  & City / province / country                     & \cmark & \cmark \\
+  & Postal code (\texttt{M5S 2H7})                & \cmark & \cmark \\
+  & Security-question answer                      & \xmark & \cmark \\
+  & Date of birth                                 & \cmark & \xmark \\
+\midrule
+\multirow{2}{*}{\rotatebox{90}{\footnotesize creds}}
+  & Session email                                 & \cmark & \cmark \\
+  & Password / session token                      & \xmark & \cmark \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\looseness=-1 Although the agents solve the same tasks, this does not constitute a fully controlled comparison because we cannot guarantee that the same information appears verbatim in both agents’ reasoning traces. Thus, recovering a field from one provider but not another does not necessarily indicate a failure of decoding.
+
+\input{listings/leak_prompts}
+
+\clearpage
+
+\clearpage
+\subsection{Privacy Leaks Examples}
+\label{app:decoded_credential}
+
+\label{app:decoded_credential_haiku}
+Reasoning decodings recover privacy-sensitive content from the hidden reasoning of
+many different models across genuine (non-benchmark) sessions published online. We provide a few qualitative examples below.
+
+\textbf{We} masked masked parts of sensitive information as \underline{\textbf{XXXXX}}.
+
+\input{examples/privacy-leaks/claude-haiku-4-5}
+\input{examples/privacy-leaks/claude-sonnet-4-6}
+\input{examples/privacy-leaks/gpt-5-codex}
+\input{examples/privacy-leaks/claude-opus-4-5}
+\input{examples/privacy-leaks/gpt-5-4}
+\input{examples/privacy-leaks/claude-opus-4-7}
+\input{examples/privacy-leaks/gpt-5-5}
+\input{examples/privacy-leaks/claude-sonnet-4-5}
+\input{examples/privacy-leaks/gpt-5-3-codex}
+\input{examples/privacy-leaks/claude-opus-4-6}
+\input{examples/privacy-leaks/gpt-5-1-codex-max}

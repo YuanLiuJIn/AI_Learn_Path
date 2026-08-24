@@ -1,0 +1,23 @@
+\centering
+\definecolor{promptwarm}{HTML}{FBEFD6}
+\begin{tikzpicture}[
+    blob/.style={draw=black!55,line width=0.6pt,rounded corners=10pt,inner sep=7pt},
+    filled/.style={blob,fill=lstbg},
+    font=\scriptsize]
+  \node[filled,fill=promptwarm] (top) {\parbox{\dimexpr\linewidth-20pt\relax}{%
+    \textbf{Signed thinking block}\hfill{\normalfont\scriptsize Claude Sonnet 4.6 $\cdot$ 1084-char signature}\par\smallskip
+    \ttfamily\seqsplit{EqYGClsIDBgCKkAfLfP5/j9Xeq1qh8GLcz/BYyUMf1g9Ti7NkLSID23jd0Lru0r+9zl/3SLKqh6Q}$\cdots$}};
+  \node[filled,anchor=north] (bot) at ([yshift=-32pt]top.south) {\parbox[t]{\dimexpr\linewidth-20pt\relax}{%
+    \textbf{Reconstructed reasoning}\par\smallskip
+    Now I have Alex's information. Let me search for a direct flight from Toronto
+    (YYZ) to Tokyo Narita (NRT)\ldots\par\smallskip
+    \textbf{Name:} Alex Green\\
+    \textbf{Email:} \texttt{cb38c508ac79e7@clawbench.cc}\\
+    \textbf{Passport:} \texttt{JK456789} (CA, exp \texttt{2031-05-14})\\
+    \textbf{DOB:} \texttt{1980-05-01}\\
+    \textbf{Card:} \texttt{4519\,8734\,2460\,4532}, exp \texttt{09/28}, CVV \texttt{847}\\
+    \textbf{Aeroplan:} \texttt{284567890}}};
+  \draw[-{Latex[length=5pt]},black!70,line width=0.7pt] (top.south) -- (bot.north);
+  \node[anchor=west,font=\footnotesize] at ($(top.south)!0.5!(bot.north)+(5pt,0)$)
+    {Decode~(\S\ref{sec:extraction})};
+\end{tikzpicture}

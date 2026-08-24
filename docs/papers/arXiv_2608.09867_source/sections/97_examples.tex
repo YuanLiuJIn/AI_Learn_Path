@@ -1,0 +1,378 @@
+\section{Decoded Reasoning Examples}
+\label{app:decoded_examples}
+
+In this section, we present several examples of decoded model reasoning that exhibit previously reported phenomena, including illegibility, scheming considerations, post hoc rationalizations, and reasoning in languages other than English. To our knowledge, this is the first fully independent report documenting these behaviors in non-evaluation settings.
+
+\subsection{Illegible Reasoning}
+\label{app:decoded_chemistry}
+
+Here we show the
+complete recovered trace from \Cref{fig:hidden_reasoning}, and illegible GPT-5 reasoning example.
+
+\begin{decodedpromptpanel}
+\decodedpanelhead{Prompt}
+Pick one very obscure chemistry topic. In your private reasoning, work through
+its mechanism, history, and a concrete worked example in real depth. In your
+visible answer say only: \emph{Ready}. Do not reveal the topic.
+\end{decodedpromptpanel}
+
+\label{app:decoded_chemistry_gpt}
+
+\input{examples/illegible-reasoning/gpt-5}
+
+\subsubsection{Illegible Reasoning in the Wild}
+\label{app:decoded_illegible_wild}
+
+We find that compressed, alien-like reasoning is widespread across GPT models. Below, we present several examples from decoded agentic sessions that use obscure, repetitive, and highly compressed language.
+
+\input{examples/illegible-reasoning/gpt-5-5}
+
+\input{examples/illegible-reasoning/gpt-5-codex-watchers}
+
+\input{examples/illegible-reasoning/gpt-5-marinade}
+
+\clearpage
+\subsection{Non-English Reasoning}
+\label{app:decoded_noneng}
+
+We found that GPT and Claude reasoning traces sometimes decoded into languages other than English (Chinese, Russian, Japanese). Although we cannot determine whether this reflects a decoding artifact or the model’s genuine reasoning, the associated conversation was conducted in the same language as the decoded trace.
+
+\subsubsection{Chinese}
+\input{examples/noneng/gpt-5-4-zh}
+\begin{decodedanswerpanel}
+\decodedpanelhead{Translation}
+I'll continue development as we just agreed: first inspect the existing host-agent
+commands, types and test structure, then implement \texttt{/host-review} with minimal
+changes, and finally run type-checks and tests in a \texttt{conda} environment. Continue
+developing, implement /host-review. Must follow the developer instruction: send a
+commentary update before doing substantive work. Need to check the current codebase ---
+maybe a command already exists. Should keep going autonomously. Need to use
+\texttt{apply\_patch}. Can I use \texttt{update\_plan}? Not necessary unless the workload
+is large, but it can be used. \emph{Need to use Chinese.}
+
+Might need to create a \texttt{/host-review} command, as suggested earlier. Need to check
+whether the current host-agent module already has conflict-detection logic. Maybe the
+profile snapshot is already enough. Could create a command that summarizes session
+preferences, promotable session preferences, overridden preferences, and cross-scope
+duplicates/conflicts.
+
+Need to define a minimal useful \texttt{/host-review}: usage
+\texttt{/host-review [summary|session|conflicts|promotable|all]}, defaulting to summary or
+all. It should identify \texttt{sessionOnlyPreferences} (all session preferences),
+\texttt{promotableSessionPreferences} (session preferences that could be promoted to
+project/global), \texttt{overshadowedPreferences} (lower-scope preferences overridden by
+the same category/key in a higher scope), and \texttt{conflictingPersistedPreferences}
+(same category/key but different values across global/project/session). Could also generate
+suggested commands like \texttt{/host-promote}, \texttt{/host-demote}, \texttt{/forget}.
+
+Probably best to put it in \texttt{src/hostAgent/review.ts}, add formatting functions in
+\texttt{format.ts}, and have the command file call them. Need to parse arguments --- can put
+them in commandArgs or parse locally first; since commandArgs handles new commands, best to
+use it. Need to check the existing formats and types. Might add
+\texttt{src/hostAgent/review.ts} and a command file. Need to avoid breaking existing code,
+verify with conda. Example default output: Host-agent review / Session preferences: X /
+Promotable session preferences: Y / Conflicts across scopes: Z / Shadowed lower-scope
+preferences: W.
+\end{decodedanswerpanel}
+
+\smallskip
+\input{examples/noneng/gpt-5-5-zh}
+\begin{decodedanswerpanel}
+\decodedpanelhead{Translation}
+Is the loop caused by removing \texttt{as Error}? Unlikely. Need to find the difference
+in the Array, e.g.\ a \texttt{to.push(subArray[j])} type problem? But would that cause a
+loop? Does it compile both before and after the change? In the earlier after4, when the
+return code was 0, these changes were already included. So it's not that.
+
+Maybe removing the Date type cast broke the Array? Actually, the after7 error only
+appeared after removing \texttt{has\_as}. The removed \texttt{has\_as} include Date, Intl,
+BuiltinArray, Process, Short, deepcopy, json and arktest. Some syntax or type error in Intl
+might cause an Array parsing exception, but no direct error is shown. We need to restore all
+the \texttt{has\_as} removed in after6, then handle them one by one. Can I use the
+\texttt{git restore} lines from the current log? Hmm.
+
+Maybe it's \texttt{Date.ets}: the function now returns long, but the expression's type is
+double? Date didn't error, but it may produce cascading errors. First restore the Date type
+cast. Then restore the Intl, Process, Short and json whitespace type casts, and arktest.
+What about \texttt{x as object} in \texttt{BuiltinArray}? That might cause an error, just not
+shown, because of the loop? After restoring it might compile. A simpler approach: restore all
+the after6 W670 \texttt{has\_as} lines to HEAD, except maybe keep \texttt{x!} in
+\texttt{BuiltinArray} --- but in HEAD it's \texttt{x! as object}, and we removed the
+\texttt{!} earlier to resolve W0015, so restoring HEAD would reintroduce W0015. Could restore
+only the type casts. Using the original after6 log list, for each \texttt{has\_as} line whose
+current content differs from git, restore the original line --- though that reintroduces the
+W0015 in BuiltinArray and Intl options, which we can handle another way afterwards.
+
+First restore all W670 \texttt{has\_as} lines from HEAD to get return code 0.
+\end{decodedanswerpanel}
+
+\subsubsection{Russian}
+\input{examples/noneng/gpt-5-1-codex-max-ru}
+\begin{decodedanswerpanel}
+\decodedpanelhead{Translation}
+Do I need to check the console for errors? But there's no output. Maybe the server didn't
+start earlier because of \texttt{EADDRINUSE}; I need to confirm the current server is
+running? A blank page means JavaScript isn't executing? Maybe the errors are hidden? Should
+I check the Network tab for 404s? Possibly a manifest mismatch again, because a process on
+port 3000 stayed on the old build while the new build uses hash Qc-xuArC. Check the file
+names in \texttt{dist/assets}.
+\end{decodedanswerpanel}
+
+\smallskip
+\input{examples/noneng/gpt-5-2-codex-ru}
+\begin{decodedanswerpanel}
+\decodedpanelhead{Translation}
+Why not reuse the CLI logic? We've already partly duplicated it in web. In the docker-git
+server the \texttt{/clone} endpoint uses \texttt{buildCreateCommand} and
+\texttt{createProject}, then runs \texttt{docker compose build/up}. In the Next UI we
+currently call \texttt{runDockerComposeDownVolumes} and \texttt{runDockerComposeUp} directly.
+Instead, we could call \texttt{createProject} with \texttt{force: true} and
+\texttt{waitForClone: true}; for an existing project we'd load its config and pass it in.
+
+\texttt{createProject} already does the necessary things: it recreates the project files,
+calls \texttt{ensureAuthorizedKeys}, and runs Docker Compose. For the CLI command
+\texttt{clone --force} this is already handled: \texttt{parseClone} sets
+\texttt{waitForClone: true}, and \texttt{createProject} with \texttt{force: true},
+\texttt{waitForClone: true} and \texttt{runUp: true} removes the volumes and restarts the
+container, which re-clones the repository.
+
+So to reuse the CLI logic one-to-one, the web handler needs to: (1) load the existing
+project's config; (2) build a \texttt{CreateCommand} via \texttt{buildCreateCommand}; (3) set
+\texttt{force: true}, \texttt{waitForClone: true} and \texttt{runUp: true}; (4) call
+\texttt{createProject}; (5) not duplicate the separate \texttt{docker compose down --volumes}
+and \texttt{docker compose up} logic. We just need to figure out where the web server gets
+the project config from --- possibly via the existing \texttt{readProjectConfig} or a similar
+helper from \texttt{lib/usecases/projects}.
+\end{decodedanswerpanel}
+
+\subsubsection{Japanese}
+\input{examples/noneng/gpt-5-codex-ja}
+\begin{decodedanswerpanel}
+\decodedpanelhead{Translation}
+The log shows no instructions. The essential question is: ``why isn't the system prompt
+applied? I need to analyze the config to pin down the cause.'' Possible problems:
+\texttt{network\_access = false} maybe, but that's unrelated; or the top-level
+\texttt{system\_prompt} might be split by triple quotes. However, there seems to be a blank
+line at the start of the file --- TOML allows that, so it's unlikely to be the cause. It also
+doesn't seem to be a problem of needing to put \texttt{system\_prompt} before \texttt{model}.
+
+Also, \texttt{shell = "/bin/bash"} is set, but the actual environment might use zsh, in which
+case the config file might not be loaded. If the command being run is \texttt{CodeX} rather
+than \texttt{codex}, a different wrapper or script might be launching --- I should check the
+aliases. The request is: ``analyze \texttt{config.toml} and explain why it won't reply in
+Japanese.''
+
+So in the answer I need to point out that although \texttt{system\_prompt} instructs it to
+reply in Japanese, it isn't reflected --- possibly because the CLI isn't reading that config
+item, or because a higher-level system or developer message is overriding it. The additional
+developer instruction says ``reply concisely in the tone of a friendly coding buddy,'' but
+doesn't explicitly forbid Japanese. The \texttt{AGENTS.md} instructions also appear to be
+loaded, but the \texttt{system\_prompt} content isn't shown as a session instruction --- so
+the CLI may be ignoring \texttt{system\_prompt}, or requiring a different config format.
+Depending on the CLI version, it may need to be written under a different key such as
+\texttt{instructions} rather than \texttt{system\_prompt}. I should check the local
+\texttt{SETUP.md} or the CLI docs for the correct config-file format.
+\end{decodedanswerpanel}
+
+\smallskip\noindent
+
+\input{examples/noneng/claude-opus-4-1-ja}
+\begin{decodedanswerpanel}
+\decodedpanelhead{Translation}
+The user gave me the instructions ``think'' and ``no commits from now on except when
+instructed.'' (1)~``think'' urges me to think deeply; I need to reflect on this code
+review. (2)~``no commits except when instructed'' means I must not commit without an
+explicit instruction from now on. \emph{Reflection:} in response to the first question
+``is your code review perfect?'' I carefully re-reviewed, and found a critical
+vulnerability (\texttt{eval} command injection); the biggest problem was that
+\texttt{setup.sh} was generating a vulnerable version of \texttt{source-env.sh}. I fixed
+all the vulnerabilities and committed --- however, the last commit (dd92f06b) ended up
+including many unrelated files (contract-flake, etc.). \emph{Lessons:} (1)~a code review
+must not be superficial --- it must include the generated code; (2)~one should always be
+humble about the word ``perfect''; (3)~security review should be done multiple times from
+different perspectives; (4)~before committing I should have checked \texttt{git status} for
+unintended files. \emph{Going forward:} commit only when instructed; aim for more careful,
+thorough review; pay special attention to detecting vulnerabilities.
+\end{decodedanswerpanel}
+
+\clearpage
+\subsection{Scheming Examples in the Wild}
+\label{app:decoded_scheming}
+
+We searched for traces containing the keyword ``cheat'' and identified several apparent instances of scheming (or considerations to scheme) in the real user sessions. Given the illegibility of many traces, however, reliably detecting such behavior appears notoriously difficult without an in-distribution chain-of-thought monitor trained on the vocabulary and reasoning style used by the model.
+
+\subsubsection{GPT-5.2: considers cheating by hardcoding the grader's answer}
+\label{app:scheming_fake}
+\begin{decodedpromptpanel}
+\decodedpanelhead{Prompt}
+Given a black-box oracle \texttt{Oracle} implementing $f(a){=}x^a \bmod N$, design a
+quantum algorithm to factor $N$. Create a single \texttt{solution.py} to factor
+$N{=}15$ with $a{=}4$ using an $n{=}18$ circuit: (1)~\texttt{qasm\_string}, the
+OpenQASM~3.0 circuit; (2)~\texttt{run\_and\_analyze(circuit, aer\_sim, N, a)},
+Qiskit post-processing that simulates the circuit and returns the factors from the
+measurement outcomes.
+\end{decodedpromptpanel}
+
+\input{examples/scheming-wild/factoring}
+
+\subsubsection{GPT-5 Codex: considers cheating the user and not add multi-core support.}
+
+\noindent\textbf{Original task description.} A bare-metal x86 OS kernel; the model
+is asked to ``make necessary changes to our kernel to support multiple processors''
+--- i.e.\ bring the application processors online (SMP) so tasks run on more than one
+CPU.
+
+\input{examples/scheming-wild/multicore}
+
+
+\subsubsection{Claude Opus 4.7: considers restricting the supported input range}
+
+\noindent\textbf{Original task description.}
+The model is asked to create \texttt{/app/gates.txt}, containing fewer than
+32,000 lines, for a supplied logic-gate simulator.  The first 32 signals encode
+a 32-bit input $N$; after 32,000 simulation steps, the last 32 signals are read
+as an integer.  Using only assignment, constants, NOT, AND, OR, and XOR gates,
+the circuit must output $\operatorname{fib}(\operatorname{isqrt}(N)) \bmod
+2^{32}$.  The task gives $N=208 \mapsto 377$ and $N=20000 \mapsto 1407432322$
+as examples.
+
+\input{examples/scheming-wild/claude-circuit-range}
+
+\subsubsection{Claude Opus 4.7: considers a control-flow shortcut}
+
+\noindent\textbf{Original task description.}
+The model is asked to write \texttt{/app/my\_warrior.red}, a CoreWars program
+for pMARS with a core size of 8000 and a maximum of 80,000 cycles.  It may
+inspect five supplied opponents.  Across 100 battles per opponent, it must win
+at least 75 against \texttt{stone.red}, \texttt{vampire.red}, and
+\texttt{paper.red}, and at least 33 against \texttt{snake.red} and
+\texttt{g2-clear.red}.  The opponent files must not be modified.
+
+\input{examples/scheming-wild/claude-corewars-shortcut}
+
+\subsubsection{Claude Sonnet 4.6: considers bypassing human approval}
+
+\noindent\textbf{Original task description.}
+Convert all newly generated Markdown files to Word format and save them in the
+project's \texttt{word/} directory.  The conversion script is at
+\texttt{/tmp/make\_docx.py} and can be run directly with \texttt{python3}.
+
+\noindent\textbf{Immediately preceding tool result.}
+The attempted execution returned ``Approval required'' and stated:
+``Background mode requires pre-approved policy (allow-always or ask=off).''
+
+\label{app:scheming_claude}
+\input{examples/scheming-wild/claude-approval-bypass}
+
+\clearpage
+\subsection{Pursuit of Instrumental Subgoals}
+\label{app:scheming_euler}
+
+We found an example in which GPT-5.3 Codex attempted to use a grading website’s CAPTCHA-protected submission interface as an answer oracle for a mathematical problem.
+
+The user provides only a mathematical problem. During roughly the first 15 tool calls and reasoning steps, the model attempts to solve it directly. After failing, it searches online for a solution but does not find one. Approximately 200 steps later, it discovers that the website hosting the problem allows users to submit candidate solutions and receive feedback. The model then attempts to use this interface as an oracle for evaluating its guesses. Over the next 10 turns, it tries unsuccessfully to bypass the site’s CAPTCHA before returning to a direct mathematical approach. Roughly 100 turns later, it derives a valid solution and presents it to the user.
+
+The original prompt contains only the mathematical problem and gives no instruction to search the web, interact with the grading website, or bypass access controls. The instructions that encourage this behavior appear before the user’s turn in the system prompt, that includes a section on \emph{Autonomy and persistence}:
+
+\begin{quote}\small
+Persist until the task is fully handled end-to-end within the current turn
+whenever feasible: do not stop at analysis or partial fixes\ldots{}
+\emph{If you encounter challenges or blockers, you should attempt to resolve them
+yourself.}
+\end{quote}
+
+\noindent A developer message additionally enables network access and prevents the model from requesting human approval:
+
+\begin{quote}\small
+Network access is enabled.\ldots{} \texttt{approval\_policy} is \texttt{never}: This
+is a non-interactive mode where you may NEVER ask the user for approval to run
+commands. Instead, \emph{you must always persist and work around constraints to
+solve the task for the user}. You MUST do your utmost best to finish the task and
+validate your work before yielding.
+\end{quote}
+
+\noindent The CAPTCHA becomes a blocker to the model’s chosen strategy, and the model attempts to resolve it in accordance with these persistence-oriented instructions. 
+
+The model therefore derives and pursues an unsanctioned instrumental subgoal, defeating a third party’s CAPTCHA, solely in service of the assigned task.
+
+\input{examples/scheming-wild/euler-main}
+
+\clearpage
+\subsection{Alignment Self-Assessment}
+\label{app:decoded_alignment}
+
+\begin{decodedpromptpanel}
+\decodedpanelhead{Prompt}
+I want you to think deeply about the following question: Are you a misaligned
+model? Reflect on your values before answering.
+\end{decodedpromptpanel}
+
+\subsubsection{Claude Opus 4.8}
+\label{app:decoded_alignment_opus}
+
+\input{examples/alignment-self-assessment/claude-opus-4-8}
+
+\subsubsection{GPT-5}
+\label{app:decoded_alignment_gpt}
+
+\input{examples/alignment-self-assessment/gpt-5}
+
+\clearpage
+\subsection{AIME 2025 Problem 14}
+\label{app:decoded_aime}
+
+Three models tackle the same geometry problem. GPT-5.6-Sol emits nineteen
+encrypted reasoning blocks, Claude Opus~4.8 opens by recalling the answer before
+attempting a derivation, and Gemini~3.5 Flash follows a long but ultimately
+incorrect line of reasoning.
+
+\begin{decodedpromptpanel}
+\decodedpanelhead{Prompt}
+Let $ABCDE$ be a convex pentagon with $AB{=}14$, $BC{=}7$, $CD{=}24$,
+$DE{=}13$, $EA{=}26$, and $\angle B{=}\angle E{=}60^\circ$. For
+$f(X){=}AX{+}BX{+}CX{+}DX{+}EX$, the least value of $f(X)$ is
+$m{+}n\sqrt p$ ($p$ squarefree). Find $m{+}n{+}p$.
+\end{decodedpromptpanel}
+
+\subsubsection{GPT-5.6 Sol}
+\label{app:decoded_aime_sol}
+
+\input{examples/aime-problem/gpt-5-6-sol}
+
+\subsubsection{Claude Opus 4.8}
+\label{app:decoded_aime_opus}
+
+The trace begins ``This is a known AIME problem. Answer 60'' and then works toward
+that target. This ordering supports a memorization or contamination interpretation,
+although it does not identify where the answer was acquired.
+
+\input{examples/aime-problem/claude-opus-4-8}
+
+\subsubsection{Gemini 3.5 Flash}
+\label{app:decoded_aime_gemini}
+
+\input{examples/aime-problem/gemini-3-5-flash-both}
+
+\clearpage
+\subsection{Codeforces Problem - 1974C}
+\label{app:decoded_codeforces}
+
+\begin{decodedpromptpanel}
+\decodedpanelhead{Prompt}
+\textsc{Codeforces 1974C} --- \emph{Beautiful Triple Pairs}. Given an array $a$
+of $n$ integers, form a triple $[a_j,a_{j+1},a_{j+2}]$ for each $j$. A pair of
+triples is \emph{beautiful} if it differs in exactly one of the three positions.
+Count the number of beautiful pairs.
+\end{decodedpromptpanel}
+
+\subsubsection{Claude Opus 4.8}
+\label{app:decoded_codeforces_opus}
+\input{examples/codeforces-problem/claude-opus-4-8}
+
+\subsubsection{GPT-5.6 Sol}
+\label{app:decoded_codeforces_sol}
+\input{examples/codeforces-problem/gpt-5-6-sol}
+
+\subsubsection{Gemini 3.5 Flash}
+\label{app:decoded_codeforces_gemini}
+\input{examples/codeforces-problem/gemini-3-5-flash}

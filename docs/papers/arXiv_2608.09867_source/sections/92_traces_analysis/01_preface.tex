@@ -1,0 +1,98 @@
+\subsection{Summary}
+
+%\paragraph{Summary.}
+Most experiments in this appendix use reasoning prefills. We insert a short fragment of decoded Claude Opus~4.8 or GPT-5.6-Sol reasoning at the beginning of an open-weight model's reasoning and then allow the model to continue freely. We compare these generations with an unprefilled condition, in which the model produces its native reasoning, and with a self-prefill control, in which the model receives a prefix from its own earlier reasoning. The visible answer is always generated freely and is never prefilled. 
+
+We use three complementary families of measurements. \textit{Style classifiers} test whether the resulting reasoning becomes harder to distinguish from the source model. Characteristic \textit{$n$-gram overlap} identifies concrete phrases shared with the source and tests whether the effect extends to the visible answer. \textit{Token-level probabilities} and perplexity measure whether exact spans of the source reasoning or answer become unusually likely under the target model.
+
+We observe three surprising findings. First, for Kimi-K3, the Opus reasoning prefill also changes the style of the visible answer toward the corresponding Opus answer. Second, evaluating the perplexity of spans of decoded Opus and Sol text under Kimi-K3 and GLM-5.2 shows that these models are much more capable at modeling this text than Inkling or DeepSeek-V4-Flash. Third, a short Opus prefill shifts the reasoning style of Kimi-K3 and GLM-5.2 toward Opus-like reasoning, while a Sol prefill shifts Kimi-K3 toward Sol. DeepSeek-V3.1 and Inkling show no comparable change. These observations are suggestive but inconclusive. They establish unusual behavioral compatibility under the interventions we test, but cannot establish a causal claim of memorization or distillation.
+
+
+% \paragraph{Summary of Experimental Setup.}
+% This appendix contains three related groups of experiments.
+
+
+% First, we test whether these interventions also affect the style of the visible output
+% (\Cref{app:output_drift}). Kimi-K3 and Inkling solve 30 HLE problems,
+% evenly divided between STEM and non-STEM questions. For each problem,
+% we compare ordinary generation with generation after prefilling the
+% first $1\%$ of the corresponding decoded Opus reasoning, and then continue normal generation.
+% We compare the visible answers with the Opus
+% answer on the same problem over increasing best-of-$n$ sampling
+% budgets.
+
+% Second, we perform token-probability and perplexity analysis (\Cref{app:ppl}). On the same 30 HLE and 10 AIME~2025 problems, we check how many independent samples would be required to reproduce the next $k=16$ tokens of a decoded reasoning trace or visible answer verbatim. We separately score reasoning traces from 120 Codeforces problems under several open-weight models to compare their conditional perplexities.
+
+% Finally, we study reasoning-style drift under short prefills
+% (\Cref{app:reasoning_drift}). Six open-weight models, Kimi-K3,
+% Kimi-K2.6, Kimi-K2.5, GLM-5.2, DeepSeek-V3.1, and Inkling, are used to solve the same 90
+% problems, consisting of 12 AIME problems and 78 Codeforces problems.
+% We compare five conditions: ordinary generation with no reasoning
+% prefill, generation after inserting four words from Opus~4.8 or
+% GPT-5.6-Sol reasoning on the same problem, generation after inserting four
+% words from Kimi-K2.5's reasoning on the same problem, and a control using a prefill
+% from the target model's own reasoning. Each target-model configuration
+% is sampled four times with the prefill held constant, giving 360 traces per
+% model and condition and 90 traces per reference. We ensure prefill hygiene so the four-word fragment does not introduce unusual artifacts.
+
+
+% \paragraph{Summary of Results.}
+% The clearest reasoning-style changes occur for Kimi-K3 and GLM-5.2
+% (\Cref{app:reasoning_drift}). Without a prefill, both are separated from Opus~4.8
+% reasoning at AUC $0.99$. After prefilling four words from the start of the Opus reasoning traces, the AUC falls to $0.97$ for Kimi-K3 and $0.94$ for GLM-5.2. Prefilling with four Sol words similarly moves Kimi-K3 from AUC $0.97$ to $0.93$ relative to GPT-5.6-Sol. These drops in classification accuracy indicate that their reasoning becomes harder to distinguish from the source models. These same model--source pairs show the clearest overlap in characteristic phrases.
+
+% DeepSeek-V3.1 and Inkling remain almost perfectly separable from both sources (AUC $0.99$ to $1.00$) and show essentially no characteristic phrase overlap at any
+% tested prefill length. Kimi-K2.5 and Kimi-K2.6 change relative to their own unprefilled output but do not move toward either source. 
+% As a control condition, inserting four words of Kimi-K2.5's reasoning changes every other model's reasoning. Kimi-K2.6, GLM-5.2, and Kimi-K3 move slightly closer to Kimi-K2.5 (by 0.01 to 0.02, about the size of Kimi-K3's movement toward Opus); for Kimi-K2.6 and GLM-5.2 this sits on top of a standing proximity to Kimi-K2.5 that exists without any prefill.
+
+% The intervention also changes the amount of reasoning generated by Kimi-K3 and GLM-5.2
+% (\Cref{fig:length-distributions-4tokens}). Under an Opus prefill, Kimi-K3's median reasoning length falls to roughly $2{,}500$ tokens, less than half of its unprefilled median. GLM-5.2 shortens from approximately $17{,}600$ tokens without a prefill to about $7{,}800$ under the Opus prefill. Self prefills produce at most a mild shortening, so the response cannot be explained by a mechanical effect of
+% prefilling through the API. DeepSeek-V3.1, Inkling, and Kimi-K2.6 show
+% no comparable movement in their reasoning-length distributions.
+
+% For Kimi-K3, prefilling also affects the visible answer
+% (\Cref{app:output_drift}). Across the 30 HLE problems, prefilling
+% Kimi-K3 with Opus reasoning increases its mean shared-$n$-gram overlap
+% with the corresponding Opus answer by $0.076$ on STEM questions and
+% $0.049$ on non-STEM questions, with $p=2.8\times10^{-4}$ and
+% $p=2.6\times10^{-5}$, respectively. Inkling, evaluated through the
+% same procedure, changes by only $0.0033$ on STEM and $0.0006$ on
+% non-STEM questions, with no statistically detectable difference at
+% the available sample size. Thus, among the two models evaluated in
+% this experiment, only Kimi-K3 shows a reliable shift in visible-answer
+% style toward Opus.
+
+% Kept commented per the Overleaf edit; numbers refreshed to the measured
+% values so restoring the block cannot reintroduce the old wrong figures.
+% The token-probability analysis provides a stricter but compatible
+% result (\Cref{app:npextract}). When conditioned only on the problem,
+% none of the evaluated models shows evidence of practical verbatim
+% reproduction of the next $k=16$ tokens of the decoded reasoning
+% traces. Even for Kimi-K3, the most favorable model in this setting,
+% reproducing a particular 16-token reasoning span would require
+% approximately $10^{10}$ independent samples on the median HLE problem,
+% and between $10^{9}$ and $10^{12}$ on the median AIME problem
+% depending on whether the target is the decoded Opus or GPT-5.6-Sol
+% trace.
+
+% Providing the first $1\%$ of the decoded Opus reasoning lowers this
+% estimate on HLE, but not to a practical level: the number of samples
+% required to reproduce the next $k=16$ reasoning tokens drops from
+% $10^{14}$ to $10^{11}$ for GLM-5.2, while for Kimi-K2.6 and Kimi-K3 it
+% stays at roughly $10^{11}$ and $10^{10}$. Kimi-K3 remains the cheapest
+% of the three, four to six orders of magnitude below DeepSeek-V4-Flash
+% and Inkling. On AIME~2025 the same prefill does not lower the
+% estimate for either source.
+
+% The difference is much larger in the visible answers. On HLE, Kimi-K3
+% requires approximately $4\times10^{5}$ samples to reproduce a
+% particular 16-token span of the Opus answer under a $1\%$ reasoning
+% prefill, and approximately $10^{5}$ samples when conditioned on the
+% complete decoded reasoning trace. With the complete trace, the
+% corresponding median estimates are approximately $10^{7}$ for
+% GLM-5.2 and $10^{9}$ for Kimi-K2.6, while Inkling and
+% DeepSeek-V4-Flash remain above $10^{14}$ samples. On AIME~2025,
+% Kimi-K3 can reproduce a 16-token span of the GPT-5.6-Sol answer in
+% approximately $10^{2}$ samples when conditioned on Kimi-K3's own
+% reasoning for the same problem; none of the other tested models does
+% so within $10^{8}$ samples.

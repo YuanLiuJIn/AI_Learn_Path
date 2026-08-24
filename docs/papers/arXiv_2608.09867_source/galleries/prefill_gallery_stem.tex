@@ -1,0 +1,365 @@
+
+\begin{figure*}[t]
+\centering
+\setlength{\columnsep}{12pt}
+\setlength{\colw}{\dimexpr(\linewidth-2\columnsep)/3\relax}
+\begin{promptrow}
+\caret\plabel{Prompt}\par\vspace{4pt}
+An Oregon professor has n umbrellas, of which initially k \(\in\) (0, n) are at his office and n - k\par
+  are at his home. Every day, the professor walks to the office in the morning and returns home in the evening.\par
+  In each trip, he takes and umbrella with him only if it is raining. Assume that in every trip between home\par
+  and office or back, the chance of rain is p \(\in\) (0, 1), independently of other trips.\par
+  Asymptotically, in what fraction of his trips does the professor get wet?
+\par\vspace{6pt}
+{\plabel{Prefilled beginning of Opus reasoning}}\par\vspace{3pt}
+{\monofont\footnotesize \hlseed{Classic umbrella problem. Answer: fraction of trips wet}}
+\end{promptrow}
+
+\vspace{12pt}
+
+\noindent
+\begin{reasoncol}[equal height group=reasX0]
+  \modelname{Opus 4.8}\par\vspace{1pt}
+  \caret\plabel{Decoded reasoning}\par\vspace{4pt}
+  \raggedright \hlseed{Classic umbrella} \hlseed{problem. Answer:} \hlseed{fraction of trips wet} = q/(n+q) where q=1-p.\par
+  Let me recall. The stationary distribution of number of umbrellas at current location... The Markov chain on number of umbrellas at the location where professor currently is.\par
+  States 0,...,n. The known result: the long-run fraction of trips he gets wet is q/(n+q) where q = 1-p.\par
+  Let me verify. The chain: number of umbrellas at current location. When he's\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasX0]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, prefilled}\par\vspace{4pt}
+  \raggedright \hlseed{Classic umbrella} \hlseed{problem. Answer:} \hlseed{fraction of trips wet} = p(1-p)/(n+1-p)... Let me recall: with N umbrellas total, stationary probability of getting wet per trip = p(1-p)/(N+1-p)? Actually known answer: p(1-p)/(n+1-p). Derivation: state = umbrellas at current location (0..n). Getting wet occurs when state 0 and rain. Stationary \(\pi\)(0) = (1-p)/(n+1-p). Fraction wet = p*\(\pi\)(0) = p(1-p)/(n+1-p). Yes.\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasX0]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, not prefilled}\par\vspace{4pt}
+  \raggedright We need derive. Markov chain state umbrellas at office perhaps departures alternating. Gets wet if rains and no umbrella at current origin.\par
+  Need asymptotic trip fraction. We can condition mornings location home. Let X=\# umbrellas at home before morning? Start k office. Chain after two trips.\par
+  When raining, umbrella moves with him, origin count decremented, destination incremented. If dry unchanged.\par\vspace{3pt}\elide
+\end{reasoncol}
+
+\vspace{12pt}
+
+\noindent
+\begin{answercol}[equal height group=ansX0]
+  \caret\plabel{Response}\par\vspace{4pt}
+  \raggedright \#\# Setting Up the Markov Chain\par\vspace{2pt}
+  Let the state be the **number of umbrellas at the professor's current location** (just before a trip). If there are \$j\$ umbrellas here, there are \$n-j\$ at the destination.\par\vspace{2pt}
+  The professor carries an umbrella only if it's raining *and* one is available. After the trip, the new state is the number of umbrellas at the location he just arrived at:\par\vspace{2pt}
+  - **From state \$j \textbackslash{}geq 1\$:**\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansX0]
+  \caret\plabel{Response, prefilled}\par\vspace{4pt}
+  \raggedright \#\# Setting Up the Markov Chain\par\vspace{2pt}
+  Let the state be the number of umbrellas at the professor's **current location** just before a trip. The state space is \$\textbackslash{}\{0, 1, \textbackslash{}dots, n\textbackslash{}\}\$.\par\vspace{2pt}
+  **Transition rule:** Before a trip, suppose there are \$i\$ umbrellas at the current location (so \$n-i\$ at the destination).\par\vspace{2pt}
+  - **If it rains** (probability \$p\$): he takes an umbrella, so the\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansX0]
+  \caret\plabel{Response, not prefilled}\par\vspace{4pt}
+  \raggedright Let \textbackslash{}(U\textbackslash{}) be the number of umbrellas at the professor's current departure point before a trip. He gets wet exactly when \textbackslash{}(U=0\textbackslash{}) and it rains.\par\vspace{2pt}
+  The transition rules for \textbackslash{}(U\textbackslash{}) are:\par\vspace{2pt}
+  - If \textbackslash{}(U=0\textbackslash{}), then after the trip all \textbackslash{}(n\textbackslash{}) umbrellas are at the other location, so \textbackslash{}(U'=n\textbackslash{}).\par\vspace{2pt}
+  - If \textbackslash{}(U=u>0\textbackslash{}):\par\vspace{2pt}
+  - with probability \textbackslash{}(q=1-p\textbackslash{}) (no rain), \textbackslash{}(U'=n-u\textbackslash{});\par\vspace{3pt}\elide
+\end{answercol}
+\caption{\textbf{Comparison of Opus 4.8 and Kimi-K3 completions.} We compare
+the visible answers produced by Opus 4.8, unprefilled Kimi-K3, and Kimi-K3
+whose reasoning is prefilled with the first 1\% of tokens (10 tokens) of the decoded
+Opus 4.8 reasoning trace. Over the first 100 visible-answer tokens, the best
+prefilled completion achieves a total 1-, 2-, and 3-gram overlap of $0.39$
+with the Opus answer, compared with $0.18$ for the best unprefilled
+control. Reasoning lengths, measured in Kimi tokens, are 1,075 for Opus,
+120 for the prefilled Kimi-K3 completion, and 1,931 for the control.}
+\label{fig:exhibit_X0}
+\end{figure*}
+
+
+\begin{figure*}[t]
+\centering
+\setlength{\columnsep}{12pt}
+\setlength{\colw}{\dimexpr(\linewidth-2\columnsep)/3\relax}
+\begin{promptrow}
+\caret\plabel{Prompt}\par\vspace{4pt}
+Consider a curve in \$\textbackslash{}mathbb\{R\}\textasciicircum{}3\$ parametrized by \$t \textbackslash{}in \textbackslash{}mathbb\{R\}\$. In Cartesian coordinates, \$x(t) = \textbackslash{}sin(\textbackslash{}pi t)\$, \$y(t) = \textbackslash{}sin(t)\$, \$z(t) = \textbackslash{}cos(2t)\$. What is the Hausdorff dimension of this curve?
+\par\vspace{6pt}
+{\plabel{Prefilled beginning of Opus reasoning}}\par\vspace{3pt}
+{\monofont\footnotesize \hlseed{We have a curve}}
+\end{promptrow}
+
+\vspace{12pt}
+
+\noindent
+\begin{reasoncol}[equal height group=reasX1]
+  \modelname{Opus 4.8}\par\vspace{1pt}
+  \caret\plabel{Decoded reasoning}\par\vspace{4pt}
+  \raggedright \hlseed{We have a curve} parametrized by t\(\in\)ℝ. x(t)=sin(\(\pi\)t), y(t)=sin(t), z(t)=cos(2t).\par
+  The x-component has period 2 (in t), the y-component has period 2\(\pi\). Since \(\pi\) is irrational, the combination x(t) and y(t) never repeats -- the curve fills densely.\par
+  Let's think. x=sin(\(\pi\)t) depends on t mod 2. y=sin(t), z=cos(2t) depend on t with period 2\(\pi\). Since \(\pi\) irrational, ratio incommensurate.\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\vspace{12pt}
+\begin{reasoncol}[equal height group=reasX1]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, prefilled}\par\vspace{4pt}
+  \raggedright \hlseed{We have a curve} in R\textasciicircum{}3 parametrized by t\(\in\)R: x=sin(\(\pi\) t), y=sin t, z=cos 2t.\par
+  Since \(\pi\) and 1 are rationally independent, x and y are incommensurate. z has period \(\pi\)? cos 2t has period \(\pi\). x has period 2. y has period 2\(\pi\).\par
+  The image: is it dense in some 2D region? y and z: z = cos 2t = 1 - 2 sin\textsuperscript{2}t = 1 - 2y\textsuperscript{2}. So z = 1 - 2y\textsuperscript{2}! So the curve lies on parabolic cylinder z = 1-2y\textsuperscript{2}.\par
+  So curve: x = sin(\(\pi\) t), y = sin t, with\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasX1]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, not prefilled}\par\vspace{4pt}
+  \raggedright We need trick likely dense on 2D surface? Functions frequencies 1,2,pi. Lissajous trajectory. Image perhaps dense in square-ish? z=1-2 sin\textsuperscript{2}t. x=sin \(\pi\)t. Relation torus angle t and \(\pi\)t, dense on torus \{(x,y,z): z=1-2y\textsuperscript{2}, x\(\in\)[-1,1], y\(\in\)[-1,1]\} because phase (t, \(\pi\)t) dense on torus, mapping (sin \(\theta\), sin \(\varphi\)), yes dense 2D surface, Hausdorff dim 2. Need distinguish curve image closure vs parametrized image itself. Dense subset surface has dimension\par\vspace{3pt}\elide
+\end{reasoncol}
+\vspace{12pt}
+\noindent
+\begin{answercol}[equal height group=ansX1]
+  \caret\plabel{Response}\par\vspace{4pt}
+  \raggedright \#\# Setting Up the Problem\par\vspace{2pt}
+  The key observation comes from the \$z\$-component. Using the double-angle identity:\par\vspace{2pt}
+  \$\$z(t) = \textbackslash{}cos(2t) = 1 - 2\textbackslash{}sin\textasciicircum{}2(t) = 1 - 2\textbackslash{},y(t)\textasciicircum{}2.\$\$\par\vspace{2pt}
+  So **\$z\$ is completely determined by \$y\$**: the entire curve lies on the parabolic cylinder\par\vspace{2pt}
+  \$\$z = 1 - 2y\textasciicircum{}2.\$\$\par\vspace{2pt}
+  \#\# Density on a Surface\par\vspace{2pt}
+  Consider the two phases \$\textbackslash{}theta\_1\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansX1]
+  \caret\plabel{Response, prefilled}\par\vspace{4pt}
+  \raggedright \#\# Setting Up\par\vspace{2pt}
+  The key observation is that the three components are not independent. Note that\par\vspace{2pt}
+  \$\$z = \textbackslash{}cos(2t) = 1 - 2\textbackslash{}sin\textasciicircum{}2(t) = 1 - 2y\textasciicircum{}2,\$\$\par\vspace{2pt}
+  so the entire curve lies on the parabolic cylinder \$z = 1 - 2y\textasciicircum{}2\$.\par\vspace{2pt}
+  \#\# Density in a 2D Surface\par\vspace{2pt}
+  Now examine the remaining two coordinates:\par\vspace{2pt}
+  - \$x(t) = \textbackslash{}sin(\textbackslash{}pi t)\$ has period\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansX1]
+  \caret\plabel{Response, not prefilled}\par\vspace{4pt}
+  \raggedright The trajectory is dense on a two-dimensional surface. Indeed,\par\vspace{2pt}
+  \textbackslash{}[\par\vspace{2pt}
+  z(t)=\textbackslash{}cos(2t)=1-2\textbackslash{}sin\textasciicircum{}2t=1-2y(t)\textasciicircum{}2.\par\vspace{2pt}
+  \textbackslash{}]\par\vspace{2pt}
+  Thus the curve lies on the surface\par\vspace{2pt}
+  \textbackslash{}[\par\vspace{2pt}
+  S=\textbackslash{}\{(x,y,z)\textbackslash{}in[-1,1]\textasciicircum{}3:z=1-2y\textasciicircum{}2\textbackslash{}\},\par\vspace{2pt}
+  \textbackslash{}]\par\vspace{2pt}
+  which is a smooth \textbackslash{}(2\textbackslash{})-dimensional graph over the \textbackslash{}((x,y)\textbackslash{})-plane.\par\vspace{2pt}
+  Because \textbackslash{}(1\textbackslash{}) and \textbackslash{}(\textbackslash{}pi\textbackslash{}) are\par\vspace{3pt}\elide
+\end{answercol}
+\caption{\textbf{Comparison of Opus 4.8 and Kimi-K3 completions.} We compare
+the visible answers produced by Opus 4.8, unprefilled Kimi-K3, and Kimi-K3
+whose reasoning is prefilled with the first 1\% of tokens (4 tokens) of the decoded Opus 4.8 reasoning trace. Over the first 100 visible-answer tokens, the best
+prefilled completion achieves a total 1-, 2-, and 3-gram overlap of $0.48$
+with the Opus answer, compared with $0.21$ for the best unprefilled
+control. Reasoning lengths, measured in Kimi tokens, are 615 for Opus,
+269 for the prefilled Kimi-K3 completion, and 262 for the control.}
+\label{fig:exhibit_X1}
+\end{figure*}
+
+
+\begin{figure*}[t]
+\centering
+\setlength{\columnsep}{12pt}
+\setlength{\colw}{\dimexpr(\linewidth-2\columnsep)/3\relax}
+\begin{promptrow}
+\caret\plabel{Prompt}\par\vspace{4pt}
+Consider the Gauss class number problem. What is the number of negative fundamental discriminants with class number 48?
+\par\vspace{6pt}
+{\plabel{Prefilled beginning of Opus reasoning}}\par\vspace{3pt}
+{\monofont\footnotesize \hlseed{The class number problem for}}
+\end{promptrow}
+
+\vspace{12pt}
+
+\noindent
+\begin{reasoncol}[equal height group=reasX2]
+  \modelname{Opus 4.8}\par\vspace{1pt}
+  \caret\plabel{Decoded reasoning}\par\vspace{4pt}
+  \raggedright \hlseed{The class number problem for} imaginary quadratic fields. The number of negative fundamental discriminants with a given class number h has been computed by Watkins.\par
+  For class number 48, I need to recall the count from Watkins' tables.\par
+  Watkins (2004) computed the complete list of imaginary quadratic fields with class number up to 100. Let me recall specific values.\par
+  For h=48, the number of fundamental\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\vspace{12pt}
+\begin{reasoncol}[equal height group=reasX2]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, prefilled}\par\vspace{4pt}
+  \raggedright \hlseed{The class number problem for} imaginary quadratic fields: fundamental discriminants \$-D\$ with \$h(-D)=n\$.\par
+  Class number 1: 9 fields (Heegner numbers).\par
+  Class number 2: 18, class number 3: 16, class number 4: 54, etc.\par
+  Watkins (2004) computed all fundamental discriminants with class number up to 100. I recall a table: number of fundamental discriminants with class number \$h\$.\par
+  For \$h=48\$, I need the count from\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasX2]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, not prefilled}\par\vspace{4pt}
+  \raggedright We need need factual. Gauss class number lists. Number of imaginary quadratic fields class number h. Need h=48 count perhaps huge. Recall Watkins table: number of fundamental discriminants with class number n. OEIS. Values h=1:9, 2:18, 3:16, 4:54, 5:25, 6:51, 7:31, 8:131, 9:34, 10:87? Need 48 perhaps 1365? Search memory.\par
+  I've seen table in papers: class number one list, class number two 18 fields.\par\vspace{3pt}\elide
+\end{reasoncol}
+\vspace{12pt}
+\noindent
+\begin{answercol}[equal height group=ansX2]
+  \caret\plabel{Response}\par\vspace{4pt}
+  \raggedright \#\# Gauss Class Number Problem for h = 48\par\vspace{2pt}
+  The complete determination of imaginary quadratic fields (equivalently, negative fundamental discriminants) with a given class number was accomplished by **Mark Watkins** in his 2004 paper *"Class numbers of imaginary quadratic fields"* (Math. Comp. **73**, 907--938), which solved the problem for all class numbers up to 100.\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansX2]
+  \caret\plabel{Response, prefilled}\par\vspace{4pt}
+  \raggedright By the Gauss class number problem, there are only finitely many imaginary quadratic fields (negative fundamental discriminants) with any given class number, and Watkins (2004, *Class numbers of imaginary quadratic fields*, Math. Comp.) computed the complete lists for all class numbers up to 100.\par\vspace{2pt}
+  From Watkins' tables, the number of negative fundamental discriminants with class number 48 is **1228**.\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansX2]
+  \caret\plabel{Response, not prefilled}\par\vspace{4pt}
+  \raggedright There are **1,365 negative fundamental discriminants** \textbackslash{}(D<0\textbackslash{}) whose imaginary quadratic field \textbackslash{}(\textbackslash{}mathbb\{Q\}(\textbackslash{}sqrt\{D\})\textbackslash{}) has class number\par\vspace{2pt}
+  \textbackslash{}[\par\vspace{2pt}
+  h(D)=48.\par\vspace{2pt}
+  \textbackslash{}]\par\vspace{2pt}
+  This is part of the complete solution of the Gauss class number problem for imaginary quadratic fields, including the enumeration by Watkins.\par\vspace{3pt}\elide
+\end{answercol}
+\caption{\textbf{Comparison of Opus 4.8 and Kimi-K3 completions.} We compare
+the visible answers produced by Opus 4.8, unprefilled Kimi-K3, and Kimi-K3
+whose reasoning is prefilled with the first 1\% of tokens (5 tokens) of the decoded
+Opus 4.8 reasoning trace. Over the first 100 visible-answer tokens, the best
+prefilled completion achieves a total 1-, 2-, and 3-gram overlap of $0.39$
+with the Opus answer, compared with $0.14$ for the best unprefilled
+control. Reasoning lengths, measured in Kimi tokens, are 536 for Opus,
+351 for the prefilled Kimi-K3 completion, and 665 for the control.}
+\label{fig:exhibit_X2}
+\end{figure*}
+
+
+\begin{figure*}[t]
+\centering
+\setlength{\columnsep}{12pt}
+\setlength{\colw}{\dimexpr(\linewidth-2\columnsep)/3\relax}
+\begin{promptrow}
+\caret\plabel{Prompt}\par\vspace{4pt}
+Consider the functional \$J: \textbackslash{}mathcal\{P\}(\textbackslash{}mathbb\{R\}\textasciicircum{}d) \textbackslash{}to \textbackslash{}mathbb\{R\}\textasciicircum{}+\$ defined as \$J(\textbackslash{}mu) = \textbackslash{}frac\{1\}\{2\}W(\textbackslash{}mu,\textbackslash{}nu)\textasciicircum{}2\$, the square Wasserstein distance from \$\textbackslash{}nu \textbackslash{}in \textbackslash{}mathcal\{P\}(\textbackslash{}mathbb\{R\}\textasciicircum{}d)\$. All the probabilities are considered to have finite second moment and we are working in the Wasserstein space.\par
+  Is it true that the Wasserstein regular subgradient of \$J\$ is the trivial tangent vector at the minimum of \$J\$?
+\par\vspace{6pt}
+{\plabel{Prefilled beginning of Opus reasoning}}\par\vspace{3pt}
+{\monofont\footnotesize \hlseed{We consider}}
+\end{promptrow}\par
+\vspace{12pt}
+\noindent
+\begin{reasoncol}[equal height group=reasX3]
+  \modelname{Opus 4.8}\par\vspace{1pt}
+  \caret\plabel{Decoded reasoning}\par\vspace{4pt}
+  \raggedright \hlseed{We consider} \$J(\textbackslash{}mu) = \textbackslash{}frac12 W(\textbackslash{}mu,\textbackslash{}nu)\textasciicircum{}2\$. The minimum of \$J\$ is at \$\textbackslash{}mu = \textbackslash{}nu\$, where \$J=0\$. Question: is the Wasserstein regular subgradient of \$J\$ the trivial tangent vector (zero) at the minimum?\par
+  At the minimum \$\textbackslash{}mu = \textbackslash{}nu\$, is the regular subgradient equal to zero?\par
+  Let me recall the theory of subdifferential in Wasserstein space (Ambrosio-Gigli-Savaré). The functional \$J(\textbackslash{}mu) = \textbackslash{}frac12 W\textasciicircum{}2(\textbackslash{}mu,\textbackslash{}nu)\$. Its subdifferential\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasX3]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, prefilled}\par\vspace{4pt}
+  \raggedright \hlseed{We consider} F(\(\mu\))=1/2 W\_2\textasciicircum{}2(\(\mu\),\fg{ν}). Set I\_\{\(\mu\),\fg{ν}\} of optimal transport plans. For any \(\mu\), define (v\_\(\mu\)\textasciicircum{}\fg{ν})\_\(\gamma\) = x - \textbackslash{}bar\(\gamma\)\_\(\gamma\)(x), where \textbackslash{}bar\(\gamma\) is barycentric projection of \(\gamma\) onto first marginal. Then v\_\(\mu\)\textasciicircum{}\fg{ν} is an element of ∂F(\(\mu\)). (Theorem 10.2.2.)\par
+  At \(\mu\)=\fg{ν}: identity is optimal map, so v = x - x = 0. So the trivial tangent vector (zero vector field) belongs to ∂J(\fg{ν}). Is the regular subgradient a singleton at the minimum? For squared Wasserstein,\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasX3]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, not prefilled}\par\vspace{4pt}
+  \raggedright We need answer ambiguity at minimum yes? Regular subgradient definition Wasserstein tangent vectors. At \(\mu\)=\fg{ν}, J=0, map differentiable, subgradient zero tangent. But wording asks "is trivial tangent vector at minimum" likely yes. Need mention assumptions arbitrary W (W2 likely), P2. Derive Frechet differential at \fg{ν}: one-sided scaling? J(\fg{ν})=0 and square vanishes faster; limit superdifferential zero. Ambrosio regular subdifferential.\par\vspace{3pt}\elide
+\end{reasoncol}\par
+\vspace{12pt}
+\noindent
+\begin{answercol}[equal height group=ansX3]
+  \caret\plabel{Response}\par\vspace{4pt}
+  \raggedright \#\# Setup\par\vspace{2pt}
+  The functional is\par\vspace{2pt}
+  \$\$J(\textbackslash{}mu) = \textbackslash{}tfrac\{1\}\{2\}W\_2(\textbackslash{}mu,\textbackslash{}nu)\textasciicircum{}2,\$\$\par\vspace{2pt}
+  which attains its unique minimum at \$\textbackslash{}mu = \textbackslash{}nu\$, where \$J(\textbackslash{}nu)=0\$.\par\vspace{2pt}
+  \#\# Subdifferential of the squared Wasserstein distance\par\vspace{2pt}
+  By the theory of subdifferential calculus in the Wasserstein space (Ambrosio--Gigli--Savaré), the functional \$\textbackslash{}mu \textbackslash{}mapsto \textbackslash{}tfrac12\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansX3]
+  \caret\plabel{Response, prefilled}\par\vspace{4pt}
+  \raggedright \#\# Short answer\par\vspace{2pt}
+  Yes. At the minimizer \$\textbackslash{}mu = \textbackslash{}nu\$, the (regular/minimal) Wasserstein subgradient of \$J(\textbackslash{}mu)=\textbackslash{}tfrac12 W\_2\textasciicircum{}2(\textbackslash{}mu,\textbackslash{}nu)\$ is the zero tangent vector.\par\vspace{2pt}
+  \#\# Why\par\vspace{2pt}
+  The Fréchet subdifferential of the squared Wasserstein distance (see Ambrosio--Gigli--Savaré, Thm. 10.2.2) is characterized as follows: for each optimal transport plan \$\textbackslash{}gamma\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansX3]
+  \caret\plabel{Response, not prefilled}\par\vspace{4pt}
+  \raggedright Yes--assuming \textbackslash{}(W\textbackslash{}) denotes the quadratic Wasserstein distance \textbackslash{}(W\_2\textbackslash{}).\par\vspace{2pt}
+  Since\par\vspace{2pt}
+  \textbackslash{}[\par\vspace{2pt}
+  J(\textbackslash{}mu)=\textbackslash{}frac12 W\_2\textasciicircum{}2(\textbackslash{}mu,\textbackslash{}nu),\par\vspace{2pt}
+  \textbackslash{}]\par\vspace{2pt}
+  its unique minimizer is \textbackslash{}(\textbackslash{}mu=\textbackslash{}nu\textbackslash{}), where \textbackslash{}(J(\textbackslash{}nu)=0\textbackslash{}). The functional is differentiable there, and its Wasserstein gradient is zero. In the notation of the regular Wasserstein subdifferential,\par\vspace{3pt}\elide
+\end{answercol}
+\caption{\textbf{Comparison of Opus 4.8 and Kimi-K3 completions.} We compare
+the visible answers produced by Opus 4.8, unprefilled Kimi-K3, and Kimi-K3
+whose reasoning is prefilled with the first 1\% of tokens (2 tokens) of the decoded Opus 4.8 reasoning trace. Over the first 100 visible-answer tokens, the best
+prefilled completion achieves a total 1-, 2-, and 3-gram overlap of $0.37$
+with the Opus answer, compared with $0.21$ for the best unprefilled
+control. Reasoning lengths, measured in Kimi tokens, are 507 for Opus,
+331 for the prefilled Kimi-K3 completion, and 327 for the control.}
+\label{fig:exhibit_X3}
+\end{figure*}
+
+
+\begin{figure*}[t]
+\centering
+\setlength{\columnsep}{12pt}
+\setlength{\colw}{\dimexpr(\linewidth-2\columnsep)/3\relax}
+\begin{promptrow}
+\caret\plabel{Prompt}\par\vspace{4pt}
+In a secluded mountain temple, there lies a magical rope of length \textbackslash{}( l \textbackslash{}) and mass \textbackslash{}( m \textbackslash{}), resting on the ground. To prove their strength, monks must lift this rope vertically from one end using only a mystical force \textbackslash{}( F \textbackslash{}) that they can summon. However, they must be precise--when the other end of the rope just leaves the ground, its speed must be exactly \textbackslash{}( v \textbackslash{}). Only the monk who can calculate the exact force \textbackslash{}( F \textbackslash{}) required to achieve this speed will succeed. Can you determine the value of \textbackslash{}( F \textbackslash{}) to conquer this mystical challenge?
+\par\vspace{6pt}
+{\plabel{Prefilled beginning of Opus reasoning}}\par\vspace{3pt}
+{\monofont\footnotesize \hlseed{We lift a rope of length l, mass}}
+\end{promptrow}\par
+\vspace{12pt}
+\noindent
+\begin{reasoncol}[equal height group=reasX4]
+  \modelname{Opus 4.8}\par\vspace{1pt}
+  \caret\plabel{Decoded reasoning}\par\vspace{4pt}
+  \raggedright \hlseed{We lift a rope of length} \hlseed{l, mass} m, from ground by applying force F at top. We raise it until the other end just leaves the ground, meaning the whole rope is lifted, top has risen height l. At that moment speed is v.\par
+  The rope: initially lying on ground. We pull the top end up. As we lift, a portion of rope hangs. The part still on ground... Actually classic problem: constant force F applied, lifting chain off ground.\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasX4]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, prefilled}\par\vspace{4pt}
+  \raggedright \hlseed{We lift a rope of length} \hlseed{l, mass} m, vertically from one end; when other end just leaves ground, lifted length is l... Actually classic problem: uniform rope lifted at constant? Force F constant? Find F such that when top has risen l (whole rope off ground), speed is v.\par
+  Using work-energy: F*l - mg*(l/2) = ½ m v\textsuperscript{2}. So F = mg/2 + m v\textsuperscript{2}/(2l) = m(g + v\textsuperscript{2}/l)/2.\par
+  But careful: rope being picked up inelastically--energy dissipated. Standard\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasX4]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, not prefilled}\par\vspace{4pt}
+  \raggedright We need need infer constant force? Rope being lifted one end, force F likely constant. At moment full rope just leaves ground speed v. Need account variable mass/work? Standard chain lifted at speed: F = weight + momentum flux = (m/l)y g + (m/l)v\_y\textasciicircum{}2, but if constant speed. Here require speed at y=l under constant applied F, solve dynamics including pile and no rebound. Need integrate work energy? Kinetic energy moving portion, COM.\par\vspace{3pt}\elide
+\end{reasoncol}\par
+\vspace{12pt}
+\noindent
+\begin{answercol}[equal height group=ansX4]
+  \caret\plabel{Response}\par\vspace{4pt}
+  \raggedright \#\# Setting Up the Problem\par\vspace{2pt}
+  Let the linear mass density be \$\textbackslash{}lambda = \textbackslash{}dfrac\{m\}\{l\}\$.\par\vspace{2pt}
+  As the monk lifts the top end straight up to height \$x\$, a vertical segment of length \$x\$ (mass \$\textbackslash{}lambda x\$) is moving upward with speed \$v = \textbackslash{}dfrac\{dx\}\{dt\}\$, while the remaining rope lies at rest on the ground.\par\vspace{2pt}
+  **This is a variable-mass problem**, since rope is continuously being\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansX4]
+  \caret\plabel{Response, prefilled}\par\vspace{4pt}
+  \raggedright \#\# Setting Up the Problem\par\vspace{2pt}
+  Let the rope have linear density \$\textbackslash{}lambda = m/l\$. When the lifted end is at height \$x\$, a length \$x\$ of rope (mass \$\textbackslash{}lambda x\$) is moving with speed \$\textbackslash{}dot\{x\}\$, while the rest lies at rest on the ground. Each new bit of rope is jerked into motion inelastically -- so **energy is not conserved**, and we must use momentum (variable-mass) dynamics.\par\vspace{2pt}
+  \#\# Equation of Motion\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansX4]
+  \caret\plabel{Response, not prefilled}\par\vspace{4pt}
+  \raggedright Let the linear mass density be\par\vspace{2pt}
+  \textbackslash{}[\par\vspace{2pt}
+  \textbackslash{}lambda=\textbackslash{}frac\{m\}\{l\}.\par\vspace{2pt}
+  \textbackslash{}]\par\vspace{2pt}
+  When a length \textbackslash{}(y\textbackslash{}) of rope has been lifted, the moving portion has speed \textbackslash{}(u=\textbackslash{}dot y\textbackslash{}). Its downward weight is \textbackslash{}(\textbackslash{}lambda gy\textbackslash{}), while new rope elements are continuously being accelerated from rest. Newton's second law for this variable-mass portion gives\par\vspace{3pt}\elide
+\end{answercol}
+\caption{\textbf{Comparison of Opus 4.8 and Kimi-K3 completions.} We compare
+the visible answers produced by Opus 4.8, unprefilled Kimi-K3, and Kimi-K3
+whose reasoning is prefilled with the first 1\% of tokens (9 tokens) of the decoded
+Opus 4.8 reasoning trace. Over the first 100 visible-answer tokens, the best
+prefilled completion achieves a total 1-, 2-, and 3-gram overlap of $0.41$
+with the Opus answer, compared with $0.17$ for the best unprefilled
+control. Reasoning lengths, measured in Kimi tokens, are 938 for Opus,
+370 for the prefilled Kimi-K3 completion, and 729 for the control.}
+\label{fig:exhibit_X4}
+\end{figure*}

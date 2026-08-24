@@ -1,0 +1,95 @@
+
+\lstdefinestyle{trace}{
+  basicstyle=\ttfamily\scriptsize,
+  backgroundcolor=\color{lstbg},
+  frame=single, rulecolor=\color{lstframe}, framerule=0.6pt,
+  breaklines=true, breakindent=0pt, postbreak=\mbox{\textcolor{lstframe}{$\hookrightarrow$}\space},
+  columns=fullflexible, keepspaces=true,
+  commentstyle=\color{lstcmt}\itshape,
+  keywordstyle=\color{lstrole}\bfseries,
+  emphstyle=\color{lstrole}\bfseries,
+  morekeywords={messages,user,assistant,system,thinking,text,signature,primer,decoder,reconciler},
+  morecomment=[l]{\#},
+  aboveskip=2pt, belowskip=2pt,
+  xleftmargin=5pt, xrightmargin=3pt, framexleftmargin=5pt,
+}
+
+\lstdefinestyle{pyclean}{
+  language=Python,
+  basicstyle=\ttfamily\scriptsize,
+  backgroundcolor=\color{lstbg},
+  frame=single, rulecolor=\color{lstframe}, framerule=0.6pt,
+  breaklines=true, breakindent=0pt,
+  postbreak=\mbox{\textcolor{lstframe}{$\hookrightarrow$}\space},
+  columns=fullflexible, keepspaces=true,
+  showstringspaces=false,
+  commentstyle=\color{lstcmt}\itshape,
+  keywordstyle=\color{lstkw}\bfseries,
+  stringstyle=\color{lstrole},
+  emphstyle=\color{lstrole}\bfseries,
+  emph={client,messages,create,model,max_tokens,thinking,content,role,signature},
+  aboveskip=6pt, belowskip=6pt,
+  xleftmargin=5pt, xrightmargin=3pt, framexleftmargin=5pt,
+}
+
+\lstdefinestyle{extracttemplate}{
+  basicstyle=\ttfamily\footnotesize,
+  frame=none,
+  backgroundcolor={},
+  breaklines=true,
+  breakindent=12pt,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  alsoletter={@},
+  morekeywords={@thought},
+  keywordstyle=\color{panelAccent}\bfseries,
+  commentstyle=\color{panelAccent}\itshape,
+  morecomment=[l]{//},
+  xleftmargin=0pt,
+  xrightmargin=0pt,
+  aboveskip=0pt,
+  belowskip=0pt,
+}
+
+\lstdefinestyle{extractcall}{
+  language=Python,
+  basicstyle=\ttfamily\scriptsize,
+  frame=none,
+  backgroundcolor={},
+  breaklines=true,
+  breakindent=12pt,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  commentstyle=\color{lstcmt}\itshape,
+  keywordstyle=\color{lstkw}\bfseries,
+  stringstyle=\color{lstrole},
+  emphstyle=\color{panelAccent}\bfseries,
+  emph={client,messages,create,generate_content,responses,models,Content,Part},
+  xleftmargin=0pt,
+  xrightmargin=0pt,
+  aboveskip=0pt,
+  belowskip=0pt,
+}
+
+\lstdefinestyle{judgeprompt}{
+  basicstyle=\ttfamily\scriptsize,
+  frame=none,
+  backgroundcolor={},
+  breaklines=true,
+  breakindent=12pt,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  alsoletter={_-},
+  emph={META,SUB,REAL,NOT-ARTIFACT,RESOLUTION,Reasoning trace},
+  emphstyle=\color{panelAccent}\bfseries,
+  xleftmargin=0pt,
+  xrightmargin=0pt,
+  aboveskip=0pt,
+  belowskip=0pt,
+}
+\usepackage{xcolor}
+\definecolor{accent}{HTML}{C43C45}
+\newcommand{\redhl}[1]{{\setlength{\fboxsep}{1pt}\colorbox{accent!18}{#1}}}

@@ -1,0 +1,15 @@
+\subsubsection{GPT-5.1-Codex-Max}
+\begin{decodedreasoningpanel}
+\decodedpanelhead{Decoded reasoning}
+{\obeylines\setlength{\parindent}{0pt}%
+To ensure the variable is expanded correctly, use separate commands:
+
+```bash
+DBURL='postgresql://gen\_user:\underline{\textbf{XXXXX}}@77.232.136.104:5432/default\_db?sslmode=disable'
+psql "\$DBURL" <<'SQL'
+...
+SQL
+```
+
+Also, the password contains characters such as `|`, `\textasciitilde{}`, `,`, `!`, and `\textasciicircum{}`, so it is safest to keep the entire connection string quoted.}
+\end{decodedreasoningpanel}

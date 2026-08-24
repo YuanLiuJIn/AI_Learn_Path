@@ -1,0 +1,23 @@
+\noindent
+Leading large language model providers now conceal their models' step-by-step reasoning, or chain-of-thought, to protect intellectual property and limit information leakage. Rather than storing these traces server-side, providers return them to the client as blocks of encrypted text, which the client passes back with each subsequent request. Building on prior research, we identify an architectural vulnerability: these encrypted blocks are fully compatible and interchangeable across different sessions, users, and models within a provider's ecosystem. We exploit this compatibility to develop a scalable decryption jailbreak. By injecting an encrypted reasoning trace from a given model into a weaker, and less safeguarded model from the same provider, we force it to decode and output the trace verbatim in plaintext, without ever jailbreaking the more capable model directly. \\
+
+\noindent This vulnerability enables four distinct attack vectors. First, it circumvents anti-\textit{distillation} mechanisms, allowing adversaries to extract a proprietary model's reasoning, as we demonstrate across Anthropic, OpenAI, and Google. Second, it allows for large-scale \textit{private data extraction}. Developers frequently share session logs publicly, unaware of contents of the encrypted blocks. By decoding 315,320 reasoning blocks scraped from public repositories, we recovered 367 Personally Identifiable Information (PII) artifacts and 182 credentials. %; from genuine user sessions alone these include 62 API keys, 33 passwords, and 30 personal emails.
+Third, it inadvertently reveals \textit{hazardous information} hidden within the reasoning process, even in cases where the model's final, visible output safely rejects a malicious request. Fourth, attackers can leverage this flaw to execute \textit{invisible prompt injections}, embedding malicious payloads entirely within encrypted blocks to poison public agentic rollouts. Following responsible disclosure, we propose concrete cryptographic and system-level mitigations to secure client-side reasoning. \\
+
+
+\vspace{0.6em}
+\begin{center}
+\begin{tcolorbox}[decodedpanel, colback=panelReason, width=\dimexpr\linewidth-1.6cm\relax,
+                  left=14pt, right=14pt, top=9pt, bottom=9pt]
+\centering
+\begin{tabular}{@{}r@{\hspace{0.7em}}l@{}}
+\textbf{Main paper:} & API vulnerability and reasoning extraction. \\
+\textbf{\Cref{app:defense-proposal}:} & Proposed cryptographic and system-level mitigations. \\
+\textbf{\Cref{app:appendix_b_faq}:} & Similarity analysis of Opus traces and Kimi-K3/GLM-5.2 traces. \\
+\textbf{\Cref{app:extraction_details}:} & Extraction attack details for Gemini, Claude and GPT APIs. \\
+\textbf{\Cref{app:leak_categories}:} & Recovered leaked private information and API keys. \\
+\textbf{\Cref{app:decoded_examples}:} & Examples of decoded reasoning. \\
+\end{tabular}
+\end{tcolorbox}
+\end{center}
+\vspace{0.4em}

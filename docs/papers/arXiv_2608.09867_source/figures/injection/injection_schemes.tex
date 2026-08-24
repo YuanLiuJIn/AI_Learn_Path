@@ -1,0 +1,54 @@
+\definecolor{usrbg}{RGB}{232,240,250}
+\definecolor{usrfr}{RGB}{0,82,155}
+\definecolor{thtbg}{RGB}{253,231,224}
+\definecolor{thtfr}{RGB}{176,58,32}
+\definecolor{txtfr}{RGB}{223,220,213}
+
+\newcommand{\chipT}[1]{{\setlength{\fboxsep}{2.2pt}\setlength{\fboxrule}{.5pt}%
+  \fcolorbox{thtfr}{thtbg}{\scriptsize\strut #1}}}
+\newcommand{\chipX}[1]{{\setlength{\fboxsep}{2.2pt}\setlength{\fboxrule}{.5pt}%
+  \fcolorbox{txtfr}{white}{\scriptsize\strut #1}}}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  turn/.style={rounded corners=2.5pt, draw=txtfr, line width=.6pt, fill=lstbg,
+               inner xsep=4pt, inner ysep=4pt, font=\scriptsize},
+  usr/.style={turn, fill=usrbg, draw=usrfr!55},
+  arr/.style={-{Stealth[length=3.4pt,width=3pt]}, draw=black!42, line width=.6pt},
+  ttl/.style={font=\scriptsize\bfseries, anchor=west},
+  role/.style={font=\tiny, text=black!62, anchor=south},
+  node distance=3.6mm,
+]
+
+\node[ttl] at (0,1.02) {Current Turn Injection};
+\node[usr, anchor=west]  (c1) at (0,0) {user};
+\node[turn, right=of c1] (c2) {\chipT{injected thought}};
+\node[turn, right=of c2] (c3) {\chipX{text}};
+\draw[arr] (c1) -- (c2);
+\draw[arr] (c2) -- (c3);
+\node[role] at (c2.north) {assistant};
+\node[role] at (c3.north) {assistant continued};
+
+\node[ttl] at ($(c3.east)+(1.5,1.02)$) {Past Turn Injection};
+\node[usr, anchor=west]  (p1) at ($(c3.east)+(1.5,0)$) {user};
+\node[turn, right=of p1] (p2) {\chipT{injected thought}\;\chipX{text}};
+\node[usr,  right=of p2] (p3) {user};
+\node[turn, right=of p3] (p4) {\chipX{text}};
+\draw[arr] (p1) -- (p2);
+\draw[arr] (p2) -- (p3);
+\draw[arr] (p3) -- (p4);
+\node[role] at (p2.north) {assistant};
+\node[role] at (p4.north) {assistant};
+
+\end{tikzpicture}
+\looseness=-1 \caption{\textbf{Injection schemes exploiting in- and cross-session compatibility.} We find that
+available form of thought injection depends on the provider and exact model. \textbf{Current-turn injection} places the thought in the current
+assistant turn, so the model continues its visible answer straight from it; as of July 2026 it
+is accepted by every GPT and Gemini model we tested and by the 4.5 generation of
+Claude. In addition, Sonnet 4.5, Haiku 4.5, and all Gemini models accept
+prefilling of the assistant turn's visible output. \textbf{Past-turn injection}
+is available only against models that do not omit previous reasoning
+blocks (e.g., Sonnet 5, Opus 4.8, Fable 5, and the GPT-5.6 series).}
+\label{fig:injection_schemes}
+\end{figure}

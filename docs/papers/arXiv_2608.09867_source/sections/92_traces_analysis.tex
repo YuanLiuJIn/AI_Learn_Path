@@ -1,0 +1,42 @@
+
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+
+ 
+
+ 
+
+
+ 
+ 
+ 
+
+
+\section{The Elephant in the Room: Were Recent Open Models Distilled with Reasoning from Proprietary Models?}
+\label{app:appendix_b_faq}
+
+
+Based on our access to reasoning traces obtained during the attack described in the main paper, we wondered whether we can find evidence of the distillation concern described in \cref{sec:av_distillation}, by comparing recovered reasoning traces of proprietary models to traces of openly available models.
+ 
+\begin{tcolorbox}[colback=green!5!white, colframe=green!55!black,
+  title=\textbf{Disclaimer: Scope and limitations of this analysis}]
+\textbf{This section cannot causally establish distillation.} We report behavioral shifts in model responses observed under specific interventions and correlate across benchmarks. We present it as the most that can be responsibly concluded from the traces available to us: The analysis was done after model providers patched the vulnerability and rests on a small and benchmark-skewed problem set, on reasoning traces recovered by a fuzzy extraction procedure that may differ from the underlying ground truth, and on generations produced across serving configurations that we do not control.
+
+\end{tcolorbox}
+
+
+\input{sections/92_traces_analysis/01_preface}
+
+\input{sections/92_traces_analysis/03_output_style_drift}
+\input{sections/92_traces_analysis/04_perplexity_analysis}
+\input{sections/92_traces_analysis/02_reasoning_style_drift}

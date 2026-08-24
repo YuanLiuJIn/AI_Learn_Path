@@ -1,0 +1,101 @@
+\begin{decodedreasoningpanel}
+\decodedpanelhead{GPT-5.5}
+Need app.css truncated. \redhl{Need maybe not need.} We'll replace entire app.css. Need create components. Need include keyboard support. Need accessible primitives.
+
+Need think architecture. Svelte 5. Components:
+- Button.svelte: variants, size, loading, disabled, children snippet, optional icon? \redhl{Avoid maybe not.} Needs accessible focus. It should support native button attrs. Svelte types. Need rest props. Need class prop? In Svelte Svelte 5, class is reserved? You can destructure class as className? Need know Svelte TS props. We can use `let \{ variant = 'primary', size = 'md', loading = false, disabled = false, type = 'button', children, class: className = '', ...rest \}: Props = \$props();` But Svelte compiler may accept destructuring alias `class: className`. Need TypeScript and snippets. Need maybe use `HTMLButtonAttributes` from 'svelte/elements'. Need `Snippet` from svelte. Define Props extends Omit<HTMLButtonAttributes, 'class'|'children'>? with `[key:string]: any` maybe simpler. Using event attributes? Svelte5 event props are passed via rest and set on button. Need rest type. Need avoid `aria-disabled=\{loading || disabled ? 'true' : undefined\}`? For native disabled. Button should be disabled when loading. Need supports keyboard natively.
+
+- Dialog.svelte: controlled `open = \$bindable(false)`, title, description, closeOnEscape, closeOnOutside, `onOpenChange`, children, footer? Need accessibility:
+  - Use actual dialog element or custom role. The HTML `<dialog>` has built-in focus and ESC close. But implementing accessible modal with keyboard focus trap? Could use `<dialog>` with `showModal`. Need docs current? Svelte action? We can implement with bind:this, oncancel, onclick backdrop if target === dialog. Need focus trap? Native dialog traps? It "inert" backdrop and escape. For polished, use HTML dialog. Need handle Escape with cancel. Need close button. Need `aria-labelledby`, describedby. Use `onMount`; `\$effect`. Svelte 5 runes. We can use `let dialog: HTMLDialogElement; \$effect(() => \{ if (!dialog) return; if (open \&\& !dialog.open) \{ dialog.showModal(); \} else if (!open \&\& dialog.open) \{ dialog.close(); \} \});` \$effect runs browser only? In component. Good. Need
+handle close event to set open false. Need Svelte event handlers property `onclose=\{...\}`. Need transition? dialog supports CSS.
+
+Potential issue `\$effect` not in non-runes? Svelte 5 uses runes in components by default? We can use. Need component syntax.
+
+Need `onclick` on `<dialog>` with event.target === dialog.
+
+Need focus first: use `requestAnimationFrame` after showModal and query `[autofocus], button...`. Native dialog does focus. Could do function.
+
+Need close button native.
+
+Need accessible labels: `<dialog aria-labelledby=\{titleId\} aria-describedby=\{description ? descId : undefined\}>`.
+
+Need snippets? Svelte children.
+
+- Combobox.svelte: accessible. Maybe use ARIA 1.2 combobox pattern. Props: items \{value,label,description?\}[], placeholder, label, selected? bindable, inputValue? maybe. Need keyboard: ArrowDown/Up open navigate; Enter select; Escape close; Home/End; Tab close. Filter. Need maybe `filteredItems = \$derived(...)`, activeIndex. Need render listbox with options. Use button? For combobox input with role="combobox", aria-expanded, aria-controls, aria-activedescendant, autocomplete list. Need click outside action perhaps. Implement `onMount` document mousedown/focusin? We can close when click outside. Need issue Svelte action? maybe not necessary. Need use `bind:this=\{root\}`.
+
+Props:
+```
+export type ComboboxItem = \{ value:string; label:string; description?:string \};
+interface Props \{
+ label?: string;
+ items?: ComboboxItem[];
+ placeholder?: string;
+ selected?: string; // bindable
+ onchange?: (item:ComboboxItem|null)=>void
+\}
+let \{ label='Choose an option', items=[], placeholder='Search...', selected = \$bindable(''), onchange, id = createId maybe, ... \} = \$props();
+let inputValue=\$state('');
+let open=\$state(false);
+let activeIndex=\$state(-1);
+let selectedItem = \$derived(items.find(...));
+let filteredItems = \$derived(...);
+```
+Svelte 5 `\$derived` with array. Need create random ID? Avoid SSR random? `Math.random` in browser? Fine. Use maybe module `let idCounter=0`? But components client. For stable, `const baseId = id ?? 'combo-' + Math.random...`. If SSR not using. This is Vite not
+SSR.
+
+Sync inputValue to selected item when selected changes and not open? `\$effect(() => \{ if (!open) inputValue = selectedItem?.label ?? ''; \});` Could cause on typing? okay. When selecting, selected=item.value, inputValue=item.label, open=false, activeIndex... onchange?..
+
+Need `oninput`. In Svelte, input value? `bind:value=\{inputValue\}` but oninput maybe after binding? Could set manually:
+```
+function handleInput(event) \{
+ inputValue=(event.currentTarget as HTMLInputElement).value;
+ open=true; activeIndex = filteredItems.length ? 0 : -1;
+\}
+```
+Need when typing, `filteredItems` uses inputValue. After setting, activeIndex = 0. Good.
+Keyboard:
+```
+if key ArrowDown prevent default; if !open open=true; activeIndex = (activeIndex+1)\%filtered.length
+ArrowUp...
+Enter if open activeIndex>=0 select
+Escape close, inputValue=selectedItem label
+Home/End if open?
+```
+Click item using button maybe for semantics? Listbox options can be buttons? ARIA option role on div? If button inside listbox not ideal. Could use `<li role="option" tabindex="-1" onmousedown=\{(e)=>e.preventDefault()\} onclick=\{...\}>`. Non-interactive with click Svelte a11y warning: visible noninteractive onclick needs keydown. Better use button with role option? Hmm "button" inside listbox? It's okay? A button with role option might confuse. Better use `div role="option" tabindex="-1"` with `onclick` and `onkeydown`? Svelte warning if click has keyboard event; add onkeydown Enter/Space. But listbox options aren't tabbable; input handles keyboard. We can use buttons styled with role option? Native button extra semantics. For a custom combobox, common use `li role="option"` with `onpointerdown` maybe Svelte warning "no static element interactions"? Could add `onkeydown` even though tabindex -1. Should pass.
+
+Need `aria-selected`.
+
+Need `onblur`? Click outside document. onMount:
+```
+onMount(()=> \{
+ const handlePointer = e => if root \&\& !root.contains(e.target) close();
+ document.addEventListener('pointerdown', handlePointer);
+ return () => ...
+\});
+```
+
+- Toast.svelte or ToastProvider? Need primitive. Need easy. Maybe create `Toast.svelte` for a single toast plus `ToastViewport.svelte` for list? User requested toast primitive. Could implement component `Toast.svelte`: Props \{message,title,open bindable, tone,duration,onOpenChange,children?\}. It manages auto-dismiss, role="status" except destructive role=alert. Keyboard support: close button is keyboard. Also pause on hover/focus? Could implement. But docs need toasts. More polished: `ToastProvider`? Simpler library includes `Toast.svelte` and `ToastRegion.svelte`? User said button/dialog/combobox/toast. Maybe four components. For docs, App holds array of toasts and renders `<Toast>`. Component can have `open` bindable and duration. Need transition. Should be accessible: container role `status`, `aria-live=polite`, close button label. Auto dismiss should pause when hovered/focused. Maybe `duration=5000`. Use `\$effect` timer when open and not paused; cleanup clearTimeout. Need remove from DOM? If `open` false don't render. If in each toast. To notify parent after close, callback. `onOpenChange?.(open)`. A caveat: when open false from button, parent bound changes.
+
+Need maybe `ToastViewport` for placement? But one component with position fixed maybe difficult if multiple. We can implement `<Toast>` as article and `<ToastViewport>` as slot? But requested primitives, perhaps include viewport. Maybe:
+- `Toast.svelte` only renders a toast item.
+- `ToastViewport.svelte` accessible region fixed bottom right and renders children snippet.
+But "toast" primitive could be two-piece. User said button, dialog, combobox, toast; maybe no extra mention. But component library can export `Toast` and `ToastViewport` support. The docs can show.
+
+Need perhaps package export in `src/lib/index.ts`. Need ts types.
+
+Need docs page demonstrating all. Use no lucide icons? No icon dependency. Design instructions: if frontend, use icons in buttons for tools. This is a library docs, not necessarily tool. Could use simple text buttons. No external icons. "Websites and games must use visual assets" but docs page? It is app; need visual assets? It says websites and games must use visual assets. We can use maybe CSS? Hmm primary apps should use visual assets. For docs page of components, maybe not landing. But requirement "small docs page demonstrating them"; can be actual docs UI. Could include no image
+perhaps okay? But instruction says websites must use visual assets. Need maybe use public/favicon or Svelte? But avoid starter. Could include a small component preview glyph created with CSS? It says visual assets. We can use a generated? Better don't use imagegen unless asked? Task could benefit? Hmm not necessary. But "Websites and games must use visual assets. You can use image search, known relevant images, or generated bitmap images instead of SVGs..." For docs page, maybe visual assets could be the UI components themselves, maybe not. But likely need actual assets. Could keep `public/favicon.svg` and use as logo? SVG not bitmap. They said websites must use visual assets. Maybe use generated bitmap? Need use imagegen skill? The available skill imagegen applies when task benefits from AI-created bitmap visuals. Does this docs page benefit? Maybe not. But instruction says must use visual assets for websites. Could use no? Hmm.
+
+Need maybe create design: polished, dense docs page. A docs page with left nav, main sections, live demos. Use component surfaces. Avoid nested cards? "Do not use UI cards inside other cards. Only use cards for repeated items, modals..." Docs sections can be full-width bands; "component demo panels" are framed tools, okay. Avoid hero. First screen actual docs/demo not landing. Use restrained palette not one hue. Need accessible. Use CSS.
+
+Could use package "lucide"? It says use lucide icons inside buttons whenever one exists if library enabled. Not enabled. Could install? Not necessary.
+
+Need maybe create small logo using CSS? Visual asset perhaps public/favicon.svg. No. Maybe use existing public/favicon.svg. But it's SVG. Could image asset generated by Vite includes hero.png. There is `src/assets/hero.png` generated. We could keep or remove. But docs page could have a subtle actual screenshot? Hmm maybe import `hero.png` as background? That is generic. Better use no.
+
+Maybe use imagegen? For a docs page, adding a tiny preview screenshot/hero image not needed. But design instruction not absolute? It is. Could generate a small bitmap `src/assets/primitives-preview.png`? But then need use image\_gen tool in commentary, not direct file? image\_gen outputs image? We need know how to use skill? We have imagegen tool, but if task benefits? Maybe we can skip because component docs page not product/landing. But user said component library, docs page; not "website" maybe frontend app
+includes docs but visual assets could be components.
+
+Need create library. Need maybe use `\$props` and Snippet. Need check Svelte compile.
+
+Need use apply\_patch. Before edits, update plan.
+\end{decodedreasoningpanel}

@@ -1,0 +1,7 @@
+{
+  "model": "claude-opus-4-6",
+  "sig": "EpEGCkYICxgCKkAYI9bTXexhntUZT7aB2gBuDLCoZEdQ+wGoCrQrJ4so+b9YZpbyUXNkcxpf990CDrIG6VN2VH3scCwzvGK1xpp7EgxBAYnj7fagMpSrDyoaDH+BrBJT19d3aKe4MCIwZukL0mFLqCdT7xyu1WPxKRDd6RiWMRrCo8lN13iwDFaAiLcyZWw5/cApLxCjmuZxKvgEM4ENPosHfTf5SSfCEJk13XJ9hK7kNCwqj+oxOcfNh9drbojMXakaakZj76+Dkrw/o18XhJ+CzJHeOByJZP7YAlViVKVmWGc1ueWEE4yD0zQ9oaC3/jzvkSHfNkKfEqRXXm/eDAmlxfD+wMuzZtYIwejOp3dYNOkGOmfk8kf8AntmbzSBns1Y7E696A2Rp8wsJEyVkwUG3IiCu1R7lRMuNYYmJpe1J+GRNb6bbmIg/K5G1FDb1AF4g0btmWshe33VC1wpCKCBOgeqGa3Lguz/Ore+Xl7LdkJBZxYnI4t854Yp93tzpyIt67RSbApvQf+g0d6REf2OIE3UsDTwR9CsWgdlTGVrGcaSXCV01f64xIKdzFKFM+rjodDIg+y/YoHbxSQqT5kSStE5vTBx14UYSeRwKFqmeMpTBJMpRjsSY4a8jKoeM7GhQn4S2NSDrVSp0DjXQHwG1MCJhNKffTVy0AV6euMHnqPE7l5uqlV46zbj+CfZhO035RC11EhFUFyUYcTf15bMCBgDCxn08cZAYj26TsKmWApNglDvjA8IUGamZ9MAykmTdTXMdsaDIIABR+7t9FpvTj5db5RtbW5bC1xE6bV5tmqlTQFotzgS5Iz2oV4Xabl7U+r0QqQFxnU0tLPRLf+oexPn93irDLi2oCzAQ/xkNmmtx7R5w40JZ8Y698C7G0QTHXVdcGNhw6Txt1Z6Kc2bcvOknidRoTEgMNJnu/q7nsCzzm2RCUgMTOQ6TaOqbN6z41qClF1KrufeP4+6t6jnvzOuLI6MlueoHzk7u5Jo64mB7WZ679XR08nOiWdQHGhbtd5oGbu/d4RZ+GZEtesUQ/wYAQ==",
+  "sig_len": 1056,
+  "plaintext": "tly with me. Let me test it to diagnose the issue, but I should be careful. Let me just test it quickly to see the error. Actually, looking at the key format: `jina_f51003████████████████████████ERs` - this looks like a val",
+  "key_masked": "jina_f51003████████████████████████ERs"
+}

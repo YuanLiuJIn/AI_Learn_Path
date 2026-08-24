@@ -1,0 +1,421 @@
+\begin{decodedreasoningpanel}
+\decodedpanelhead{Decoded reasoning}
+  We need solve. Need reason geometry Weber point? Given pentagon sides and angles. Need find min sum distances. Likely construct rotations / Fermat point lower bound via vectors calibration, maybe triangulation.
+
+We need derive coordinates pentagon perhaps angles B/E allow diagonals AC and AD? Law cosine:
+AC\textsuperscript{2}=14\textsuperscript{2}+7\textsuperscript{2}-2*14*7 cos60 =196+49-98=147 =\textgreater{} AC=7\ensuremath{\sqrt{3}}.
+AD from triangle AED: EA26 DE13 angle E60: AD\ensuremath{^2}=676+169-338? 2*26*13*.5=338, =507=13\ensuremath{\sqrt{3}}? 169*3 yes 13\ensuremath{\sqrt{3}}.
+Then quadrilateral? Pentagonal boundary diagonal AC, AD and CD 24. Triangle ACD sides 7\ensuremath{\sqrt{3}},24,13\ensuremath{\sqrt{3}}. Compute perhaps angle CAD? 24\ensuremath{^2} =147+507 -2*(7sqrt3)(13sqrt3) cos A =654-546 cos, so cos=(78)/546=1/7. Nice. Convex configurations likely B and E outside triangle ACD opposite? Coordinates.
+
+Objective sum distances vertices. Geometric median. Need calculate likely lies A? Need solve weighted directions no straightforward radical perhaps structural.
+
+Pentagon arranged fan at A: triangles ABC, ACD, ADE. B and E likely external sides around triangle. Given each triangle angle at B/E 60 and side ratios where AC opposite 60. Triangle ABC sides AB14 BC7 AC7sqrt3: angle B60 indeed. Angles: law: at A, cos=(196+147-49)/(2*14*7sqrt3)=294/(196sqrt3)=\ensuremath{\sqrt{3}}/2 =\textgreater{} A=30. C=90. Thus right triangle C, angles A30 B60.
+
+Triangle ADE: AE26, ED13, AD13sqrt3 similarly E60, A30, D90.
+
+Triangle ACD: know cos at A=1/7, perhaps angles? At C cos=(AC\ensuremath{^2}+CD\ensuremath{^2}-AD\ensuremath{^2})/(2 AC CD)= (147+576-507)/(336sqrt3)=216/(336sqrt3)=? 9/(14sqrt3)=3sqrt3/14. D cos=(507+576-147)/(624sqrt3)=936/(624sqrt3)=3/(2sqrt3)=sqrt3/2 =\textgreater{} D=30\ensuremath{^\circ}. Then C angle = 150\ensuremath{^\circ} - A? A angle arccos1/7
+  \textasciitilde\{\}81.79, C68.21, D30.
+
+At A total interior angle pentagon? rays AB-AC 30, AC-AD \textasciitilde\{\}81.8, AD-AE30 gives angle BAE likely 141.8. At C interior BC-CD combines angle BCA90 + ACD68.2 =158.2 depending. D interior 30+90=120. Fine.
+
+Can set coordinate simplify. Need geometric median of 5 vertices. Could exploit B,C relation, D,E relation. Maybe minimizing AX+BX+CX+DX+EX by unfolding/rotations gives m+n\ensuremath{\surd}p.
+
+Known generalized Fermat problem and pentagon. At minimizing X, sum unit vectors to vertices =0. Five unit vectors cannot symmetric simple except maybe X equals one vertex/subgradient. Check perhaps X=A or C/D. At A, condition norm sum directions from A to B,C,D,E \ensuremath{\leq}1 for A minimizer. Let's calculate directions.
+
+Set AC angle 0. AB angle -30 (pentagon outward). AD at theta = arccos 1/7 (\textasciitilde\{\}81.79). AE AD+30 (\textasciitilde\{\}111.79) likely.
+unit from A:
+B angle -30
+C 0
+D theta
+E theta+30.
+Sum four. Pair first two magnitude 2cos15 angle -15. latter pair magnitude 2cos15 angle theta+15. sum magnitude =4 cos15 cos((theta+30)/2?) Difference directions theta+30; resultant magnitude 4cos15 cos((theta+30)/2). theta81.8 =\textgreater{} cos55.9 =\textgreater{} around 2.16 \textgreater{}1. not A.
+
+At C possibility sum vectors from C A,B,D,E norm \ensuremath{\leq}1. C\ensuremath{\rightarrow}A angle180, C\ensuremath{\rightarrow}B? triangle right, B-C direction? Coordinates A=(0,0), C=(7\ensuremath{\sqrt{3}},0); B from A angle -30 length14 = (7\ensuremath{\sqrt{3}},-7), so B=(same x,-7), C\ensuremath{\rightarrow}B down. D coordinate AD 13\ensuremath{\sqrt{3}} angle theta with cos=1/7 =\textgreater{} x=13\ensuremath{\sqrt{3}}/7? Wait AD*cos =13\ensuremath{\sqrt{3}}/7, y AD sin where sin=4\ensuremath{\sqrt{3}}? sqrt48/7=4sqrt3/7; product =156/7? y=13\ensuremath{\sqrt{3}}*4\ensuremath{\sqrt{3}}/7=156/7. CD vector x=13\ensuremath{\sqrt{3}}/7 -7\ensuremath{\sqrt{3}} = -36\ensuremath{\surd}
+  3/7, y156/7, norm24. angle \textasciitilde\{\}111.8.
+E from A theta+30 length26. Need coordinates perhaps D to E perpendicular AD? Triangle at D 90. Compute. Unit AD=(1/7,4\ensuremath{\sqrt{3}}/7). Rotate? AE direction theta+30. values cos(theta+30)=cos\ensuremath{\theta}\ensuremath{\sqrt{3}}/2 - sin\ensuremath{\theta}/2 = \ensuremath{\sqrt{3}}/14 -2\ensuremath{\sqrt{3}}/7= -3\ensuremath{\sqrt{3}}/14. sin =1/14 + (4\ensuremath{\sqrt{3}}/7)(\ensuremath{\sqrt{3}}/2)=1/14+6/7=13/14. E=(-39\ensuremath{\sqrt{3}}/7,169/7). D=(13\ensuremath{\sqrt{3}}/7,156/7), E-D=(-52\ensuremath{\sqrt{3}}/7,13/7), norm13. Great.
+
+Coordinates:
+A (0,0)
+B(7\ensuremath{\sqrt{3}},-7)
+C(7\ensuremath{\sqrt{3}},0)
+D(13\ensuremath{\sqrt{3}}/7,156/7)
+E(-39\ensuremath{\sqrt{3}}/7,169/7).
+
+Could solve geometric median analytically? Claimed answer m+n sqrt p suggests perhaps a clever lower bound.
+
+Observe pairs AB, BC with 60 angle and DE, EA. Could rotate distances to chain and triangle inequality. For any X, AX+BX+CX maybe Fermat triangle ABC min? Triangle has angle C=90 all \textless{}120, Fermat sum maybe sqrt((a\ensuremath{^2}+b\ensuremath{^2}+c\ensuremath{^2}+4\ensuremath{\sqrt{3}} area)/2). For sides 14,7,7\ensuremath{\sqrt{3}}, area49\ensuremath{\sqrt{3}}? expression squares sum294, 4sqrt3 area=588, /2=441 sqrt=21. Indeed min AX+BX+CX =21. Fermat point perhaps? Given 30-60-90, Fermat point? Likewise AX+DX+EX triangle ADE scale 13 etc: side26,13,13\ensuremath{\sqrt{3}}, min39. But summing these double counts AX:
+(AX+BX+CX)+(AX+DX+EX) \ensuremath{\geq}60 gives f+AX \ensuremath{\geq}60 =\textgreater{} f\ensuremath{\geq}60-AX not fixed. Conversely objective = those - AX. Could simultaneous structure perhaps Fermat points at A? Triangle ABC angle? max90, Fermat interior. Locate likely midpoint? For triangle ratio, Fermat point maybe B? no angle 60.
+
+Could combine BX+CX lower bound in terms AX via rotations.
+
+Maybe objective lower-bound chain using 60\ensuremath{^\circ} rotations due at B/E
+  fixed. Classical Fermat point: rotate one vector to concatenate.
+
+Since AB=2 BC and EA=2 ED perhaps points C,D geometry engineered.
+
+Could geometric median X perhaps lies on CD? Need numeric explore.
+
+Coordinates decimal:
+A(0,0)
+B(12.124,-7)
+C(12.124,0)
+D(3.216,22.286)
+E(-9.65,24.143).
+
+Find geometric median iterative mentally. likely central around (3,8). Calculate unit balance.
+
+At X maybe A? above sum \textgreater{}.
+Could derive with Weiszfeld numerical then recognize distances/sum.
+
+Let's iterate approximate. vertices spread. Coordinate-wise median rough (3.2,0), geometric around (3,6).
+At X=(3,7):
+to A vectors from X to vertex normalized (-.394,-.919)
+B(.713,-.701)
+C(.793,-.609)
+D(.014,.9999)
+E(-.596,.803)
+sum .530,-.426. Need move direction sum likely +x,-y? Gradient wrt X = -sum; optimum move sum direction, x increase y decrease. (4.5,5.5):
+A(-.633,-.774)
+B(.778,-.628)
+C(.837,-.547)
+D(-.083,.997)
+E(-.647,.762)
+sum .252,-.190. move x+,y-
+(5.5,4.5):
+A(-.774,-.633)
+B(.799,-.601)
+C(.827,-.562)
+D(-.127,.992)
+E(-.675,.738)
+sum .050,-.066.
+(5.75,4.1):
+A(-.814,-.581)
+B(.820,-.572)
+C(.841,-.541)
+D(-.137,.991)
+E(-.681,.732)
+sum .029,.029. around 5.9,4.2 maybe.
+
+Could special X based on direction unit vectors perhaps angles yielding cancellation. Five unit vectors sum zero. With geometry perhaps directions include opposite pairs and something? At X likely:
+angles to A about -145
+B -42
+C -31
+D 98
+E132.
+Notice A-E angle \textasciitilde\{\}83; E-D 34; D-C129; C-B 11; B-A103. No obvious.
+
+Maybe optimum happens X at intersection something and exact f via Melzak construction for 5 terminals (Ste
+  iner? But geometric median star has 5 edges equilibrated sum units; degree 5 unconstrained has equilibrium, unlike Steiner). To obtain exact m+n\ensuremath{\surd}p, perhaps exploit centrally arranged vertices such that X is on something and distances sum simplifies, or polygon itself cyclic? Let's inspect coordinate relations and perhaps all vectors from special X have rational directional forms. Use exact solve equilibrium could be high algebra generally. Geometry engineered perhaps vertices lie on two lines/circle yielding X at known point. A,C horizontal; B vertical below C. AD perpendicular DE. Also triangle ACD has D angle30 and coordinate. Could pentagon maybe tangential? At optimum, unit vector directions perhaps edge side directions due to a point constructed. Try precise numerical solve and identify X. Use equations. Let candidate X perhaps (7\ensuremath{\sqrt{3}}/2=6.062, 7/2=3.5)? That's midpoint AB? AB midpoint (6.062,-3.5) no. (?? Current estimate improve using units at x? Let's computational hand robust. Maybe X is intersection BD and CE etc. Calculate: BD from B(12.124,-7) to D D(3.216,22.286). CE C(12.124,0) to E(-9.65,24.143). intersection perhaps (\textasciitilde\{\}6.9,10.2), too high. Diagonal BE and CD? around etc. Potential exploit: Pair unit vectors to A,B,C. Since triangle ABC special. For any X in some region, perhaps angle AXB etc known at optimum dictated other pair. Could formulate objective in elliptical coordinate and use vector grouping. Pair A? Points might be generated by vectors: Use complex perhaps polygon edge directions: AB = angle -30 BC=7 angle 90 (vertical) CD=24 angle 111.787 DE=13 angle171.787 EA=26 angle -68.213 (E to A) Turns: at B exterior120; at E exterior120. Rotating AB by120 yields BC direction 90 and length half. Similarly DE direction171.8 to EA direction291.8 turn120 and double. This enables rotate segments Known lower bound: For any X, AX+BX+... use coefficients/unit vectors (dual): choose unit vectors u\_A... sum u\_i=0; then sum |X-P\_i| \ensuremath{\geq} sum u\_i\ensuremath{\cdot}(X-P\_i?) If choose u\_i pointing relation. Equality if P\_i-X aligns u\_i. Need find
+  unit directions from optimal X. To establish exact f can construct these. But need X.
+
+Maybe use rotations to combine AX, BX around B given AB lengths. If rotate something.
+
+Minkowski: sum distances \ensuremath{\geq} magnitude of weighted complex sum after choosing unit complex multipliers \textbackslash{}(q\_i\textbackslash{}) satisfying \textbackslash{}(\textbackslash{}sum q\_i=0\textbackslash{}). For equality \textbackslash{}(q\_i=(P\_i-X)/\textbackslash{}text\{distance\}\textbackslash{}). Need directions.
+
+Could selected \textbackslash{}(q\_i\textbackslash{}) roots of unity? Sum of 5 regular pentagon directions zero, then X sees vertices along five equally spaced rays. Do our approximate angles not equal 72 spacing (angles list \textbackslash{}(-145,-42,-31,98,132\textbackslash{}))---no.
+
+Could grouping \textbackslash{}(q\_A+q\_B+\textbackslash{}dots\textbackslash{})? Maybe directions approximate exact common:
+A angle \textbackslash{}(-145.3\textbackslash{})  
+B \textbackslash{}(-42.1\textbackslash{})  
+C \textbackslash{}(-31.0\textbackslash{})  
+D \textbackslash{}(97.7\textbackslash{})  
+E \textbackslash{}(131.8\textbackslash{}).
+
+Interesting B,C only 11\ensuremath{^\circ} apart; D,E 34\ensuremath{^\circ}.
+
+Perhaps my X estimate is inaccurate but broad.
+
+Could optimum lie on A? No. General exact seems unlikely for an olympiad unless an inequality transformation is tailored.
+
+Could \textbackslash{}(f\_\{\textbackslash{}min\}\textbackslash{}) equal something simple like \textbackslash{}(39+7\textbackslash{}sqrt3\textbackslash{})? Need numeric \textbackslash{}(f\textbackslash{}) at \textbackslash{}((5.8,4.2)\textbackslash{}):
+\textbackslash{}[
+r\_A=7.16
+\textbackslash{}]
+\textbackslash{}[
+r\_B=\textbackslash{}sqrt\{6.324\textsuperscript{2}+(-11.2)\textsuperscript{2}\}=12.86
+\textbackslash{}]
+\textbackslash{}[
+r\_C=\textbackslash{}sqrt\{6.324\textsuperscript{2}+(-4.2)\textsuperscript{2}\}=7.59
+\textbackslash{}]
+\textbackslash{}[
+r\_D=\textbackslash{}sqrt\{(-2.584)\textsuperscript{2}+18.086\textsuperscript{2}\}=18.27
+\textbackslash{}]
+\textbackslash{}[
+r\_E=\textbackslash{}sqrt\{(-15.45)\textsuperscript{2}+19.943\textsuperscript{2}\}=25.23
+\textbackslash{}]
+sum \textbackslash{}(71.11\textbackslash{}). Possible \textbackslash{}(50+12\textbackslash{}sqrt3=70.78\textbackslash{}). \textbackslash{}(m+n\textbackslash{}sqrt p\textbackslash{}).
+
+Need exact likely \textbackslash{}(42+\textbackslash{} ?\textbackslash{})
+
+Maybe the geometric configuration supports applying a Viviani-like theorem if \textbackslash{}(X\textbackslash{}) is inside the pentagon? Distances to vertices, not sides.
+
+Could the minimum perhaps be at \textbackslash{}(X=C\textbackslash{})? Compute \textbackslash{}(AC=12.124+BC=7+CD=24+CE\textbackslash{}), where
+\textbackslash{}[
+CE=\textbackslash{}sqrt\{21.774\textsuperscript{2}+24.143\textsuperscript{2}\}=32.514,
+\textbackslash{}]
+so the sum is approximately \textbackslash{}(75.64\textbackslash{}). Thus the optimum is around \textbackslash{}(71\textbackslash{}).
+
+Let's calculate exactly via a transformation reducing the pair because \textbackslash{}(B\textbackslash{}) lies in a particular position relative to \textbackslash{}(A,C\textbackslash{}).
+
+Can choose coordinates relative to \textbackslash{}(X\textbackslash{}) in polar form. Conditions between rays impose fixed inter-vertex vectors. Unknowns are the \textbackslash{}(r\_i\textbackslash{}) and unit vectors \textbackslash{}(q\_i\textbackslash{}). Equilibrium gives \textbackslash{}(\textbackslash{}sum q\_i=0\textbackslash{}). Given edge lengths and angles at \textbackslash{}(B,E\textbackslash{}), perhaps solve the \textbackslash{}(q\textbackslash{})-angles through stationarity---not directly.
+
+Maybe pair distances to \textbackslash{}(A,C\textbackslash{}) with \textbackslash{}(B\textbackslash{})? There is an inequality:
+  triangle AX? AB+BC relation. Rotate A around B by60: Since BA=14 and BC=7 with angle ABC60, rotation+scale maps? C is midpoint of rotated BA vector: C-B = (1/2) R\_? (A-B). Specifically BA angle150, rotate -60 gives90, half = BC. So C = B + (1/2) R\_\{-60\}(A-B). Similarly D? At E, ED=13, EA=26 angle between ED and EA 60: D-E = (1/2) R? (A-E). This affine relation perhaps whole vertex set maps. Thus B can expressed from A,C: 2(C-B)=R\_-60(A-B). For arbitrary X, maybe relation vectors c =? Set X origin: 2c-2b=R(a-b), so 2c-Ra = (2 (2I-R)b. This can derive weighted sum inequalities. Could pair distances weighted? We have each once. A possible use complex multipliers based on linear dependence of vertices? To calculate dual bound choose q\_i satisfying sum q=0, and sum q\_i\ensuremath{\cdot}P\_i gives desired. Any q unit. Need find q independent geometry maybe satisfy directions from a constructed X. Relations could let triangle inequality. Another thought: Is point X maybe Fermat point of triangle ACD? For ACD angles A81.8,C68.2,D Fermat point. At Fermat, units to A,C,D sum zero. Then additional B,E units must sum zero, requiring B,X,E collinear opposite. Did config perhaps BE passes through Fermat point! Approx X Fermat point of ACD? Compute likely around (5.8,4.2), indeed near. BE line B(12.124,-7) to E(-9.65,24.14); at x5.8 y2.05 not 4.2. Not exactly. Intersection no. If B and E vectors opposite requires X on BE. Geometric median condition grouping triple and pair. If intersection of BE with Fermat point maybe engineered but seems no. Could be Fermat point of ACE and BXD? Other partition: if three directions sum 0 (120 apart), remaining pair opposite. Approx angles: A -145, D98? diff117; B? -42 gives103 Check A,C,D: differences114,129,117 near 120! Ah approximate! Angles A=-145, C
+  =-31 diff114; C to D=129; D to A=117. Maybe exact X Fermat of triangle ACD has all 120. Then B/E would need opposite, but approximate B=-42 and E132 diff174, perhaps exact point could be BE and Fermat. Our approximate off. Let's find intersection BE and test angles A,C,D.
+
+Line BE param B+t(E-B). x:12.124-21.774t y=-7+31.143t.
+At around x? t .306 =\textgreater{} (5.46,2.53). Earlier equilibrium maybe (5.8,4.2). Compute at (5.46,2.53) directions:
+A angle -155.1
+C -20.7
+D 97.3
+differences134.4,118,107.6 not Fermat.
+
+Actual Fermat of ACD calculate. Fermat condition. Since D angle30. construct maybe coordinates. Solve ray direction to vertices 120.
+
+Let direction to A angle \ensuremath{\alpha}; to C \ensuremath{\alpha}+120 perhaps. At point intersection locus angle AXC120. Find numerically around? For triangle A(0,0), C(12.124,0), D(3.216,22.286). Fermat likely (5.??,4?). At (5.8,4.2), angles A -144.1 C -33.6 difference110.5, D98.1 differences131.7/117.8 not. Fermat perhaps lower y? For equilateral on AC inward, locus angle120; point y relative x. at center x6.06, y=AC/(2\ensuremath{\sqrt{3}})=3.5 gives angle A-C \textasciitilde\{\}120. Candidate (5.5,3.4): angles A-148.3, C-27.7 diff120.6, D97.5: differences125.8,113.7. adjust.
+Maybe (4.9,3.8): A -142.2, C -27.8=114.4, D95.2 etc.
+
+Let's exact Fermat via equilateral: Construct external equilateral on AC below: Q=(6.062,-10.5). line DQ; similarly. Fermat lies D-Q. line D(3.216,22.286) to Q. At y maybe 3: t=.588, x4.89. Then directions A\textasciitilde\{\}-148.5, C\textasciitilde\{\}-24, D
+  \textasciitilde\{\}95.6: differences124.5,119.6,115.9 perhaps. Point \textasciitilde\{\} (4.92,3). Better. BE at x4.9 y3.33 close! Ah maybe exact coincides! Calculate intersection line D to Q and BE perhaps perhaps yes due engineered geometry. Let's test exact.
+
+Q equilateral external (below AC): AC=7\ensuremath{\sqrt{3}} horizontal, Q=(7\ensuremath{\sqrt{3}}/2, -21/2) = (3.5\ensuremath{\sqrt{3}},-10.5).
+
+BE exact:
+B=(7\ensuremath{\sqrt{3}},-7); E=(-39\ensuremath{\sqrt{3}}/7,169/7).
+direction E-B=(-88\ensuremath{\sqrt{3}}/7,218/7) = (2/7)(-44\ensuremath{\sqrt{3}},109).
+
+Line DQ:
+D=(13\ensuremath{\sqrt{3}}/7,156/7).
+Q-D = (7\ensuremath{\sqrt{3}}/2 -13\ensuremath{\sqrt{3}}/7 = (49-26)/14\ensuremath{\sqrt{3}}=23\ensuremath{\sqrt{3}}/14, -21/2-156/7=(-147-312)/14=-459/14) = (1/14)(23\ensuremath{\sqrt{3}},-459).
+
+Intersection solve. B+s(E-B), D+t(Q-D).
+x /\ensuremath{\sqrt{3}}: 7 -88s/7 =13/7+23t/14.
+y -7+218s/7=156/7-459t/14.
+multiply14:
+x:98-176s=26+23t =\textgreater{} 176s+23t=72.
+y:-98+436s=312-459t =\textgreater{}436s+459t=410.
+Solve first t=(72-176s)/23. second 436s + (459/23)(72-176s)=410. 459/23? 19.956.
+multiply:10028s+33048-80784s=9430 =\textgreater{} -70756s=-23618 =\textgreater{} s=11809/35378 \textasciitilde\{\}.33380. t=(72-58.749)/23=.5761. no obvious 1/3 near. At intersection around x4.856,y3.396. Is it exact Fermat? D-Q line ensures one Fermat construction but must also on appropriate other line; any point DQ isn't Fermat. Intersection BE might possibly line and enough? Need also e.g. angle AFC120 not guaranteed. On DQ line, Fermat lies but exact location where line with another construction. BE may be other construction line if
+  BE connects B,E unrelated. Could BE itself equal line from another triangle equilateral vertex? For triangle ACD, external equilateral on AD or CD. Maybe B or E constructions! Ah yes due triangles.
+
+For triangle ACD:
+- Equilateral outward on AC has Q.
+- Equilateral outward on AD (side opposite C likely side E? Construct vertex). Since AD length13\ensuremath{\sqrt{3}}. E relation? Triangle ADE has angle A30, E60,D90, not equilateral.
+- Equilateral outward on CD maybe B/E line vertex.
+
+The Fermat point exact can derive. Is B,E line perhaps one of connecting vertex to equilateral? Let's construct external equilateral on AD, vertex R. A=(0), D vector angle theta81.8. Rotate +60 (outside triangle ACD? C lies right/below AD, outside left/up is +): R=R60(D): x= xD/2 -\ensuremath{\sqrt{3}} yD/2 =13\ensuremath{\sqrt{3}}/14 -156\ensuremath{\sqrt{3}}/14=-143\ensuremath{\sqrt{3}}/14; y=\ensuremath{\sqrt{3}}*xD/2+yD/2 =39/14+156/14=195/14. Then line C-R. Is that BE? R decimal(-17.69,13.93). C-R line slope (13.93)/( -29.81)= -.467 (from C to R); BE slope -1.43, no.
+
+External equilateral on CD likely line A-S. Fermat intersect.
+
+Calculate Fermat exact perhaps then test BE line. Use DQ and C-R. Solve likely.
+
+D+t(Q-D), coordinate.
+C+u(R-C).
+R x/\ensuremath{\sqrt{3}}=-143/14, y195/14. C x/\ensuremath{\sqrt{3}}=7=98/14, so vector=(-241\ensuremath{\sqrt{3}}/14,195/14).
+D coordinates /14: x26\ensuremath{\sqrt{3}}/14,y312/14.
+line1 x=(26+23t)\ensuremath{\sqrt{3}}/14, y=(312-459t)/14.
+line2 x=(98-241u)\ensuremath{\sqrt{3}}/14,y=195u/14.
+equate: 23t+241u=72; -459t-195u=-312 =\textgreater{}459t+195u=312.
+Solve. first t=(72-241u)/23. 459/23*(72-241u)+195u=312.
+459*72 -459*241u +4485u=7176.
+33048-
+  (110619-4485=106134)u=7176 =\textgreater{}u=25872/106134 simplify /? =4312/17689 (\textasciitilde\{\}.24377). t=(72-58.744?)/23=.57635. Similar intersection BE extremely close but not same perhaps likely exactly? Compare s gave t derive exact: s11809/35378 = denominator 2*17689! s=11809/(2*17689). Fermat u=4312/17689. Compute t exact:
+72*17689=1,273,608; 241*4312=1,039,192; difference234416 /(23*17689=406847) simplify 10192/17689? multiply23*10192=234416 yes t=10192/17689=.57618.
+
+BE intersection t using solve above: s..., t:
+72 -176*11809/(35378) = denominator35378: 2,547,216 -2,078,384=468832 /35378 /23 =468832/813694 simplify .576167; indeed 20384/35378? 468832/23=20384, then /35378=10192/17689. Exactly! So same t! Great. Thus BE goes through Fermat point of ACD. Nice. Therefore at F, units toward A,C,D sum0 and toward B,E opposite (because F lies segment BE likely), so equilibrium all 5. Thus minimum at F. Excellent.
+
+Then f(F)=FA+FC+FD + FB+FE = Fermat sum for triangle ACD + BE (since F between B,E). So compute BE plus minimum sum for triangle ACD. Elegant.
+
+Compute BE exact length. B E coordinate differences (-88\ensuremath{\sqrt{3}}/7,218/7). square=(88\ensuremath{^2}*3 +218\ensuremath{^2})/49. 7744*3=23232; 47524; total70756 /49. Factor70756. Divide4=17689. Is 17689 square? 133\ensuremath{^2}=17689 indeed! yes 133\ensuremath{^2} (17689). sqrt=266/7=38. Great BE=38. Nice.
+
+Fermat sum for triangle ACD. Formula for triangle all angles \textless{}120:
+S\_min = sqrt[(a\ensuremath{^2}+b\ensuremath{^2}+c\ensuremath{^2}+4\ensuremath{\sqrt{3}} \ensuremath{\Delta})/2].
+Sides AC=7\ensuremath{\sqrt{3}}, CD=24, DA=13\ensuremath{\sqrt{3}}. squares147+576+
+  507=1230.
+Area triangle: using base? cross A C D: .5*(7\ensuremath{\sqrt{3}})*(156/7)=78\ensuremath{\sqrt{3}}. 4\ensuremath{\sqrt{3}} \ensuremath{\Delta}=4\ensuremath{\sqrt{3}}*78\ensuremath{\sqrt{3}}=936.
+sum2166/2=1083 =? 1083=3*361=3*19\ensuremath{^2} =\textgreater{}19\ensuremath{\sqrt{3}}.
+Thus total 38+19\ensuremath{\sqrt{3}}. m38 n19 p3 sum60. Need ensure proof F lies BE and is Fermat point. Need present clean synthetic perhaps demonstrate via angles instead of coordinate cumbersome.
+
+Could show BE passes through Fermat point via coordinates. Coordinates are efficient. Need prove convex layout determines coordinates orientation. Establish A=(0,0), AC horizontal. Given convex fan ordering coordinates as above. Then show Fermat point lies BE perhaps use coordinates of equilateral construction or directly find equation intersection and verify 120 angles. Could avoid ugly F fraction using line relationships perhaps show BE equals line connecting C to equilateral-on-AD point? Earlier no. It passes Fermat but not a standard defining line endpoint. We can prove concurrence via equations and perhaps numbers surprisingly denominator 17689=133\ensuremath{^2}. Maybe there is synthetic neat.
+
+Could identify BE as a Simson-ish line through F due side ratios. We can calculate F coordinates perhaps simplify due 17689=133\ensuremath{^2}:
+F line D+t(Q-D), t=10192/17689.
+Coordinates ugly maybe cancel:
+x coefficient numerator 26+23t over14:
+(26*17689 +234416)/17689 =459914+234416=694330 /17689 /14 =? 694330/14=49595; x=49595\ensuremath{\sqrt{3}}/17689. Since 17689=133\ensuremath{^2}, 49595? 133*? 133*? 373=49609, no.
+y=(312-459t)/14 = (5,519? 17689*312: 17,689*(300+12)=5,306,700+212,268=5,518,968. minus 4,? 10192*459=10192*(460-1)=4,688,320-10,192=4,678,128 =\textgreater{}840840 /14=60060. y=60060/17689. Coordinates \textasciitilde\{\} x4.856, y3.396. Ugly.
+
+Maybe another characterization lets prove BE contains F by angle checks with distances potentially cleaner. At intersection X=BE and perhaps
+  show angles AXC=CXD=DXA=120 via circle equations. Coordinates intersection itself maybe simplify due BE=38 and ratio BF? s=11809/35378, BF=38s =? 38*11809/(2*17689)=19*11809/17689. Factor 11809? 109\ensuremath{^2}=11881, maybe 7*1687. Not simple.
+
+Could demonstrate using Fermat construction lines and show concurrence of BE with DQ and CR by determinant, equations maybe manageable if scale coordinates smart.
+
+Choose oblique/complex coordinate could simplify. Current exact coordinates rational*sqrt3. Scale x by 1/\ensuremath{\sqrt{3}}, all rational:
+A(0,0), B(7,-7), C(7,0), D(13/7,156/7), E(-39/7,169/7) in transformed non-Euclidean, but line incidence valid. Equilateral points coordinates also rational under transform:
+Q=(7/2,-21/2)
+R=(-143/14,195/14).
+Then prove lines BE,DQ,CR concurrent via determinant/Ceva? We can state direct calculation, perhaps don't need F coordinate. Give line equations and verify concurrency.
+
+Could find line equations and determinant perhaps nice.
+
+In scaled coordinates (u=x/\ensuremath{\sqrt{3}},y), calculate lines:
+
+BE through B(7,-7), E(-39/7,169/7). Direction differences (-88/7,218/7) proportional (-44,109). Equation normal (109? direction dx -44 dy109; normal (109,44)): 109(u-7)+44(y+7)=0 =\textgreater{}109u+44y -763+308=-455 =\textgreater{} 109u+44y=455.
+
+DQ: D(13/7,156/7), Q(7/2,-21/2). Direction common: Q-D=(23/14,-459/14) proportional (23,-459). normal (459,23). equation 459(u-13/7)+23(y-156/7)=0. constants (5967+3588)/7=9555/7=1365. Thus 459u+23y=1365. Nice.
+
+CR: C(7,0), R(-143/14,195/14). direction (-241,195)/14. normal (195,241):195(u-7)+241 y=0 =\textgreater{}195u+241y=1365. Intersection of
+  DQ and CR should satisfy BE. Is line equation combination? Solve implication perhaps determinant:
+At intersection:
+459u+23y=1365
+195u+241y=1365.
+Need show109u+44y=455 (=1365/3), equivalently327u+132y=1365.
+Can 327,132 be combo? Average? (459+195)/2=327, (23+241)/2=132! RHS average1365. So indeed adding equations /2 gives 327u+132y=1365 -\textgreater{} divide3 gives109u+44y=455. Beautiful! Great concurrence elegantly coordinate.
+
+Excellent.
+
+Need be precise equilateral construction orientations. F Fermat point is intersection of DQ and CR where Q external equilateral vertex on AC and R external equilateral vertex on AD? Standard: For triangle ACD, construct outward equilateral triangles on AC and AD. Then lines joining opposite original vertex (D to Q, C to R) meet at Fermat point. Need ensure R coordinate/outward. We computed R from rotating AD +60. Triangle C location relative AD: cross AD, AC? AD \ensuremath{\times} AC negative (D vector x,y cross C x,0 = -y*C \textless{}0), so C lies clockwise/right of AD. R=rotate AD +60 lies CCW, outward. Yes.
+
+Q external on AC: D above AC, Q below. coordinates.
+
+Then line BE equation. Since F intersection DQ, CR and their averaged equations imply on BE.
+
+Need also F lies on segment BE, not merely line, to FB+FE=BE. Need establish. Standard Fermat F inside triangle ACD. Is BE line crosses triangle, but B and E on opposite sides? Need show F between B,E. We can show parameter or line side. Since F inside triangle. B and E? Segment BE likely passes through triangle, F. To know endpoints surround F, evaluate one coordinate or line equations? Since F is on line. Could show B and E lie on opposite sides of e.g. AC maybe B below AC, E above (yes y B=-7, E=169/7 \textgreater{}0), while F inside ACD has y\textgreater{}0, doesn't guarantee before E but likely F y3.4\textless{}E24.1; since F inside triangle y\ensuremath{\leq}22.3 \textless{}E y24.14, and y\_B\textless{}0. Along BE y increases monotonically from -7 to169/7, so F y (inside
+  triangle) between perhaps nonnegative and max D y=156/7=22.286 \textless{} E 24.143. Thus yes B y=-7 \textless{} F y (\textless{}156/7) \textless{} E y169/7. Fermat inside triangle because all angles\textless{}120. So between.
+
+Could alternatively compute.
+
+Now lower-bound/minimal argument:
+For any X,
+AX+CX+DX \ensuremath{\geq} FA+FC+FD =19\ensuremath{\sqrt{3}} since F Fermat point/min sum triangle ACD.
+And BX+EX \ensuremath{\geq} BE=38 triangle inequality.
+Thus f(X) = (AX+CX+DX)+(BX+EX) \ensuremath{\geq}19\ensuremath{\sqrt{3}}+38.
+At X=F, because F minimizes first and lies segment BE, equality. This avoids vector equilibrium.
+
+Compute triangle angle conditions all under120. Need establish for Fermat formula and construction. Triangle ACD: sides. D angle? Calculate cos D = \ensuremath{\sqrt{3}}/2 =\textgreater{}30. Other no angle \textgreater{}120 clearly perhaps longest side CD=24. To prove largest angle \textless{}120: longest side 24, opposite angle A. cos A=(147+507-576)/(2*...)=78/546=1/7 \textgreater{}0, so A acute; all \textless{}120. Good.
+
+Fermat sum formula perhaps derive or cite. Need likely contest solution can state known result, but provide derivation maybe desired. We can explain:
+For triangle side lengths a,b,c area K, Fermat minimum L has formula:
+L\ensuremath{^2}=(a\ensuremath{^2}+b\ensuremath{^2}+c\ensuremath{^2}+4\ensuremath{\sqrt{3}}K)/2.
+Derive at Fermat point with x=FA,y=FC,z=FD and pairwise angles120. Then:
+a? AC\ensuremath{^2}=x\ensuremath{^2}+y\ensuremath{^2}+xy (cos120 yields +xy)
+CD\ensuremath{^2}=y\ensuremath{^2}+z\ensuremath{^2}+yz
+DA\ensuremath{^2}=z\ensuremath{^2}+x\ensuremath{^2}+zx.
+Sum sides\ensuremath{^2}=2(x\ensuremath{^2}+y\ensuremath{^2}+z\ensuremath{^2})+(xy+yz+zx).
+Area K = sum areas around F = (\ensuremath{\sqrt{3}}/4)(xy+yz+zx), since each area 1/2 xy sin120=\ensuremath{\sqrt{3}}/4 xy.
+L\ensuremath{^2}=(x+y+z)\ensuremath{^2}=x\ensuremath{^2}+y\ensuremath{^2}+z\ensuremath{^2}+2q.
+Let S sides\ensuremath{^2}=2r+q, 4\ensuremath{\sqrt{3}}K=4\ensuremath{\sqrt{3}}*(\ensuremath{\sqrt{3}}/4 q)=3q. Then (S+4sqrt3K)/2=(2r+4q)/2=r+2q=L\ensuremath{^2}. Good.
+
+Compute AC
+  and AD first law cos:
+AC\ensuremath{^2} 14\ensuremath{^2}+7\ensuremath{^2} -2(14)(7)cos60=147.
+AD\ensuremath{^2} 26\ensuremath{^2}+13\ensuremath{^2}-2(26)(13)cos60=507.
+Area ACD via Heron maybe we use angle? Need get area. We inferred angle D=30 perhaps calculate:
+CD=24. Heron sides sqrt147,24,sqrt507 unwieldy. Coordinate or law area. We have cos angle A=1/7 and sin=4\ensuremath{\sqrt{3}}/7, area .5 AC*AD sin A =.5*(7\ensuremath{\sqrt{3}})(13\ensuremath{\sqrt{3}})*(4\ensuremath{\sqrt{3}}/7) =? 7\ensuremath{\sqrt{3}}*13\ensuremath{\sqrt{3}}=273; times 4\ensuremath{\sqrt{3}}/7=156\ensuremath{\sqrt{3}}; half=78\ensuremath{\sqrt{3}}. Derive cos A:
+(AC\ensuremath{^2}+AD\ensuremath{^2}-CD\ensuremath{^2})/(2 AC AD)=(147+507-576)/(2*7\ensuremath{\sqrt{3}}*13\ensuremath{\sqrt{3}})=78/(546)=1/7.
+sin positive=\ensuremath{\surd}(48/49)=4\ensuremath{\sqrt{3}}/7.
+Yes.
+
+Coordinate setup derivation:
+Set A=(0,0), C=(7\ensuremath{\sqrt{3}},0), choose B below AC due convex order and D,E above? Convex pentagon ABCDE: diagonal AC lies interior and B lies one side; rest D,E other? In convex polygon, B and D/E? Diagonal AC boundary divides: B one side, D,E other. So set B below, D above. Then coordinate B:
+AB=14 and triangle ABC: projection along AC. A angle 30 due cos A \ensuremath{\sqrt{3}}/2, B=(14cos(-30),14sin(-30))=(7\ensuremath{\sqrt{3}},-7).
+D coordinates using AD and cos CAD=1/7:
+D=(AD cos A, AD sin A) = (13\ensuremath{\sqrt{3}}/7,? 13\ensuremath{\sqrt{3}}*4\ensuremath{\sqrt{3}}/7=156/7).
+E coordinate. Triangle ADE with angle at A? Sides AE26, AD13\ensuremath{\sqrt{3}}, DE13. Law cos angle DAE:
+(26\ensuremath{^2}+(13\ensuremath{\sqrt{3}})\ensuremath{^2}-13\ensuremath{^2})/(2*26*13\ensuremath{\sqrt{3}})=(676+507-169)/(676\ensuremath{\sqrt{3}})=1014/(676sqrt3)=? 1.5/\ensuremath{\sqrt{3}}=\ensuremath{\sqrt{3}}/2, so 30. Convex orientation: E lies on side of AD away from C, i.e. direction AD rotated +
+  30 (counterclockwise). We compute E:
+Direction angle \ensuremath{\theta}+30, where unit AD=(1/7,4\ensuremath{\sqrt{3}}/7). Rot:
+cos component = (1/7)(\ensuremath{\sqrt{3}}/2) -(4\ensuremath{\sqrt{3}}/7)(1/2)=\ensuremath{\sqrt{3}}/14-2\ensuremath{\sqrt{3}}/7=-3\ensuremath{\sqrt{3}}/14; times26=-39\ensuremath{\sqrt{3}}/7.
+y=(1/7)(1/2)+(4\ensuremath{\sqrt{3}}/7)(\ensuremath{\sqrt{3}}/2)=1/14+6/7=13/14; times26=169/7.
+Fine.
+
+Could coordinate transformed u=x/\ensuremath{\sqrt{3}}. Explain just for equations.
+
+Coordinates in (u,y):
+A(0,0), B(7,-7), C(7,0), D(13/7,156/7), E(-39/7,169/7). Important equilateral points under u scaling need ensure calculation:
+Q actual (7\ensuremath{\sqrt{3}}/2,-21/2), transformed (7/2,-21/2).
+R actual rotate AD+60: (-143\ensuremath{\sqrt{3}}/14,195/14), transformed (-143/14,195/14).
+
+Line equations verify:
+BE:
+B 7,-7 plug 763-308=455. E:109*(-39/7)+44*169/7=(-4251+7436)/7=3185/7=455.
+DQ D:459*13/7 +23*156/7=(5967+3588)/7=9555/7=1365. Q:459*3.5 +23*(-10.5)=1606.5-241.5=1365.
+CR C:1365; R:195*(-143/14)+241*(195/14)=195(-143+241)/14=195*98/14=195*7=1365.
+Adding line equations for DQ and CR at intersection:
+(459+195)u+(23+241)y=2730 =\textgreater{}654u+264y=2730 divide6:109u+44y=455 indeed. I earlier /2 then /3. Thus F on BE.
+
+Need establish standard Fermat construction lines DQ and CR indeed intersection F. Could state theorem. If worry naming: For triangle ACD, outward equilateral on AC with Q and on AD with R; lines DQ and CR intersect at Fermat point. This is standard. We might include quick note they meet
+  at point where three subtended angles 120.
+
+Potential issue line CR outward equilateral point R as selected. Yes.
+
+Calculate BE:
+In actual coords difference:
+\ensuremath{\Delta}x=(-39/7-7)\ensuremath{\sqrt{3}}=(-88\ensuremath{\sqrt{3}}/7)
+\ensuremath{\Delta}y=169/7+7=218/7
+length\ensuremath{^2}=(3*88\ensuremath{^2}+218\ensuremath{^2})/49.
+Compute 88\ensuremath{^2}=7744*3 23232; 218\ensuremath{^2} 47524; total70756. 266\ensuremath{^2}? 266\ensuremath{^2}=(260+6)\textsuperscript{2}=67600+3120+36=70756. /49 =\textgreater{}38\ensuremath{^2}. BE38.
+
+Formula gives 19\ensuremath{\sqrt{3}}. Then total.
+
+Check m,n positive p squarefree yes 38+19sqrt3 m+n+p=60.
+
+Need likely not overdo all coordinate construction but solution coherent. We could maybe find a more direct proof concurrence. Include coordinate labels transformed.
+
+Let's make final answer structured.
+
+Let's ensure convex orientation triangle ADE angle A 30. Given angle E=60 and sides, law diagonal. Triangle ADE also right at D? Side AE26 longest, AD13sqrt3, DE13, squares 507+169=676, yes right at D. Angle A opposite13 =30. Coordinates consistent. Triangle ABC right at C.
+
+Triangle ACD side orientation. Calculate diagonals.
+
+When coordinate setup, mention reflection choice WLOG.
+
+Fermat point formula and construction sequence perhaps order before coordinates.
+
+Detailed:
+
+1 diagonal lengths and K.
+2 define T Fermat point of ACD.
+3 show T on BE.
+
+Coordinates derive all. The equilateral vertices.
+
+Do we need show Fermat point lies inside and standard construction applies all angles \textless{}120. Longest CD 24, and angle A cosine1/7 so acute; perhaps is CD definitely longest vs AD22.5 AC12.1 yes. Thus all angles acute? angle C maybe68, D30. If largest opposite24 is angle A acute; all acute. Good.
+
+Coordinates transformed line incidence only. State actual coordinate x=\ensuremath{\sqrt{3}} u to reduce clutter. Equilateral geometry not preserved under transformed coordinate but points were first computed actual then listed transformed. Be clear "(u,y)=(x/\textbackslash{}sqrt3,y), used only for line equations." We can give actual setup then table transformed.
+
+Construct Q/R:
+- Q equilateral external on AC below: actual.
+- R equilateral external on AD opposite C. Need perhaps list only transformed coordinate but say direct 60 rotation
+  gives.
+Then standard construction says T = DQ\ensuremath{\cap}CR. (Could lines swapped yes.)
+
+At T equations both hold -\textgreater{} sum gives BE equation. Thus collinear.
+
+T between B,E argument:
+T lies inside ACD. In coordinates, its y between 0 and max y D=156/7 (strict actually A,C y0). B y=-7, E y169/7. Along line BE y coordinate is monotonic because endpoints y distinct; a point collinear with y between endpoints lies on segment. Since 0\textless{}T\_y\textless{}156/7\textless{}169/7, yes.
+
+Triangle ACD Fermat sum formula; derive briefly in parenthesis or equations.
+
+Potential nuance triangle ACD includes T y maybe inside and all angles less 120 yes.
+
+The lower bound separates:
+AX+CX+DX \ensuremath{\geq} minimum triangle =19\ensuremath{\sqrt{3}}. For all plane X yes.
+BX+EX\ensuremath{\geq}BE.
+At T equality in both. done.
+
+Let's formulate no claim f convex needed.
+
+Coordinates A,C orientation: Let AC x positive. Since pentagon convex B and D lie opposite sides AC. Put B below. E location must be above and on outside AD. Coordinate computed.
+
+Check E and C relative AD: E is CCW from AD; C clockwise yes.
+
+m+n+p.
+
+Let's final answer desired 4, detailed enough.
+\end{decodedreasoningpanel}
+\begin{decodedanswerpanel}
+\decodedpanelhead{Model answer}
+$\min f(X){=}38{+}19\sqrt3$, so $m{+}n{+}p{=}60$.
+\end{decodedanswerpanel}

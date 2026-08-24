@@ -1,0 +1,102 @@
+
+\usepackage{fullpage}
+\usepackage[left=2.5cm,top=1.7cm,bottom=2.2cm,right=2.5cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A,T1]{fontenc}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage{CJKutf8}
+  \DeclareUnicodeCharacter{211D}{\ensuremath{\mathbb{R}}}
+  \DeclareUnicodeCharacter{2202}{\ensuremath{\partial}}
+  \DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\fi
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{bm}
+
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{colortbl}
+
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage[most]{tcolorbox}
+
+\usepackage{pifont}
+\usepackage{fontawesome5}
+\usepackage{soul}
+\usepackage{eurosym}
+\usepackage{xspace}
+\usepackage{seqsplit}
+\usepackage{comment}
+\usepackage{enumitem}
+
+\usepackage{tgpagella}
+\usepackage{roboto}
+\renewcommand{\sfdefault}{cmss}%
+\usepackage{nopageno}
+
+\usepackage[authoryear,round]{natbib}
+
+\usepackage[
+  colorlinks=true,
+  linkcolor=linkblue,
+  citecolor=citegreen,
+  urlcolor=urlviolet,
+  unicode
+]{hyperref}
+\usepackage{xurl}
+\usepackage{footnotehyper}
+\makesavenoteenv{figure}
+
+\usepackage{etoc}
+\usepackage[nameinlink,capitalise,noabbrev]{cleveref}
+
+\usepackage{siunitx}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, calc, decorations.pathreplacing}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+
+
+\usepackage{iftex}
+\ifPDFTeX
+  \newcommand{\bodyfont}{\fontfamily{XCharter-TLF}\selectfont}
+  \newcommand{\labelfont}{\fontfamily{phv}\selectfont}
+\else
+  \usepackage{fontspec}
+  \newfontfamily\bodyfont{Spectral}[
+    Path=fonts/, Extension=.ttf,
+    UprightFont=*-Regular, ItalicFont=*-Italic,
+    BoldFont=*-Bold, BoldItalicFont=*-BoldItalic]
+  \newfontfamily\labelfont{LibreFranklin}[
+    Path=fonts/, Extension=.ttf,
+    UprightFont=*-SemiBold, BoldFont=*-Bold]
+\fi
+
+\ifPDFTeX
+  \newcommand{\fg}[1]{\begin{CJK}{UTF8}{gbsn}\fontencoding{T2A}\selectfont#1\end{CJK}}
+\else
+  % CJK font bundled in fonts/: Noto Sans Mono CJK SC covers Chinese, Japanese
+  % and Cyrillic. Loaded by Path -- like the body fonts -- so arXiv's XeLaTeX
+  % finds it without relying on system-installed fonts (the earlier system-name
+  % lookup failed on arXiv and dropped every CJK/Cyrillic glyph).
+  \newfontfamily\intlfont{NotoSansMonoCJKsc-Regular.otf}[Path=fonts/, Scale=MatchLowercase]
+  \newcommand{\fg}[1]{{\intlfont #1}}
+  \IfFontExistsTF{Noto Sans Devanagari}
+    {\newfontfamily\devfont{Noto Sans Devanagari}[Scale=MatchLowercase]}{\let\devfont\intlfont}
+  \IfFontExistsTF{Noto Sans Georgian}
+    {\newfontfamily\geofont{Noto Sans Georgian}[Scale=MatchLowercase]}{\let\geofont\intlfont}
+  \newcommand{\fgd}[1]{{\devfont #1}}
+  \newcommand{\fgg}[1]{{\geofont #1}}
+\fi
+\ifPDFTeX \newcommand{\fgd}[1]{#1}\newcommand{\fgg}[1]{#1}\fi

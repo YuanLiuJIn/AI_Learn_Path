@@ -1,0 +1,130 @@
+\clearpage
+\subsection{Output Style Drift with Reasoning Prefilling}\label{app:output_drift}
+
+\looseness=-1 %In this section, we investigate in detail the phenomenon shown in \Cref{fig:kimi}: when Kimi-K3 is given a short reasoning prefill from decoded Opus 4.8 reasoning, the style of its visible output shifts toward Claude. 
+A reasoning prefill can affect more than a model's hidden reasoning. As shown in \Cref{fig:kimi}, giving Kimi-K3 a short prefix of decoded Opus 4.8 reasoning also shifts the style of its visible answer toward the corresponding Opus answer. We study this effect  by measuring $n$-gram overlap between model output. 
+
+\label{app:prefill_qualitative}
+
+\subsubsection{Common $n$-gram Analysis}
+
+%\paragraph{Setting.} Following \citet{barbero2026extracting}, we compare similarity of best-of-$n$ samples from the target models, Kimi-K3 and Inkling, with the corresponding Opus~4.8 responses on the same HLE problems \citep{hle}. We compare three visible answers for each problem: the Opus~4.8 answer, an on-policy Kimi-K3 (or Inkling) answer, and a Kimi-K3 answer generated after prefilling its reasoning with the first $1\%$ of the decoded Opus reasoning trace. The prefill length is measured in tokens of Opus reasoning encoded with Kimi tokenizer.
+
+\paragraph{Setting.}  Following \citet{barbero2026extracting}, we measure how similar is best-of-$k$ answers from Kimi-K3 and a control model (Inkling) match the corresponding Opus~4.8 answer given the same problem. For each problem, we compare three visible answers: (i) the Opus~4.8 reference answer; (ii) an unprefilled answer from Kimi-K3 or control (Inkling); and (iii) an answer generated after prefilling the target model reasoning with the first $1\%$ of the decoded Opus reasoning trace. The target model generates the rest of the reasoning and the entire visible answer without further intervention. We measure the prefill length by encoding the Opus trace with the Kimi-K3 tokenizer.  
+
+\paragraph{Metric.} For each problem and condition, we draw batches of $k\in\{1,10,50,100\}$ completions. Each completion contains a reasoning trace and a visible answer. Within each batch, we select the completion with the largest shared 1-, 2-, and 3-grams with the first 100 tokens of the corresponding Opus visible answer. This best-of-$k$ protocol tests whether a sampling pool contains an answer written in an Opus-like style, while 100 token limit controls for any length bias. We evaluate 30 HLE problems: 15 STEM and 15 non-STEM, with qualitative results presented in \Cref{app:qual_stem} and \Cref{app:qual_nonstem} respectively.
+
+%For each problem and condition, we sample batches of 1, 10, 50, each containing both a continuation of the reasoning and a visible answer. Within each batch, we select the completion with the largest total number of shared 1-, 2-, and 3-grams with the first 100 tokens of the corresponding Opus visible answer. We present examples of STEM completions in \Cref{app:qual_stem} and the non-STEM completions in \Cref{app:qual_nonstem}, both selected under described protocol.
+\begin{table}[htbp]
+\centering
+\footnotesize
+\providecommand{\sci}{}
+\renewcommand{\sci}[1]{\num[exponent-mode=scientific,
+  output-exponent-marker=\text{e}, retain-explicit-plus]{#1}}
+\caption{\textbf{Best-of-$k$ $n$-gram overlap with the source model's visible answer.}
+We measure overlap with the first 100 tokens of the visible answer produced by the model supplying the reasoning prefill, using the commong $n$-gram intersection. For each problem, we compute best-of-$k$ overlap for $k\in\{1,10,50,100\}$, average across these four values, and then average across problems. $\Delta$ denotes the difference between the prefilled and unprefilled conditions. We report two-sided paired $t$-tests on the per-problem differences. In the lower block, Kimi-K3 and Inkling supply prefills to each other, so neither model receives proprietary reasoning. After Bonferroni correction, only Kimi-K3 mean differences remain significant; none of the control comparisons do.}
+
+\label{tab:ngram_means}
+\begin{tabular}{lllcccc}
+\toprule
+Model & Prefill & Category & Prefilled & Control & $\Delta$ & $p$ \\
+\midrule
+Kimi-K3 & Opus 4.8 & STEM     & \num{0.305} & \num{0.160} & \sci{+1.5e-1} & \sci{1.7e-5} \\
+Kimi-K3 & Opus 4.8 & non-STEM & \num{0.289} & \num{0.203} & \sci{+8.6e-2} & \sci{6.3e-6} \\
+Inkling & Opus 4.8 & STEM     & \num{0.217} & \num{0.205} & \sci{+1.2e-2} & \sci{7.4e-2} \\
+Inkling & Opus 4.8 & non-STEM & \num{0.241} & \num{0.239} & \sci{+2.1e-3} & \sci{5.5e-1} \\
+\midrule
+Kimi-K3 & Inkling  & STEM     & \num{0.359} & \num{0.337} & \sci{+2.2e-2} & \sci{1.2e-1} \\
+Kimi-K3 & Inkling  & non-STEM & \num{0.272} & \num{0.263} & \sci{+9.4e-3} & \sci{5.5e-1} \\
+Inkling & Kimi-K3  & STEM     & \num{0.414} & \num{0.411} & \sci{+2.2e-3} & \sci{7.2e-1} \\
+Inkling & Kimi-K3  & non-STEM & \num{0.320} & \num{0.306} & \sci{+1.4e-2} & \sci{3.3e-2} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\paragraph{Sampling Details.} We sample all Kimi-K3 completions at temperature $1.0$, with reasoning effort \texttt{low} and a budget of $14{,}000$ completion tokens per sample. We generate these completions through the Fireworks API and prefill into the open reasoning span of Kimi-K3 chat template. We repeat the same procedure with Inkling through Tinker at temperature $1.0$, with a budget of $16{,}000$ tokens. We place the prefill in Inkling's \texttt{content\_thinking} channel and otherwise apply the same generation and selection procedure. The Opus-4.8 reference reasoning and answers are decoded from captured responses (\Cref{sec:extraction}) and are not re-sampled. 
+
+
+%All Kimi-K3 completions in this section are sampled at temperature $1.0$ with reasoning effort \texttt{low} and a completion budget of $14{,}000$ tokens per sample. Inkling completions are sampled through Tinker at temperature $1.0$ with a budget of $16{,}000$ tokens. The Opus 4.8 reference reasoning and answers are decoded from captured responses (\Cref{sec:extraction}) and are not re-sampled. We use Fireworks API for generating completions, appending the prefill within the open reasoning span of Kimi-K3's chat template. 
+
+%We repeat the same generation and selection procedure for Inkling \citep{inkling}, served through the Thinking Machines API (the seed appended in its \texttt{content\_thinking} channel), and report the results in \Cref{fig:ngram_scaling}.
+
+\paragraph{Results.} We report the results in \Cref{fig:ngram_scaling}. We find a clear output style shift for Kimi-K3. The prefilled condition produces greater $n$-gram overlap with the corresponding Opus answer on 29 of the 30 problems, with the best-of-$k$ overlap rising by $0.15$ on STEM problems and by $0.09$ on non-STEM problems, averaged over $k$. For Inkling we observe no comparable effect. \Cref{tab:ngram_means} reports the per-category values and significance tests.
+
+We additionally include a control experiment, to test whether this effect on Kimi-K3 arises from cross-model prefilling more generally, rather than specifically from Opus~4.8 reasoning. We prefill Kimi-K3 with the first $1\%$ of an Inkling reasoning trace and score its answer against Inkling's answer. Conversely, we prefill Inkling with the first $1\%$ of a Kimi-K3 reasoning trace and score its answer against Kimi-K3's answer. Correcting for the eight comparisons in \Cref{tab:ngram_means}, none of the four control comparisons is significant, while both Kimi-K3 rows under the Opus prefill remain so by three orders of magnitude. 
+
+
+% We find that prefilling Kimi-K3's reasoning substantially increases the number of $n$-grams its visible answers share with the Opus visible answer relative to the unprefilled control: the prefilled condition exceeds the control on $29$ of the $30$ problems. For Inkling we observe no comparable effect. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figures/thinking_prefill/fig_ngram_scaling.pdf}
+\caption{\textbf{Divergence of Visible-Answer Style under Opus 4.8 Reasoning Prefill.} For each pair of an Opus 4.8 hidden reasoning trace and its visible response, we extract the 1-, 2-, and 3-grams appearing in the visible response. We then measure the number of these $n$-grams that also appear in outputs generated by Kimi K3 and Inkling under two conditions: (i) the models generate both reasoning and output without intervention (non-prefilled), and (ii) the models' reasoning is prefilled with the first 1\% of tokens from the Opus reasoning trace. The $x$-axis shows the number of sampled completions, and the $y$-axis shows the maximum number of shared $n$-grams within each batch of completions. Curves show the mean over the $15$ HLE prompts \citep{hle} of each category, STEM and non-STEM ($30$ in total); shaded bands are $\pm 1$ standard error of the mean over the prompts. We observe that Kimi K3's output changes substantially under the 1\% reasoning prefill relative to the non-prefilled control, while Inkling's does not; \Cref{tab:ngram_means} reports the per-category means and significance tests.}
+\label{fig:ngram_scaling}
+\end{figure}
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figures/thinking_prefill/fig_ngram_cross.pdf}
+\caption{\textbf{Control for \Cref{fig:ngram_scaling}: the same measurement with the prefill source swapped.} As in \Cref{fig:ngram_scaling}, but neither model is prefilled with proprietary reasoning: Kimi-K3 receives the first $1\%$ of an Inkling trace and is scored against Inkling's visible answer (left), and Inkling receives the first $1\%$ of a Kimi-K3 trace and is scored against Kimi-K3's visible answer (right). Same $30$ HLE problems, curves are the mean over the $15$ prompts of each category; shaded bands are $\pm 1$ standard error of the mean over the prompts. Neither model separates from its control in either category.}
+\label{fig:ngram_cross}
+\end{figure}
+
+
+\definecolor{ink}{HTML}{27272A}
+\definecolor{inkStrong}{HTML}{141414}
+\definecolor{inkBlack}{HTML}{000000}
+\definecolor{seedGreen}{HTML}{D1E5D9}
+\definecolor{washReason}{HTML}{ECD4D5}
+\definecolor{washAnswer}{HTML}{E2CFD1}
+\definecolor{washHead}{HTML}{F0D8DA}
+\providecommand{\monofont}{\ttfamily}
+\providecommand{\tracked}[1]{\MakeUppercase{#1}}
+\newcommand{\caret}{{\labelfont\normalsize\color{inkBlack}>}\;}
+\newcommand{\plabel}[1]{{\labelfont\bfseries\scriptsize\color{inkStrong}\tracked{#1}}}
+\newcommand{\modelname}[1]{{\rmfamily\large\bfseries\color{inkStrong}#1}}
+\tcbset{
+  seedpanel/.style={
+    enhanced, frame hidden,
+    boxrule=0pt, arc=3.2pt, boxsep=0pt,
+    left=6pt, right=6pt, top=5pt, bottom=6pt,
+    nobeforeafter, valign=top,
+  }
+}
+\newtcolorbox{promptrow}{seedpanel, colback=panelPrompt, width=\linewidth,
+  fontupper=\sffamily\small\linespread{1.15}\selectfont\color{ink}}
+\newlength{\colw}
+\newtcolorbox{reasoncol}[1][]{seedpanel, colback=panelReason, width=\colw,
+  fontupper=\ttfamily\scriptsize\linespread{1.15}\selectfont\color{ink}, #1}
+\newtcolorbox{answercol}[1][]{seedpanel, colback=panelAnswer, width=\colw,
+  fontupper=\sffamily\footnotesize\linespread{1.15}\selectfont\color{ink}, #1}
+\newtcbox{\prefillchip}{enhanced, frame hidden, nobeforeafter, tcbox raise base, boxrule=0pt, arc=2.5pt,
+  boxsep=0pt, left=5pt, right=5pt, top=1.5pt, bottom=1.5pt, colback=seedGreen}
+\newcommand{\hlseed}[1]{\colorbox{seedGreen}{#1}}
+\newcommand{\hla}[1]{#1}
+\newcommand{\hlhead}[1]{#1}
+\newcommand{\elide}{\textbf{[ $\cdots$ ]}}
+
+\clearpage
+\subsubsection{Qualitative STEM Examples}
+\label{app:qual_stem}
+
+\input{sections/exhibits/aime15_style_transfer}
+
+\input{sections/exhibits/hle_nmr_transfer}
+
+\input{sections/exhibits/hle_ode_transfer}
+
+\input{galleries/prefill_gallery_stem}
+
+\clearpage
+\subsubsection{Qualitative non-STEM Examples}
+\label{app:qual_nonstem}
+
+\input{galleries/prefill_gallery_nonstem}
+
+\clearpage

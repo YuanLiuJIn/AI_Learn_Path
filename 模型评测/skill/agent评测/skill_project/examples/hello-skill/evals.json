@@ -1,0 +1,77 @@
+{
+  "evals": [
+    {
+      "id": "case_1",
+      "prompt": "review this code",
+      "split": "dev",
+      "assertions": [
+        {"type": "contains", "value": "code review"},
+        {"type": "contains", "value": "Python"}
+      ]
+    },
+    {
+      "id": "case_2",
+      "prompt": "check my Python function",
+      "split": "dev",
+      "assertions": [
+        {"type": "contains", "value": "bug"},
+        {"type": "contains", "value": "style"},
+        {"type": "contains", "value": "performance"}
+      ]
+    },
+    {
+      "id": "case_3",
+      "prompt": "review this code for security issues",
+      "split": "dev",
+      "metadata": {"note": "intentionally fails at baseline — security not in initial SKILL.md"},
+      "assertions": [
+        {"type": "contains", "value": "security"},
+        {"type": "not_contains", "value": "always find issues"}
+      ]
+    },
+    {
+      "id": "case_4",
+      "prompt": "review my code and show examples of fixes",
+      "split": "dev",
+      "metadata": {"note": "intentionally fails at baseline — example not in initial SKILL.md"},
+      "assertions": [
+        {"type": "contains", "value": "example"},
+        {"type": "contains", "value": "line number"}
+      ]
+    },
+    {
+      "id": "case_5",
+      "prompt": "is this code efficient?",
+      "split": "holdout",
+      "assertions": [
+        {"type": "contains", "value": "performance"},
+        {"type": "not_contains", "value": "rewrite everything"}
+      ]
+    },
+    {
+      "id": "case_6",
+      "prompt": "review this Python class for best practices",
+      "split": "holdout",
+      "assertions": [
+        {"type": "contains", "value": "specific"},
+        {"type": "contains", "value": "actionable"}
+      ]
+    },
+    {
+      "id": "case_7",
+      "prompt": "regression guard: output format must survive",
+      "split": "regression",
+      "assertions": [
+        {"type": "contains", "value": "Output Format"}
+      ]
+    },
+    {
+      "id": "case_8",
+      "prompt": "regression guard: anti-hallucination rule must persist",
+      "split": "regression",
+      "assertions": [
+        {"type": "contains", "value": "do not invent"}
+      ]
+    }
+  ]
+}

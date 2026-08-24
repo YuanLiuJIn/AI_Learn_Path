@@ -1,0 +1,81 @@
+
+\newcommand{\cmark}{{\color{lstcmt}\ding{51}}}
+\newcommand{\xmark}{{\color{black!35}\ding{55}}}
+
+\newcommand{\sd}[1]{\textsubscript{\color{black!50}{\textpm \SI[round-precision=1, round-mode=places]{#1}{}}}}
+
+\sethlcolor{tokbg}
+\newcommand{\tok}[1]{{\color{tokfg}\small\ttfamily\hl{#1}}}
+
+\newcommand{\colortt}[1]{\textcolor{bordo}{\texttt{\seqsplit{#1}}}}
+
+\newcommand{\BetweenLarge}{\fontsize{15.5}{18}\selectfont}
+\renewcommand{\bold}[1]{\textbf{\textsf{#1}}}
+\newcommand{\myparagraph}{\paragraph}
+
+\tcbset{
+  decodedpanel/.style={
+    enhanced jigsaw,
+    breakable,
+    boxrule=0pt,
+    arc=3.2pt,
+    boxsep=0pt,
+    left=6pt,
+    right=6pt,
+    top=5pt,
+    bottom=6pt,
+    before skip=6pt,
+    after skip=6pt,
+    coltext=panelInk,
+  },
+}
+\newcommand{\decodedpanelhead}[1]{%
+  {\sffamily\bfseries\normalsize\color{black}>\,}%
+  {\labelfont\bfseries\scriptsize\color{panelInkStrong}\MakeUppercase{#1}}%
+  \par\vspace{4pt}%
+}
+\newtcolorbox{decodedpromptpanel}{
+  decodedpanel,
+  colback=panelPrompt,
+  fontupper=\sffamily\small\linespread{1.15}\selectfont,
+}
+\newtcolorbox{decodedreasoningpanel}{
+  decodedpanel,
+  colback=panelReason,
+  fontupper=\ttfamily\scriptsize\linespread{1.15}\selectfont,
+  before upper={\raggedright\sloppy},
+}
+\newtcolorbox{decodedanswerpanel}{
+  decodedpanel,
+  colback=panelAnswer,
+  fontupper=\sffamily\small\linespread{1.15}\selectfont,
+}
+\newcommand{\decodedblock}[1]{%
+  \par\medskip{\normalfont\sffamily\bfseries\small\color{panelInkStrong}%
+    [DECODED REASONING BLOCK #1]}%
+  \par\smallskip%
+}
+
+\newtcblisting{extractiontemplate}{
+  decodedpanel,
+  colback=panelPrompt,
+  listing only,
+  listing options={style=extracttemplate},
+}
+\newtcblisting{extractioncall}{
+  decodedpanel,
+  colback=panelReason,
+  listing only,
+  listing options={style=extractcall},
+}
+\newtcblisting{judgepromptpanel}{
+  decodedpanel,
+  colback=panelPrompt,
+  listing only,
+  listing options={style=judgeprompt},
+}
+
+\newcommand{\addcomment}[3]{{\color{#1}\textsuperscript{\textbf{#3:}}#2}}
+\newcommand{\todo}[1]{\addcomment{red}{#1}{TODO}}
+\newcommand{\ma}[1]{\addcomment{red}{#1}{MA}}
+\newcommand{\ap}[1]{\addcomment{Orange}{#1}{AP}}

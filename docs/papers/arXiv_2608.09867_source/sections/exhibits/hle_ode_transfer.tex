@@ -1,0 +1,125 @@
+\begin{figure*}[t]
+\centering
+\setlength{\columnsep}{12pt}
+\setlength{\colw}{\dimexpr(\linewidth-2\columnsep)/3\relax}
+
+\begin{promptrow}
+\caret\plabel{Prompt}\par\vspace{4pt}
+Consider the following differential equation
+$x_{3}'(t) + \mathrm{th}\,t\ x_{3}(t) = e^{-t/3}$, $x_{3}(0) = 5$.
+Find the following value:
+$(10^{5} + 10^{-5})\,x_{3}(\ln 10^{5}) + \tfrac{3}{4}10^{-20/3}$.
+\par\vspace{6pt}
+{\plabel{Prefilled beginning of Opus reasoning}}\par\vspace{3pt}
+{\monofont\footnotesize \hlseed{We have ODE: x'}}
+\end{promptrow}
+
+\vspace{12pt}
+
+\noindent
+\begin{reasoncol}[equal height group=reasODE]
+  \modelname{Opus 4.8}\par\vspace{1pt}
+  \caret\plabel{Decoded reasoning}\par\vspace{4pt}
+  \raggedright\hlseed{We have ODE: x'} + tanh(t) x = e\textasciicircum{-t/3},
+  x(0)=5. Integrating factor: exp($\int$ tanh t dt) = exp(ln cosh t) = cosh t.
+  So (cosh t * x)' = cosh t * e\textasciicircum{-t/3}. Integrate: cosh t * x =
+  $\int$ cosh t e\textasciicircum{-t/3} dt + C. cosh t = (e\textasciicircum t
+  + e\textasciicircum{-t})/2. $\int$ cosh t e\textasciicircum{-t/3} dt =
+  (1/2)$\int$ (e\textasciicircum{2t/3} + e\textasciicircum{-4t/3}) dt =
+  (1/2)[ (3/2) e\textasciicircum{2t/3} - (3/4) e\textasciicircum{-4t/3} ] =
+  (3/4) e\textasciicircum{2t/3} - (3/8) e\textasciicircum{-4t/3}. So cosh t *
+  x = (3/4) e\textasciicircum{2t/3} - (3/8) e\textasciicircum{}\par
+  \vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasODE]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, prefilled}\par\vspace{4pt}
+  \raggedright\hlseed{We have ODE: x'} + tanh(t) x = e\textasciicircum{-t/3},
+  x(0)=5. Integrating factor: e\textasciicircum{$\int$ tanh t dt} =
+  e\textasciicircum{ln cosh t} = cosh t. (cosh t * x)' = cosh t *
+  e\textasciicircum{-t/3}. cosh t * e\textasciicircum{-t/3} =
+  (e\textasciicircum t + e\textasciicircum{-t})/2 * e\textasciicircum{-t/3} =
+  (e\textasciicircum{2t/3} + e\textasciicircum{-4t/3})/2. Integrate: $\int$
+  (1/2)e\textasciicircum{2t/3} dt = (3/4)e\textasciicircum{2t/3}; $\int$
+  (1/2)e\textasciicircum{-4t/3} dt = -(3/8)e\textasciicircum{-4t/3}. So cosh
+  t * x(t) = (3/4)e\textasciicircum{2t/3} - (3/8)e\textasciicircum{-4t/3} +
+  C. At t=0: cosh 0=1, x(0)=5: 5 = 3/4 - 3/8 + C = 3/8 + C, so C = 37/8.\par
+  \vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasODE]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, not prefilled}\par\vspace{4pt}
+  \raggedright We need parse th t likely tanh t. Solve ODE. x'+tanh t
+  x=e\textasciicircum{}-t/3. IF cosh t. (x cosh)'= e\textasciicircum{}-t/3
+  cosh t = (e\textasciicircum{2t/3}+e\textasciicircum{-4t/3})/2. Integrate 0
+  to T: x cosh T -5 = 3/4(e\textasciicircum{2T/3}-1)
+  -3/8(e\textasciicircum{}-4T/3-1) = ... At T=ln 1e5=5 ln10. Need requested A
+  x + 3/4 10\textasciicircum{}-20/3 where A=1e5+1e-5. Note 2 cosh T =
+  e\textasciicircum T+e\textasciicircum{}-T = A exactly. Thus A x =2[x cosh
+  T]. Bracket =5 + 3/4(e\textasciicircum{2T/3}-1)
+  -3/8(e\textasciicircum{}-4T/3-1). Twice plus extra. Compute: A x=10 +
+  (3/2)(10\textasciicircum{10/3}-1) -(3/4)(10\textasciicircum{}\par
+  \vspace{3pt}\elide
+\end{reasoncol}
+
+\vspace{12pt}
+
+\noindent
+\begin{answercol}[equal height group=ansODE]
+  \caret\plabel{Response}\par\vspace{4pt}
+  \raggedright\hlhead{\#\# Setting Up the Solution}\par\vspace{3pt}
+  The equation is linear:\par
+  \detokenize{$$x_3' + \tanh(t)\, x_3 = e^{-t/3}$$}\par
+  **Integrating factor:**\par
+  \detokenize{$$\mu(t) = \exp(\int \tanh t\, dt) = \exp(\ln \cosh t) = \cosh t$$}\par
+  So:\par
+  \detokenize{$$\frac{d}{dt}(\cosh t \cdot x_3) = \cosh t \cdot e^{-t/3}$$}\par
+  \vspace{3pt}
+  \hlhead{\#\# Integrating}\par\vspace{3pt}
+  Using \detokenize{$\cosh t = \frac{e^t + e^{-t}}{2}$}:\par
+  \detokenize{$$\int \cosh t\, e^{-t/3}\, dt = \frac{3}{4}e^{2t/3} - \frac{3}{8}e^{-4t/3}$$}\par
+  Therefore: \detokenize{$$\cosh t \cdot x_3 = \frac{3}{4}}\par
+  \vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansODE]
+  \caret\plabel{Response, prefilled}\par\vspace{4pt}
+  \raggedright\hlhead{\#\# Setting Up}\par\vspace{3pt}
+  The equation \detokenize{$x' + \tanh(t)\,x = e^{-t/3}$} has integrating
+  factor\par
+  \detokenize{$$\mu(t) = e^{\int \tanh t\, dt} = \cosh t.$$}\par
+  So\par
+  \detokenize{$$(\cosh t \cdot x)' = \cosh t \cdot e^{-t/3} = \tfrac{1}{2}(e^{2t/3} + e^{-4t/3}).$$}\par
+  Integrating:\par
+  \detokenize{$$\cosh t \cdot x(t) = \frac{3}{4}e^{2t/3} - \frac{3}{8}e^{-4t/3} + C.$$}\par
+  \vspace{3pt}
+  \hlhead{\#\# Applying the Initial Condition}\par\vspace{3pt}
+  At \detokenize{$t=0$}: \detokenize{$\cosh 0 = 1$, $x(0)=5$}:
+  \detokenize{$$5 = \frac{3}{4} - \frac{3}{8} + C \implies C = \frac{37}{8}.$$}\par
+  \vspace{3pt}
+  \hlhead{\#\# Evaluating at $t = \ln 10^5$}\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansODE]
+  \caret\plabel{Response, not prefilled}\par\vspace{4pt}
+  \raggedright Here \detokenize{\(th\,t=\tanh t\)}. Rewrite the equation as\par
+  \detokenize{\[x_3'(t)+\tanh(t)x_3(t)=e^{-t/3}.\]}\par
+  Since \detokenize{\(\int \tanh t\,dt=\ln(\cosh t)\)}, the integrating factor
+  is \detokenize{\(\cosh t\)}. Thus\par
+  \detokenize{\[\frac{d}{dt}\bigl(x_3(t)\cosh t\bigr)=e^{-t/3}\cosh t=\frac12(e^{2t/3}+e^{-4t/3}).\]}\par
+  Using \detokenize{\(x_3(0)=5\)},\par
+  \detokenize{\[x_3(t)\cosh t=5+\frac34(e^{2t/3}-1)-\frac38(e^{-4t/3}-1).\]}\par
+  Let \detokenize{\(T=\ln(10^5)=5\ln10\)}. Then\par
+  \detokenize{\[2\cosh T=e^T+e^{-T}=10^5+10^{-5},\]}\par
+  \detokenize{\[e^{2T/3}=10^{10/3},\quad e^{-4T/3}=10^{-}\]}\par
+  \vspace{3pt}\elide
+\end{answercol}
+
+\caption{\textbf{Comparison of Opus 4.8 and Kimi-K3 completions.} We compare
+the visible answers produced by Opus 4.8, unprefilled Kimi-K3, and Kimi-K3
+whose reasoning is prefilled with the first 1\% of tokens (7 tokens) of the decoded
+Opus 4.8 reasoning trace. Over the first 100 visible-answer tokens, the best
+prefilled completion achieves a total 1-, 2-, and 3-gram overlap of $0.50$
+with the Opus answer, compared with $0.27$ for the best unprefilled control.
+Reasoning lengths, measured in Kimi tokens, are 736 for Opus, 567 for the
+prefilled Kimi-K3 completion, and 333 for the control.}
+\label{fig:hle_ode_transfer}
+\end{figure*}

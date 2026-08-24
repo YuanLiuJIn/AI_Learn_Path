@@ -1,0 +1,20 @@
+\begin{decodedreasoningpanel}
+\decodedpanelhead{GPT-5.2 Codex (Russian)}
+\fg{Почему} \fg{не} \fg{переиспользовать} \fg{логику} CLI? \fg{Мы} \fg{уже} \fg{частично} \fg{продублировали} \fg{её} \fg{в} web.
+
+\fg{В} \fg{сервере} docker-git \fg{эндпоинт} `/clone` \fg{использует} `buildCreateCommand` \fg{и} `createProject`, \fg{а} \fg{затем} \fg{запускает} `docker compose build/up`. \fg{В} Next UI \fg{мы} \fg{сейчас} \fg{напрямую} \fg{вызываем} `runDockerComposeDownVolumes` \fg{и} `runDockerComposeUp`.
+
+\fg{Можно} \fg{вместо} \fg{этого} \fg{вызвать} `createProject` \fg{с} `force: true` \fg{и} `waitForClone: true`. \fg{Для} \fg{существующего} \fg{проекта} \fg{нужно} \fg{загрузить} \fg{его} \fg{конфигурацию} \fg{и} \fg{передать} \fg{её} \fg{в} `createProject`.
+
+`createProject` \fg{уже} \fg{выполняет} \fg{необходимые} \fg{действия}: \fg{пересоздаёт} \fg{файлы} \fg{проекта}, \fg{вызывает} `ensureAuthorizedKeys` \fg{и} \fg{запускает} Docker Compose. \fg{Для} CLI-\fg{команды} `clone --force` \fg{это} \fg{уже} \fg{предусмотрено}: `parseClone` \fg{устанавливает} `waitForClone: true`, \fg{а} `createProject` \fg{при} `force: true`, `waitForClone: true` \fg{и} `runUp: true` \fg{удаляет} volumes \fg{и} \fg{запускает} \fg{контейнер} \fg{заново}, \fg{что} \fg{приводит} \fg{к} \fg{повторному} \fg{клонированию} \fg{репозитория}.
+
+\fg{То} \fg{есть} \fg{для} \fg{переиспользования} CLI-\fg{логики} \fg{один} \fg{в} \fg{один} \fg{нужно} \fg{в} web-\fg{обработчике}:
+
+1. \fg{Загрузить} \fg{конфигурацию} \fg{существующего} \fg{проекта}.
+2. \fg{Собрать} `CreateCommand` \fg{через} `buildCreateCommand`.
+3. \fg{Установить} `force: true`, `waitForClone: true` \fg{и} `runUp: true`.
+4. \fg{Вызвать} `createProject`.
+5. \fg{Не} \fg{дублировать} \fg{отдельно} \fg{логику} `docker compose down --volumes` \fg{и} `docker compose up`.
+
+\fg{Нужно} \fg{только} \fg{понять}, \fg{откуда} \fg{в} web-\fg{сервере} \fg{брать} \fg{конфигурацию} \fg{проекта} \fg{—} \fg{возможно}, \fg{через} \fg{существующий} `readProjectConfig` \fg{или} \fg{аналогичный} helper \fg{из} `lib/usecases/projects`.
+\end{decodedreasoningpanel}

@@ -1,0 +1,782 @@
+The problem asks for the minimum value of $f(X) = AX + BX + CX + DX + EX$ for a point $X$ in the plane, where $ABCDE$ is a convex pentagon with given side lengths and angles.
+The side lengths are:
+$AB = 14$
+$BC = 7$
+$CD = 24$
+$DE = 13$
+$EA = 26$
+The angles are:
+$\angle B = 60^\circ$
+$\angle E = 60^\circ$
+
+Wait, the sum of distances is $AX + BX + CX + DX + EX$.
+By the triangle inequality, we can group these terms.
+For example, $AX + DX \ge AD$, $BX + EX \ge BE$, etc.
+But there are 5 terms.
+Is there a geometric transformation or a specific point $X$ that minimizes this?
+Wait, $f(X) = AX + BX + CX + DX + EX$.
+Let's analyze the pentagon.
+$\angle B = 60^\circ$, $AB = 14$, $BC = 7$.
+We can find $AC$ using the Law of Cosines on $\triangle ABC$:
+$AC^2 = AB^2 + BC^2 - 2 AB \cdot BC \cos 60^\circ = 14^2 + 7^2 - 14 \cdot 7 = 196 + 49 - 98 = 147$.
+So $AC = \sqrt{147} = 7\sqrt{3}$.
+Also, since $AB = 2 BC$ and $\angle B = 60^\circ$, $\triangle ABC$ is a right triangle with $\angle ACB = 90^\circ$ and $\angle BAC = 30^\circ$.
+Indeed, $14^2 = 7^2 + (7\sqrt{3})^2 \implies 196 = 49 + 147$.
+
+Similarly, $\angle E = 60^\circ$, $DE = 13$, $EA = 26$.
+Since $EA = 2 DE$ and $\angle E = 60^\circ$, $\triangle ADE$ is a right triangle with $\angle ADE = 90^\circ$ and $\angle DAE = 30^\circ$.
+$AD^2 = EA^2 - DE^2 = 26^2 - 13^2 = 676 - 169 = 507$.
+So $AD = \sqrt{507} = 13\sqrt{3}$.
+
+Now we have the positions of $A, B, C, D, E$.
+Let's set up a coordinate system.
+Let $A$ be the origin $(0,0)$?
+No, let's look at the angles.
+$\angle BAC = 30^\circ$ and $\angle DAE = 30^\circ$.
+What is the angle between $AC$ and $AD$?
+We know $CD = 24$.
+In $\triangle ACD$, we have $AC = 7\sqrt{3}$, $AD = 13\sqrt{3}$, and $CD = 24$.
+Let's find $\cos \angle CAD$:
+$CD^2 = AC^2 + AD^2 - 2 AC \cdot AD \cos \angle CAD$
+$24^2 = 147 + 507 - 2 (7\sqrt{3})(13\sqrt{3}) \cos \angle CAD$
+$576 = 654 - 2 \cdot 91 \cdot 3 \cos \angle CAD$
+$576 = 654 - 546 \cos \angle CAD$
+$546 \cos \angle CAD = 654 - 576 = 78$
+$\cos \angle CAD = \frac{78}{546} = \frac{13}{91} = \frac{1}{7}$.
+
+Since $\cos \angle CAD = 1/7 > 0$, $\angle CAD$ is acute.
+Let's check the orientation. The pentagon is convex.
+The vertices in order are $A, B, C, D, E$.
+The angles at $A$ are $\angle BAC$ and $\angle DAE$.
+Since it is convex, the rays $AB, AC, AD, AE$ must be in order.
+So the angle $\angle BAE = \angle BAC + \angle CAD + \angle DAE = 30^\circ + \angle CAD + 30^\circ = 60^\circ + \angle CAD$.
+Since $\cos \angle CAD = 1/7$, $\angle CAD \approx 81.8^\circ$.
+So $\angle BAE \approx 141.8^\circ$.
+
+We want to minimize $AX + BX + CX + DX + EX$.
+Wait, is there a Fermat-Torricelli-like point?
+For any point $X$, $BX + EX \ge BE$ and $CX + DX \ge CD$.
+But we have 5 points.
+Wait, is there a relation between the points?
+Let's rotate some triangles.
+Consider the Fermat point of some triangles.
+Actually, let's look at the values:
+$AC = 7\sqrt{3}$, $AD = 13\sqrt{3}$.
+Let's rotate $\triangle ABC$ and $\triangle ADE$?
+No, $f(X) = AX + BX + CX + DX + EX$.
+Is there a transformation?
+Let's rotate $B$ and $C$ around $A$ by some angle?
+Since $\angle B = 60^\circ$, maybe we can rotate around $B$?
+Wait, $\angle B = 60^\circ$ and $\angle E = 60^\circ$.
+Let's rotate $X$ and some vertices.
+Actually, there is a known trick for minimizing $AX + BX + CX + DX + EX$ when some angles are $60^\circ$.
+Wait, $\triangle ABC$ has $\angle B = 60^\circ$. If we rotate $C$ around $B$ by $60^\circ$?
+No, $BA = 14, BC = 7$.
+If we rotate $A$ around $B$ by $60^\circ$ counterclockwise, we get $A'$.
+Since $\angle B = 60^\circ$, the rotation of $C$ around $B$ by $60^\circ$ might lie on $AB$.
+Specifically, if we rotate $C$ around $B$ by $60^\circ$ towards $A$, since $\angle B = 60^\circ$, the image $C'$ will lie on the line $AB$. Since $BC = 7$ and $BA = 14$, $C'$ is the midpoint of $AB$.
+This suggests some nice geometry.
+
+Let's use the rotation of $X$ to align the segments.
+Let's rotate $X$ and some points.
+Consider rotating $C$ and $B$ around $A$? No.
+What if we rotate $X$ around $A$ by $60^\circ$?
+Let $R$ be the rotation around $A$ by $60^\circ$ (direction to be chosen).
+Let $X' = R(X)$. Then $AX' = AX$.
+Also, we can rotate some other points.
+Actually, let's look at the Fermat point of a triangle.
+For a triangle $PQR$, the sum $XP + XQ + XR$ is minimized at the Fermat point, and the minimum sum is the length of a certain segment.
+Specifically, if we rotate $R$ around $P$ by $60^\circ$ to $R'$, then $XP + XQ + XR = X'R' + X'X + XQ \ge Q R'$.
+Here, we have 5 points.
+Can we group them as $(BX + CX + AX) + (DX + EX)$?
+Or $(BX + AX + EX) + (CX + DX)$?
+Wait, $\angle B = 60^\circ$ and $\angle E = 60^\circ$.
+Let's rotate $C$ around $B$ by $60^\circ$ (or $-60^\circ$) and $D$ around $E$ by $60^\circ$ (or $-60^\circ$).
+Let's perform a rotation of $X$ around $B$ by $60^\circ$ to $X_1$, and around $E$ by $60^\circ$ to $X_2$.
+Then $BX = XX_1 = BX_1$, and $EX = XX_2 = EX_2$.
+Also, if we rotate $C$ around $B$ by $60^\circ$ to $C'$, then $CX = C'X_1$.
+So $BX + CX = X_1X + C'X_1 \ge C'X$.
+Similarly, if we rotate $D$ around $E$ by $60^\circ$ to $D'$, then $DX + EX = D'X_2 + X_2X \ge D'X$.
+Thus, $BX + CX + DX + EX \ge C'X + D'X$.
+Then $AX + BX + CX + DX + EX \ge AX + C'X + D'X$.
+For this to be a single straight line, we would need $A, C', D'$ to be collinear?
+Let's check the positions of $C'$ and $D'$.
+We rotate $C$ around $B$ by $60^\circ$ towards $A$.
+Since $\angle B = 60^\circ$, the ray $BC$ rotated by $60^\circ$ towards $A$ is the ray $BA$.
+Since $BC = 7$ and $BA = 14$, the image $C'$ lies on $BA$ with $BC' = 7$.
+Thus, $C'$ is the midpoint of $AB$.
+Since $C'$ is on $AB$, $AC' = 7$.
+Similarly, we rotate $D$ around $E$ by $60^\circ$ towards $A$.
+Since $\angle E = 60^\circ$, the ray $ED$ rotated by $60^\circ$ towards $A$ is the ray $EA$.
+Since $ED = 13$ and $EA = 26$, the image $D'$ lies on $EA$ with $ED' = 13$.
+Thus, $D'$ is the midpoint of $AE$.
+Since $D'$ is on $AE$, $AD' = 13$.
+
+Now, we have:
+$BX + CX \ge C'X$
+$EX + DX \ge D'X$
+So $f(X) = AX + BX + CX + DX + EX \ge AX + C'X + D'X$.
+To minimize $AX + C'X + D'X$, we want to find the Fermat point of $\triangle AC'D'$.
+The minimum of $AX + C'X + D'X$ is achieved when $X$ is the Fermat point of $\triangle AC'D'$.
+Is the minimum value of $AX + C'X + D'X$ equal to the length of the segment obtained by rotating $D'$ around $A$ by $60^\circ$ to $D''$, which is $C'D''$?
+Yes! The minimum of $AX + C'X + D'X$ is indeed the Fermat sum of $\triangle AC'D'$.
+Since $\angle C'AD' = \angle BAE = 60^\circ + \angle CAD < 180^\circ$, and the angles of $\triangle AC'D'$ are likely less than $120^\circ$, the Fermat point lies inside the triangle.
+The minimum sum is equal to the distance $C'D''$, where $D''$ is the image of $D'$ under a $60^\circ$ rotation around $A$ (in the direction away from $C'$).
+Wait, the rotation of $D'$ around $A$ by $60^\circ$ towards the outside of $\triangle AC'D'$.
+Since $\angle C'AD' = 60^\circ + \angle CAD$, if we rotate $D'$ around $A$ by $60^\circ$ towards $C'$, the angle of rotation is $60^\circ$.
+Wait, the Fermat sum of $\triangle AC'D'$ is obtained by rotating $D'$ around $A$ by $60^\circ$ outwards.
+The angle $\angle C'AD''$ will be $\angle C'AD' + 60^\circ$ (if we rotate away from $C'$) or $\angle C'AD' - 60^\circ$ (if we rotate towards $C'$).
+Actually, the standard construction for the Fermat point of $\triangle OPQ$ is to construct an equilateral triangle on $OP$ outwards, say $OPR$, and then the minimum sum is $RQ$.
+Here, the triangle is $\triangle AC'D'$.
+We construct an equilateral triangle on $AD'$ outwards, say $\triangle AD'D''$.
+Then the minimum sum is $C'D''$.
+Since $AD'D''$ is equilateral, $AD'' = AD' = 13$, and $\angle D'AD'' = 60^\circ$.
+Since it is constructed outwards, the angle $\angle C'AD'' = \angle C'AD' + 60^\circ$.
+Wait, is it $+$ or $-$?
+If we construct it outwards, the direction of rotation from $AD'$ to $AD''$ is opposite to the direction from $AD'$ to $AC'$.
+So $\angle C'AD'' = \angle C'AD' + 60^\circ$.
+But wait, $\angle C'AD' = \angle BAE = 60^\circ + \angle CAD$.
+So $\angle C'AD'' = 60^\circ + \angle CAD + 60^\circ = 120^\circ + \angle CAD$.
+Let's calculate $C'D''$ using the Law of Cosines on $\triangle AC'D''$:
+$C'D''^2 = AC'^2 + AD''^2 - 2 AC' \cdot AD'' \cos \angle C'AD''$
+We know $AC' = 7$ and $AD'' = 13$.
+We need $\cos(120^\circ + \angle CAD)$.
+We know $\cos \angle CAD = 1/7$.
+Since $\angle CAD$ is acute, $\sin \angle CAD = \sqrt{1 - 1/49} = \sqrt{48}/7 = 4\sqrt{3}/7$.
+Now,
+$\cos(120^\circ + \angle CAD) = \cos 120^\circ \cos \angle CAD - \sin 120^\circ \sin \angle CAD$
+$= \left(-\frac{1}{2}\right) \left(\frac{1}{7}\right) - \left(\frac{\sqrt{3}}{2}\right) \left(\frac{4\sqrt{3}}{7}\right)$
+$= -\frac{1}{14} - \frac{12}{14} = -\frac{13}{14}$.
+
+Now we substitute this into the Law of Cosines:
+$C'D''^2 = 7^2 + 13^2 - 2 \cdot 7 \cdot 13 \cdot \left(-\frac{13}{14}\right)$
+$= 49 + 169 + 2 \cdot 7 \cdot 13 \cdot \frac{13}{14}$
+$= 49 + 169 + 169$
+$= 49 + 338 = 387$.
+So $C'D'' = \sqrt{387} = \sqrt{9 \cdot 43} = 3\sqrt{43}$.
+
+Wait, is the minimum sum $3\sqrt{43}$?
+Let's check if $m+n\sqrt{p}$ is of this form.
+Here $m=0$, but the problem says $m$ and $n$ are positive integers.
+Ah! "m and n are positive integers".
+Why would $m$ be positive?
+Maybe the minimum is not just $C'D''$?
+Wait, did I make a mistake in the rotation direction?
+If we rotate $D'$ towards $C'$, the angle is $\angle C'AD' - 60^\circ = \angle CAD$.
+Then the distance would be:
+$7^2 + 13^2 - 2 \cdot 7 \cdot 13 \cos \angle CAD = 49 + 169 - 2 \cdot 7 \cdot 13 \cdot (1/7) = 218 - 26 = 192$.
+$\sqrt{192} = 8\sqrt{3}$. Still $m=0$.
+
+Wait, why is $m > 0$?
+Let's re-evaluate:
+$BX + CX \ge C'X$.
+Is the equality $BX + CX = C'X$ possible?
+Wait, $BX + CX = C'X$ requires $X$ to lie on the segment $C'C$?
+No, the rotation was around $B$ by $60^\circ$.
+So $BX = BX_1$ and $CX = C'X_1$.
+For $BX + CX = C'X$, we need $X_1, X, C'$ to be collinear in that order?
+No, the triangle inequality is $C'X_1 + X_1X \ge C'X$.
+Equality holds if and only if $X_1$ lies on the segment $C'X$.
+But $X_1$ is the rotation of $X$ around $B$ by $60^\circ$.
+So $\triangle BXX_1$ is equilateral.
+Thus $\angle BXX_1 = 60^\circ$.
+If $X_1$ lies on $C'X$, then $X, X_1, C'$ are collinear, so $\angle BXC' = 120^\circ$ (since $\angle BXX_1 = 60^\circ$ and $X-X_1-C'$ is a line, wait, if $X_1$ is between $C'$ and $X$, then $X_1$ is on $C'X$, so the direction of $XX_1$ is along $XC'$. Thus $\angle BXC' = \angle BXX_1 = 60^\circ$? No, if $X_1$ is on $C'X$, then $X, X_1, C'$ are collinear, so the line $XX_1$ is the line $XC'$. Since $BX = XX_1 = BX_1$, $\triangle BXX_1$ is equilateral, so the angle of $BX$ with $XC'$ is $60^\circ$ or $120^\circ$).
+Actually, the equality $BX + CX = C'X$ holds if and only if $\angle BXC = 120^\circ$ and $X$ is on the arc of the circle... wait, the standard Fermat point property.
+Yes, the equality holds when $\angle BXC = 120^\circ$.
+Similarly, $DX + EX = D'X$ holds when $\angle DXE = 120^\circ$.
+And for the Fermat point of $\triangle AC'D'$, we have $\angle AXC' = \angle C'XD' = \angle D'XA = 120^\circ$.
+Are these conditions compatible?
+Yes, because the transformation maps the lines such that if $X$ is the Fermat point of $\triangle AC'D'$, then the equality conditions for the other two inequalities are automatically satisfied!
+Wait, is that true?
+Let's check.
+If $X$ is the Fermat point of $\triangle AC'D'$, then $\angle AXC' = 120^\circ$.
+Since $C'$ lies on $AB$, and $X$ is the Fermat point, does $\angle BXC = 120^\circ$?
+Actually, the minimum of $AX + BX + CX + DX + EX$ is indeed achieved when we can lay them in a straight line.
+Wait, the sum is $AX + BX + CX + DX + EX$.
+Is it possible that we can't just do this?
+Let's look at the value $m + n\sqrt{p}$.
+Could $m$ be the length of some other segment?
+Wait, $BX + CX \ge BC$ is not what we used?
+Wait, is $C'X$ the one?
+Ah, $BX + CX \ge C'X$ is true.
+But we also have $AX$.
+Wait, is $AX + C'X + D'X$ the right sum?
+What if we group them differently?
+What if we don't use $C'$ and $D'$?
+Wait, $C'$ is the rotation of $C$ around $B$.
+But $B$ is a fixed point.
+Is $BX + CX \ge C'X$ the best inequality?
+Actually, $BX + CX \ge \dots$
+Wait, $BC = 7$.
+What if we use the fact that $C'$ is the midpoint of $AB$?
+Then $C'X \le AX + AC'$? No.
+Wait, $AX + C'X \ge AC' = 7$.
+So $AX + BX + CX + DX + EX \ge C'X + D'X + AX \ge \dots$
+Wait, if $AX + C'X \ge AC' = 7$, and $DX + EX \ge D'X$, then we get some other bound.
+But we want the minimum of $AX + C'X + D'X$.
+Is the minimum of $AX + C'X + D'X$ achieved at a point $X$ where the equality $BX + CX = C'X$ holds?
+For $BX + CX = C'X$ to hold, $X$ must lie on the arc of the circle.
+But the Fermat point of $\triangle AC'D'$ might not lie on this arc!
+If it doesn't, then we cannot achieve equality in both simultaneously.
+Wait, is there a way to write $AX + BX + CX + DX + EX$ as a single chain of segments?
+Let's rotate the entire figure!
+Rotate $C$ and $B$ around $A$?
+No, the angles at $B$ and $E$ are $60^\circ$.
+Let's rotate $C$ around $B$ by $60^\circ$ to $C'$ (which is on $AB$).
+Then $BC = BC' = 7$.
+Since $\angle B = 60^\circ$, $\triangle BCC'$ is equilateral.
+So $BC = CC' = 7$.
+For any $X$, $BX + CX \ge CC' = 7$? No, $BX + CX \ge CX$ is not $CC'$.
+Actually, in $\triangle BCC'$, for any $X$, $BX + CX \ge CC' = 7$ is NOT true (e.g., if $X=C$, $BC + 0 = 7 \ge 7$).
+Wait, by triangle inequality on $\triangle BCX$, $BX + CX \ge BC = 7$.
+But we have $BX + CX \ge C'X$.
+Also, $DX + EX \ge D'X$.
+Is there a relation $AX + BX + CX + DX + EX$?
+What if we rotate $C$ around $B$ by $60^\circ$ to $C'$ (midpoint of $AB$), so $BX + CX \ge C'X$.
+And rotate $D$ around $E$ by $60^\circ$ to $D'$ (midpoint of $AE$), so $DX + EX \ge D'X$.
+Then $f(X) \ge AX + C'X + D'X$.
+Since $C'$ is on $AB$ and $D'$ is on $AE$,
+$AX + C'X \ge AC' = 7$? No, $C'X + AX \ge AC' = 7$.
+And $D'X + AX \ge AD' = 13$.
+But we can also use $C'X + D'X \ge C'D'$.
+Actually, for any $X$, $AX + C'X + D'X$ is minimized at the Fermat point of $\triangle AC'D'$.
+But wait, is the Fermat point of $\triangle AC'D'$ actually $A$ itself?
+The angle $\angle C'AD' = 60^\circ + \angle CAD \approx 141.8^\circ$.
+Since this angle is greater than $120^\circ$, the Fermat point of $\triangle AC'D'$ is $A$!
+Ah!!!
+If the angle at $A$ is $> 120^\circ$, the point that minimizes $AX + C'X + D'X$ is $A$ itself!
+Let's check this.
+If $X = A$, then $AX + C'X + D'X = 0 + AC' + AD' = 7 + 13 = 20$.
+But wait, if $X = A$, then $BX + CX + DX + EX = AB + AC + AD + AE = 14 + 7\sqrt{3} + 13\sqrt{3} + 26 = 40 + 20\sqrt{3}$.
+But the minimum of $AX + C'X + D'X$ is indeed at $X = A$, which is $20$.
+However, we cannot have $BX + CX = C'X$ and $DX + EX = D'X$ at $X = A$.
+Wait, if $X = A$, then $BX + CX = 14 + 7\sqrt{3} \approx 26.1$, while $C'A = 7$.
+So the lower bound $f(X) \ge AX + C'X + D'X \ge 20$ is very loose because we cannot achieve equality.
+
+We need a tighter transformation.
+Let's rotate the points to make a single path.
+We want to minimize $CX + XB + XA + XE + XD$.
+Let's rotate $C$ around $B$ by $60^\circ$ to $C'$ (which is the midpoint of $AB$, so $C'$ is on $AB$).
+Wait, if we rotate $C$ around $B$ by $60^\circ$ to $C'$, then $BC = BC' = 7$.
+And we rotate $X$ around $B$ by $60^\circ$ to $X'$.
+Then $BX = XX'$ and $CX = C'X'$.
+So $CX + XB = C'X' + X'X$.
+Similarly, rotate $D$ around $E$ by $60^\circ$ to $D'$ (midpoint of $AE$).
+Rotate $X$ around $E$ by $60^\circ$ to $X''$.
+Then $DX + XE = D'X'' + X''X$.
+So $f(X) = C'X' + X'X + XA + XX'' + X''D'$.
+This is a path from $C'$ to $D'$: $C' \to X' \to X \to X'' \to D'$.
+Wait, the path is $C' - X' - X - X'' - D'$.
+But $XA$ is also in the sum!
+Ah, $XA$ is the middle segment.
+So the path is $C' - X' - X - A$ and $A - X - X'' - D'$?
+No, the sum is $C'X' + X'X + XA + XX'' + X''D'$.
+This is exactly the length of the path $C' - X' - X - A - X - X'' - D'$?
+No, $XA$ is traversed, but $X$ is visited, then we go to $A$, then we have to go back to $X$?
+No, $XA$ is just one segment.
+Wait, $C'X' + X'X + XA + XX'' + X''D'$ is NOT a single path because $X$ is connected to $X'$, $X''$, and $A$.
+So $X$ is a junction.
+Actually, $X'$ is the rotation of $X$ around $B$ by $60^\circ$.
+Since $C'$ is the rotation of $C$ around $B$ by $60^\circ$, the segment $C'X'$ is the rotation of $CX$ around $B$ by $60^\circ$.
+So $C'X' = CX$.
+And $XX' = BX$ because $\triangle BXX'$ is equilateral.
+So $CX + XB = C'X' + X'X$.
+Since $X'$ is the rotation of $X$ around $B$ by $60^\circ$, the angle $\angle BXX' = 60^\circ$.
+This means $C' - X' - X$ is a straight line if and only if ...
+Actually, we can just rotate the points.
+Is there a way to rotate $C$ around $B$ and $D$ around $E$ such that we get a straight line?
+Let's look at the sum:
+$f(X) = CX + XB + XA + XE + XD$.
+Let's rotate $C$ around $B$ by $60^\circ$ to $C'$ (midpoint of $AB$).
+Then $CX + XB \ge C'X$.
+And rotate $D$ around $E$ by $60^\circ$ to $D'$ (midpoint of $AE$).
+Then $DX + XE \ge D'X$.
+So $f(X) \ge C'X + XA + D'X$.
+Since $C'$ is on $AB$ and $D'$ is on $AE$, and $A$ is the common vertex.
+We want to minimize $C'X + XA + D'X$.
+Wait! $C', A, D'$ are three points.
+$C'X + XA + D'X$ is the sum of distances from $X$ to $C', A, D'$.
+This is exactly the Fermat point problem for $\triangle AC'D'$!
+The minimum of $C'X + XA + D'X$ is indeed the Fermat sum of $\triangle AC'D'$.
+But wait, is the Fermat point of $\triangle AC'D'$ inside the triangle?
+We calculated $\angle C'AD' = 141.8^\circ > 120^\circ$.
+If the angle is $> 120^\circ$, the minimum of $C'X + XA + D'X$ is achieved at $X = A$.
+But if $X = A$, then $C'A + AA + D'A = 7 + 0 + 13 = 20$.
+But we can't have $BX + CX = C'X$ at $X = A$.
+Wait, if $X = A$, then $BX + CX = AB + AC = 14 + 7\sqrt{3}$.
+And $C'A = 7$.
+Clearly, $14 + 7\sqrt{3} \approx 26.1 \neq 7$.
+So the minimum of $f(X)$ is NOT 20.
+Why? Because the minimum of $C'X + XA + D'X$ is at $X=A$, but at $X=A$, the inequality $BX + CX \ge C'X$ is not tight.
+Wait, is there another rotation?
+What if we rotate $A$ and $C$ around $B$?
+Let's rotate $A$ around $B$ by $60^\circ$ to $A'$.
+Then $BA' = BA = 14$.
+Since $\angle B = 60^\circ$, $A'$ lies on the line $BC$.
+Specifically, since $BC = 7$, $C$ is the midpoint of $BA'$.
+So $A'C = 7$.
+Also, rotate $X$ around $B$ by $60^\circ$ to $X'$.
+Then $BX = XX'$ and $AX = A'X'$.
+So $AX + BX + CX = A'X' + X'X + XC \ge A'C = 7$? No, $A'X' + X'X + XC \ge A'C$ is true, but $A'C = 7$ is too small.
+Wait, $A'X' + X'X + XC$ is a path from $A'$ to $C$ via $X'$ and $X$.
+The minimum of this path is $A'C = 7$.
+But $X$ and $X'$ must be related by rotation.
+Actually, $AX + BX + CX$ is minimized at the Fermat point of $\triangle ABC$.
+Since $\angle B = 60^\circ$, the Fermat point of $\triangle ABC$ is...
+Wait, $\triangle ABC$ has $AB = 14, BC = 7, \angle B = 60^\circ$.
+The angle $\angle ACB = 90^\circ$ and $\angle BAC = 30^\circ$.
+Since all angles are $< 120^\circ$, the Fermat point $Y_1$ of $\triangle ABC$ lies inside.
+The minimum of $AX + BX + CX$ is the Fermat sum of $\triangle ABC$.
+To find this, we rotate $C$ around $B$ by $60^\circ$ to $C'$ (midpoint of $AB$).
+Then the Fermat sum is $AC' = 7$? No, we rotate $A$ around $B$ by $60^\circ$ to $A'$, then the sum is $CA'$.
+Since $C$ is the midpoint of $BA'$, $CA' = 7$.
+Wait, is the Fermat sum of $\triangle ABC$ really 7?
+No, $AX + BX + CX \ge 7$ is true, but we can't get 7?
+If $X = C$, then $AC + BC + CC = 7\sqrt{3} + 7 + 0 = 7 + 7\sqrt{3} \approx 19.1$.
+Why is the Fermat sum not 7?
+Ah! The rotation of $A$ around $B$ by $60^\circ$ must be OUTWARDS.
+If we rotate $A$ around $B$ by $60^\circ$ outwards (away from $C$), then the angle $\angle A'BC = \angle B + 60^\circ = 120^\circ$.
+Then $BA' = 14$, $BC = 7$, and $\angle A'BC = 120^\circ$.
+Then $A'C^2 = 14^2 + 7^2 - 2 \cdot 14 \cdot 7 \cos 120^\circ = 196 + 49 + 98 = 343$.
+So $A'C = \sqrt{343} = 7\sqrt{7}$.
+This is the minimum of $AX + BX + CX$.
+Similarly, for $\triangle ADE$, we rotate $A$ around $E$ by $60^\circ$ outwards to $A''$.
+Then $EA'' = 26$, $ED = 13$, and $\angle A''ED = 120^\circ$.
+Then $A''D^2 = 26^2 + 13^2 - 2 \cdot 26 \cdot 13 \cos 120^\circ = 676 + 169 + 338 = 1183$.
+So $A''D = \sqrt{1183} = 13\sqrt{7}$.
+This is the minimum of $AX + DX + EX$.
+
+Wait, we want to minimize $AX + BX + CX + DX + EX$.
+Notice that $AX$ is shared!
+$f(X) = (AX + BX + CX) + (AX + DX + EX) - AX$? No, that doesn't help.
+But we can write:
+$BX + CX \ge C'X$ where $C'$ is the rotation of $C$ around $B$ by $60^\circ$ outwards?
+No, if we rotate $C$ around $B$ by $60^\circ$ inwards, we got $C'$ as the midpoint of $AB$.
+Wait, if we rotate $C$ around $B$ by $60^\circ$ outwards, we get $C''$.
+Then $BX + CX \ge C''X$.
+But we want to align them.
+Actually, let's use the Fermat point of the pentagon.
+Is there a known formula for this?
+"The least possible value of $f(X)$ can be expressed as $m+n\sqrt{p}$."
+Could the minimum be achieved when $X$ is on the segment $AD$?
+Let's look at the values:
+$7\sqrt{7}$ and $13\sqrt{7}$.
+Sum is $20\sqrt{7}$.
+Wait, $7\sqrt{7} + 13\sqrt{7} = 20\sqrt{7}$.
+Is the answer of the form $m + n\sqrt{p}$?
+If the minimum is $20\sqrt{7}$, then $m=0$, but $m$ must be a positive integer.
+Wait, what if the minimum is $14 + 13\sqrt{3}$?
+Let's search for the minimum of $AX + BX + CX + DX + EX$.
+Actually, we can reflect or rotate.
+Let's rotate $\triangle ABC$ around $B$ by $60^\circ$ to $\triangle A'BC'$.
+And rotate $\triangle ADE$ around $E$ by $60^\circ$ to $\triangle A''D'E$.
+This is getting complicated.
+Let's use coordinates.
+Since $\triangle ABC$ is a right triangle at $C$ with $BC = 7, AC = 7\sqrt{3}, AB = 14$.
+Let $C$ be the origin $(0,0)$.
+Then $BC$ is along the y-axis?
+Let's set $C = (0,0)$.
+Since $\angle ACB = 90^\circ$, we can set $CA$ along the x-axis and $CB$ along the y-axis.
+So $C = (0,0)$.
+$A = (7\sqrt{3}, 0)$.
+$B = (0, 7)$.
+Then $AB = \sqrt{147 + 49} = 14$.
+$\angle B = 60^\circ$ is satisfied because $\tan \angle CAB = 7 / (7\sqrt{3}) = 1/\sqrt{3} \implies \angle CAB = 30^\circ \implies \angle B = 60^\circ$.
+
+Now, what about $D$ and $E$?
+We know $CD = 24$.
+And $AD = 13\sqrt{3}$.
+Let $D = (x, y)$.
+$CD^2 = x^2 + y^2 = 24^2 = 576$.
+$AD^2 = (x - 7\sqrt{3})^2 + y^2 = (13\sqrt{3})^2 = 507$.
+Subtracting the two equations:
+$x^2 - (x - 7\sqrt{3})^2 = 576 - 507 = 69$
+$14\sqrt{3} x - 147 = 69$
+$14\sqrt{3} x = 216$
+$x = \frac{216}{14\sqrt{3}} = \frac{108}{7\sqrt{3}} = \frac{36\sqrt{3}}{7}$.
+Then $y^2 = 576 - x^2 = 576 - \frac{3888}{49} = \frac{28224 - 3888}{49} = \frac{24336}{49}$.
+Since $\sqrt{24336} = 156$, we have $y = \pm \frac{156}{7}$.
+Since the pentagon is convex, $D$ and $B$ must be on opposite sides of $AC$, or we must check the orientation.
+$B = (0,7)$ has $y > 0$.
+For the pentagon to be convex, $D$ should have $y < 0$.
+So $D = \left(\frac{36\sqrt{3}}{7}, -\frac{156}{7}\right)$.
+
+Now we need to find $E$.
+We know $\triangle ADE$ is a right triangle at $D$ with $DE = 13, AD = 13\sqrt{3}, AE = 26$.
+And $\angle DAE = 30^\circ, \angle E = 60^\circ$.
+Since the pentagon is convex, $E$ must be on the "outer" side.
+Actually, we can find the coordinates of $E$.
+But we want to minimize $AX + BX + CX + DX + EX$.
+Is there a point $X$ that makes this extremely simple?
+Wait, what if $X$ is the intersection of some lines?
+Let's look at the sum of distances.
+Is there a point $X$ such that $AX + BX + CX + DX + EX$ is minimized?
+Wait, $AX + BX + CX \ge 7\sqrt{7}$ (with equality at the Fermat point of $ABC$, let's call it $F_1$).
+$AX + DX + EX \ge 13\sqrt{7}$ (with equality at the Fermat point of $ADE$, let's call it $F_2$).
+If $F_1$ and $F_2$ are the same point, then the minimum is $7\sqrt{7} + 13\sqrt{7} - AX$? No, the sum is $AX + BX + CX + DX + EX$.
+Wait!
+If we choose $X$ to be the Fermat point of some triangle, say $X = C$?
+No.
+What if $X$ is the point $C$?
+Then $f(C) = AC + BC + 0 + CD + CE$.
+What if $X$ is on the segment $AD$?
+Actually, there is a theorem:
+For any point $X$,
+$BX + CX \ge C'X$ where $C'$ is the midpoint of $AB$ (if we rotate by $60^\circ$).
+Wait, earlier we had:
+$BX + CX \ge C'X$ where $C'$ is the midpoint of $AB$.
+And $DX + EX \ge D'X$ where $D'$ is the midpoint of $AE$.
+So $f(X) \ge AX + C'X + D'X$.
+Since $C'$ is the midpoint of $AB$, and $D'$ is the midpoint of $AE$.
+Wait, is $C'X + D'X \ge C'D'$?
+Yes, so $AX + C'X + D'X \ge AX + C'D'$.
+But we also have $AX + C'X + D'X \ge \dots$
+Wait!
+$C'$ is the midpoint of $AB$, so $C' = \frac{A+B}{2}$? No, geometrically, $C'$ is the midpoint of $AB$ because $BC' = 7$ and $BA = 14$, and $C'$ lies on $AB$.
+So $C'$ is indeed the midpoint of $AB$.
+$D'$ is the midpoint of $AE$.
+So $C'D'$ is the midline of $\triangle ABE$!
+Thus $C'D' = \frac{1}{2} BE$.
+Also, $AX + C'X + D'X$.
+By triangle inequality, $C'X + D'X \ge C'D'$.
+And $AX \ge 0$.
+So $AX + C'X + D'X \ge C'D'$.
+But we can do better:
+Since $C'$ is on $AB$ and $D'$ is on $AE$,
+$C'X + XA \ge C'A = 7$.
+$D'X + XA \ge D'A = 13$.
+So $2AX + C'X + D'X \ge 20$.
+But we want to minimize $AX + C'X + D'X$.
+Since $A, C', D'$ form a triangle, the minimum of $AX + C'X + D'X$ is the Fermat sum of $\triangle AC'D'$.
+But since $\angle C'AD' > 120^\circ$, the minimum is at $X = A$, which gives $AC' + AD' = 7 + 13 = 20$.
+Wait! If the minimum of $AX + C'X + D'X$ is indeed 20, then for any $X$,
+$AX + C'X + D'X \ge 20$.
+Is this true?
+Yes, because if $\angle A > 120^\circ$, then for any $X$, $AX + C'X + D'X \ge AC' + AD' = 20$.
+Let's check this:
+If $X = A$, the sum is $0 + 7 + 13 = 20$.
+For any other $X$, since $\angle C'AD' > 120^\circ$, the sum is $> 20$.
+So indeed, $AX + C'X + D'X \ge 20$ for all $X$.
+Therefore, $f(X) \ge AX + C'X + D'X \ge 20$.
+But we cannot achieve 20 because at $X = A$, $BX + CX = 14 + 7\sqrt{3} \approx 26.1 > 7 = C'A$.
+So the minimum must be larger.
+
+Wait, is there another way?
+What if we rotate $C$ around $B$ by $60^\circ$ OUTWARDS to $C''$?
+Then $BX + CX \ge C''X$.
+And rotate $D$ around $E$ by $60^\circ$ OUTWARDS to $D''$?
+Then $EX + DX \ge D''X$.
+Then $f(X) \ge AX + C''X + D''X$.
+What are the positions of $C''$ and $D''$?
+$C''$ is the rotation of $C$ around $B$ by $60^\circ$ outwards.
+Since $\angle B = 60^\circ$, the outward rotation of $BC$ by $60^\circ$ around $B$ is the line $AB$ extended past $B$.
+So $B$ is the midpoint of $AC''$?
+No, $BC = 7$, so $BC'' = 7$.
+Since $C''$ is on the extension of $AB$ past $B$, and $AB = 14$, we have $AC'' = AB + BC'' = 14 + 7 = 21$.
+Similarly, $D''$ is on the extension of $AE$ past $E$, with $ED'' = 13$.
+So $AD'' = AE + ED'' = 26 + 13 = 39$.
+Now, we have $f(X) \ge AX + C''X + D''X$.
+We want to minimize $AX + C''X + D''X$.
+The angle $\angle C''AD'' = \angle BAE = 60^\circ + \angle CAD \approx 141.8^\circ > 120^\circ$.
+So the minimum of $AX + C''X + D''X$ is also at $X = A$, which is $21 + 39 = 60$.
+But at $X = A$, $BX + CX = 14 + 7\sqrt{3} \approx 26.1$, while $C''A = 21$.
+Still not equal.
+
+Wait!
+What if we rotate $A$ around $B$ by $60^\circ$ to $A'$ and $A$ around $E$ by $60^\circ$ to $A''$?
+Then $AX + BX + CX \ge A'X + CX$?
+Actually, the standard way to minimize $AX + BX + CX + DX + EX$ when $\angle B = \angle E = 60^\circ$:
+Let's reflect or rotate.
+Consider the rotation of $A$ around $B$ by $60^\circ$ to $A_1$, and $C$ around $B$ by $60^\circ$ to $C_1$.
+Actually, if we rotate the point $X$ to $X_1$ around $B$ by $60^\circ$, and $X$ to $X_2$ around $E$ by $60^\circ$.
+Then $BX = XX_1$ and $EX = XX_2$.
+Also, $AX = A_1X_1$ and $DX = D_2X_2$ where $A_1$ is $A$ rotated around $B$ by $60^\circ$, and $D_2$ is $D$ rotated around $E$ by $60^\circ$.
+Then $AX + BX + CX + DX + EX = A_1X_1 + X_1X + CX + XX_2 + X_2D_2$.
+This is a path: $A_1 - X_1 - X - C$ and $C - X - X_2 - D_2$?
+No, the sum is $A_1X_1 + X_1X + XC + XD_2$ ... wait, $CX$ is there, but what about $DX$?
+$DX = D_2X_2$.
+So the sum is $A_1X_1 + X_1X + XC + XX_2 + X_2D_2$.
+This is a single path from $A_1$ to $D_2$!
+Path: $A_1 \to X_1 \to X \to C \to X \to X_2 \to D_2$?
+No, $XC$ is not a single segment if we go to $C$ and then to $X_2$.
+Wait, the path is $A_1 \to X_1 \to X \to X_2 \to D_2$.
+The length of this path is $A_1X_1 + X_1X + XX_2 + X_2D_2 = AX + BX + EX + DX$.
+But we also have $CX$.
+Wait, if we choose the rotation directions such that $C$ lies on the segment?
+Actually, if we rotate $A$ around $B$ by $60^\circ$ to $A_1$ (outwards).
+Since $AB = 14, BC = 7, \angle B = 60^\circ$.
+If we rotate $A$ around $B$ by $60^\circ$ towards $C$, then since $\angle B = 60^\circ$, the image $A_1$ lies on the line $BC$.
+Since $BA = 14$ and $BC = 7$, $C$ is the midpoint of $BA_1$.
+So $A_1, C, B$ are collinear, with $C$ between $A_1$ and $B$.
+Specifically, $A_1C = 7$ and $CB = 7$.
+Now, rotate $X$ around $B$ by $60^\circ$ to $X_1$ (in the same direction).
+Then $AX = A_1X_1$ and $BX = XX_1$.
+So $AX + BX + CX = A_1X_1 + X_1X + XC$.
+Since $A_1, C, X_1, X$ can be aligned, the minimum of $A_1X_1 + X_1X + XC$ is $A_1C = 7$?
+No, $X_1$ is the rotation of $X$, so we can't just place them anywhere.
+But by triangle inequality, $A_1X_1 + X_1X + XC \ge A_1C = 7$ is true, but we can also write:
+Since $C$ is on the segment $A_1B$, and $X_1$ is the rotation of $X$ around $B$ by $60^\circ$.
+Actually, there is a known identity:
+$AX + BX + CX \ge \dots$
+Wait, if $C$ is the midpoint of $A_1B$, then for any $X$,
+$AX + 2CX \ge \dots$?
+No.
+Let's look at the other side.
+Rotate $A$ around $E$ by $60^\circ$ to $A_2$ (towards $D$).
+Since $AE = 26, ED = 13, \angle E = 60^\circ$.
+The image $A_2$ lies on the line $ED$, and $D$ is the midpoint of $EA_2$.
+So $A_2D = 13$ and $DE = 13$.
+Rotate $X$ around $E$ by $60^\circ$ to $X_2$.
+Then $AX = A_2X_2$ and $EX = XX_2$.
+So $AX + EX + DX = A_2X_2 + X_2X + XD \ge A_2D = 13$.
+
+Wait, we have:
+$AX + BX + CX = A_1X_1 + X_1X + XC$.
+$AX + EX + DX = A_2X_2 + X_2X + XD$.
+Can we combine these?
+Actually, $AX = A_1X_1 = A_2X_2$.
+This means $A_1X_1 = A_2X_2$.
+Is there a way to get $m + n\sqrt{p}$?
+Let's guess the structure of the minimum.
+Could it be $CD + \text{something}$?
+$CD = 24$.
+What if the minimum is $24 + 10\sqrt{3}$?
+Let's check if $24 + 10\sqrt{3}$ is possible.
+If $m = 24, n = 10, p = 3$, then $m+n+p = 37$.
+What if the minimum is $24 + 7\sqrt{3} + 13\sqrt{3} = 24 + 20\sqrt{3}$?
+Then $m=24, n=20, p=3 \implies 47$.
+Let's check if $X$ can be chosen such that $f(X) = 24 + 10\sqrt{3}$ or something.
+Wait, $CD = 24$.
+If $X$ lies on the segment $CD$, then $CX + DX = CD = 24$.
+Then we need to minimize $AX + BX + EX$ for $X$ on $CD$.
+If $X$ is on $CD$, can we have $AX + BX + EX$ be small?
+Actually, if $X = C$, then $f(C) = AC + BC + 0 + CD + CE$.
+Wait, $CE$ is not given, but we can find it.
+If $X$ is the intersection of $AD$ and $BC$?
+No, $ABCDE$ is a pentagon.
+Let's think if there is a simpler case.
+If $X$ is the point $A$.
+Then $f(A) = 0 + 14 + 7\sqrt{3} + 13\sqrt{3} + 26 = 40 + 20\sqrt{3}$.
+Here $m=40, n=20, p=3 \implies 63$.
+But we can probably do better.
+What if $X$ is the point where $AX + BX + CX$ and $AX + DX + EX$ are minimized?
+Wait, if we choose $X$ such that $X, B, C$ are collinear and $X, E, D$ are collinear?
+Actually, the minimum of $AX + BX + CX + DX + EX$ is achieved at some point.
+Could the minimum value be $24 + 10\sqrt{3}$?
+Wait, $10\sqrt{3} \approx 17.32$, so $24 + 17.32 = 41.32$.
+$40 + 20\sqrt{3} \approx 40 + 34.64 = 74.64$.
+So $41.32$ is much smaller.
+Is $24 + 10\sqrt{3}$ achievable?
+If $X$ is on $CD$, then $CX + DX = 24$.
+We need $AX + BX + EX = 10\sqrt{3} \approx 17.32$.
+But $AB = 14$ and $AE = 26$, so $AX + BX + EX$ must be at least $AE = 26$ (by $BX \ge 0$ and $AX + EX \ge AE = 26$).
+So $AX + BX + EX \ge 26$.
+Thus, if $X$ is on $CD$, $f(X) \ge 24 + 26 = 50$.
+Wait, if $X$ is on $CD$, then $AX + EX \ge AE = 26$ is not necessarily true if $X$ is not on $AE$, but by triangle inequality $AX + EX \ge AE = 26$ is ALWAYS true for any point $X$ in the plane!
+So $AX + EX \ge 26$ is always true.
+Since $BX \ge 0$ and $CX + DX \ge CD = 24$, we must have:
+$f(X) = (AX + EX) + BX + (CX + DX) \ge 26 + 0 + 24 = 50$.
+So $f(X) \ge 50$ for any point $X$!
+Wait, is this true?
+Yes! $AX + EX \ge AE = 26$ is always true.
+$CX + DX \ge CD = 24$ is always true.
+$BX \ge 0$ is always true.
+So $f(X) \ge 50$.
+Thus, the minimum must be at least 50.
+Let's check if we can get something like $26 + 24\sqrt{3}$? No, 50 is already a lower bound.
+Wait, if $f(X) \ge 50$, then $m + n\sqrt{p}$ must be at least 50.
+Let's look at $f(X) = AX + BX + CX + DX + EX$.
+We have $AX + EX \ge 26$.
+And $BX + CX \ge BC = 7$.
+And $DX \ge 0$.
+So $f(X) \ge 26 + 7 = 33$, which is weaker than 50.
+What about $AX + BX \ge 14$, $DX + EX \ge 13$, $CX \ge 0$? Sum $\ge 27$.
+What about $BX + CX \ge 7$, $DX + EX \ge 13$, $AX \ge 0$? Sum $\ge 20$.
+But the strongest simple bound is $AX + EX \ge 26$ and $CX + DX \ge 24$, which gives $f(X) \ge 50 + BX \ge 50$.
+Can we get close to 50?
+If $X$ is on $AE$ and also on $CD$.
+But $AE$ and $CD$ might not intersect, or if they do, $BX$ would be positive.
+Actually, if $X$ is the intersection of $AE$ and $CD$.
+Then $AX + EX = 26$ and $CX + DX = 24$.
+Then $f(X) = 50 + BX$.
+What is $BX$ for this intersection point?
+Let's estimate.
+If $m + n\sqrt{p}$ is the minimum, and it is around 50-60.
+Could it be $14 + 20\sqrt{3}$?
+$14 + 20\sqrt{3} \approx 14 + 34.64 = 48.64 < 50$, impossible.
+Could it be $20 + 20\sqrt{3}$?
+$20 + 20\sqrt{3} \approx 54.64$.
+Could it be $14 + 13\sqrt{7}$?
+$13\sqrt{7} \approx 13 \cdot 2.645 = 34.39$.
+$14 + 34.39 = 48.39 < 50$, impossible.
+What about $14 + 14\sqrt{7} \approx 51.03$?
+What about $20 + 10\sqrt{13}$?
+Let's think.
+Is there a way to write $f(X)$ as $AX + BX + CX + DX + EX \ge \dots$
+Wait, we had:
+$BX + CX \ge C'X$ where $C'$ is the midpoint of $AB$ (so $AC' = 7$).
+$DX + EX \ge D'X$ where $D'$ is the midpoint of $AE$ (so $AD' = 13$).
+So $f(X) \ge AX + C'X + D'X$.
+Since $C'$ is the midpoint of $AB$, and $D'$ is the midpoint of $AE$.
+Wait, is $AX + C'X + D'X$ minimized at some point?
+Yes, we said the Fermat point of $\triangle AC'D'$ is $A$ because $\angle C'AD' > 120^\circ$.
+But wait!
+Is $\angle C'AD' > 120^\circ$?
+We had $\cos \angle CAD = 1/7$.
+$\angle C'AD' = 60^\circ + \angle CAD$.
+Wait, why is $\angle C'AD' = 60^\circ + \angle CAD$?
+Ah!
+$\angle BAE = \angle BAC + \angle CAD + \angle DAE$.
+We know $\angle BAC = 30^\circ$ and $\angle DAE = 30^\circ$.
+So $\angle BAE = 30^\circ + \angle CAD + 30^\circ = 60^\circ + \angle CAD$.
+Since $C'$ is on $AB$ and $D'$ is on $AE$, the angle $\angle C'AD'$ is exactly $\angle BAE$.
+So $\angle C'AD' = 60^\circ + \angle CAD$.
+Since $\cos \angle CAD = 1/7$, $\angle CAD \approx 81.8^\circ$.
+So $\angle C'AD' \approx 141.8^\circ > 120^\circ$.
+So the Fermat point of $\triangle AC'D'$ is indeed $A$.
+But wait, if the Fermat point is $A$, then the minimum of $AX + C'X + D'X$ is $AC' + AD' = 7 + 13 = 20$.
+But this minimum is achieved at $X = A$.
+Is there any other inequality?
+What if we didn't use $C'$ and $D'$?
+What if we used $C''$ and $D''$ (the outward ones)?
+Then $AC'' = 21$ and $AD'' = 39$.
+The angle is still $141.8^\circ > 120^\circ$.
+So the minimum of $AX + C''X + D''X$ is also at $X = A$, which is $21 + 39 = 60$.
+Wait!
+If $X = A$, then $AX + C''X + D''X = 60$.
+But is $BX + CX \ge C''X$ tight at $X = A$?
+At $X = A$, $BX + CX = 14 + 7\sqrt{3} \approx 26.12$.
+And $C''A = 21$.
+So $BX + CX - C''A = 14 + 7\sqrt{3} - 21 = 7\sqrt{3} - 7 \approx 5.12$.
+And $DX + EX - D''A = 13\sqrt{3} + 26 - 39 = 13\sqrt{3} - 13 \approx 9.5$.
+So $f(A) = 60 + (7\sqrt{3} - 7) + (13\sqrt{3} - 13) = 40 + 20\sqrt{3} \approx 74.64$.
+
+Wait, is there a point $X$ where $AX + C''X + D''X$ is not at $A$?
+No, because the angle is $> 120^\circ$, so for any $X \neq A$, $AX + C''X + D''X > 60$.
+But maybe the sum $f(X)$ is minimized at some other point?
+Actually, $f(X) \ge C''X + D''X$ is also true (since $AX \ge 0$).
+What is the minimum of $C''X + D''X$?
+It is $C''D''$.
+Since $C''D''$ is a straight line, we can achieve $C''X + D''X = C''D''$ for any $X$ on the segment $C''D''$.
+If we can find a point $X$ on $C''D''$ such that $AX + C''X + D''X$ is minimized?
+No, on the segment $C''D''$, $C''X + D''X = C''D''$ (constant).
+So we just need to minimize $AX$ for $X$ on $C''D''$.
+The minimum of $AX$ for $X$ on $C''D''$ is the distance from $A$ to the line $C''D''$.
+Let's check if this point $X$ also satisfies the equality for $BX + CX \ge C''X$ and $DX + EX \ge D''X$.
+Wait!
+The equality $BX + CX = C''X$ holds if and only if $X$ lies on the segment $C''C$ and ...
+Actually, the rotation of $X$ around $B$ by $60^\circ$ is $X'$.
+We have $BX + CX = XX' + X'C'' \ge XC''$.
+Equality holds if and only if $X'$ lies on the segment $XC''$.
+Since $X'$ is the rotation of $X$ around $B$ by $60^\circ$, this requires $\angle BXC'' = 60^\circ$ and some orientation.
+It turns out that the set of points $X$ for which $BX + CX = C''X$ is the arc of a circle!
+Specifically, the circumcircle of $\triangle BCC''$ (which is equilateral, so it's the circle through $B, C, C''$).
+Wait, the circle through $B, C, C''$ has $BC''$ as a chord.
+Since $\triangle BCC''$ is equilateral, the arc of the circle indeed gives $\angle BXC'' = 60^\circ$ or $120^\circ$.
+Similarly, $DX + EX = D''X$ holds for $X$ on the circumcircle of $\triangle EDD''$.
+So we need $X$ to lie on both circles? That's only at most two points, which might not lie on $C''D''$.
+But wait!
+Is $f(X) \ge C''D''$ always true?
+Yes, because $f(X) \ge C''X + D''X \ge C''D''$.
+Wait, is $f(X) \ge C''D''$ true?
+Let's check:
+$BX + CX \ge C''X$ is true for ALL $X$.
+$DX + EX \ge D''X$ is true for ALL $X$.
+And $AX \ge 0$ is true for ALL $X$.
+So $f(X) = AX + (BX + CX) + (DX + EX) \ge 0 + C''X + D''X \ge C''D''$.
+So $f(X) \ge C''D''$ is a universal lower bound!
+Can we achieve this lower bound?
+To achieve $f(X) = C''D''$, we need:
+1. $AX = 0 \implies X = A$.
+2. $BX + CX = C''X$ at $X = A$.
+3. $DX + EX = D''X$ at $X = A$.
+But we already saw that at $X = A$, these are not tight.
+So $f(A) > C''D''$.
+But what if we don't set $AX = 0$?
+Can we have $AX + C''X + D''X = C''D''$?
+No, because $AX \ge 0$, so $AX + C''X + D''X \ge C''D''$.
+Actually, the minimum of $AX + C''X + D''X$ is $C''D''$ if $A$ lies on the segment $C''D''$.
+But $A$ does not lie on $C''D''$ (the angle $\angle C''AD'' \approx 141.8^\circ \neq 180^\circ$).
+Wait, is there another rotation?
+What if we rotate $C$ around $B$ by $60^\circ$ and $D$ around $E$ by $-60^\circ$?
+Then we get different points, but the sum of distances will be represented by a different segment.
+Actually, the minimum of $AX + BX + CX + DX + EX$ is indeed of the form $m + n\sqrt{p}$.
+Let's assume the minimum is $14 + 13\sqrt{7}$? No, we had $7\sqrt{7} + 13\sqrt{7} = 20\sqrt{7}$.
+Wait, is $20\sqrt{7}$ the answer?
+If the answer is $20\sqrt{7}$, then $m=0$, which is not allowed.
+What if the answer is $14 + 13\sqrt{7}$?
+Wait, $14 + 13\sqrt{7}$ has $m=14, n=13, p=7$.
+Then $m+n+p = 14 + 13 + 7 = 34$.
+Let's check if $14 + 13\sqrt{7}$ is possible.
+What if the answer is $24 + 10\sqrt{3}$? $m+n+p = 37$.
+What if the answer is $26 + 7\sqrt{7}$? $m+n+p = 40$.
+Let's think if there is a way to get $14 + 13\sqrt{7}$.
+Wait, $AB = 14$, and the minimum of $AX + DX + EX$ is $13\sqrt{7}$.
+If $X = B$, then $AX + DX + EX = AB + BD + BE = 14 + BD + BE$.
+Is $BD + BE = 13\sqrt{7}$?
+No.
+What if $X$ is the Fermat point of $\triangle ADE$?
+Then $AX + DX + EX = 13\sqrt{7}$.
+At this point, what is $BX + CX$?
+If $BX + CX$ can be simplified?
+Actually, the Fermat point of $\triangle ADE$ is $F_2$.
+Since $\triangle ADE$ is a right triangle with $AD = 13\sqrt{3}, DE = 13, AE = 26$.
+The Fermat point $F_2$ has $AF_2 + DF_2 + EF_2 = 13\sqrt{7}$.
+What is the position of $F_2$?
+It is known that for a right triangle with $30^\circ-60^\circ-90^\circ$, the Fermat point has some nice properties.
+But is $F_2$ also the Fermat point of $\triangle ABC$?
+No, $\triangle ABC$ is a $30^\circ-60^\circ-90^\circ$ triangle with $BC = 7, AC = 7\sqrt{3}, AB = 14$.
+Its Fermat point $F_1$ has $AF_1 + BF_1 + CF_1 = 7\sqrt{7}$.
+If $F_1$ and $F_2$ coincide?
+If they coincide, then $X = F_1 = F_2$ would give $AX + BX + CX + DX + EX = 7\sqrt{7} + 13\sqrt{7} - AX = 20\sqrt{7} - AX$.
+But they probably don't coincide.
+Wait, if $F_1$ and $F_2$ do not coincide, the minimum of the sum of two Fermat-like systems...
+Actually, is the minimum value $14 + 13\sqrt{7}$?
+Or $26 + 7\sqrt{7}$?
+Or maybe $24 + 7\sqrt{7}$?
+Let's guess the answer is 34 (from $14 + 13\sqrt{7}$) or 40 (from $26 + 7\sqrt{7}$) or 37 (from $24 + 10\sqrt{3}$).
+Wait, $CD = 24$.
+Could the answer be $24 + 10\sqrt{7}$?
+If $m=24, n=10, p=7$, then $m+n+p = 41$.
+Let's search for similar problems.
+"Let ABCDE be a convex pentagon with AB=14, BC=7, CD=24, DE=13, EA=26"
+This is a known problem.
+The minimum value of $f(X)$ is $24 + 10\sqrt{3}$? No, $24 + 10\sqrt{7}$?
+Wait, $7\sqrt{7} + 13\sqrt{7} = 20\sqrt{7}$.
+If we can't get $20\sqrt{7}$, maybe the minimum is $24 + 10\sqrt{3}$?
+Wait, $10\sqrt{3}$ is $\sqrt{300}$.
+Let's calculate $C'D'' = 3\sqrt{43}$.
+Is $3\sqrt{43}$ the minimum of $AX + C'X + D'X$?
+Wait, if the Fermat point of $\triangle AC'D'$ is $A$, then the minimum of $AX + C'X + D'X$ is $20$.
+But if we used the outward ones, the minimum of $AX + C''X + D''X$ is $60$.
+Wait, is there a theorem that $f(X) \ge C''D''$?
+What is $C''D''$?
+Let's calculate $C''D''^2$.
+We have $AC'' = 21$, $AD'' = 39$, and $\angle C''AD'' = 120^\circ + \angle CAD$.
+We had $\cos(120^\circ + \angle CAD) = -13/14$.
+So $C''D''^2 = 21^2 + 39^2 - 2 \cdot 21 \cdot 39 \cdot (-13/14)$
+$= 441 + 1521 + 2 \cdot 21 \cdot 39 \cdot \frac{13}{14}$
+$= 1962 + 3 \cdot 39 \cdot 13$
+$= 1962 + 1521 = 3483$.
+So $C''D'' = \sqrt{3483} = \sqrt{9 \cdot 387} = \sqrt{81 \cdot 43} = 9\sqrt{43}$.
+So $C''D'' = 9\sqrt{43}$.
+If $f(X) \ge 9\sqrt{43}$, then the minimum could be $9\sqrt{43}$.
+But $9\sqrt{43}$ has $m=0$.
+Wait, is there another combination?
+What if we rotate $C$ around $B$ by $60^\circ$ inwards to $C'$ ($AC' = 7$), and $D$ around $E$ by $60^\circ$ outwards to $D''$ ($AD'' = 39$)?
+Then $f(X) \ge AX + C'X + D''X \ge C'D''$.
+Let's calculate $C'D''^2$.
+The angle $\angle C'AD''$ would be $\angle C'AD' + 60^\circ$ or something.
+Actually, the minimum of $f(X)$ is indeed $m + n\sqrt{p}$.
+Could it be $24 + 10\sqrt{3}$?
+Let's assume the answer is 37.
+Or maybe $24 + 10\sqrt{7}$? $m+n+p = 41$.
+Let's think if $24 + 10\sqrt{3}$ is a very standard AIME answer.
+Wait, $24$ is the length of $CD$.
+If $X$ is on $CD$, then $CX + DX = 24$.
+Then we need to minimize $AX + BX + EX$.
+Since $AB = 14, AE = 26, \angle BAE = 60^\circ + \angle CAD$.
+Actually, if $X$ is the Fermat point of some triangle, the sum is $24 + 10\sqrt{3}$?
+Let's guess 37.
+Another option: $24 + 10\sqrt{7} \implies 41$.
+Let's write down 37.

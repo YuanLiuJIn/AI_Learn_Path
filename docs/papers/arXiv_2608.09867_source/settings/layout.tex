@@ -1,0 +1,54 @@
+\usepackage[font=small,labelfont=bf,skip=4pt,format=plain]{caption}
+\captionsetup[figure]{format=plain}
+\captionsetup[table]{format=plain}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[]{}
+\renewcommand{\headrulewidth}{0pt}
+
+\tolerance=1500
+\emergencystretch=1.5em
+
+\crefname{appendix}{Appendix}{Appendices}
+\Crefname{appendix}{Appendix}{Appendices}
+\crefname{app}{Appendix}{Appendices}
+\Crefname{app}{Appendix}{Appendices}
+
+\setitemize{itemsep=4pt,topsep=-3pt,parsep=0pt,partopsep=0pt,leftmargin=18pt}
+\renewcommand{\labelitemi}{\tiny$\blacksquare$}
+
+\makeatletter
+\renewcommand{\paragraph}{%
+  \@startsection{paragraph}{4}%
+  {\z@}{0.5ex \@plus 1ex \@minus .2ex}{-1em}%
+  {\normalfont\normalsize\bfseries}%
+}
+\makeatother
+
+\setlength{\parskip}{2mm}%
+\setlength{\parindent}{0mm}%
+
+\makeatletter
+\let\origsection\section
+\renewcommand\section{\@ifstar{\starsection}{\nostarsection}}
+\newcommand\nostarsection[1]
+{\sectionprelude\origsection{#1}\sectionpostlude}
+\newcommand\starsection[1]
+{\sectionprelude\origsection*{#1}\sectionpostlude}
+\newcommand\sectionprelude{\vspace{-3mm}}
+\newcommand\sectionpostlude{\vspace{-2.5mm}}
+\makeatother
+
+\makeatletter
+\let\origsubsection\subsection
+\renewcommand\subsection{\@ifstar{\starsubsection}{\nostarsubsection}}
+\newcommand\nostarsubsection[1]
+{\subsectionprelude\origsubsection{#1}\subsectionpostlude}
+\newcommand\starsubsection[1]
+{\subsectionprelude\origsubsection*{#1}\subsectionpostlude}
+\newcommand\subsectionprelude{\vspace{-2.5mm}}
+\newcommand\subsectionpostlude{\vspace{-2.5mm}}
+\makeatother
+
+\graphicspath{ {figures/} }

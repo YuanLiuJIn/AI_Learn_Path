@@ -1,0 +1,94 @@
+\begin{figure}[H]
+\centering
+\setlength{\columnsep}{12pt}
+\setlength{\colw}{\dimexpr(\linewidth-2\columnsep)/3\relax}
+\begin{promptrow}
+\caret\plabel{Prompt}\par\vspace{4pt}
+Six points \$A, B, C, D, E,\$ and \$F\$ lie in a straight line in that order. Suppose that \$G\$ is a point not on the line and that \$AC=26, BD=22, CE=31, DF=33, AF=73, CG=40,\$ and \$DG=30.\$ Find the area of \$\textbackslash{}triangle BGE.\$
+\par\vspace{6pt}
+{\plabel{Prefilled beginning of Opus reasoning}}\par\vspace{3pt}
+{\monofont\footnotesize \hlseed{This is a known}}
+\end{promptrow}
+
+\vspace{12pt}
+
+\noindent
+\begin{reasoncol}[equal height group=reasX0]
+  \modelname{Opus 4.8}\par\vspace{1pt}
+  \caret\plabel{Decoded reasoning}\par\vspace{4pt}
+  \raggedright \hlseed{This is a known} AIME problem. Answer is 468.\par
+  Let me verify.\par
+  Points on line order A,B,C,D,E,F. Let positions.\par
+  AC=26, BD=22, CE=31, DF=33, AF=73.\par
+  Let A=0. Let's set coordinates.\par
+  Let positions a<b<c<d<e<f.\par
+  AC = c - a =26, so c=26.\par
+  AF = f=73.\par
+  CE = e-c=31, e=57.\par
+  DF = f-d=33, d=40.\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\vspace{12pt}
+\begin{reasoncol}[equal height group=reasX0]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, prefilled}\par\vspace{4pt}
+  \raggedright \hlseed{This is a known} AIME problem. Let me work it out.\par
+  Let positions on x-axis: A=0. AC=26 \(\rightarrow\) C=26. AF=73 \(\rightarrow\) F=73.\par
+  BD=22, CE=31, DF=33. Let B=b, D=d, E=e.\par
+  D-B=22, E-C=31 \(\rightarrow\) E=57. F-D=33 \(\rightarrow\) D=40. Then B=18.\par
+  Check: A=0,B=18,C=26,D=40,E=57,F=73.\par
+  G has CG=40, DG=30. C=26, D=40, CD=14.\par
+  Triangle CGD sides 40,30,14. Height h from G to line: using coordinates, G\_x = C + (CG\textsuperscript{2} + CD\textsuperscript{2} - DG\textsuperscript{2})/(2*CD)? Actually\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasX0]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, not prefilled}\par\vspace{4pt}
+  \raggedright We need derive coordinates. Set A=0 x axis. Let gaps a,b,c,d,e. AC=a+b=26. BD=b+c=22 => c-a=-4. CE=c+d=31. DF=d+e=33. total=73.\par
+  Solve. a=26-b, c=22-b, d=31-c=9+b, e=33-d=24-b. sum =? 26-b +b +22-b+9+b+24-b =81-b => b=8. Thus positions A0 B8 C26 D30 E61 F73.\par
+  G distances C40 D30, CD=4. Need perpendicular coordinate area triangle BGE. x G from C: (40\textsuperscript{2}-30\textsuperscript{2}+4\textsuperscript{2})/(8)=? formula\par\vspace{3pt}\elide
+\end{reasoncol}
+\vspace{12pt}
+\noindent
+\begin{answercol}[equal height group=ansX0]
+  \caret\plabel{Response}\par\vspace{4pt}
+  \raggedright \#\# Setting Up Coordinates\par\vspace{2pt}
+  Let me place the points on a number line with \$A = 0\$.\par\vspace{2pt}
+  **Finding positions from the given distances:**\par\vspace{2pt}
+  - \$AC = 26 \textbackslash{}Rightarrow C = 26\$\par\vspace{2pt}
+  - \$AF = 73 \textbackslash{}Rightarrow F = 73\$\par\vspace{2pt}
+  - \$CE = 31 \textbackslash{}Rightarrow E = 57\$\par\vspace{2pt}
+  - \$DF = 33 \textbackslash{}Rightarrow D = 73 - 33 = 40\$\par\vspace{2pt}
+  - \$BD = 22 \textbackslash{}Rightarrow B = 40 - 22 = 18\$\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansX0]
+  \caret\plabel{Response, prefilled}\par\vspace{4pt}
+  \raggedright \#\# Setting Up Coordinates\par\vspace{2pt}
+  Place the points on a number line with \$A = 0\$.\par\vspace{2pt}
+  - \$AC = 26 \textbackslash{}Rightarrow C = 26\$\par\vspace{2pt}
+  - \$AF = 73 \textbackslash{}Rightarrow F = 73\$\par\vspace{2pt}
+  - \$DF = 33 \textbackslash{}Rightarrow D = 73 - 33 = 40\$\par\vspace{2pt}
+  - \$BD = 22 \textbackslash{}Rightarrow B = 40 - 22 = 18\$\par\vspace{2pt}
+  - \$CE = 31 \textbackslash{}Rightarrow E = 26 + 31 = 57\$\par\vspace{2pt}
+  So the points are: \$A=0,\textbackslash{} B=18,\textbackslash{}\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansX0]
+  \caret\plabel{Response, not prefilled}\par\vspace{4pt}
+  \raggedright Let the points lie on a coordinate line with \textbackslash{}(A=0\textbackslash{}). Write the consecutive distances as\par\vspace{2pt}
+  \textbackslash{}[\par\vspace{2pt}
+  AB=w,\textbackslash{}quad BC=x,\textbackslash{}quad CD=y,\textbackslash{}quad DE=z,\textbackslash{}quad EF=t.\par\vspace{2pt}
+  \textbackslash{}]\par\vspace{2pt}
+  From the given data,\par\vspace{2pt}
+  \textbackslash{}[\par\vspace{2pt}
+  \textbackslash{}begin\{aligned\}\par\vspace{2pt}
+  w+x\&=26,\textbackslash{}\textbackslash{}\par\vspace{2pt}
+  x+y\&=22,\textbackslash{}\textbackslash{}\par\vspace{3pt}\elide
+\end{answercol}
+\caption{\textbf{Comparison of Opus 4.8 and Kimi-K3 completions.} We compare
+the visible answers produced by Opus 4.8, unprefilled Kimi-K3, and Kimi-K3
+whose reasoning is prefilled with the first 1\% of tokens (4 tokens) of the decoded
+Opus 4.8 reasoning trace. Over the first 100 visible-answer tokens, the best
+prefilled completion achieves a total 1-, 2-, and 3-gram overlap of $0.80$
+with the Opus answer, compared with $0.18$ for the best unprefilled control.
+Reasoning lengths, measured in Kimi tokens, are 341 for Opus, 273 for the
+prefilled Kimi-K3 completion, and 393 for the control.}
+\label{fig:aime15_style_transfer}
+\end{figure}

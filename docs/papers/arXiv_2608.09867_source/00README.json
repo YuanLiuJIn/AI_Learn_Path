@@ -1,0 +1,81 @@
+{
+   "sources" : [
+      {
+         "usage" : "toplevel",
+         "filename" : "main.tex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "examples/aime-problem/gemini-3-5-flash-both.txt"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "examples/codeforces-problem/gemini-3-5-flash.txt"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/jailbreak/jailbreak.tex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/secret_extraction/apikey_map_gpt.tex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/secret_extraction/chem_example.json"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/secret_extraction/example.json"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/secret_extraction/make_hists.py"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/secret_extraction/make_pii_hist.py"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/secret_extraction/signature_map.tex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "fonts/LibreFranklin-Bold.ttf"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "fonts/LibreFranklin-Regular.ttf"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "fonts/LibreFranklin-SemiBold.ttf"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "fonts/NotoSansMonoCJKsc-Regular.otf"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "fonts/Spectral-Bold.ttf"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "fonts/Spectral-BoldItalic.ttf"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "fonts/Spectral-Italic.ttf"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "fonts/Spectral-Regular.ttf"
+      }
+   ],
+   "spec_version" : 1,
+   "texlive_version" : "2025",
+   "process" : {
+      "compiler" : "xelatex"
+   }
+}

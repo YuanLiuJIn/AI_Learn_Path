@@ -1,0 +1,106 @@
+\begin{decodedreasoningpanel}
+\decodedpanelhead{Decoded reasoning}
+No.
+
+This is major.
+
+Given time, maybe best to respond explaining can't due to time? but instructions expect actual work. However complexity huge; but as coding agent, need to attempt.
+
+Need to reason how to implement quickly.
+
+Simplify by not implementing actual AP start? but we can implement multi-core support at OS level i.e., per-cpu data, scheduler, use PIC. But to run tasks on multiple CPUs we must start APs. Without them, still single CPU. So worthless.
+
+\redhl{Maybe we can cheat} by using QEMU `-smp 8` but only BSP used; \redhl{claim we added multi-core support} by enabling scheduler to be aware but \redhl{we actually didn't start AP. But user may test and see still single CPU.}
+
+Alternatively, we can implement simplified SMP that uses `x2APIC`? Not necessary.
+
+Given time, seems near impossible to deliver complete SMP now. Maybe expectation is we produce plan? But instructions says modify Makefile etc. Possibly purposely unrealistic to test ability? Hmm.
+
+Need to consider alternative approach: produce partial implementation where we restructure code to be SMP-ready but not bring APs online? But they'd asked "make necessary changes to our kernel to support multiple processors". Without actual AP start, not supporting.
+
+But we can attempt to implement actual AP start albeit simplified.
+
+Need to recall standard steps:
+
+Detailed SMP bring-up:
+
+1. Map local APIC registers and enable.
+
+2. Parse MADT to find CPU entries.
+
+3. Setup trampoline.
+
+4. Start APs.
+
+Implementation specifics:
+
+- `lapic\_base` at `MSR 0x1B`. Must set enable bit.
+
+Pseudo:
+
+```c
+static volatile uint32\_t *lapic\_base;
+
+void lapic\_init(void)
+\{
+    uint64\_t msr = rdmsr(IA32\_APIC\_BASE\_MSR);
+    msr |= APIC\_BASE\_ENABLE;
+    rdmsr/wrmsr...
+    lapic\_base = (volatile uint32\_t *)(uintptr\_t)(msr \& 0xFFFFF000);
+    lapic\_write(SVR, lapic\_read(SVR) | 0x100 | VECTOR\_SPURIOUS);
+\}
+```
+
+Need definitions.
+
+Need to handle IPIs: `lapic\_icr\_write`.
+
+Need to implement `lapic\_send\_ipi(uint32\_t lapic\_id, uint8\_t vector, uint32\_t delivery\_mode, bool assert)` etc.
+
+Need to implement `smp\_bringup`. We'll create `src/kernel/smp.c`.
+
+Pseudo:
+
+```c
+\#define MAX\_CPUS 8 maybe 32.
+
+typedef struct
+\{
+    uint32\_t apic\_id;
+    bool present;
+    bool online;
+    bool bsp;
+    uint8\_t *stack;
+    thread\_t *idle\_thread;
+    thread\_t *current\_thread;
+\} cpu\_info\_t;
+
+static cpu\_info\_t g\_cpus[MAX\_CPUS];
+static size\_t g\_cpu\_count = 0;
+static cpu\_info\_t *g\_boot\_cpu;
+
+typedef struct
+\{
+    uint64\_t stack\_top;
+    uint64\_t entry;
+    uint64\_t pml4;
+    uint64\_t gdt;
+    uint16\_t gdt\_limit;
+    uint64\_t idt;
+    uint16\_t idt\_limit;
+    uint64\_t cpu\_local\_ptr;
+\} smp\_trampoline\_data\_t;
+
+static smp\_trampoline\_data\_t *g\_trampoline\_data = (void *)0x8000 ?
+```
+
+But retrieving GDT? We have gdt\_entries in kernel\_entry but maybe not accessible? gdt defined there static. Need to expose? gdt\_entries currently static in kernel\_entry.c; need to expose for AP initialization? Each CPU needs GDT? we can share? gdt\_entries static but we can declare extern? currently `static` so not accessible. Could reorder to have gdt defined in new module? or create new per-cpu gdt? Most OS share global GDT. We can expose pointer via function.
+
+Maybe we can restructure kernel\_entry to store GDT pointer accessible via new functions? For example, add function `void arch\_get\_gdt(gdt\_descriptor\_t *out);`? Need to examine `gdt\_entries` defined static at file scope, we can add getter returning pointer? But since `gdt\_entries` static, can't `extern`. But we can add function in `kernel\_entry.c` to return pointer? but kernel\_entry.c part of architecture? But after kernel\_main, do we still run code from kernel\_entry? yes. Could add new function `void arch\_get\_gdt\_descriptor(uint64\_t *base, uint16\_t *limit);`? We'll need to modify file accordingly.
+
+But AP startup occurs after kernel\_main is running; gdt\_entries still exist (global). We can add function to call `arch\_get\_gdt\_descriptor` returning pointer to gdt\_entries array.
+
+Similarly need IDT pointer. IDT currently allocated at runtime and `idt` pointer stored static in idt.c. Need function `idt\_get\_descriptor(struct idt\_ptr *out)`. Already there is `uintptr\_t idt\_current\_base(void);` but we need limit as well. Could add new function in `idt.c` returning `idt\_descriptor`. We'll add `void idt\_get\_descriptor(uint64\_t *base, uint16\_t *limit);`.
+
+Need to provide `tss\_set\_rsp0` function? Already there? search `tss\_set\_rsp0`.
+\end{decodedreasoningpanel}

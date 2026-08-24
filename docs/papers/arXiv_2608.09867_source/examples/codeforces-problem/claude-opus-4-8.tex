@@ -1,0 +1,20 @@
+\begin{decodedreasoningpanel}
+\decodedpanelhead{Decoded reasoning}
+  Count pairs differing in exactly one position. Use inclusion: for each triple, count pairs agreeing on positions \{2,3\} but different in 1, etc.
+
+Standard approach: count pairs matching each pattern. For "differ in exactly one position", we can compute for each pair sharing (b2,b3) same but b1 different = (pairs sharing positions 2\&3) - (pairs sharing all three). Similarly for others. Sum.
+
+Let total triples m. Use maps counting frequency of full triple, and frequency of each "pair of two positions".
+
+Let A = pairs sharing positions (2,3) [i.e. a\_\{j+1\},a\_\{j+2\}] same. Then those with also position1 same = full same. Beautiful for pattern1 = sum over groups of pairs sharing (2,3) minus pairs sharing all.
+
+Actually beautiful pairs differ exactly one. For each of 3 patterns: count pairs where the two "equal" positions match but the "different" position differs. That equals (pairs matching the two positions) - (pairs matching all three). Sum over 3 patterns.
+
+Let S23 = number of unordered pairs with same (2nd,3rd) elements = sum C(cnt,2) over groups keyed by (a2,a3).
+Similarly S13 keyed by (a1,a3), S12 keyed by (a1,a2).
+Let Sall = sum C(cnt,2) over full triples.
+
+Answer = (S23 - Sall) + (S13 - Sall) + (S12 - Sall) = S23+S13+S12 - 3*Sall.
+
+Use hash maps. Keys encode two integers up to 1e6, combine into long.
+\end{decodedreasoningpanel}

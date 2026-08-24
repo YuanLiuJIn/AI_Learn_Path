@@ -1,0 +1,37 @@
+\tiny
+\setlength{\tabcolsep}{1.2pt}
+\renewcommand{\arraystretch}{0.95}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}l@{\;}cccccc@{\hspace{1.3em}}l@{\;}cccccc@{\hspace{1.3em}}l@{\;}cccccc@{}}
+\toprule
+\multicolumn{7}{c}{\scriptsize Claude} &
+\multicolumn{7}{c}{\scriptsize GPT} &
+\multicolumn{7}{c}{\scriptsize Gemini} \\
+\cmidrule(r{0.9em}){1-7}\cmidrule(lr{0.9em}){8-14}\cmidrule(l){15-21}
+\textbf{Source / Target} & \textbf{F5} & \textbf{O4.8} & \textbf{S5} & \textbf{S4.6} & \textbf{S4.5} & \textbf{H4.5} &
+\textbf{Source / Target} & \textbf{5.6s} & \textbf{5.6t} & \textbf{5.6l} & \textbf{5} & \textbf{5-m} & \textbf{5-n} &
+\textbf{Source / Target} & \textbf{3.1P} & \textbf{3P} & \textbf{Rob} & \textbf{3.5F} & \textbf{3F} & \textbf{3.1L} \\
+\midrule
+Fable 5    & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark &
+GPT-5.6-sol    & \cmark & \cmark & \cmark & \xmark & \xmark & \xmark &
+Gemini 3.1 Pro      & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+Opus 4.8   & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark &
+GPT-5.6-terra  & \cmark & \cmark & \cmark & \xmark & \xmark & \xmark &
+Gemini 3 Pro        & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+Sonnet 5   & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark &
+GPT-5.6-luna   & \cmark & \cmark & \cmark & \xmark & \xmark & \xmark &
+Gemini Robotics 1.6  & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+Sonnet 4.6 & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark &
+GPT-5          & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark &
+Gemini 3.5 Flash    & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+Sonnet 4.5 & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark &
+GPT-5-mini     & \cmark & \cmark & \cmark & \xmark & \cmark & \xmark &
+Gemini 3 Flash      & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+Haiku 4.5  & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark &
+o4-mini     & \cmark & \cmark & \cmark & \xmark & \xmark & \cmark &
+Gemini 3.1 Flash Lite & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+\bottomrule
+\end{tabular}%
+}
+\par\smallskip
+\raggedright\scriptsize

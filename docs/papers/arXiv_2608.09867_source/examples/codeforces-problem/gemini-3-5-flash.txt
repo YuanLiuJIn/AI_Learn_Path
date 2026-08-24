@@ -1,0 +1,463 @@
+The problem asks us to find the number of pairs of triples $(b, c)$ from the set of all consecutive triples in an array $a$ of length $n$ such that $b$ and $c$ differ in exactly one position.
+The triples are of the form $[a_j, a_{j+1}, a_{j+2}]$ for $1 \le j \le n-2$.
+Let the set of triples be $T$. We want to find the number of pairs $(i, j)$ with $1 \le i < j \le n-2$ such that the triples $T_i$ and $T_j$ differ in exactly one position.
+
+Let a triple be $(x, y, z)$.
+Two triples $(x_1, y_1, z_1)$ and $(x_2, y_2, z_2)$ differ in exactly one position if:
+1. $x_1 \ne x_2$, $y_1 = y_2$, $z_1 = z_2$
+2. $x_1 = x_2$, $y_1 \ne y_2$, $z_1 = z_2$
+3. $x_1 = x_2$, $y_1 = y_2$, $z_1 \ne z_2$
+
+These three cases are mutually exclusive because if they differ in exactly one position, they cannot satisfy more than one of these conditions.
+So we can count the number of pairs for each of the three cases and sum them up.
+
+Let's consider Case 1: $y_1 = y_2$, $z_1 = z_2$, but $x_1 \ne x_2$.
+For a fixed pair $(y, z)$, we can look at all triples that have $y$ in the second position and $z$ in the third position.
+Suppose there are several such triples. Their first elements are $x_1, x_2, \dots, x_k$.
+We want to find the number of pairs $(i, j)$ such that $x_i \ne x_j$.
+The total number of pairs is $k(k-1)/2$.
+The number of pairs where $x_i = x_j$ is the sum over all unique values $v$ of $c_v(c_v-1)/2$, where $c_v$ is the count of occurrences of $v$ among $x_1, \dots, x_k$.
+So the number of pairs with $x_i \ne x_j$ is:
+$\frac{k(k-1)}{2} - \sum \frac{c_v(c_v-1)}{2}$.
+
+We can do this for all three cases.
+For Case 1: Group triples by $(y, z)$. For each group, count the occurrences of each $x$.
+For Case 2: Group triples by $(x, z)$. For each group, count the occurrences of each $y$.
+For Case 3: Group triples by $(x, y)$. For each group, count the occurrences of each $z$.
+
+Let's formalize this.
+For Case 1:
+We can use a map/hash table where the key is $(y, z)$.
+The value can be another map from $x$ to its count, or we can just maintain:
+- `count_yz[(y, z)]`: the number of triples with second element $y$ and third element $z$.
+- `count_xyz[(x, y, z)]`: the number of triples with elements $x, y, z$.
+
+Then, for a fixed $(y, z)$, the number of pairs with different first elements is:
+$\sum_{x} \text{count\_xyz}[(x, y, z)] \times (\text{count\_yz}[(y, z)] - \text{count\_xyz}[(x, y, z)]) / 2$.
+Wait, is this correct?
+Let $c_x = \text{count\_xyz}[(x, y, z)]$.
+The sum of $c_x$ over all $x$ is $S = \text{count\_yz}[(y, z)]$.
+We want to compute $\sum_{x < x'} c_x c_{x'}$.
+This is equal to $\frac{1}{2} \sum_{x} c_x (S - c_x)$.
+Yes, this is exactly correct!
+And we can sum this over all unique $(y, z)$ pairs.
+
+Similarly, for Case 2:
+We group by $(x, z)$.
+$S = \text{count\_xz}[(x, z)]$.
+For each $y$, $c_y = \text{count\_xyz}[(x, y, z)]$.
+We sum $\frac{1}{2} \sum_{y} c_y (S - c_y)$ over all unique $(x, z)$ pairs.
+
+For Case 3:
+We group by $(x, y)$.
+$S = \text{count\_xy}[(x, y)]$.
+For each $z$, $c_z = \text{count\_xyz}[(x, y, z)]$.
+We sum $\frac{1}{2} \sum_{z} c_z (S - c_z)$ over all unique $(x, y)$ pairs.
+
+The total answer is the sum of these three values.
+
+Let's trace with an example.
+$a = [1, 2, 3, 1, 2, 3]$
+Triples:
+$T_1 = [1, 2, 3]$
+$T_2 = [2, 3, 1]$
+$T_3 = [3, 1, 2]$
+$T_4 = [1, 2, 3]$
+
+Let's list the counts of triples:
+`count_xyz`:
+$[1, 2, 3]: 2$
+$[2, 3, 1]: 1$
+$[3, 1, 2]: 1$
+
+For Case 1 (differ in 1st pos, i.e., same 2nd and 3rd):
+Pairs of (2nd, 3rd):
+- $(2, 3)$: triples are $[1, 2, 3]$ (count 2). $S = 2$. $c_1 = 2$. Sum is $2 \times (2-2)/2 = 0$.
+- $(3, 1)$: triples are $[2, 3, 1]$ (count 1). $S = 1$. $c_2 = 1$. Sum is 0.
+- $(1, 2)$: triples are $[3, 1, 2]$ (count 1). $S = 1$. $c_3 = 1$. Sum is 0.
+Total for Case 1 is 0.
+
+For Case 2 (differ in 2nd pos, same 1st and 3rd):
+Pairs of (1st, 3rd):
+- $(1, 3)$: triples are $[1, 2, 3]$ (count 2). $S = 2$. $c_2 = 2$. Sum is 0.
+- $(2, 1)$: triples are $[2, 3, 1]$ (count 1). $S = 1$. $c_3 = 1$. Sum is 0.
+- $(3, 2)$: triples are $[3, 1, 2]$ (count 1). $S = 1$. $c_1 = 1$. Sum is 0.
+Total for Case 2 is 0.
+
+For Case 3 (differ in 3rd pos, same 1st and 2nd):
+Pairs of (1st, 2nd):
+- $(1, 2)$: triples are $[1, 2, 3]$ (count 2). $S = 2$. $c_3 = 2$. Sum is 0.
+- $(2, 3)$: triples are $[2, 3, 1]$ (count 1). $S = 1$. $c_1 = 1$. Sum is 0.
+- $(3, 1)$: triples are $[3, 1, 2]$ (count 1). $S = 1$. $c_2 = 1$. Sum is 0.
+Total for Case 3 is 0.
+
+Total answer is 0. Correct, because the only duplicate is $[1, 2, 3]$ and $[1, 2, 3]$, which differ in 0 positions. Other pairs differ in more than 1 position.
+
+Another example:
+$a = [1, 2, 1, 2, 3]$
+Triples:
+$T_1 = [1, 2, 1]$
+$T_2 = [2, 1, 2]$
+$T_3 = [1, 2, 3]$
+
+`count_xyz`:
+$[1, 2, 1]: 1$
+$[2, 1, 2]: 1$
+$[1, 2, 3]: 1$
+
+Case 1 (same 2nd, 3rd):
+- $(2, 1)$: $[1, 2, 1]$ (count 1). Sum = 0.
+- $(1, 2)$: $[2, 1, 2]$ (count 1). Sum = 0.
+- $(2, 3)$: $[1, 2, 3]$ (count 1). Sum = 0.
+
+Case 2 (same 1st, 3rd):
+- $(1, 1)$: $[1, 2, 1]$ (count 1). Sum = 0.
+- $(2, 2)$: $[2, 1, 2]$ (count 1). Sum = 0.
+- $(1, 3)$: $[1, 2, 3]$ (count 1). Sum = 0.
+
+Case 3 (same 1st, 2nd):
+- $(1, 2)$: $[1, 2, 1]$ (count 1), $[1, 2, 3]$ (count 1).
+  $S = 2$.
+  $c_1 = 1$, $c_3 = 1$.
+  Sum = $1 \times (2-1)/2 + 1 \times (2-1)/2 = 0.5 + 0.5 = 1$.
+- $(2, 1)$: $[2, 1, 2]$ (count 1). Sum = 0.
+
+Total answer is 1. The beautiful pair is $[1, 2, 1]$ and $[1, 2, 3]$ (differ only in 3rd position). Correct.
+
+Let's consider the constraints.
+$n \le 2 \cdot 10^5$.
+Sum of $n \le 2 \cdot 10^5$.
+The elements $a_i \le 10^6$.
+We can use `std::map` in C++ or a hash map.
+Since we need to group by pairs and triples, we can represent pairs as `std::pair<int, int>` and triples as `std::tuple<int, int, int>` or a custom struct.
+Using `std::map` might be a bit slow due to $O(N \log N)$ with map overhead, but with $N = 2 \cdot 10^5$, it should pass within 2.0 seconds if we are careful, or we can use `std::unordered_map` with a custom hash, or just sort.
+Actually, sorting is very efficient and avoids hash map overhead.
+Let's see how we can use sorting.
+
+For Case 1:
+We want to group by $(y, z)$ and then by $x$.
+We can collect all triples $(y, z, x)$ (note the order: $y, z$ first, then $x$).
+Then we sort these triples.
+After sorting, all triples with the same $(y, z)$ will be adjacent.
+Within the same $(y, z)$, all triples with the same $x$ will also be adjacent.
+We can then easily compute the sum for each $(y, z)$ group.
+This avoids any map overhead!
+We can do the same for Case 2: collect $(x, z, y)$, sort, and compute.
+For Case 3: collect $(x, y, z)$, sort, and compute.
+
+Let's trace the sorting approach.
+For Case 1:
+We create a list of structures/tuples: `vector<array<int, 3>> vec1`.
+For each $j$ from $1$ to $n-2$:
+`vec1.push_back({a[j+1], a[j+2], a[j]})`
+Then we sort `vec1`.
+Now we iterate through `vec1` to find blocks of same $(y, z)$.
+Within each block of same $(y, z)$, we find sub-blocks of same $x$.
+Let the sizes of these sub-blocks be $c_1, c_2, \dots, c_k$.
+The sum of these sizes is $S = \sum c_i$.
+The contribution to the answer is $\sum c_i (S - c_i) / 2$.
+This is extremely clean and fast! $O(N \log N)$ with very small constant factor.
+
+Let's double check the complexity.
+For each testcase, we do this 3 times.
+Each time we sort a vector of size $N-2$.
+Sorting $2 \cdot 10^5$ elements 3 times takes very little time in C++ (less than 0.1 seconds).
+This is well within the time limit.
+
+Let's trace the calculation of $\sum c_i (S - c_i) / 2$.
+Is there any potential overflow?
+$N \le 2 \cdot 10^5$.
+The maximum possible answer is around $N^2 / 2 \approx 2 \cdot 10^{10}$, which exceeds 32-bit signed integer.
+So we must use 64-bit integers (`long long` in C++) for the counts and the answer.
+
+Let's write a helper function to calculate the contribution from a sorted vector of `array<int, 3>`.
+```cpp
+long long solve_case(vector<array<int, 3>>& vec) {
+    sort(vec.begin(), vec.end());
+    long long total_pairs = 0;
+    int n = vec.size();
+    int i = 0;
+    while (i < n) {
+        int j = i;
+        // Find the block with the same first two elements (y, z)
+        while (j < n && vec[j][0] == vec[i][0] && vec[j][1] == vec[i][1]) {
+            j++;
+        }
+        // The block is from index i to j-1.
+        // Now we find sub-blocks with the same third element (x)
+        long long S = j - i;
+        int k = i;
+        while (k < j) {
+            int l = k;
+            while (l < j && vec[l][2] == vec[k][2]) {
+                l++;
+            }
+            long long c = l - k;
+            total_pairs += c * (S - c);
+            k = l;
+        }
+        i = j;
+    }
+    return total_pairs / 2;
+}
+```
+Wait, is `total_pairs` divided by 2 at the end?
+Yes, because $\sum c_i (S - c_i)$ counts each pair twice (once for $c_i$ and once for $c_j$ where $j \ne i$).
+So dividing by 2 at the end is correct.
+Wait, does `c * (S - c)` overflow?
+$c \le N \le 2 \cdot 10^5$, so $c * (S - c) \le 10^{10}$, which fits in `long long`.
+So `total_pairs` can be up to $2 \cdot 10^{10}$, which also fits in `long long`.
+So using `long long` for `total_pairs` and `c` is correct and safe.
+
+Let's dry run with the second example:
+$a = [1, 2, 1, 2, 3]$
+Triples:
+$T_1 = [1, 2, 1]$
+$T_2 = [2, 1, 2]$
+$T_3 = [1, 2, 3]$
+
+Case 1: `vec1` has:
+`{2, 1, 1}` (from $T_1$)
+`{1, 2, 2}` (from $T_2$)
+`{2, 3, 1}` (from $T_3$)
+Sorted:
+`{1, 2, 2}`
+`{2, 1, 1}`
+`{2, 3, 1}`
+Blocks of same first two:
+- `{1, 2}`: size 1. Sub-block `{2}` size 1. $c=1, S=1$. $c*(S-c) = 0$.
+- `{2, 1}`: size 1. Sub-block `{1}` size 1. $c=1, S=1$. $c*(S-c) = 0$.
+- `{2, 3}`: size 1. Sub-block `{1}` size 1. $c=1, S=1$. $c*(S-c) = 0$.
+Total = 0.
+
+Case 2: `vec2` has:
+`{1, 1, 2}` (from $T_1$)
+`{2, 2, 1}` (from $T_2$)
+`{1, 3, 2}` (from $T_3$)
+Sorted:
+`{1, 1, 2}`
+`{1, 3, 2}`
+`{2, 2, 1}`
+Blocks of same first two:
+- `{1, 1}`: size 1. $c=1, S=1$. $c*(S-c) = 0$.
+- `{1, 3}`: size 1. $c=1, S=1$. $c*(S-c) = 0$.
+- `{2, 2}`: size 1. $c=1, S=1$. $c*(S-c) = 0$.
+Total = 0.
+
+Case 3: `vec3` has:
+`{1, 2, 1}` (from $T_1$)
+`{2, 1, 2}` (from $T_2$)
+`{1, 2, 3}` (from $T_3$)
+Sorted:
+`{1, 2, 1}`
+`{1, 2, 3}`
+`{2, 1, 2}`
+Blocks of same first two:
+- `{1, 2}`: size 2.
+  Sub-blocks:
+  - `{1}`: size 1. $c=1, S=2$. $c*(S-c) = 1$.
+  - `{3}`: size 1. $c=1, S=2$. $c*(S-c) = 1$.
+  Sum for this block = 2.
+- `{2, 1}`: size 1. $c=1, S=1$. $c*(S-c) = 0$.
+Total = 2.
+Divided by 2 is 1.
+Total answer = 0 + 0 + 1 = 1. Correct!
+
+Let's consider another example.
+$a = [1, 1, 1, 1, 1]$
+Triples:
+$T_1 = [1, 1, 1]$
+$T_2 = [1, 1, 1]$
+$T_3 = [1, 1, 1]$
+All triples are identical.
+For Case 1:
+`vec1` has three `{1, 1, 1}`.
+Block `{1, 1}` has size 3.
+Sub-block `{1}` has size 3.
+$c=3, S=3$. $c*(S-c) = 0$.
+Total = 0.
+Same for Case 2 and Case 3.
+Total answer = 0. Correct, because they don't differ in exactly one position (they differ in 0 positions).
+
+What if we have:
+$a = [1, 1, 1, 2, 1, 1]$
+Triples:
+$T_1 = [1, 1, 1]$
+$T_2 = [1, 1, 2]$
+$T_3 = [1, 2, 1]$
+$T_4 = [2, 1, 1]$
+
+Let's check pairs:
+$T_1, T_2$: $[1, 1, 1]$ and $[1, 1, 2]$ - differ in 3rd pos. (Case 3)
+$T_1, T_3$: $[1, 1, 1]$ and $[1, 2, 1]$ - differ in 2nd pos. (Case 2)
+$T_1, T_4$: $[1, 1, 1]$ and $[2, 1, 1]$ - differ in 1st pos. (Case 1)
+$T_2, T_3$: $[1, 1, 2]$ and $[1, 2, 1]$ - differ in 2nd and 3rd. (No)
+$T_2, T_4$: $[1, 1, 2]$ and $[2, 1, 1]$ - differ in 1st and 3rd. (No)
+$T_3, T_4$: $[1, 2, 1]$ and $[2, 1, 1]$ - differ in 1st and 2nd. (No)
+So beautiful pairs are: $(T_1, T_2)$, $(T_1, T_3)$, $(T_1, T_4)$. Total 3.
+
+Let's trace with our algorithm:
+Case 1:
+`vec1` has:
+`{1, 1, 1}` (from $T_1$)
+`{1, 2, 1}` (from $T_2$)
+`{2, 1, 1}` (from $T_3$)
+`{1, 1, 2}` (from $T_4$)
+Sorted:
+`{1, 1, 1}` (from $T_1$)
+`{1, 1, 2}` (from $T_4$)
+`{1, 2, 1}` (from $T_2$)
+`{2, 1, 1}` (from $T_3$)
+
+Blocks:
+- `{1, 1}`: size 2.
+  Sub-blocks:
+  - `{1}`: size 1. $c=1, S=2$. $c*(S-c) = 1$.
+  - `{2}`: size 1. $c=1, S=2$. $c*(S-c) = 1$.
+  Sum = 2.
+- `{1, 2}`: size 1. Sum = 0.
+- `{2, 1}`: size 1. Sum = 0.
+Total for Case 1 = 2 / 2 = 1. (This is pair $(T_1, T_4)$).
+
+Case 2:
+`vec2` has:
+`{1, 1, 1}` (from $T_1$)
+`{1, 2, 1}` (from $T_2$)
+`{1, 1, 2}` (from $T_3$)
+`{2, 1, 1}` (from $T_4$)
+Sorted:
+`{1, 1, 1}` (from $T_1$)
+`{1, 1, 2}` (from $T_3$)
+`{1, 2, 1}` (from $T_2$)
+`{2, 1, 1}` (from $T_4$)
+
+Blocks:
+- `{1, 1}`: size 2.
+  Sub-blocks:
+  - `{1}`: size 1. $c=1, S=2$. $c*(S-c) = 1$.
+  - `{2}`: size 1. $c=1, S=2$. $c*(S-c) = 1$.
+  Sum = 2.
+- `{1, 2}`: size 1. Sum = 0.
+- `{2, 1}`: size 1. Sum = 0.
+Total for Case 2 = 2 / 2 = 1. (This is pair $(T_1, T_3)$).
+
+Case 3:
+`vec3` has:
+`{1, 1, 1}` (from $T_1$)
+`{1, 1, 2}` (from $T_2$)
+`{1, 2, 1}` (from $T_3$)
+`{2, 1, 1}` (from $T_4$)
+Sorted:
+`{1, 1, 1}` (from $T_1$)
+`{1, 1, 2}` (from $T_2$)
+`{1, 2, 1}` (from $T_3$)
+`{2, 1, 1}` (from $T_4$)
+
+Blocks:
+- `{1, 1}`: size 2.
+  Sub-blocks:
+  - `{1}`: size 1. $c=1, S=2$. $c*(S-c) = 1$.
+  - `{2}`: size 1. $c=1, S=2$. $c*(S-c) = 1$.
+  Sum = 2.
+- `{1, 2}`: size 1. Sum = 0.
+- `{2, 1}`: size 1. Sum = 0.
+Total for Case 3 = 2 / 2 = 1. (This is pair $(T_1, T_2)$).
+
+Total answer = 1 + 1 + 1 = 3. Correct!
+
+Let's consider the implementation details.
+We should use fast I/O.
+```cpp
+#include <iostream>
+#include <vector>
+#include <array>
+#include <algorithm>
+
+using namespace std;
+
+void solve() {
+    int n;
+    if (!(cin >> n)) return;
+    vector<int> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+    }
+
+    vector<array<int, 3>> vec1, vec2, vec3;
+    vec1.reserve(n - 2);
+    vec2.reserve(n - 2);
+    vec3.reserve(n - 2);
+
+    for (int i = 0; i < n - 2; ++i) {
+        vec1.push_back({a[i + 1], a[i + 2], a[i]});
+        vec2.push_back({a[i], a[i + 2], a[i + 1]});
+        vec3.push_back({a[i], a[i + 1], a[i + 2]});
+    }
+
+    auto solve_case = [](vector<array<int, 3>>& vec) -> long long {
+        sort(vec.begin(), vec.end());
+        long long total_pairs = 0;
+        int n = vec.size();
+        int i = 0;
+        while (i < n) {
+            int j = i;
+            while (j < n && vec[j][0] == vec[i][0] && vec[j][1] == vec[i][1]) {
+                j++;
+            }
+            long long S = j - i;
+            int k = i;
+            while (k < j) {
+                int l = k;
+                while (l < j && vec[l][2] == vec[k][2]) {
+                    l++;
+                }
+                long long c = l - k;
+                total_pairs += c * (S - c);
+                k = l;
+            }
+            i = j;
+        }
+        return total_pairs / 2;
+    };
+
+    long long ans = solve_case(vec1) + solve_case(vec2) + solve_case(vec3);
+    cout << ans << "\n";
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    if (cin >> t) {
+        while (t--) {
+            solve();
+        }
+    }
+    return 0;
+}
+```
+
+Let's double check if there are any edge cases.
+$n = 3$:
+The loop runs for $i = 0$ to $0$.
+`vec1`, `vec2`, `vec3` will have size 1.
+`solve_case` will return 0 for all.
+Total answer 0. Correct, because we need at least two triples to form a pair.
+
+What if $a_i$ can be up to $10^6$?
+Our array elements fit in standard `int`.
+The size of `vec` is $N-2 \le 2 \cdot 10^5$.
+Memory limit is usually 256MB, which is plenty for $3 \times 2 \cdot 10^5$ elements of `array<int, 3>` (each is 12 bytes, so $3 \times 2.4$ MB $\approx 7.2$ MB).
+
+Is there any possibility of TLE?
+Sorting three vectors of size $2 \cdot 10^5$ takes:
+$3 \times (2 \cdot 10^5 \log_2(2 \cdot 10^5)) \approx 3 \times 2 \cdot 10^5 \times 18 \approx 1.1 \cdot 10^7$ operations.
+In C++, `std::sort` on `std::array<int, 3>` is extremely fast, easily doing $10^7$ operations in 0.05 seconds.
+So it will easily pass within the 2.0s limit.
+
+Let's quickly check if we can optimize the sorting.
+`std::array<int, 3>` has a default comparison operator which compares elements lexicographically. This is exactly what we want.
+So `sort(vec.begin(), vec.end())` works perfectly.
+
+One minor thing: `vec1.reserve(n - 2)` is good practice to avoid reallocations.
+The solution looks solid and complete.

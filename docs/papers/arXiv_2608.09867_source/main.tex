@@ -1,0 +1,71 @@
+\documentclass[oneside, a4paper, onecolumn, 10pt]{article}
+
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amssymb}
+
+\title{Stealing Reasoning Traces from Proprietary LLM APIs}
+
+
+\author{\vspace{-0.2cm}
+\normalsize \textbf{Alexander Panfilov}\textsuperscript{1,\,2,\,3,\,4}* \quad \textbf{David Schmotz}\textsuperscript{2,\,3,\,4}*  \quad \textbf{Ilia Shumailov}\textsuperscript{5}* \quad \textbf{Luca Beurer-Kellner}\textsuperscript{6}\\[2.5mm]
+\normalsize \textbf{Joachim Schaeffer}\textsuperscript{1} \quad  \textbf{Ameya Prabhu}\textsuperscript{2,\,4,\,7\textdaggerdbl} \quad \textbf{Jonas Geiping}\textsuperscript{2,\,3,\,4\textdaggerdbl} \quad \textbf{Maksym Andriushchenko}\textsuperscript{2,\,3,\,4\textdaggerdbl}\\[2.5mm]
+\small \textsuperscript{1}MATS Research \qquad \textsuperscript{2}ELLIS Institute T\"ubingen \qquad \textsuperscript{3}Max Planck Institute for Intelligent Systems\\[0mm]
+\small \textsuperscript{4}T\"ubingen AI Center \qquad \textsuperscript{5}AI Sequrity Company \qquad \textsuperscript{6}Snyk \qquad \textsuperscript{7}University of T\"ubingen\\[2mm]
+\small *\,Equal contribution, order decided by dice roll \qquad \textsuperscript{\textdaggerdbl}Equal supervision\\[4mm]
+\small \href{https://stolen-thoughts.com}{\textcolor{black}{{\footnotesize\faGlobe}\hspace{0.45em}stolen-thoughts.com}}
+}
+\date{}
+\input{settings/settings}
+
+\begin{document}
+\maketitle
+\vspace{-.7cm}
+\begin{abstract}
+\input{sections/0_abstracts}
+\end{abstract}
+
+\section{Introduction}
+\label{sec:summary}
+\input{sections/1_introduction}
+
+\section{Decoding Reasoning at Scale}
+\label{sec:vulnerability}
+\input{sections/2_vulnerability}
+
+\input{sections/3_attack_vectors}
+
+\section{Discussion}
+\label{sec:discussion}
+\input{sections/4_discussion}
+
+\clearpage
+
+\subsubsection*{Acknowledgments}
+\vspace{-.1cm}
+The authors thank, in alphabetical order, Albert Catalán-Tatjer, Andy Zou, Cheng Zhang, Derck Prinzhorn, Edoardo Debenedetti, Hanna Foerster, Jeanne Salle, Joschka Braun, Mikhail Terekhov, Roland S. Zimmermann, Sail Wang, Shashwat Goel, and Yiren Zhao for valuable feedback and discussions. AP and JS thank Perusha Moodley, Ning Yang, and the MATS team for their support and administrative assistance. AP and DS thank the International Max Planck Research School for Intelligent Systems (IMPRS-IS) for its support. AmP acknowledges funding by the Federal Ministry of Research, Technology and Space (BMFTR), FKZ: 16IS24085B. AmP acknowledges Coefficient Giving funded by the Good Ventures Foundation.
+
+\subsubsection*{Reproducibility Statement}
+\vspace{-.1cm}
+As of August 2026, the results presented in \Cref{fig:teaser} are no longer reproducible with attacks described in \Cref{sec:extraction} and \Cref{app:extraction_details} because of mitigations implemented by providers following our disclosure. All experiments were conducted using open- and closed- source models accessed via API. In total, we spent approximately \$30,000 on API credits.
+{\small
+\bibliographystyle{plainnat}
+\bibliography{references}
+}
+
+\newpage
+\appendix
+\crefalias{section}{appendix}
+\crefalias{subsection}{appendix}
+\crefalias{subsubsection}{appendix}
+
+\setcounter{secnumdepth}{-2}
+\part{Appendix}
+\setcounter{secnumdepth}{3}
+\etocsetnexttocdepth{subsection}
+\localtableofcontents
+\clearpage
+
+\input{sections/9_appendix}
+
+\end{document}

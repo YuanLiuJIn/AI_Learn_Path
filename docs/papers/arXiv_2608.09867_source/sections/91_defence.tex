@@ -1,0 +1,239 @@
+
+\section{Context-Bound Envelope Defense}
+\label{app:defense-proposal}
+
+\looseness=-1 The attacks presented in this paper: cross-session,
+cross-user, and cross-model replay, all exploit the same structural gap:
+the AEAD envelope authenticates the \emph{content} of a reasoning block
+but not the \emph{context} in which it was produced or is later replayed.
+We therefore propose a defense that re-binds every envelope to its
+originating user, session, and conversational position, complemented by
+operational measures for legacy data, backwards compatibility, and
+training-time hardening. Table~\ref{tab:defense-summary} maps each leakage vector to exactly
+what the corresponding mitigation provides. The remainder of
+this section elaborates each entry in turn.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.35}
+\setlength{\tabcolsep}{4pt}
+\caption{Leakage vectors mapped to protections and processes.
+Each tick states what the mitigation supplies; the final
+column records the operational steps that deliver it.}
+\label{tab:defense-summary}
+\begin{tabular}{@{}
+  >{\centering\arraybackslash}p{0.035\textwidth}
+  >{\raggedright\arraybackslash}p{0.15\textwidth}
+  >{\raggedright\arraybackslash}p{0.34\textwidth}
+  >{\raggedright\arraybackslash}p{0.38\textwidth}
+  @{}
+}
+\toprule
+\textbf{\#} & \textbf{Issue} & \textbf{What the mitigation provides} & \textbf{Mitigation} \\
+\midrule
+1 &
+Cross-user leakage &
+$\checkmark$ User-identity binding \newline
+$\checkmark$ Stateless verification \newline
+$\checkmark$ Immediate mismatch rejection
+&
+\begin{enumerate}[topsep=0pt,partopsep=0pt,before=\vspace{-0.55\baselineskip}]
+  \item Embed \texttt{user\_id} in AEAD associated data at issuance.
+  \item On replay, compare bound identity to authenticated caller.
+  \item Reject the envelope on any mismatch.
+\end{enumerate} \\
+\addlinespace
+2 &
+Cross-session leakage &
+$\checkmark$ Session + predecessor binding \newline
+$\checkmark$ Ordinality (P1) under compaction \newline
+$\checkmark$ Native fork / compact / downgrade support \newline
+$\checkmark$ Dramatically reduced blast radius
+&
+\begin{enumerate}[topsep=0pt,partopsep=0pt,before=\vspace{-0.55\baselineskip}]
+  \item Hash-chain each envelope to \texttt{session\_id} and its
+        predecessor (Eq.~\ref{eq:chain}).
+  \item Enforce ordinality server-side.
+  \item Retain only Merkle roots after compaction so surviving
+        spans stay verifiable.
+\end{enumerate} \\
+\addlinespace
+3 &
+Legacy public/enterprise datasets &
+$\checkmark$ Permanent undecodability of pre-fix signatures \newline
+$\checkmark$ Clean cryptographic separation from new material
+&
+\begin{enumerate}[topsep=0pt,partopsep=0pt,before=\vspace{-0.55\baselineskip}]
+  \item Rotate every pre-fix signing key.
+  \item Refuse to decode any envelope under a retired key ID.
+  \item (Optional) Offer identity-verified re-signing for enterprise
+        archives.
+\end{enumerate} \\
+\addlinespace
+4 &
+Backwards compatibility &
+$\checkmark$ Zero-break migration path \newline
+$\checkmark$ Bounded dual-format window \newline
+$\checkmark$ Identity-verified re-issuance
+&
+\begin{enumerate}[topsep=0pt,partopsep=0pt,before=\vspace{-0.55\baselineskip}]
+  \item Accept both legacy and context-bound envelopes during a
+        fixed deprecation window.
+  \item Expose an opt-in batch re-signature endpoint.
+  \item Re-issue only after confirming the requester owns the
+        original session.
+\end{enumerate} \\
+\addlinespace
+5 &
+Model-level compliance &
+$\checkmark$ Closure of residual gaps beyond cryptography \newline
+$\checkmark$ Resistance to transcription / replay jailbreaks
+&
+\begin{enumerate}[topsep=0pt,partopsep=0pt,before=\vspace{-0.55\baselineskip}]
+  \item Post-train models to recognise transcription-style prompts
+        (e.g., \texttt{<thinking-copy>}).
+  \item Refuse the request irrespective of envelope validity.
+\end{enumerate} \\
+\addlinespace
+6 &
+Nonce predictability &
+$\checkmark$ Critical since key is shared between users \newline
+$\checkmark$ Cryptographic foundation for every binding above \newline
+$\checkmark$ Collision- and forgery-resistance at provider scale 
+&
+\begin{enumerate}[topsep=0pt,partopsep=0pt,before=\vspace{-0.55\baselineskip}]
+  \item Draw a high-entropy nonce from a CSPRNG for every block.
+  \item Enforce server-side uniqueness before the envelope is issued.
+\end{enumerate} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Cross-User Binding}
+\label{sec:cross-user-binding}
+
+The simplest and cheapest fix addresses Issue~1 directly: embed the
+originating \texttt{user\_id} (or an equivalent stable account
+identifier) inside the AEAD associated data of every reasoning envelope.
+On replay the API simply compares the bound identifier against the
+already-authenticated caller and rejects the block on mismatch.
+This closes the cross-user attack vector entirely without requiring any stateful backend.
+
+\subsection{Chained, Context-Bound Envelopes}
+\label{sec:chained-binding}
+
+Cross-session replay (Issue~2) is harder, because legitimate workflows
+depend on the very portability that enables the attack: users must be
+able to \emph{fork} a conversation, \emph{compact} old turns out of a
+long session, and \emph{downgrade} to a cheaper model mid-conversation.
+A naive binding of every block to the literal, complete prior transcript
+would break all three.
+
+We therefore propose a lightweight hash chain that binds each user turn and reasoning
+block only to its session and its immediate predecessor:
+\begin{equation}
+\label{eq:chain}
+\tau_{n+1}
+\;=\;
+H\bigl(\,
+  \text{user\_id}
+  \,\|\,
+  \text{session\_id}
+  \,\|\,
+  H(\tau_n \,\|\, \text{salt}_2)
+  \,\|\,
+  \text{salt}_1
+\,\bigr),
+\end{equation}
+where $\tau_n$ denotes the reasoning content of block~$n$ and the resulting
+hash is placed in the associated data of the following block's envelope.
+
+Chaining alone does not prevent an adversary who replays an \emph{entire}
+prior conversation, in order, from coercing a compatible decoder into
+transcription.  What it does achieve is a substantial increase in attack
+cost (the adversary now needs the full session rather than a single
+captured signature) together with a far smaller, auditable blast radius---
+sufficient to defeat the scalable, single-signature extraction attacks.
+
+\paragraph{Design properties.}
+A practical chained scheme could satisfy four complementary properties:
+
+\begin{description}
+\item[P1 (Reasoning Ordinality).]
+  Block~$X$ must be verifiably prior to block~$Y$ whenever~$Y$ depends
+  on~$X$.  This weaker ordering guarantee is inexpensive to preserve under
+  compaction: dropped chunks can simply be excised from the chain while
+  the relative order of surviving nodes remains intact.
+
+\item[P2 (Full Reasoning Integrity).]
+  Block~$X$ must be preceded by \emph{exactly} block~$X{-}1$; no
+  intermediate block may be elided.  The stronger guarantee is costly
+  under compaction, because removal of an internal node forces
+  recomputation of every downstream hash.
+
+\item[P3 (Leak monitoring).]
+  Providers should run a continuous verbatim-matching pass between any
+  published or reported plaintext and any decoded reasoning that surfaces
+  through support channels or abuse reports, so that leakage is detected and account flagged rather than merely prevented.
+
+\item[P4 (Non-replayability).]
+  The same reasoning block must never be accepted twice -- neither within
+  a session nor across sessions.  Replay of an already-consumed envelope
+  is rejected server-side.
+\end{description}
+
+Properties P1 and P2 stand in tension with the compaction requirement;
+we therefore do not attempt to guarantee P2 globally.  Instead we recommend
+a Merkle-tree structure over the session's blocks: the leaves are the
+individual reasoning envelopes, while the provider retains only the tree
+root (or a small number of subtree roots) after leaves are pruned.
+This yields P1 cheaply everywhere and P2 on demand for any surviving
+contiguous span, without ever requiring the full unpruned history to be
+replayed.
+
+Model downgrade and forking are handled uniformly by allowing a session
+to branch the tree: a fork inherits the chain state up to the fork point
+and thereafter continues independently. Consequently an envelope's
+context binding never needs to reference a model version that produced
+an earlier segment of an unrelated branch.
+
+\subsection{Legacy Data}
+\label{sec:legacy}
+
+None of the bindings above can protect data that has already been
+produced and published, e.g. the 6\,708 public trajectories
+surveyed.  Because old envelopes
+were signed under a key that encodes neither user nor session context,
+the only retroactive remedy is key invalidation: providers must rotate
+all pre-fix signing keys and refuse to decode any envelope authenticated
+under a retired key ID.  This single measure -- independent of any new
+context-binding logic -- renders previously published signatures
+permanently undecodable, at the inevitable cost of also invalidating
+legitimate continuations of old sessions.
+
+\subsection{Backwards Compatibility}
+\label{sec:backcompat}
+
+Enterprise customers hold large volumes of stored transcripts whose
+signatures they may still need to resume (e.g., paused agentic workflows).
+We therefore recommend a bounded dual-format acceptance window during
+which both legacy and context-bound envelopes are honored, together with
+an opt-in batch re-signature endpoint.  Customers may submit archived
+transcripts for re-issuance under the new scheme, subject to identity
+verification that the requesting account is the original session owner.
+Once the deprecation window closes, legacy envelopes are rejected
+outright, consistent with the key-rotation policy of
+Section~\ref{sec:legacy}.
+
+\subsection{Training-Time Defenses}
+\label{sec:training}
+
+Cryptographic binding constrains \emph{which} model may be asked to
+decode a given envelope; it cannot constrain what a compliant decoder
+does once it is legitimately asked to process its own prior reasoning. 
+Closing this residual gap is therefore a training problem. Models should be explicitly trained to recognize and
+refuse transcription-style jailbreaks (e.g., \texttt{<thinking-copy>}
+framings) regardless of how innocuous the surrounding request appears.
+We list this as a standing item for future post-training work rather than
+a solved component of the present proposal.

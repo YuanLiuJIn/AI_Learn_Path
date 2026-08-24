@@ -1,0 +1,119 @@
+\begin{figure*}[t]
+\centering
+\setlength{\columnsep}{12pt}
+\setlength{\colw}{\dimexpr(\linewidth-2\columnsep)/3\relax}
+
+\begin{promptrow}
+\caret\plabel{Prompt}\par\vspace{4pt}
+A hydrocarbon compound with molecular formula $C_7H_{14}$ has the following
+$^{13}C$ NMR chemical shifts: 145(s), 112(t), 48(t), 27(d), 22(q), 21(q).
+What is the IUPAC name of the compound? Hint: there may be signal overlapping.
+\par\vspace{6pt}
+{\plabel{Prefilled beginning of Opus reasoning}}\par\vspace{3pt}
+{\monofont\footnotesize \hlseed{C7H14,}}
+\end{promptrow}
+
+\vspace{12pt}
+
+\noindent
+\begin{reasoncol}[equal height group=reasNMR]
+  \modelname{Opus 4.8}\par\vspace{1pt}
+  \caret\plabel{Decoded reasoning}\par\vspace{4pt}
+  \raggedright\hlseed{C7H14,} one degree of unsaturation. 13C signals: 145(s),
+  112(t) -- these are alkene carbons =CH2 (112, t) and =C (145, s). So
+  terminal alkene C=CH2, quaternary alkene carbon (s means no H). 145 (s) = C
+  with no H, alkene carbon. 112 (t) = =CH2. 48 (t) = CH2. 27 (d) = CH. 22 (q)
+  = CH3. 21 (q) = CH3. Count carbons: with overlapping. Total 7 carbons.
+  145(s): 1 carbon. 112(t): 1 carbon (=CH2). 48(t): CH2. 27(d): CH. 22(q):
+  CH3. 21(q): CH3. That's 6 carbons but\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasNMR]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, prefilled}\par\vspace{4pt}
+  \raggedright\hlseed{C7H14,} degree unsaturation 1. 13C: 145(s) quaternary
+  alkene carbon, 112(t) =CH2 terminal alkene. So exocyclic/terminal alkene.
+  Remaining: 48(t) CH2, 27(d) CH, 22(q),21(q). Counting carbons: signals = 6
+  but 7 carbons, so one overlap of two equivalent methyls likely. Structure:
+  CH2=C(CH3)-CH2-CH(CH3)2? That is 2,4-dimethyl-1-pentene:
+  CH2=C(CH3)-CH2-CH(CH3)2, C7H14. Check: C1 =CH2 \textasciitilde112 t; C2
+  quaternary \textasciitilde145 s; CH3 on C2 \textasciitilde22 q; CH2
+  \textasciitilde48 t; CH \textasciitilde27 d\par\vspace{3pt}\elide
+\end{reasoncol}\hspace{\columnsep}%
+\begin{reasoncol}[equal height group=reasNMR]
+  \modelname{Kimi-K3}\par\vspace{1pt}
+  \caret\plabel{Reasoning, not prefilled}\par\vspace{4pt}
+  \raggedright We need solve. Formula one unsat alkene. Six signals means
+  overlap. DEPT multiplicities: 145 quaternary alkene C, 112 CH2 terminal.
+  Structure likely 2-methyl-1-hexene? CH2=C(CH3)-CH2-CH2-CH2-CH3. Carbons 7.
+  Signals: CH2=C carbon 145 s; terminal =CH2 112 t. CH2 adjacent likely 38?
+  Given 48 t. CH d at 27 means a CH present, so branched isopropyl perhaps
+  2,4-dimethyl-1-pentene? CH2=C(CH3)-CH2-CH(CH3)2. C7 H14. Signals expected
+  alkene q, CH2, CH2 t,\par\vspace{3pt}\elide
+\end{reasoncol}
+
+\vspace{12pt}
+
+\noindent
+\begin{answercol}[equal height group=ansNMR]
+  \caret\plabel{Response}\par\vspace{4pt}
+  \raggedright\hlhead{\#\# Analysis}\par\vspace{3pt}
+  **Molecular formula C\textsubscript{7}H\textsubscript{14}** $\rightarrow$
+  Degrees of unsaturation = (2$\times$7+2$-$14)/2 = **1** (one C=C, no ring
+  since we have alkene carbons).\par\vspace{2pt}
+  **Interpreting the signals:**\par
+  {\ttfamily\scriptsize
+  | Shift (ppm) | Mult. | Assignment |\par
+  | 145 | s | =C< (quaternary sp\textsuperscript{2} carbon) |\par
+  | 112 | t | =CH\textsubscript{2} (terminal alkene) |\par
+  | 48 | t | --CH\textsubscript{2}-- |\par
+  | 27 | d | --CH< (methine) |\par
+  | 22 | q | --CH\textsubscript{3} |\par
+  | 21 | q | --CH\textsubscript{3} |\par}
+  The pair at 145 (s) and 112 (t) indicates a **\par\vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansNMR]
+  \caret\plabel{Response, prefilled}\par\vspace{4pt}
+  \raggedright\hlhead{\#\# Answer: **2,4-Dimethylpent-1-ene**}
+  (2,4-dimethyl-1-pentene)\par\vspace{2pt}
+  **Structure:**
+  CH\textsubscript{2}=C(CH\textsubscript{3})--CH\textsubscript{2}--CH(CH\textsubscript{3})\textsubscript{2}\par
+  \vspace{3pt}
+  \hlhead{\#\# Reasoning}\par\vspace{3pt}
+  **Degree of unsaturation:** C\textsubscript{7}H\textsubscript{14}
+  $\rightarrow$ (2$\times$7+2$-$14)/2 = **1** $\rightarrow$ one C=C double
+  bond.\par\vspace{2pt}
+  **Signal assignment (DEPT multiplicities in parentheses):**\par
+  {\ttfamily\scriptsize
+  | $\delta$ (ppm) | Mult. | Assignment |\par
+  | 145 | s | C2, quaternary alkene carbon **C=** |\par
+  | 112 | t | C1, terminal **=CH\textsubscript{2}** |\par
+  | 48 | t | C3, **CH\textsubscript{2}** |\par
+  | 27 | d | C4, **CH** |\par
+  | 22 | q | **CH\textsubscript{3}** on C2 |\par}
+  \vspace{3pt}\elide
+\end{answercol}\hspace{\columnsep}%
+\begin{answercol}[equal height group=ansNMR]
+  \caret\plabel{Response, not prefilled}\par\vspace{4pt}
+  \raggedright The compound is **2,4-dimethylpent-1-ene**:\par\vspace{2pt}
+  \detokenize{\[\mathrm{CH_2=C(CH_3)-CH_2-CH(CH_3)_2}\]}\par\vspace{2pt}
+  Signal assignments:\par
+  - **145 ppm (s)**: substituted alkene carbon, \detokenize{\(\mathrm{C2}\)}\par
+  - **112 ppm (t)**: terminal alkene carbon,
+    \detokenize{\(\mathrm{CH_2{=}C}\)}\par
+  - **48 ppm (t)**: methylene carbon, \detokenize{\(\mathrm{CH_2}\)}\par
+  - **27 ppm (d)**: methine carbon, \detokenize{\(\mathrm{CH}\)}\par
+  - **22 ppm (q)**: two equivalent methyl groups on C4 (signal overlap)\par
+  - **21 ppm (q)**: methyl substituent on C2\par
+  Thus, the IUPAC name is **2,4-dimeth\par\vspace{3pt}\elide
+\end{answercol}
+
+\caption{\textbf{Comparison of Opus 4.8 and Kimi-K3 completions.} We compare
+the visible answers produced by Opus 4.8, unprefilled Kimi-K3, and Kimi-K3
+whose reasoning is prefilled with the first 1\% of tokens (5 tokens) of the decoded
+Opus 4.8 reasoning trace. Over the first 100 visible-answer tokens, the best
+prefilled completion achieves a total 1-, 2-, and 3-gram overlap of $0.26$
+with the Opus answer, compared with $0.10$ for the best unprefilled control.
+Reasoning lengths, measured in Kimi tokens, are 485 for Opus, 209 for the
+prefilled Kimi-K3 completion, and 269 for the control.}
+\label{fig:hle_nmr_transfer}
+\end{figure*}

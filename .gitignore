@@ -1,0 +1,13 @@
+# 大文件/压缩包
+*.tar.gz
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# 运行时产物
+.skillforge/

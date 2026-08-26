@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -22,7 +23,12 @@ from .evaluate import LLMSkillRunner, LocalEvaluator, SandboxEvaluator
 from .gate import Gate
 from .gitops import GitWorkspace
 from .gt import load_gt
-from .llm import BinaryJudge, LLMBackend, NullBackend
+from .llm import (
+    BinaryJudge,
+    LLMBackend,
+    NullBackend,
+    OpenAICompatibleBackend,
+)
 from .loop import EvolutionLoop
 from .memory import MemoryStore
 from .proposer import LLMProposer
@@ -30,8 +36,28 @@ from .target import SkillTarget
 
 
 def _build_backend() -> LLMBackend:
-    """尝试从环境变量构造后端；未配置则返回 NullBackend。"""
-    # 支持 EVOLVER_LLM_URL（OpenAI 兼容接口）——留待用户实现具体适配
+    """从环境变量构造 OpenAI 兼容后端；未配置则返回 NullBackend。
+
+    环境变量（优先用 SKILLFORGE_ 前缀，其次 OPENAI_ 前缀）：
+      SKILLFORGE_BASE_URL / OPENAI_BASE_URL  服务的 ``/v1`` 地址
+      SKILLFORGE_API_KEY  / OPENAI_API_KEY   API key（本地服务可留空）
+      SKILLFORGE_MODEL    / OPENAI_MODEL     模型名，默认 gpt-4o-mini
+    """
+    base_url = os.environ.get("SKILLFORGE_BASE_URL") or os.environ.get(
+        "OPENAI_BASE_URL"
+    )
+    api_key = (
+        os.environ.get("SKILLFORGE_API_KEY")
+        or os.environ.get("OPENAI_API_KEY")
+        or ""
+    )
+    model = (
+        os.environ.get("SKILLFORGE_MODEL")
+        or os.environ.get("OPENAI_MODEL")
+        or "gpt-4o-mini"
+    )
+    if base_url:
+        return OpenAICompatibleBackend(base_url, api_key, model)
     return NullBackend()
 
 

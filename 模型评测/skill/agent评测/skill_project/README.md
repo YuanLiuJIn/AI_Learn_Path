@@ -54,13 +54,25 @@ python -c "from skillforge.cli import main; main(['eval','--skill','examples/hel
 
 ### 2. 完整进化（需要 LLM 后端）
 
+`evolve` 的 Phase 2/3（诊断/修改）需要真实 LLM。项目已内置 **OpenAI 兼容后端**，
+支持 OpenAI / DeepSeek / 通义 / 混元 / vLLM / Ollama 等所有兼容服务，通过环境变量配置：
+
 ```bash
+# PowerShell
+$env:SKILLFORGE_BASE_URL="https://api.openai.com/v1"   # 服务的 /v1 地址
+$env:SKILLFORGE_API_KEY="sk-xxx"
+$env:SKILLFORGE_MODEL="gpt-4o-mini"
+
+# 方式一：命令行
 skillforge evolve --skill examples/hello-skill --gt examples/hello-skill/evals.json \
     --max-iterations 5 --beam-width 2 --git
+
+# 方式二：跑完整真实实验（baseline 评测 + 进化 + 结果展示）
+py examples/run_experiment.py
 ```
 
-`evolve` 的 Phase 2/3（诊断/修改）需要真实 LLM。接入方式：实现 `LLMBackend` 接口
-（见 `src/skillforge/llm.py`），并在 `cli.py` 的 `_build_backend()` 里返回你的后端。
+`run_experiment.py` 是一个端到端示例：它先评测 baseline（预期 dev=0.5），然后让
+LLM 诊断"缺少 security / example 维度"并自动改写 SKILL.md，最终 dev 提升到 1.0。
 
 ### 3. 跑测试
 

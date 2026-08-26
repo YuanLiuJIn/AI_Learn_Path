@@ -44,6 +44,77 @@ class NullBackend(LLMBackend):
         )
 
 
+class OpenAICompatibleBackend(LLMBackend):
+    """OpenAI 兼容的 ``chat/completions`` 后端。
+
+    支持所有提供 OpenAI 兼容接口的服务（OpenAI / DeepSeek / 通义 / 混元 /
+    vLLM / Ollama 等）。零第三方依赖，用标准库 ``urllib`` 实现。
+
+    参数
+    ----
+    base_url:
+        服务的 ``/v1`` 地址，例如 ``https://api.openai.com/v1`` 或
+        ``http://localhost:11434/v1``（Ollama）。
+    api_key:
+        API key；本地服务（Ollama/vLLM）可传空字符串。
+    model:
+        模型名。
+    """
+
+    name = "openai"
+
+    def __init__(
+        self,
+        base_url: str,
+        api_key: str,
+        model: str,
+        timeout: int = 120,
+        temperature: float = 0.2,
+    ):
+        self.base_url = base_url.rstrip("/")
+        self.api_key = api_key
+        self.model = model
+        self.timeout = timeout
+        self.temperature = temperature
+
+    def complete(
+        self, messages: Sequence[dict[str, str]], **kwargs: Any
+    ) -> str:
+        import json
+        import urllib.error
+        import urllib.request
+
+        url = f"{self.base_url}/chat/completions"
+        payload = {
+            "model": self.model,
+            "messages": list(messages),
+            "temperature": kwargs.get("temperature", self.temperature),
+        }
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(payload).encode("utf-8"),
+            headers=headers,
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+                body = json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            detail = e.read().decode("utf-8", errors="replace")[:300]
+            raise RuntimeError(f"LLM 请求失败 ({e.code}): {detail}") from e
+        except urllib.error.URLError as e:
+            raise RuntimeError(f"LLM 连接失败: {e.reason}") from e
+
+        try:
+            return body["choices"][0]["message"]["content"]
+        except (KeyError, IndexError, TypeError) as e:
+            raise RuntimeError(f"LLM 响应格式异常: {body!r}") from e
+
+
 class BinaryJudge:
     """二元 LLM 判定器，用于 path_hit / fact_coverage 等语义断言。
 

@@ -11,6 +11,11 @@ data:
   max_response_length: 4096      # 多轮 推理+检索+作答
   filter_overlong_prompts: True  # 变长 episode 过滤（对应 03 §5 轨迹过滤）
 
+# 环境变量 REWARD_FUNCTION 在三组实验中切换函数名；权重见 reward_ablation.json。
+custom_reward_function:
+  path: ${oc.env:SEARCH_R1_PROJECT_ROOT}/src/reward.py
+  name: ${oc.env:REWARD_FUNCTION,reward_outcome}
+
 actor_rollout_ref:
   model:
     path: Qwen/Qwen2.5-14B

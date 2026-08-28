@@ -29,10 +29,33 @@ conda activate retriever && bash retrieval_launch.sh    # http://127.0.0.1:8000/
 }
 ```
 
-- `reward_model.style="rule"` → 走 RLVR 规则奖励（零 RM，最稳）。
-- `ground_truth` 用于精确匹配（见 `src/reward.py`）。
+- `reward_model.style="rule"` → 走 RLVR 规则奖励。
+- `ground_truth` 支持字符串、答案列表或 `{"target": [...]}`，用于归一化精确匹配（见 `src/reward.py`）。
+- `extra_info.process_scores` 仅用于已有离线 PRM 分数的评测；在线训练的 PRM 组应配置 `PRM_ENDPOINT`，不能把静态样本分数冒充当前 rollout 的过程分数。
 
-## 3. 用自己的 QA 数据集
+## 3. 离线评测输出格式
+
+`scripts/evaluate.py` 接收一行一条轨迹的 JSONL：
+
+```json
+{
+  "id": "q1",
+  "data_source": "nq",
+  "ground_truth": {"target": ["Paris"]},
+  "requires_search": true,
+  "max_search_calls": 2,
+  "search_relevance": [1.0],
+  "process_scores": [0.8, 0.9],
+  "output": "<think>...</think><search>capital of France</search><information>...</information><answer>Paris</answer>"
+}
+```
+
+- `requires_search`：人工或规则提供的题目级搜索必要性标签。
+- `search_relevance`：每次工具调用的相关性标签，可由人工或独立评审器产生。
+- `process_scores`：与当前输出轨迹对应的真实 PRM 分数，仅在离线 PRM 评测时使用。
+- 缺少后两类标签时仍可计算正确率、搜索轮次和格式有效性；工具调用合理率只聚合可观察分量，并同步报告覆盖率。
+
+## 4. 用自己的 QA 数据集
 
 只要满足上述字段即可。处理脚本参考 `Search-R1/scripts/data_process/nq_search.py`。
 常见来源：HotpotQA（多跳）、TriviaQA、2WikiMultihopQA。语料换成你自己的 jsonl：
@@ -41,7 +64,7 @@ conda activate retriever && bash retrieval_launch.sh    # http://127.0.0.1:8000/
 {"id": "0", "contents": "\"Evan Morris\"\nEvan L. Morris (...) was a lobbyist for Genentech..."}
 ```
 
-## 4. 检索服务替代方案
+## 5. 检索服务替代方案
 
 | 搜索引擎 | 配置 | 说明 |
 |---|---|---|
@@ -49,7 +72,7 @@ conda activate retriever && bash retrieval_launch.sh    # http://127.0.0.1:8000/
 | 本地稠密 e5 + ANN | 官方默认 | 需下载索引 |
 | 在线 API（Google/Bing/Brave） | 见 Search-R1 "Use your own search engine" | 真实联网搜索 |
 
-## 5. 数据量建议（4×H200, 14B）
+## 6. 数据量建议（4×H200, 14B）
 
 - 起步：NQ train ~79k 题，先抽样 5k~10k 跑通流程，再全量。
 - `train_batch_size=128`、`rollout.n=5` → 每步约 640 条轨迹，4 卡可接受。

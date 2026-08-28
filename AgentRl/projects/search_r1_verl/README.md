@@ -1,9 +1,9 @@
-# Search-R1 复刻 · Agentic RL 实战脚手架
+# Search-R1 复刻与改进 · Agentic RL 实战项目
 
-> 目标：在 **4×NVIDIA H200** 上，用 **veRL** 复刻 **Search-R1**（训练 LLM 学会"边推理边调搜索工具"的多轮 Agentic RL）。
-> 模型：**Qwen2.5-14B**，算法：**GRPO（RLVR 奖励）**。
-> 这是对你 `AgentRl/` 笔记的全链路实战：多轮轨迹(03) + RLVR 奖励(05) + GRPO(02) + veRL 框架(04)。
-> 同时也是**补齐 JD 缺口**的练兵：GPU 分布式（NCCL/FSDP/vLLM），不是你升腾那套 HCCL。
+> 目标：在 **4×NVIDIA H200** 上，用 **veRL** 复刻 **Search-R1**，并完成「多目标 Reward 消融 + Agentic-Search 评测 + 训评闭环」。
+> 模型：**Qwen2.5-14B**，算法：**GRPO（RLVR / 可插拔 PRM）**。
+> 核心增量：对比 `outcome`、`outcome + 检索效率`、`outcome + 检索效率 + PRM` 三组训练，统一评估正确率、平均搜索轮次和工具调用合理率。
+> 这是对 `AgentRl/` 笔记的全链路实战：多轮轨迹(03) + 多目标奖励(05) + GRPO(02) + veRL 框架(04) + 评测闭环。
 
 ---
 
@@ -102,62 +102,126 @@ conda activate retriever && bash retrieval_launch.sh
 
 ## 4. 启动训练（4×H200, Qwen2.5-14B, GRPO）
 
-用本仓库提供的 `scripts/run_grpo.sh`（已按 14B/4H200 调好），或见 `configs/grpo_qwen14b_4xh200.yaml`：
+`scripts/run_grpo.sh` 已通过 veRL 的 `custom_reward_function.path/name` 接入本项目奖励函数。先设置外部 Search-R1/veRL 环境和检索服务，再选择消融组：
 
 ```bash
-cd Search-R1
+cd /path/to/search_r1_verl
 conda activate searchr1
-export CUDA_VISIBLE_DEVICES=0,1,2,3
-bash scripts/run_grpo.sh
+
+# A：仅最终答案奖励
+REWARD_VARIANT=outcome bash scripts/run_grpo.sh
+
+# B：最终答案 + 检索效率惩罚
+REWARD_VARIANT=outcome_efficiency bash scripts/run_grpo.sh
+
+# C：最终答案 + 检索效率惩罚 + 真实 PRM
+PRM_ENDPOINT=http://127.0.0.1:9000/score \
+REWARD_VARIANT=outcome_efficiency_prm bash scripts/run_grpo.sh
 ```
 
-关键参数（已在 `configs/` 给出，并在 `run_grpo.sh` 用命令行覆盖）：
+模型、数据和输出目录可分别通过 `MODEL_PATH`、`TRAIN_FILE`、`VAL_FILE`、`CHECKPOINT_DIR` 覆盖。`scripts/run_reward_ablation.sh` 可顺序启动三组实验；未设置 `PRM_ENDPOINT` 时会跳过 C 组，防止把启发式分数冒充 PRM。
+
+关键参数：
+
 ```text
 actor_rollout_ref.model.path          = Qwen/Qwen2.5-14B
 actor_rollout_ref.rollout.name        = vllm
-actor_rollout_ref.rollout.tensor_model_parallel_size = 2   # 14B → 14GB/卡
+actor_rollout_ref.rollout.tensor_model_parallel_size = 2
 actor_rollout_ref.rollout.gpu_memory_utilization     = 0.5
-actor_rollout_ref.rollout.n            = 5     # GRPO 组内样本数
-algorithm.adv_estimator               = grpo   # 省 Critic，对应你 02
-trainer.n_gpus_per_node               = 4
-trainer.nnodes                        = 1
-data.max_prompt_length                = 2048   # 搜索上下文较长
-data.max_response_length              = 4096   # 多轮推理+检索
+actor_rollout_ref.rollout.n           = 5
+algorithm.adv_estimator               = grpo
+custom_reward_function.path           = src/reward.py
+custom_reward_function.name           = reward_<消融组>
 ```
 
+### Reward 定义
+
+\[
+R = w_oR_{outcome} - c_sN_{excess} - c_iN_{invalid} - c_dN_{duplicate} - c_bN_{overbudget} + w_pR_{PRM}
+\]
+
+- `outcome`：最终 `<answer>` 与一个可接受答案归一化精确匹配。
+- `efficiency`：只惩罚超过免费额度的搜索、空/未闭合调用、重复查询和超预算调用，不无条件奖励“用了工具”。
+- `PRM`：读取当前轨迹的真实过程分数。在线训练走 `PRM_ENDPOINT`；离线评测也可用 `process_scores`。
+- 所有权重集中在 `configs/reward_ablation.json`，三组实验除了 Reward 之外应保持数据、模型、seed 和训练预算一致。
+
+PRM 服务接收：
+
+```json
+{"data_source":"nq","trajectory":"...","steps":["..."],"ground_truth":{"target":"..."},"extra_info":{}}
+```
+
+返回 `{"scores":[0.7, 0.9]}` 或 `{"score":0.8}`。默认 fail-closed：服务不可用即终止 C 组，避免实验口径失真。
+
 ---
 
-## 5. 你会亲手踩的坑（← 全是笔记里的考点）
+## 5. Agentic-Search 离线评测
 
-| 现象 | 原因 | 对应笔记 / 处理 |
+输出文件格式见 `data/README.md`，可先用样例验证：
+
+```bash
+python scripts/evaluate.py \
+  --input examples/eval_sample.jsonl \
+  --variant outcome_efficiency \
+  --reward-config configs/reward_ablation.json \
+  --output-dir outputs/example
+```
+
+输出：
+
+- `summary.json`：正确率、平均搜索轮次、工具调用合理率、指标覆盖率、格式通过率、重复/非法/超预算比例及各奖励分量。
+- `details.csv`：逐样本明细，支持 bad case 归因。
+
+工具调用合理率是以下**可审计分量的均值**：格式有效性、查询去重、预算遵循、搜索必要性对齐，以及可选的查询相关性。若样本没有搜索且缺少 `requires_search` 标签，该指标记为缺失而非满分，并由 `rationality_coverage` 披露覆盖率。
+
+三组训练完成并分别导出轨迹后，生成消融表：
+
+```bash
+python scripts/compare_ablations.py \
+  --run outcome=outputs/outcome.jsonl \
+  --run outcome_efficiency=outputs/outcome_efficiency.jsonl \
+  --run outcome_efficiency_prm=outputs/outcome_efficiency_prm.jsonl \
+  --output-dir outputs/ablation
+```
+
+重点比较：**正确率是否保持或提升、平均搜索轮次是否下降、工具调用合理率是否提升**，而不是只比较训练 reward。
+
+---
+
+## 6. 常见问题
+
+| 现象 | 原因 | 处理 |
 |---|---|---|
-| loss 不降 / reward 恒为 0 | 答案解析正则不匹配 `<answer>` | `05` §4 Rule 奖励要和可验证格式对齐 |
-| 训练 OOM | rollout 占满显存 | 降 `gpu_memory_utilization` 到 0.4，或 rollout TP=4 |
-| 推理时搜索结果和训练对不上 | Re-tokenize（回填分词不一致） | `03` §4.1，确保 search 结果稳定分词 |
-| 长尾样本拖慢 | 变长 episode | `03`：开启 `filter_overlong_prompts`，轨迹过滤 |
-| 模型只输出不搜索 | 奖励没激励工具调用 | `05`：加"使用搜索"格式奖励 |
-| 多卡通信慢 | NCCL 拓扑 | `04`：检查 `n_gpus_per_node` 与 NVLink |
+| loss 不降 / reward 恒为 0 | 答案解析格式与 `<answer>` 不一致 | 先运行单元测试，再抽样检查 rollout 原文和 ground truth |
+| 搜索次数下降但正确率也下降 | 检索成本过高 | 下调 `search_cost` 或提高 `free_search_calls`，看 Pareto 而非单指标 |
+| 模型重复改写同一查询 | 没有重复惩罚或归一化不足 | 调整 `duplicate_search_penalty`，检查逐样本 `details.csv` |
+| PRM 组启动即失败 | 未提供当前轨迹的过程分数 | 配置真实 `PRM_ENDPOINT`；不要用固定启发式分数代替 |
+| 推理时搜索结果和训练对不上 | 回填后 Re-tokenize 不一致 | 固定检索结果模板与 tokenizer，检查状态掩码 |
+| 训练 OOM | rollout 占满显存 | 降 `gpu_memory_utilization`，或调整 rollout TP/micro batch |
+| 长尾样本拖慢 | 变长 episode | 开启过长轨迹过滤，并报告被过滤比例 |
 
 ---
 
-## 6. 验收标准（跑通即达成）
+## 7. 验收标准
 
 ```text
-[ ] 环境点亮：4 卡 `nvidia-smi` 可见，vLLM 能加载 Qwen2.5-14B
-[ ] 数据跑通：NQ 处理成 parquet，reward 函数能算分
-[ ] 训练启动：GRPO 跑起来，wandb/console 看到 reward 曲线
-[ ] 行为涌现：训练若干步后，模型学会插入 <search> 调用且答案准确率上升
-[ ] 复盘：能对照 03/05 说出本项目的轨迹表示、奖励来源、信用分配点
+[ ] python -m unittest discover -s tests -v 全部通过
+[ ] 三组 Reward 在同一批固定轨迹上的分量符合预期
+[ ] A/B/C 三组保持模型、数据、seed、训练步数和采样参数一致
+[ ] 每组导出独立测试轨迹，并生成 summary.json + details.csv
+[ ] 消融表至少报告：accuracy / avg_search_turns / tool_call_rationality
+[ ] 对重复搜索、错误搜索、无需搜索和答案正确但低效四类 bad case 完成归因
+[ ] 只有接入真实 PRM 模型或真实逐步分数后，才对外声称完成 PRM 实验
 ```
 
 ---
 
-## 7. 延伸（跑通后）
+## 8. 下一步
 
-- 换 **在线搜索**（Google/Bing API）替代本地检索，见 Search-R1 "Use your own search engine"。
-- 上 **Qwen2.5-32B**（TP=4 + ZeRO）验证分布式扩展。
-- 接你 `升腾910b_infra/` 的并行概念，做"GPU vs NPU 分布式"对照笔记。
-- 参考 `AgentRl/05_reward_design.md` 把 Rule 奖励升级为 AgentPRM 过程奖励。
+- 接入语义相关性评审器，替代人工填写 `search_relevance`。
+- 对搜索成本系数做网格实验，绘制正确率—搜索成本 Pareto 曲线。
+- 对 PRM 的 `mean/min/last` 聚合方式做消融，分析长轨迹信用分配。
+- 换在线搜索或不同检索器，控制检索质量变量做交叉实验。
 
 ## 参考
 

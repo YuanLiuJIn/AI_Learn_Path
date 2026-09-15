@@ -1,0 +1,45 @@
+repos:
+- repo: https://github.com/astral-sh/uv-pre-commit
+  rev: 0.8.0
+  hooks:
+    - id: uv-lock
+    - id: uv-export
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
+  hooks:
+    - id: trailing-whitespace
+    - id: end-of-file-fixer
+    - id: check-json
+    - id: check-toml
+    - id: check-yaml
+    - id: check-added-large-files
+      args: ["--maxkb=1000"]
+    - id: mixed-line-ending
+      args: [--fix=lf]
+- repo: https://github.com/psf/black-pre-commit-mirror
+  rev: 24.10.0
+  hooks:
+    - id: black
+- repo: https://github.com/charliermarsh/ruff-pre-commit
+  rev: v0.4.5
+  hooks:
+    - id: ruff
+- repo: https://github.com/pycqa/flake8
+  rev: 6.1.0
+  hooks:
+    - id: flake8
+- repo: local
+  hooks:
+    - id: pylint
+      name: pylint
+      entry: uv
+      args: [run, pylint]
+      language: system
+      types: [python]
+    - id: jupyter-nb-clear-output
+      name: jupyter-nb-clear-output
+      files: \.ipynb$
+      stages: [pre-commit]
+      language: system
+      entry: uv
+      args: [run, jupyter, nbconvert, --ClearOutputPreprocessor.enabled=True, --inplace]

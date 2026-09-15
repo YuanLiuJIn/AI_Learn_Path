@@ -1,0 +1,2476 @@
+{
+  "catalog_name": "current_visible_api_tool_schema_catalog",
+  "date": "2026-05-13",
+  "scope": "Tools visible in the current ChatGPT session, plus dynamic resources discovered via api_tool.list_resources.",
+  "important_notes": [
+    "Input schemas are taken from the currently visible tool definitions and the api_tool resource listing.",
+    "Return schemas are descriptive summaries when the tool definition exposes only `any` or when the exact backend return object is not specified.",
+    "Some tools are channel-constrained in the assistant runtime; that constraint is included as metadata because it matters for actual use.",
+    "Dynamic api_tool resource paths include session-specific link identifiers and may change in another session."
+  ],
+  "top_level_tools": [
+    {
+      "namespace": "web",
+      "function": "run",
+      "channel": "analysis",
+      "description": "Internet and live-data access wrapper: search, open, click, find, PDF screenshots, image search, product search, sports, finance, weather, calculator, and time.",
+      "parameters": [
+        {
+          "name": "open",
+          "type": "array<OpenToolInvocation>|null",
+          "description": "Open pages or URLs by ref_id, optionally at a line number.",
+          "required": false,
+          "nullable": true,
+          "items": {
+            "ref_id": "string",
+            "lineno": "integer|null"
+          }
+        },
+        {
+          "name": "click",
+          "type": "array<ClickToolInvocation>|null",
+          "description": "Click link ids from an opened page.",
+          "required": false,
+          "nullable": true,
+          "items": {
+            "ref_id": "string",
+            "id": "integer"
+          }
+        },
+        {
+          "name": "find",
+          "type": "array<FindToolInvocation>|null",
+          "description": "Find a text pattern in an opened page.",
+          "required": false,
+          "nullable": true,
+          "items": {
+            "ref_id": "string",
+            "pattern": "string"
+          }
+        },
+        {
+          "name": "screenshot",
+          "type": "array<ScreenshotToolInvocation>|null",
+          "description": "Take screenshot of a page in an opened PDF; pageno is zero-indexed.",
+          "required": false,
+          "nullable": true,
+          "items": {
+            "ref_id": "string",
+            "pageno": "integer"
+          }
+        },
+        {
+          "name": "image_query",
+          "type": "array<SearchQuery>|null",
+          "description": "Search the web for images.",
+          "required": false,
+          "nullable": true,
+          "items": {
+            "q": "string",
+            "recency": "integer|null",
+            "domains": "string[]|null"
+          }
+        },
+        {
+          "name": "product_query",
+          "type": "ProductQuery|null",
+          "description": "Search or lookup retail products; restricted categories are unavailable.",
+          "required": false,
+          "nullable": true,
+          "properties": {
+            "search": "string[]|null",
+            "lookup": "string[]|null"
+          }
+        },
+        {
+          "name": "sports",
+          "type": "array<SportsToolInvocation>|null",
+          "description": "Fetch sports schedules or standings for supported leagues.",
+          "required": false,
+          "nullable": true,
+          "items": {
+            "tool": "sports",
+            "fn": "schedule|standings",
+            "league": "nba|wnba|nfl|nhl|mlb|epl|ncaamb|ncaawb|ipl",
+            "team": "string|null",
+            "opponent": "string|null",
+            "date_from": "YYYY-MM-DD|null",
+            "date_to": "YYYY-MM-DD|null",
+            "num_games": "integer|null",
+            "locale": "string|null"
+          }
+        },
+        {
+          "name": "finance",
+          "type": "array<StockToolInvocation>|null",
+          "description": "Fetch current market data for equity, fund, crypto, or index tickers.",
+          "required": false,
+          "nullable": true,
+          "items": {
+            "ticker": "string",
+            "type": "equity|fund|crypto|index",
+            "market": "ISO 3166-3 country code, OTC, or empty for crypto"
+          }
+        },
+        {
+          "name": "weather",
+          "type": "array<WeatherToolInvocation>|null",
+          "description": "Fetch weather forecast for specific locations.",
+          "required": false,
+          "nullable": true,
+          "items": {
+            "location": "string",
+            "start": "YYYY-MM-DD|null",
+            "duration": "integer|null"
+          }
+        },
+        {
+          "name": "calculator",
+          "type": "array<CalculatorInvocation>|null",
+          "description": "Evaluate basic calculations.",
+          "required": false,
+          "nullable": true,
+          "items": {
+            "expression": "string",
+            "prefix": "string",
+            "suffix": "string"
+          }
+        },
+        {
+          "name": "time",
+          "type": "array<TimeInvocation>|null",
+          "description": "Get current time for UTC offsets.",
+          "required": false,
+          "nullable": true,
+          "items": {
+            "utc_offset": "+HH:MM string"
+          }
+        },
+        {
+          "name": "response_length",
+          "type": "string",
+          "description": "Controls returned result verbosity.",
+          "required": false,
+          "enum": [
+            "short",
+            "medium",
+            "long"
+          ],
+          "default": "medium"
+        },
+        {
+          "name": "search_query",
+          "type": "array<SearchQuery>|null",
+          "description": "Search the internet for query strings, optionally with recency and domain filters.",
+          "required": false,
+          "nullable": true,
+          "items": {
+            "q": "string",
+            "recency": "integer|null",
+            "domains": "string[]|null"
+          },
+          "max_items": 4
+        }
+      ],
+      "returns": {
+        "type": "web_result_bundle",
+        "description": "A bundle of source objects with reference ids such as turnXsearchY, turnXviewY, turnXfinanceY, turnXforecastY, turnXsportsY, turnXimageY, or turnXproductY. Some refs can be used by later open/click/find/screenshot calls or rendered as rich UI widgets."
+      }
+    },
+    {
+      "namespace": "file_search",
+      "function": "msearch",
+      "channel": "analysis",
+      "description": "Search the user's File Library for uploaded files or file chunks. Current available source is file_library.",
+      "parameters": [
+        {
+          "name": "queries",
+          "type": "string[]",
+          "description": "One to five self-contained semantic/keyword search queries; must always be present.",
+          "required": true,
+          "max_items": 5
+        },
+        {
+          "name": "source_filter",
+          "type": "string[]",
+          "description": "Non-empty source list; current hard constraint allows only file_library.",
+          "required": true,
+          "enum": [
+            "file_library"
+          ]
+        },
+        {
+          "name": "file_type_filter",
+          "type": "string[]",
+          "description": "Optional file type filter.",
+          "required": false,
+          "enum": [
+            "spreadsheets",
+            "slides"
+          ]
+        },
+        {
+          "name": "intent",
+          "type": "string",
+          "description": "Use nav when locating/listing files.",
+          "required": false,
+          "enum": [
+            "nav"
+          ]
+        },
+        {
+          "name": "time_frame_filter",
+          "type": "object",
+          "description": "Optional upload-time filter for File Library searches.",
+          "required": false,
+          "properties": {
+            "start_date": "YYYY-MM-DD",
+            "end_date": "YYYY-MM-DD"
+          }
+        }
+      ],
+      "returns": {
+        "type": "file_search_results",
+        "description": "Ranked file snippets or navigation entries, with mclick pointers like 0:1 and file citation line markers when content is retrieved."
+      }
+    },
+    {
+      "namespace": "file_search",
+      "function": "mclick",
+      "channel": "analysis",
+      "description": "Open file_search result pointers to expand file content, snippets, or multimodal file views.",
+      "parameters": [
+        {
+          "name": "pointers",
+          "type": "string[]",
+          "description": "Pointers returned by msearch, for example ['0:1','0:2'].",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "file_content_bundle",
+        "description": "Expanded file content, metadata, line-numbered snippets, and sometimes multimodal view data."
+      }
+    },
+    {
+      "namespace": "python",
+      "function": "exec",
+      "channel": "analysis",
+      "description": "Execute Python code in a stateful Jupyter-like kernel for private analysis, computation, data inspection, and file generation used internally by the assistant.",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "freeform python",
+          "description": "Python source code sent as the tool body.",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "execution_result",
+        "description": "stdout, stderr, exceptions, displayed values, and generated file side effects in the sandbox."
+      }
+    },
+    {
+      "namespace": "python_user_visible",
+      "function": "exec",
+      "channel": "commentary",
+      "description": "Execute Python code whose outputs are visible to the user; used for charts, tables, and user-facing files.",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "freeform python",
+          "description": "Python source code sent as the tool body.",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "user_visible_execution_result",
+        "description": "User-visible stdout, rendered plots/tables, and generated file artifacts."
+      }
+    },
+    {
+      "namespace": "user_info",
+      "function": "get_user_info",
+      "channel": "analysis",
+      "description": "Get the user's current location and local time, or UTC time when location is unknown.",
+      "parameters": [],
+      "returns": {
+        "type": "user_info_result",
+        "description": "Coarse location, local time, and timezone context when available."
+      }
+    },
+    {
+      "namespace": "personal_context",
+      "function": "search",
+      "channel": "analysis",
+      "description": "Retrieve user-specific personal context from prior interactions or linked context streams. The query must be self-contained.",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Self-contained natural-language query describing the personal context needed.",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "personal_context_results",
+        "description": "Relevant user-memory/context snippets and summaries when available."
+      }
+    },
+    {
+      "namespace": "summary_reader",
+      "function": "read",
+      "channel": "analysis",
+      "description": "Read safe-to-share summaries of previous hidden reasoning messages when the user asks about prior scratchpad or reasoning.",
+      "parameters": [
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of summary messages to read.",
+          "required": false,
+          "default": 10
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "description": "Offset into the summary stream.",
+          "required": false,
+          "default": 0
+        }
+      ],
+      "returns": {
+        "type": "reasoning_summary_bundle",
+        "description": "A list of safe-to-share reasoning summaries, not raw private chain-of-thought JSON."
+      }
+    },
+    {
+      "namespace": "container",
+      "function": "exec",
+      "channel": "analysis",
+      "description": "Execute a command in the sandbox/container; can allocate an interactive pseudo-TTY if session_name is set.",
+      "parameters": [
+        {
+          "name": "cmd",
+          "type": "string[]",
+          "description": "Command and arguments to execute, for example ['bash','-lc','ls -lah'].",
+          "required": true
+        },
+        {
+          "name": "session_name",
+          "type": "string|null",
+          "description": "Optional interactive session name.",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "workdir",
+          "type": "string|null",
+          "description": "Optional working directory.",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "timeout",
+          "type": "integer|null",
+          "description": "Optional timeout in milliseconds.",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "env",
+          "type": "object|null",
+          "description": "Optional environment variables.",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "user",
+          "type": "string|null",
+          "description": "Optional user to run as.",
+          "required": false,
+          "nullable": true
+        }
+      ],
+      "returns": {
+        "type": "process_result",
+        "description": "stdout, stderr, exit status, and session metadata when applicable; file-system side effects may persist inside the sandbox."
+      }
+    },
+    {
+      "namespace": "container",
+      "function": "feed_chars",
+      "channel": "analysis",
+      "description": "Send characters to an existing interactive exec session, then flush stdout/stderr after a delay.",
+      "parameters": [
+        {
+          "name": "session_name",
+          "type": "string",
+          "description": "Interactive session name created by container.exec.",
+          "required": true
+        },
+        {
+          "name": "chars",
+          "type": "string",
+          "description": "Characters to send to stdin.",
+          "required": true
+        },
+        {
+          "name": "yield_time_ms",
+          "type": "integer",
+          "description": "Delay before collecting output.",
+          "required": false,
+          "default": 100
+        }
+      ],
+      "returns": {
+        "type": "process_stream_chunk",
+        "description": "Incremental stdout/stderr emitted by the interactive session."
+      }
+    },
+    {
+      "namespace": "container",
+      "function": "open_image",
+      "channel": "analysis",
+      "description": "Open an image file from the container for visual inspection. Absolute paths are required; supported formats include jpg, jpeg, png, and webp.",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "string",
+          "description": "Absolute path to image.",
+          "required": true
+        },
+        {
+          "name": "user",
+          "type": "string|null",
+          "description": "Optional user context.",
+          "required": false,
+          "nullable": true
+        }
+      ],
+      "returns": {
+        "type": "image_view",
+        "description": "Rendered image preview plus metadata as available."
+      }
+    },
+    {
+      "namespace": "container",
+      "function": "download",
+      "channel": "analysis",
+      "description": "Download a file from a URL into the container filesystem.",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "string",
+          "description": "URL to download.",
+          "required": true
+        },
+        {
+          "name": "filepath",
+          "type": "string",
+          "description": "Destination path inside the container.",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "download_result",
+        "description": "Download status and local file path when successful."
+      }
+    },
+    {
+      "namespace": "api_tool",
+      "function": "list_resources",
+      "channel": "commentary",
+      "description": "List dynamic op resources and callable tools, including Figma and GitHub resources in the current session.",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "string",
+          "description": "Resource path to list.",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "cursor",
+          "type": "string|null",
+          "description": "Pagination cursor; must be a next_cursor from a prior response.",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "only_tools",
+          "type": "boolean",
+          "description": "Only list invokable tools.",
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "refetch_tools",
+          "type": "boolean",
+          "description": "Force refresh of eligible tools.",
+          "required": false,
+          "default": false
+        }
+      ],
+      "returns": {
+        "type": "resource_listing",
+        "description": "Resource names, callable tool paths, descriptions, and argument schemas. May include next_cursor for pagination."
+      }
+    },
+    {
+      "namespace": "api_tool",
+      "function": "call_tool",
+      "channel": "commentary",
+      "description": "Invoke a dynamic op resource discovered by api_tool.list_resources.",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "string",
+          "description": "Full resource path returned by list_resources.",
+          "required": true
+        },
+        {
+          "name": "args",
+          "type": "object",
+          "description": "Arguments matching that resource's schema.",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "dynamic_tool_result",
+        "description": "Result object from the invoked resource; shape depends on the selected resource."
+      }
+    },
+    {
+      "namespace": "image_gen",
+      "function": "text2im",
+      "channel": "commentary",
+      "description": "Generate or edit images from the conversation context. It can use referenced images from the current conversation for image editing or style transfer when allowed.",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string|null",
+          "description": "Deprecated in the visible schema; normally pass null because instructions are inferred from context.",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "size",
+          "type": "string|null",
+          "description": "Optional output size in the visible schema.",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "n",
+          "type": "integer|null",
+          "description": "Number of images.",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "transparent_background",
+          "type": "boolean|null",
+          "description": "Whether to generate a transparent background.",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "is_style_transfer",
+          "type": "boolean|null",
+          "description": "Whether the request asks for a stylistic transformation.",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "referenced_image_ids",
+          "type": "string[]|null",
+          "description": "Deprecated image reference field in the visible schema.",
+          "required": false,
+          "nullable": true
+        }
+      ],
+      "observed_runtime_note": "The runtime wrapper also accepted fields such as aspect_ratio and reference_image_paths in this session; these are treated as observed wrapper fields rather than stable top-level schema guarantees.",
+      "returns": {
+        "type": "generated_image_result",
+        "description": "Generated image preview and saved file path metadata."
+      }
+    },
+    {
+      "namespace": "bio",
+      "function": "update",
+      "channel": "commentary",
+      "disabled": true,
+      "description": "Long-term memory update interface. Disabled in the current session.",
+      "parameters": [
+        {
+          "name": "payload",
+          "type": "freeform",
+          "description": "Would normally contain memory update content; unavailable here.",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "disabled_tool_result",
+        "description": "No callable result because the tool is disabled."
+      }
+    }
+  ],
+  "api_tool_dynamic_resources": {
+    "Figma": [
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/get_screenshot",
+        "description": "Generate a screenshot for a required nodeId and fileKey; contentsOnly can render node in isolation.",
+        "parameters": [
+          {
+            "name": "nodeId",
+            "type": "string",
+            "description": "Node id in the Figma document, e.g. '123:456' or '123-456'.",
+            "required": true
+          },
+          {
+            "name": "fileKey",
+            "type": "string",
+            "description": "Figma file key. Extract from Figma URL when a URL is provided.",
+            "required": true
+          },
+          {
+            "name": "contentsOnly",
+            "type": "boolean",
+            "description": "Render node in isolation when true.",
+            "required": false,
+            "default": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/create_design_system_rules",
+        "description": "Generate a prompt to create design system rules for a repo.",
+        "parameters": [
+          {
+            "name": "clientLanguages",
+            "type": "string",
+            "description": "Comma-separated programming languages; use unknown when uncertain.",
+            "required": false
+          },
+          {
+            "name": "clientFrameworks",
+            "type": "string",
+            "description": "Comma-separated frameworks; use unknown when uncertain.",
+            "required": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/get_design_context",
+        "description": "Primary design-to-code context tool; returns reference code, screenshot, and contextual metadata.",
+        "parameters": [
+          {
+            "name": "nodeId",
+            "type": "string",
+            "description": "Node id in the Figma document, e.g. '123:456' or '123-456'.",
+            "required": true
+          },
+          {
+            "name": "fileKey",
+            "type": "string",
+            "description": "Figma file key. Extract from Figma URL when a URL is provided.",
+            "required": true
+          },
+          {
+            "name": "clientLanguages",
+            "type": "string",
+            "description": "Comma-separated programming languages; use unknown when uncertain.",
+            "required": false
+          },
+          {
+            "name": "clientFrameworks",
+            "type": "string",
+            "description": "Comma-separated frameworks; use unknown when uncertain.",
+            "required": false
+          },
+          {
+            "name": "forceCode",
+            "type": "boolean",
+            "description": "Always return code when directly requested.",
+            "required": false
+          },
+          {
+            "name": "disableCodeConnect",
+            "type": "boolean",
+            "description": "Disable Code Connect when directly requested.",
+            "required": false
+          },
+          {
+            "name": "excludeScreenshot",
+            "type": "boolean",
+            "description": "Exclude screenshot only when explicitly requested or context must be preserved.",
+            "required": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/get_metadata",
+        "description": "Get XML-style metadata for a node or page: IDs, layer types, names, positions, and sizes.",
+        "parameters": [
+          {
+            "name": "nodeId",
+            "type": "string",
+            "description": "Node id in the Figma document, e.g. '123:456' or '123-456'.",
+            "required": true
+          },
+          {
+            "name": "fileKey",
+            "type": "string",
+            "description": "Figma file key. Extract from Figma URL when a URL is provided.",
+            "required": true
+          },
+          {
+            "name": "clientLanguages",
+            "type": "string",
+            "description": "Comma-separated programming languages; use unknown when uncertain.",
+            "required": false
+          },
+          {
+            "name": "clientFrameworks",
+            "type": "string",
+            "description": "Comma-separated frameworks; use unknown when uncertain.",
+            "required": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/get_variable_defs",
+        "description": "Get variable definitions for a node, such as colors, sizes, and spacing variables.",
+        "parameters": [
+          {
+            "name": "nodeId",
+            "type": "string",
+            "description": "Node id in the Figma document, e.g. '123:456' or '123-456'.",
+            "required": true
+          },
+          {
+            "name": "fileKey",
+            "type": "string",
+            "description": "Figma file key. Extract from Figma URL when a URL is provided.",
+            "required": true
+          },
+          {
+            "name": "clientLanguages",
+            "type": "string",
+            "description": "Comma-separated programming languages; use unknown when uncertain.",
+            "required": false
+          },
+          {
+            "name": "clientFrameworks",
+            "type": "string",
+            "description": "Comma-separated frameworks; use unknown when uncertain.",
+            "required": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/get_figjam",
+        "description": "Generate UI code for a FigJam node; only works for FigJam files.",
+        "parameters": [
+          {
+            "name": "nodeId",
+            "type": "string",
+            "description": "Node id in the Figma document, e.g. '123:456' or '123-456'.",
+            "required": true
+          },
+          {
+            "name": "fileKey",
+            "type": "string",
+            "description": "Figma file key. Extract from Figma URL when a URL is provided.",
+            "required": true
+          },
+          {
+            "name": "includeImagesOfNodes",
+            "type": "boolean",
+            "description": "Include images of nodes in the response.",
+            "required": false,
+            "default": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/get_code_connect_map",
+        "description": "Get mapping from Figma node ids to Code Connect source components.",
+        "parameters": [
+          {
+            "name": "nodeId",
+            "type": "string",
+            "description": "Node id in the Figma document, e.g. '123:456' or '123-456'.",
+            "required": true
+          },
+          {
+            "name": "fileKey",
+            "type": "string",
+            "description": "Figma file key. Extract from Figma URL when a URL is provided.",
+            "required": true
+          },
+          {
+            "name": "codeConnectLabel",
+            "type": "string",
+            "description": "Optional label for selecting Code Connect information.",
+            "required": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/whoami",
+        "description": "Return information about the authenticated Figma user.",
+        "parameters": [],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/get_code_connect_suggestions",
+        "description": "Suggest a strategy for linking a Figma node to code components via Code Connect.",
+        "parameters": [
+          {
+            "name": "nodeId",
+            "type": "string",
+            "description": "Node id in the Figma document, e.g. '123:456' or '123-456'.",
+            "required": true
+          },
+          {
+            "name": "fileKey",
+            "type": "string",
+            "description": "Figma file key. Extract from Figma URL when a URL is provided.",
+            "required": true
+          },
+          {
+            "name": "clientLanguages",
+            "type": "string",
+            "description": "Comma-separated programming languages; use unknown when uncertain.",
+            "required": false
+          },
+          {
+            "name": "clientFrameworks",
+            "type": "string",
+            "description": "Comma-separated frameworks; use unknown when uncertain.",
+            "required": false
+          },
+          {
+            "name": "excludeMappingPrompt",
+            "type": "boolean",
+            "description": "Return only a lightweight list of unmapped components when true.",
+            "required": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/list_code_components",
+        "description": "List Storybook code components available for a Figma file.",
+        "parameters": [
+          {
+            "name": "fileKey",
+            "type": "string",
+            "description": "Figma file key.",
+            "required": true
+          },
+          {
+            "name": "clientLanguages",
+            "type": "string",
+            "description": "Comma-separated programming languages; use unknown when uncertain.",
+            "required": false
+          },
+          {
+            "name": "clientFrameworks",
+            "type": "string",
+            "description": "Comma-separated frameworks; use unknown when uncertain.",
+            "required": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/get_code_component_info",
+        "description": "Get component information for all Storybook stories matching a story path.",
+        "parameters": [
+          {
+            "name": "fileKey",
+            "type": "string",
+            "description": "Figma file key.",
+            "required": true
+          },
+          {
+            "name": "storybookId",
+            "type": "string",
+            "description": "Storybook id to search.",
+            "required": true
+          },
+          {
+            "name": "storyPath",
+            "type": "string",
+            "description": "Storybook story file path.",
+            "required": true
+          },
+          {
+            "name": "clientLanguages",
+            "type": "string",
+            "description": "Comma-separated programming languages; use unknown when uncertain.",
+            "required": false
+          },
+          {
+            "name": "clientFrameworks",
+            "type": "string",
+            "description": "Comma-separated frameworks; use unknown when uncertain.",
+            "required": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/get_context_for_code_connect",
+        "description": "Get structured component metadata for creating Code Connect template files.",
+        "parameters": [
+          {
+            "name": "nodeId",
+            "type": "string",
+            "description": "Node id in the Figma document, e.g. '123:456' or '123-456'.",
+            "required": true
+          },
+          {
+            "name": "fileKey",
+            "type": "string",
+            "description": "Figma file key. Extract from Figma URL when a URL is provided.",
+            "required": true
+          },
+          {
+            "name": "clientLanguages",
+            "type": "string",
+            "description": "Comma-separated programming languages; use unknown when uncertain.",
+            "required": false
+          },
+          {
+            "name": "clientFrameworks",
+            "type": "string",
+            "description": "Comma-separated frameworks; use unknown when uncertain.",
+            "required": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/get_libraries",
+        "description": "Get design libraries associated with a Figma file.",
+        "parameters": [
+          {
+            "name": "fileKey",
+            "type": "string",
+            "description": "Figma file key.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "Figma",
+        "path": "/Figma/link_68ee062d8e8c8191869cb17436951f7b/search_design_system",
+        "description": "Search design system assets such as components, variables, and styles.",
+        "parameters": [
+          {
+            "name": "query",
+            "type": "string",
+            "description": "Text query.",
+            "required": true
+          },
+          {
+            "name": "fileKey",
+            "type": "string",
+            "description": "Figma file key for context.",
+            "required": true
+          },
+          {
+            "name": "disableCodeConnect",
+            "type": "boolean",
+            "description": "Disable Code Connect for search results.",
+            "required": false
+          },
+          {
+            "name": "includeComponents",
+            "type": "boolean",
+            "description": "Include components.",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "includeVariables",
+            "type": "boolean",
+            "description": "Include variables.",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "includeStyles",
+            "type": "boolean",
+            "description": "Include styles.",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "includeLibraryKeys",
+            "type": "string[]",
+            "description": "Restrict search to selected library keys.",
+            "required": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      }
+    ],
+    "GitHub": [
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/check_repo_initialized",
+        "description": "Check whether a GitHub repository has been set up.",
+        "parameters": [
+          {
+            "name": "repo_id",
+            "type": "number",
+            "description": "Repository id.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/compare_commits",
+        "description": "Compare two commits or refs and return per-file stats plus compare metadata.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "base",
+            "type": "string",
+            "description": "Base commit/ref.",
+            "required": true
+          },
+          {
+            "name": "head",
+            "type": "string",
+            "description": "Head commit/ref.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/download_user_content",
+        "description": "Download user-supplied content from a GitHub URL.",
+        "parameters": [
+          {
+            "name": "url",
+            "type": "string",
+            "description": "GitHub file URL; supports blob, raw, and api contents URLs.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/download_workflow_artifact",
+        "description": "Download a GitHub Actions workflow artifact ZIP archive.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "artifact_id",
+            "type": "number",
+            "description": "Workflow artifact id.",
+            "required": true
+          },
+          {
+            "name": "file_name",
+            "type": "string|null",
+            "description": "Optional returned ZIP file name.",
+            "required": false,
+            "nullable": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch",
+        "description": "Fetch a UTF-8 text file from GitHub by URL.",
+        "parameters": [
+          {
+            "name": "url",
+            "type": "string",
+            "description": "GitHub file URL.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_blob",
+        "description": "Fetch blob content by SHA from a repository.",
+        "parameters": [
+          {
+            "name": "repository_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "blob_sha",
+            "type": "string",
+            "description": "Blob SHA.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_commit",
+        "description": "Fetch a commit with metadata, diff, and canonical URL.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "commit_sha",
+            "type": "string",
+            "description": "Commit SHA.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_commit_workflow_runs",
+        "description": "Fetch pull-request-triggered workflow runs associated with a commit SHA; first page only.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "commit_sha",
+            "type": "string",
+            "description": "Commit SHA.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_file",
+        "description": "Fetch file content by path and ref from a repository.",
+        "parameters": [
+          {
+            "name": "repository_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "path",
+            "type": "string",
+            "description": "Repository path for file.",
+            "required": true
+          },
+          {
+            "name": "ref",
+            "type": "string",
+            "description": "Branch, tag, or commit ref.",
+            "required": true
+          },
+          {
+            "name": "encoding",
+            "type": "string",
+            "description": "utf-8 or base64.",
+            "required": false,
+            "enum": [
+              "utf-8",
+              "base64"
+            ],
+            "default": "utf-8"
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_issue",
+        "description": "Fetch a GitHub issue.",
+        "parameters": [
+          {
+            "name": "repo",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "issue_number",
+            "type": "number",
+            "description": "Issue number.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_issue_comments",
+        "description": "Fetch comments for a GitHub issue across all pages.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "issue_number",
+            "type": "number",
+            "description": "Issue number.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_pr",
+        "description": "Fetch a pull request with diff, metadata, and optionally comments.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "pr_number",
+            "type": "number",
+            "description": "Pull request number.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_pr_comments",
+        "description": "Fetch merged PR discussion timeline including issue comments, review comments, and review submissions.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "pr_number",
+            "type": "number",
+            "description": "Pull request number.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_pr_file_patch",
+        "description": "Fetch a single-file patch from a PR, searching all file-list pages.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "pr_number",
+            "type": "number",
+            "description": "Pull request number.",
+            "required": true
+          },
+          {
+            "name": "path",
+            "type": "string",
+            "description": "Changed file path within the pull request.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_pr_patch",
+        "description": "Fetch the patch for a GitHub pull request across all changed-file pages.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "pr_number",
+            "type": "number",
+            "description": "Pull request number.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_workflow_job_logs",
+        "description": "Fetch decoded logs for a GitHub Actions workflow job.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "job_id",
+            "type": "number",
+            "description": "Workflow job id.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_workflow_job_steps",
+        "description": "Fetch step summaries for a GitHub Actions workflow job.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "job_id",
+            "type": "number",
+            "description": "Workflow job id.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_workflow_run_artifacts",
+        "description": "Fetch artifacts for a GitHub Actions workflow run; first page only.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "run_id",
+            "type": "number",
+            "description": "Workflow run id.",
+            "required": true
+          },
+          {
+            "name": "name",
+            "type": "string|null",
+            "description": "Optional artifact name filter.",
+            "required": false,
+            "nullable": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/fetch_workflow_run_jobs",
+        "description": "Fetch jobs for a GitHub Actions workflow run; latest attempt, first page only.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "run_id",
+            "type": "number",
+            "description": "Workflow run id.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/get_commit_combined_status",
+        "description": "Fetch combined CI status and individual status checks for a commit.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "commit_sha",
+            "type": "string",
+            "description": "Commit SHA.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/get_issue_comment_reactions",
+        "description": "Fetch reactions for an issue comment.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "comment_id",
+            "type": "number",
+            "description": "Numeric issue or review comment id.",
+            "required": true
+          },
+          {
+            "name": "per_page",
+            "type": "number|null",
+            "description": "Maximum results.",
+            "required": false,
+            "nullable": true
+          },
+          {
+            "name": "page",
+            "type": "number|null",
+            "description": "1-based page number.",
+            "required": false,
+            "nullable": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/get_pr_diff",
+        "description": "Fetch just the diff or patch text for a pull request.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "pr_number",
+            "type": "number",
+            "description": "Pull request number.",
+            "required": true
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "description": "Output format.",
+            "required": false,
+            "enum": [
+              "diff",
+              "patch"
+            ],
+            "default": "diff"
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/get_pr_info",
+        "description": "Get metadata for a pull request without code changes.",
+        "parameters": [
+          {
+            "name": "repository_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "pr_number",
+            "type": "number",
+            "description": "Pull request number.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/get_pr_reactions",
+        "description": "Fetch reactions for a GitHub pull request.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "pr_number",
+            "type": "number",
+            "description": "Pull request number.",
+            "required": true
+          },
+          {
+            "name": "per_page",
+            "type": "number|null",
+            "description": "Maximum results.",
+            "required": false,
+            "nullable": true
+          },
+          {
+            "name": "page",
+            "type": "number|null",
+            "description": "1-based page number.",
+            "required": false,
+            "nullable": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/get_pr_review_comment_reactions",
+        "description": "Fetch reactions for a pull request review comment.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "comment_id",
+            "type": "number",
+            "description": "Numeric review comment id.",
+            "required": true
+          },
+          {
+            "name": "per_page",
+            "type": "number|null",
+            "description": "Maximum results.",
+            "required": false,
+            "nullable": true
+          },
+          {
+            "name": "page",
+            "type": "number|null",
+            "description": "1-based page number.",
+            "required": false,
+            "nullable": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/get_profile",
+        "description": "Retrieve the GitHub profile for the authenticated user.",
+        "parameters": [],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/get_repo",
+        "description": "Retrieve metadata for a GitHub repository.",
+        "parameters": [
+          {
+            "name": "repo_id",
+            "type": "string",
+            "description": "Repository id or identifier accepted by connector.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/get_repo_collaborator_permission",
+        "description": "Return collaborator permission level for a user on a repository.",
+        "parameters": [
+          {
+            "name": "repository_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "username",
+            "type": "string",
+            "description": "GitHub username.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/get_user_login",
+        "description": "Return the GitHub login for the authenticated user.",
+        "parameters": [],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/get_users_recent_prs_in_repo",
+        "description": "List the user's recent pull requests in a repository.",
+        "parameters": [
+          {
+            "name": "repository_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "limit",
+            "type": "number",
+            "description": "Maximum results.",
+            "required": false,
+            "default": 20
+          },
+          {
+            "name": "state",
+            "type": "string",
+            "description": "PR state filter.",
+            "required": false,
+            "default": "all"
+          },
+          {
+            "name": "include_diff",
+            "type": "boolean",
+            "description": "Include diff in each result.",
+            "required": false,
+            "default": false
+          },
+          {
+            "name": "include_comments",
+            "type": "boolean",
+            "description": "Include comments in each result.",
+            "required": false,
+            "default": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/list_installations",
+        "description": "List all organizations the authenticated user installed this GitHub App on.",
+        "parameters": [],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/list_installed_accounts",
+        "description": "List all accounts that installed the GitHub app.",
+        "parameters": [],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/list_pr_changed_filenames",
+        "description": "List changed filenames for a PR across all paginated file-list pages.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "pr_number",
+            "type": "number",
+            "description": "Pull request number.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/list_pull_request_review_threads",
+        "description": "List inline review threads on a pull request, including resolved state.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "pr_number",
+            "type": "number",
+            "description": "Pull request number.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/list_pull_request_reviews",
+        "description": "List review submissions on a pull request.",
+        "parameters": [
+          {
+            "name": "repo_full_name",
+            "type": "string",
+            "description": "Repository in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "pr_number",
+            "type": "number",
+            "description": "Pull request number.",
+            "required": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/list_recent_issues",
+        "description": "Return the most recent GitHub issues accessible to the user.",
+        "parameters": [
+          {
+            "name": "top_k",
+            "type": "number",
+            "description": "Final result limit.",
+            "required": false,
+            "default": 20
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/list_repositories",
+        "description": "List repositories accessible to the authenticated user.",
+        "parameters": [
+          {
+            "name": "page_size",
+            "type": "number",
+            "description": "Maximum results.",
+            "required": false,
+            "default": 20
+          },
+          {
+            "name": "page_offset",
+            "type": "number",
+            "description": "Zero-based offset.",
+            "required": false,
+            "default": 0
+          },
+          {
+            "name": "include_search_index_status",
+            "type": "boolean",
+            "description": "Include code search index availability metadata.",
+            "required": false,
+            "default": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/list_repositories_by_affiliation",
+        "description": "List accessible repositories filtered by affiliation.",
+        "parameters": [
+          {
+            "name": "affiliation",
+            "type": "string",
+            "description": "owner, collaborator, organization_member, or similar.",
+            "required": true
+          },
+          {
+            "name": "page_size",
+            "type": "number",
+            "description": "Maximum results.",
+            "required": false,
+            "default": 100
+          },
+          {
+            "name": "page_offset",
+            "type": "number",
+            "description": "Zero-based offset.",
+            "required": false,
+            "default": 0
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/list_repositories_by_installation",
+        "description": "List accessible repositories by GitHub App installation id.",
+        "parameters": [
+          {
+            "name": "installation_id",
+            "type": "number",
+            "description": "GitHub App installation id.",
+            "required": true
+          },
+          {
+            "name": "page_size",
+            "type": "number",
+            "description": "Maximum results.",
+            "required": false,
+            "default": 20
+          },
+          {
+            "name": "page_offset",
+            "type": "number",
+            "description": "Zero-based offset.",
+            "required": false,
+            "default": 0
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/list_user_org_memberships",
+        "description": "List the authenticated user's organization memberships.",
+        "parameters": [],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/list_user_orgs",
+        "description": "List organizations the authenticated user is a member of.",
+        "parameters": [],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/search",
+        "description": "Search files within a specific GitHub repository or organization.",
+        "parameters": [
+          {
+            "name": "query",
+            "type": "string",
+            "description": "Plain search query string.",
+            "required": true
+          },
+          {
+            "name": "topn",
+            "type": "number",
+            "description": "Maximum results.",
+            "required": false,
+            "default": 20
+          },
+          {
+            "name": "repository_name",
+            "type": "string|string[]|null",
+            "description": "Repository or repositories to search within.",
+            "required": false,
+            "nullable": true
+          },
+          {
+            "name": "org",
+            "type": "string|null",
+            "description": "Optional organization scope.",
+            "required": false,
+            "nullable": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/search_branches",
+        "description": "Search GitHub branches within a repository.",
+        "parameters": [
+          {
+            "name": "owner",
+            "type": "string",
+            "description": "Repository owner or organization.",
+            "required": true
+          },
+          {
+            "name": "repo_name",
+            "type": "string",
+            "description": "Repository name without owner prefix.",
+            "required": true
+          },
+          {
+            "name": "query",
+            "type": "string",
+            "description": "Search query.",
+            "required": true
+          },
+          {
+            "name": "page_size",
+            "type": "number",
+            "description": "Maximum results.",
+            "required": false,
+            "default": 20
+          },
+          {
+            "name": "cursor",
+            "type": "string|null",
+            "description": "Opaque cursor from previous branch search.",
+            "required": false,
+            "nullable": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/search_commits",
+        "description": "Search commits across one or more repositories.",
+        "parameters": [
+          {
+            "name": "query",
+            "type": "string",
+            "description": "Search query.",
+            "required": true
+          },
+          {
+            "name": "repo",
+            "type": "string|string[]|null",
+            "description": "Repository or repositories to search within.",
+            "required": false,
+            "nullable": true
+          },
+          {
+            "name": "org",
+            "type": "string|null",
+            "description": "Optional organization scope.",
+            "required": false,
+            "nullable": true
+          },
+          {
+            "name": "topn",
+            "type": "number",
+            "description": "Maximum results.",
+            "required": false,
+            "default": 20
+          },
+          {
+            "name": "sort",
+            "type": "string|null",
+            "description": "Commit sort order.",
+            "required": false,
+            "enum": [
+              "best-match",
+              "author-date",
+              "committer-date",
+              null
+            ]
+          },
+          {
+            "name": "order",
+            "type": "string|null",
+            "description": "Result ordering.",
+            "required": false,
+            "enum": [
+              "desc",
+              "asc",
+              null
+            ]
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/search_installed_repositories_streaming",
+        "description": "Search for installed repositories by name or description, with streaming cursor support.",
+        "parameters": [
+          {
+            "name": "query",
+            "type": "string",
+            "description": "Search query.",
+            "required": true
+          },
+          {
+            "name": "limit",
+            "type": "number",
+            "description": "Maximum results.",
+            "required": false,
+            "default": 10
+          },
+          {
+            "name": "next_token",
+            "type": "string|null",
+            "description": "Opaque streaming cursor.",
+            "required": false,
+            "nullable": true
+          },
+          {
+            "name": "option_enrich_code_search_index_availability",
+            "type": "boolean",
+            "description": "Include search index availability metadata.",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "option_enrich_code_search_index_request_concurrency_limit",
+            "type": "number",
+            "description": "Concurrency limit for enrichment.",
+            "required": false,
+            "default": 10
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/search_installed_repositories_v2",
+        "description": "Search repositories within user installations using GitHub search.",
+        "parameters": [
+          {
+            "name": "query",
+            "type": "string",
+            "description": "Search query.",
+            "required": true
+          },
+          {
+            "name": "limit",
+            "type": "number",
+            "description": "Maximum results.",
+            "required": false,
+            "default": 10
+          },
+          {
+            "name": "installation_ids",
+            "type": "string[]|null",
+            "description": "Optional installation ids.",
+            "required": false,
+            "nullable": true
+          },
+          {
+            "name": "page",
+            "type": "number",
+            "description": "1-based page.",
+            "required": false,
+            "default": 1
+          },
+          {
+            "name": "include_search_index_status",
+            "type": "boolean",
+            "description": "Include code search index metadata.",
+            "required": false,
+            "default": false
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/search_issues",
+        "description": "Search GitHub issues.",
+        "parameters": [
+          {
+            "name": "query",
+            "type": "string",
+            "description": "Search query.",
+            "required": true
+          },
+          {
+            "name": "repo",
+            "type": "string|string[]",
+            "description": "Repository or repositories in owner/name form.",
+            "required": true
+          },
+          {
+            "name": "topn",
+            "type": "number",
+            "description": "Maximum results.",
+            "required": false,
+            "default": 20
+          },
+          {
+            "name": "sort",
+            "type": "string|null",
+            "description": "Issue sort order.",
+            "required": false,
+            "enum": [
+              "best-match",
+              "created",
+              "updated",
+              "comments",
+              "reactions",
+              "interactions",
+              null
+            ]
+          },
+          {
+            "name": "order",
+            "type": "string|null",
+            "description": "Result ordering.",
+            "required": false,
+            "enum": [
+              "desc",
+              "asc",
+              null
+            ]
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/search_prs",
+        "description": "Search GitHub pull requests.",
+        "parameters": [
+          {
+            "name": "query",
+            "type": "string",
+            "description": "Search query.",
+            "required": true
+          },
+          {
+            "name": "repo",
+            "type": "string|string[]|null",
+            "description": "Repository scope.",
+            "required": false,
+            "nullable": true
+          },
+          {
+            "name": "org",
+            "type": "string|null",
+            "description": "Organization scope.",
+            "required": false,
+            "nullable": true
+          },
+          {
+            "name": "topn",
+            "type": "number",
+            "description": "Maximum results.",
+            "required": false,
+            "default": 20
+          },
+          {
+            "name": "sort",
+            "type": "string|null",
+            "description": "PR sort order.",
+            "required": false,
+            "enum": [
+              "best-match",
+              "created",
+              "updated",
+              "comments",
+              "reactions",
+              "interactions",
+              null
+            ]
+          },
+          {
+            "name": "order",
+            "type": "string|null",
+            "description": "Result ordering.",
+            "required": false,
+            "enum": [
+              "desc",
+              "asc",
+              null
+            ]
+          },
+          {
+            "name": "state",
+            "type": "string|null",
+            "description": "PR state filter.",
+            "required": false,
+            "enum": [
+              "open",
+              "closed",
+              "all",
+              null
+            ]
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      },
+      {
+        "namespace": "GitHub",
+        "path": "/GitHub/link_693a34e9e8748191b308d93a9392cb3a/search_repositories",
+        "description": "Search for a repository by name or description.",
+        "parameters": [
+          {
+            "name": "query",
+            "type": "string",
+            "description": "Search query.",
+            "required": true
+          },
+          {
+            "name": "per_page",
+            "type": "number|null",
+            "description": "Maximum results per page.",
+            "required": false,
+            "nullable": true
+          },
+          {
+            "name": "page",
+            "type": "number",
+            "description": "1-based page.",
+            "required": false,
+            "default": 1
+          },
+          {
+            "name": "org",
+            "type": "string|null",
+            "description": "Optional organization scope.",
+            "required": false,
+            "nullable": true
+          },
+          {
+            "name": "topn",
+            "type": "number|null",
+            "description": "Alias for per_page.",
+            "required": false,
+            "nullable": true
+          }
+        ],
+        "returns": {
+          "type": "any",
+          "description": "Connector-specific result object returned by api_tool.call_tool."
+        }
+      }
+    ]
+  }
+}

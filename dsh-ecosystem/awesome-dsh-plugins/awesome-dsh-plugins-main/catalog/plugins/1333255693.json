@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "github:1333255693",
+  "repository": {
+    "full_name": "Proton1917/dsh-live-stats",
+    "url": "https://github.com/Proton1917/dsh-live-stats"
+  },
+  "package": {
+    "name": "@dsh-external/live-stats",
+    "entry": "lib/index.js"
+  },
+  "curation": {
+    "state": "candidate",
+    "category": "",
+    "description_zh": ""
+  },
+  "ownership": {
+    "method": "auto_discovered",
+    "verified_at": ""
+  },
+  "lifecycle": {
+    "state": "active"
+  },
+  "disclosures": {
+    "risk": "unknown",
+    "network": false,
+    "filesystem": "none",
+    "credentials": [],
+    "data_handling_url": ""
+  },
+  "runtime_test": {
+    "status": "fail",
+    "reason": "FAIL: 插件依赖使用 link: 协议指向 ~/deepseek-harness 目录（该目录不存在），无法安装构建，导致 dsh 加载失败",
+    "tested_at": "2026-08-14"
+  }
+}

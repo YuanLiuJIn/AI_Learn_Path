@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "github:1324638821",
+  "repository": {
+    "full_name": "omdsh-dev/dsh-tool-time",
+    "url": "https://github.com/omdsh-dev/dsh-tool-time"
+  },
+  "package": {
+    "name": "@deepseek-ai/dsh-tool-time",
+    "entry": "lib/index.js"
+  },
+  "curation": {
+    "state": "candidate",
+    "category": "",
+    "description_zh": ""
+  },
+  "ownership": {
+    "method": "auto_discovered",
+    "verified_at": ""
+  },
+  "lifecycle": {
+    "state": "active"
+  },
+  "disclosures": {
+    "risk": "unknown",
+    "network": false,
+    "filesystem": "none",
+    "credentials": [],
+    "data_handling_url": ""
+  },
+  "runtime_test": {
+    "status": "fail",
+    "reason": "FAIL: peer dependency '@deepseek-ai/dsh-tools' not found and node_modules is read-only (无法安装依赖)",
+    "tested_at": "2026-08-14"
+  }
+}

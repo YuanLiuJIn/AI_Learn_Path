@@ -1,0 +1,31 @@
+{
+  "inserts": [
+    "dsh-tui-storage",
+    "dsh-tui-storage-json",
+    "dsh-tui-storage-domain",
+    "dsh-tui-workspace",
+    "dsh-tui-workspaces",
+    "dsh-tui-command-trees",
+    "dsh-tui-settings-sections",
+    "dsh-tui-scenes",
+    "dsh-tui-plugin-host",
+    "dsh-tui-extensions",
+    "dsh-tui-agent-presets",
+    "dsh-tui-cordis-host-runner",
+    "dsh-tui",
+    "working-activity"
+  ],
+  "configOverrides": [
+    "system-prompt",
+    "llm-deepseek",
+    "agent-loop",
+    "sandbox-policy",
+    "approval",
+    "session-persistence-jsonl"
+  ],
+  "disablesBeyondWebApp": [],
+  "webAppDisablesBeyondTui": [
+    "hmr"
+  ],
+  "insertsSharedWithWebApp": []
+}

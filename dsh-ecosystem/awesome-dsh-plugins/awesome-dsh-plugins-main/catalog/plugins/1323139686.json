@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "github:1323139686",
+  "repository": {
+    "full_name": "omdsh-dev/ex-setting",
+    "url": "https://github.com/omdsh-dev/ex-setting"
+  },
+  "package": {
+    "name": "@deepseek-ai/dsh-ex-setting",
+    "entry": "lib/index.js"
+  },
+  "curation": {
+    "state": "candidate",
+    "category": "",
+    "description_zh": ""
+  },
+  "ownership": {
+    "method": "auto_discovered",
+    "verified_at": ""
+  },
+  "lifecycle": {
+    "state": "active"
+  },
+  "disclosures": {
+    "risk": "unknown",
+    "network": false,
+    "filesystem": "none",
+    "credentials": [],
+    "data_handling_url": ""
+  },
+  "runtime_test": {
+    "status": "fail",
+    "reason": "FAIL: peer 依赖 @deepseek-ai/dsh-api-remotes@^0.0.1 等私有包在 npm 上不存在，无法安装和加载",
+    "tested_at": "2026-08-14"
+  }
+}

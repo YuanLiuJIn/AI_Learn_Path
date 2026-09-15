@@ -24,6 +24,7 @@
   └─ 06_empirical_cases.md            → 真实案例（OpenAI Codex/Stripe/Cursor）
   ↓
 第5步：延伸专题
+  ├─ 07_deepseek_harness.md      → 生产级开源 Harness 源码实战（DeepSeek 官方）
   ├─ Hermes/ 专题 → 长寿命自进化 Agent（与 Harness 互补视角）
   └─ OpenClaw/ 相关文章 → 多 Agent 协作（KM 搜索）
 ```
@@ -39,6 +40,7 @@
 | 5 | `04_deep_dive_context_memory.md` | 2-3h | 掌握上下文压缩、长期记忆工程 |
 | 6 | `05_cloud_harness_adp.md` | 2-3h | 理解云端解耦 Harness 架构设计 |
 | 7 | `06_empirical_cases.md` | 1-2h | 看工业级实践如何落地 |
+| 8 | `07_deepseek_harness.md` | 半天-1天 | 跑通 DeepSeek 官方 Harness 并写插件 |
 
 ## 核心论文必读（按学习阶段）
 
@@ -66,6 +68,7 @@
 | Inspect AI | 生产级评测（含沙箱） | inspect.aisi.org.uk |
 | OpenHands | 自托管 Coding Agent | github.com/OpenHands/OpenHands |
 | AutoGen | 多 Agent 框架 | microsoft.github.io/autogen/ |
+| deepseek-harness | DeepSeek 官方 Harness（插件化、含 Web UI） | github.com/deepseek-ai/deepseek-harness |
 
 ## 学习建议
 

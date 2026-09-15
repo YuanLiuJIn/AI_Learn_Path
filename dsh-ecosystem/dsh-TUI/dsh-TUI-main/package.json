@@ -1,0 +1,256 @@
+{
+  "name": "@deepseek-harness-tui/dsh-tui",
+  "version": "0.8.6",
+  "description": "Claude Code style interactive TUI front door for DeepSeek Harness agents, built on the ported Ink core.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccch1mneyyy/dsh-TUI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ccch1mneyyy/dsh-TUI/issues"
+  },
+  "homepage": "https://github.com/ccch1mneyyy/dsh-TUI#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "imports": {
+    "#dsh-ecosystem-spec/tui-channel": "./dsh-ecosystem-spec/protocols/tui-channel.js"
+  },
+  "bin": {
+    "dsh-tui": "./bin/dsh-tui.js"
+  },
+  "main": "lib/types/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "import": "./lib/types/index.js"
+    },
+    "./working-activity": {
+      "types": "./lib/types/working-activity.d.ts",
+      "import": "./lib/types/working-activity.js"
+    },
+    "./workspaces": {
+      "types": "./lib/types/workspaces.d.ts",
+      "import": "./lib/types/workspaces.js"
+    },
+    "./command-trees": {
+      "types": "./lib/types/command-trees.d.ts",
+      "import": "./lib/types/command-trees.js"
+    },
+    "./settings-sections": {
+      "types": "./lib/types/settings-sections.d.ts",
+      "import": "./lib/types/settings-sections.js"
+    },
+    "./scenes": {
+      "types": "./lib/types/scenes.d.ts",
+      "import": "./lib/types/scenes.js"
+    },
+    "./extensions": {
+      "types": "./lib/types/extensions.d.ts",
+      "import": "./lib/types/extensions.js"
+    },
+    "./plugin-host": {
+      "types": "./lib/types/plugin-host.d.ts",
+      "import": "./lib/types/plugin-host.js"
+    },
+    "./jsx-runtime": {
+      "types": "./lib/types/jsx-runtime.d.ts",
+      "import": "./lib/types/jsx-runtime.js"
+    },
+    "./invariant": {
+      "types": "./lib/types/dsh-adapter/invariant.d.ts",
+      "default": "./lib/types/dsh-adapter/invariant.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "cordis.patch.yml",
+    "cordis.yml",
+    "dsh-ecosystem-spec/registry",
+    "dsh-ecosystem-spec/protocols",
+    "dsh-ecosystem-spec/schemas",
+    "presets",
+    "skills"
+  ],
+  "engines": {
+    "node": "^22.19 || >=24"
+  },
+  "scripts": {
+    "clean": "node scripts/clean-lib.mjs",
+    "build:dsh-std": "pnpm --dir vendor/dsh-std install --frozen-lockfile --ignore-scripts && pnpm --dir vendor/dsh-std --filter @dsh-std/core --filter @dsh-std/manifest --filter @dsh-std/connection --filter @dsh-std/presentation --filter @dsh-std/command --filter @dsh-std/storage --filter @dsh-std/messages -r build",
+    "compile": "npm run build:dsh-std && npm run clean && tsc -p tsconfig.json",
+    "prepare": "node scripts/prepare-guard.mjs && npm run compile",
+    "build": "npm run compile && npm run verify:build",
+    "dev": "node scripts/dev-test.mjs",
+    "dev:copy-config": "node scripts/dev-copy-config.mjs",
+    "dev:test": "node scripts/verify-dev-command.mjs && node scripts/dev-test.mjs --no-launch",
+    "prompt:debug": "node scripts/read-prompt-debug.mjs",
+    "tui": "node --import tsx/esm scripts/run.ts",
+    "smoke": "node --import tsx/esm scripts/smoke.tsx",
+    "verify:build": "npm run verify:boundary && npm run verify:contract && npm run verify:herdr && npm run verify:manifest-deps && npm run verify:patch-surface && npm run verify:web-coexistence && npm run verify:plugin-spec && npm run verify:plugin-grants && npm run verify:plugin-storage && npm run verify:plugin-messages && npm run verify:plugin-ledger && npm run verify:plugin-commands && npm run verify:plugin-negotiation && npm run verify:plugin-lifecycle && npm run verify:packaged-presets && npm run verify:minimal-preset-tools && npm run verify:liangshen-bootstrap",
+    "verify:boundary": "node --import tsx/esm scripts/verify-adapter-boundary.ts",
+    "verify:contract": "node --import tsx/esm scripts/verify-upstream-contract.ts",
+    "verify:herdr": "node --import tsx/esm scripts/verify-herdr-integration.ts",
+    "verify:manifest-deps": "node --import tsx/esm scripts/verify-manifest-deps.ts",
+    "verify:patch-surface": "node --import tsx/esm scripts/verify-patch-surface.ts",
+    "verify:web-coexistence": "node scripts/verify-web-coexistence.mjs",
+    "verify:plugin-spec": "node --import tsx/esm scripts/verify-plugin-spec.ts",
+    "verify:plugin-grants": "node --import tsx/esm scripts/verify-plugin-grants.ts",
+    "verify:plugin-storage": "node --import tsx/esm scripts/verify-plugin-storage.ts",
+    "verify:plugin-messages": "node --import tsx/esm scripts/verify-plugin-messages.ts",
+    "verify:packaged-presets": "node scripts/verify-packaged-presets.mjs",
+    "verify:minimal-preset-tools": "node scripts/verify-minimal-preset-tools.mjs",
+    "verify:liangshen-bootstrap": "node scripts/verify-liangshen-bootstrap.mjs",
+    "verify:liangshen-bash": "node scripts/verify-liangshen-bash.mjs",
+    "verify:package": "npm pack --dry-run --json --ignore-scripts | node scripts/verify-package.mjs",
+    "verify:bun-package": "node scripts/verify-bun-package.mjs",
+    "verify:prompt-debug": "npm run build && node scripts/verify-prompt-debug.mjs",
+    "verify:clipboard-image": "node --import tsx/esm scripts/verify-clipboard-image.ts",
+    "verify:plugin-ledger": "node --import tsx/esm scripts/verify-plugin-ledger.ts",
+    "verify:plugin-commands": "node --import tsx/esm scripts/verify-plugin-commands.ts",
+    "verify:plugin-negotiation": "node --import tsx/esm scripts/verify-plugin-negotiation.ts",
+    "verify:plugin-lifecycle": "node --import tsx/esm scripts/verify-plugin-lifecycle.ts",
+    "verify:tips": "node --import tsx/esm scripts/verify-tips.tsx",
+    "verify:thinking-preview": "node --import tsx/esm scripts/verify-thinking-preview.tsx",
+    "sync:profile": "node scripts/sync-profile.mjs",
+    "sync:profile:check": "node scripts/sync-profile.mjs --check"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-agent": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-agent-instructions": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-agent-presets": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-atomic-write": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-commands": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-cordis-host-runner": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-invariants": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-llm": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-persona": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-session": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-settings": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-skill": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-storage": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-storage-domain": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-storage-json": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-system-prompt": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-terminal": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-terminal-bash": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-tool-ask-user": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-tool-bash-persistent": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-tool-cordis": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-user-approval": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-user-questions": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-workspace": "^0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "^3.18.1"
+  },
+  "dependencies": {
+    "@dsh-std/command": "workspace:*",
+    "@dsh-std/connection": "workspace:*",
+    "@dsh-std/core": "workspace:*",
+    "@dsh-std/manifest": "workspace:*",
+    "@dsh-std/messages": "workspace:*",
+    "@dsh-std/presentation": "workspace:*",
+    "@dsh-std/storage": "workspace:*",
+    "@alcalzone/ansi-tokenize": "^0.3.0",
+    "auto-bind": "^4.0.0 || ^5.0.0",
+    "bidi-js": "^1.0.0",
+    "chalk": "^5.0.0",
+    "cli-boxes": "^3.0.0 || ^4.0.0",
+    "cli-highlight": "^2.1.11",
+    "code-excerpt": "^3.0.0 || ^4.0.0",
+    "diff": "^8.0.4",
+    "dsh-working-activity": "^0.3.3",
+    "emoji-regex": "^10.0.0",
+    "figures": "^6.1.0",
+    "get-east-asian-width": "^1.0.0",
+    "highlight.js": "^11.11.1",
+    "indent-string": "^5.0.0",
+    "lodash-es": "^4.17.0",
+    "marked": "^18.0.7",
+    "react": "^19.2.0",
+    "react-reconciler": "^0.33.0",
+    "semver": "^7.0.0",
+    "signal-exit": "^4.0.0",
+    "stack-utils": "^2.0.0",
+    "strip-ansi": "^7.0.0",
+    "supports-hyperlinks": "^3.0.0",
+    "type-fest": "^4.0.0",
+    "usehooks-ts": "^3.1.0",
+    "wrap-ansi": "^8.0.0 || ^9.0.0"
+  },
+  "bundledDependencies": [
+    "@dsh-std/command",
+    "@dsh-std/connection",
+    "@dsh-std/core",
+    "@dsh-std/manifest",
+    "@dsh-std/messages",
+    "@dsh-std/presentation",
+    "@dsh-std/storage"
+  ],
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/cordis-plugin-include": "^1.0.6",
+    "@deepseek-ai/cordis-plugin-loader": "^1.0.2",
+    "@deepseek-ai/dsh-agent": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-agent-instructions": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-agent-presets": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-atomic-write": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-attachment": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-brand": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-code-runtime": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-commands": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-cordis-host-runner": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-fs": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-home-paths": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-invariants": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-llm": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-persona": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-sandbox": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-sandbox-policy": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-scope": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-session": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-session-persistence": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-session-persistence-jsonl": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-session-persistence-sqlite": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-settings": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-skill": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-storage": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-storage-domain": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-storage-json": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-subprocess": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-system-prompt": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-terminal": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-terminal-bash": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-timeout": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-tool-ask-user": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-tool-bash-persistent": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-tool-cordis": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-tools": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-typert-protocol": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-user-approval": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-user-questions": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-web-app": "0.1.0-rc.8",
+    "@deepseek-ai/dsh-workspace": "^0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "^3.18.1",
+    "@types/lodash-es": "^4.17.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-reconciler": "^0.33.0",
+    "@types/semver": "^7.0.0",
+    "@xterm/headless": "^6.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^6.0.3",
+    "yaml": "^2.9.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

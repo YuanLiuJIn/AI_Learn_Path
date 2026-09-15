@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "github:1323618624",
+  "repository": {
+    "full_name": "omdsh-dev/dsh-tool-json",
+    "url": "https://github.com/omdsh-dev/dsh-tool-json"
+  },
+  "package": {
+    "name": "@deepseek-ai/dsh-tool-json",
+    "entry": "lib/index.js"
+  },
+  "curation": {
+    "state": "candidate",
+    "category": "",
+    "description_zh": ""
+  },
+  "ownership": {
+    "method": "auto_discovered",
+    "verified_at": ""
+  },
+  "lifecycle": {
+    "state": "active"
+  },
+  "disclosures": {
+    "risk": "unknown",
+    "network": false,
+    "filesystem": "none",
+    "credentials": [],
+    "data_handling_url": ""
+  },
+  "runtime_test": {
+    "status": "fail",
+    "reason": "FAIL: Peer 依赖 @deepseek-ai/dsh-tools 为私有包，安装失败导致插件无法加载",
+    "tested_at": "2026-08-14"
+  }
+}

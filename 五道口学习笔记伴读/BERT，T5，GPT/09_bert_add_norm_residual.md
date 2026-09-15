@@ -396,7 +396,8 @@ BERT 里永远一致（都是 768），直接相加。ResNet 里遇到通道数�
 - **接 08 / 08B**：08 讲了引擎（多头注意力），08B 讲了它的分块矩阵实现；本篇讲引擎装进 BertLayer 的两套骨架。08 第五节"从单头回到完整的一层"就是本篇的预告。
 - **接 07**：`hidden_states` 的 13 个工位，每个工位 = 本篇一整个 BertLayer 的出口；07 说"形状永远 `[1,22,768]`"，本篇解释了**为什么必须不变**（残差相加的形状约束）。
 - **接 03**：`LayerNorm` 用的 mean/std 就是 03 提过的 mean/std；本篇补上了"归一化之后还有可学习的 γ/β"。
-- **下一步 10 预告**：自注意力只解决"谁跟谁相关"，残差与 LN 只解决"训得动"，都还没编码**位置**——下一个问题是 Positional Embedding 与绝对/相对位置编码。
+- **→ 10**：08~09 讲的都是 BERT 的"**身体**"（encoder 内部）；[10_bert_pooler_output_and_head.md](./10_bert_pooler_output_and_head.md) 转向"**接口**"——`pooler_output` 与 `BertForXxx` 各种任务头（head）。
+- **位置编码**留到番外（合集第 24 集 Positional Embedding）。
 - **延伸**：`bilibili_vlogs/learn_torch/basics/add_norm.py` 是本篇的最小可运行骨架（加载模型 + 前向，可在此基础上加第四节的拆解代码）。
 
 ---

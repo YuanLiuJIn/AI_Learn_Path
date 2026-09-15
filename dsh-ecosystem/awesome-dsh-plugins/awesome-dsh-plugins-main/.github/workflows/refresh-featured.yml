@@ -1,0 +1,72 @@
+name: refresh-featured
+
+# 精选插件榜（Featured Top 50，人工策展成员）自动刷新星标：
+#   - schedule 每 6 小时（成员固定，星标变化慢；避开整点高峰）
+#   - workflow_dispatch 支持手动触发
+# 成员与分类在 data/awesome-50.json 人工维护，本工作流只刷星标不改成员；
+# 变化时提交并推送 origin；配置了 DSH_EXT_TOKEN secret 时同步推送 dsh-ext 镜像。
+on:
+  schedule:
+    - cron: "23 */6 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-featured
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Refresh featured block
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/refresh-featured.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "featured-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md README.en-US.md
+          if git diff --cached --quiet; then
+            echo "[skip] 榜单无变化，不提交"
+            exit 0
+          fi
+          git commit -m "auto: 精选50星标刷新 $(date -u '+%Y-%m-%d %H:%M') UTC"
+          # 并发防护：main 可能在本次运行期间被其他 bot/人工推进——变基后重试推送，最多三轮
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then
+              echo "[push] 第 $i 轮成功"
+              exit 0
+            fi
+            echo "[push] 第 $i 轮冲突，变基重试"
+            sleep 5
+          done
+          echo "[push] 三轮均失败，留待下轮 cron 重试"
+          exit 1
+
+      - name: Push mirror to dsh-ext (optional)
+        env:
+          DSH_EXT_TOKEN: ${{ secrets.DSH_EXT_TOKEN }}
+        run: |
+          if [ -z "${DSH_EXT_TOKEN}" ]; then echo "[skip] 未配置 DSH_EXT_TOKEN，仅推 origin"; exit 0; fi
+          BASE=$(git rev-parse HEAD)
+          git config --unset-all http.https://github.com/.extraheader || true
+          git remote add dsh-ext "https://x-access-token:${DSH_EXT_TOKEN}@github.com/dsh-external/awesome-dsh-plugins.git" || true
+          git fetch dsh-ext main
+          # 双仓历史分叉：不做整仓 rebase，只在 org main 之上同步两个 README；
+          # 星标区块归本链，渲染区块归 Bot B（幂等渲染自愈），区块不重叠
+          git checkout -q -B mirror-sync dsh-ext/main
+          git checkout -q "$BASE" -- README.md README.en-US.md
+          if git diff --cached --quiet; then echo "[skip] org 的 README 已同步"; exit 0; fi
+          git -c user.name="featured-bot" -c user.email="41898282+github-actions[bot]@users.noreply.github.com"             commit -m "auto: 星标榜镜像同步 personal→org"
+          git push dsh-ext mirror-sync:main

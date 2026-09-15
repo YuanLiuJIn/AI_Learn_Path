@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "github:1333111893",
+  "repository": {
+    "full_name": "ccch1mneyyy/dsh-cc-tui",
+    "url": "https://github.com/ccch1mneyyy/dsh-cc-tui"
+  },
+  "package": {
+    "name": "@deepseek-ai/dsh-cc-tui",
+    "entry": "lib/types/index.js"
+  },
+  "curation": {
+    "state": "candidate",
+    "category": "",
+    "description_zh": ""
+  },
+  "ownership": {
+    "method": "auto_discovered",
+    "verified_at": ""
+  },
+  "lifecycle": {
+    "state": "active"
+  },
+  "disclosures": {
+    "risk": "unknown",
+    "network": false,
+    "filesystem": "none",
+    "credentials": [],
+    "data_handling_url": ""
+  },
+  "runtime_test": {
+    "status": "fail",
+    "reason": "FAIL: 缺少 DSH monorepo 的 workspace:^ 依赖（如 @deepseek-ai/schemastery），无法独立加载",
+    "tested_at": "2026-08-14"
+  }
+}

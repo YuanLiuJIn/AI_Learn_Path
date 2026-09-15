@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "github:1323137354",
+  "repository": {
+    "full_name": "omdsh-dev/web-components",
+    "url": "https://github.com/omdsh-dev/web-components"
+  },
+  "package": {
+    "name": "@deepseek-ai/dsh-client-web-component",
+    "entry": "lib/index.js"
+  },
+  "curation": {
+    "state": "candidate",
+    "category": "",
+    "description_zh": ""
+  },
+  "ownership": {
+    "method": "auto_discovered",
+    "verified_at": ""
+  },
+  "lifecycle": {
+    "state": "active"
+  },
+  "disclosures": {
+    "risk": "unknown",
+    "network": false,
+    "filesystem": "none",
+    "credentials": [],
+    "data_handling_url": ""
+  },
+  "runtime_test": {
+    "status": "fail",
+    "reason": "FAIL: peer dependencies (`@deepseek-ai/dsh-client-locale`, `@deepseek-ai/dsh-client-runtime`, `@deepseek-ai/dsh-client-ui-slots`, `@deepseek",
+    "tested_at": "2026-08-14"
+  }
+}

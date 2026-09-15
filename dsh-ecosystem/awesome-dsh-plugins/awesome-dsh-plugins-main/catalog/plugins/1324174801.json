@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "github:1324174801",
+  "repository": {
+    "full_name": "omdsh-dev/Qwen-MM-Plugins",
+    "url": "https://github.com/omdsh-dev/Qwen-MM-Plugins"
+  },
+  "package": {
+    "name": "@deepseek-ai/dsh-qwen-mm",
+    "entry": "lib/index.js"
+  },
+  "curation": {
+    "state": "candidate",
+    "category": "",
+    "description_zh": ""
+  },
+  "ownership": {
+    "method": "auto_discovered",
+    "verified_at": ""
+  },
+  "lifecycle": {
+    "state": "active"
+  },
+  "disclosures": {
+    "risk": "unknown",
+    "network": false,
+    "filesystem": "none",
+    "credentials": [],
+    "data_handling_url": ""
+  },
+  "runtime_test": {
+    "status": "fail",
+    "reason": "FAIL: 依赖的 @deepseek-ai/dsh-* peer 包为内部包，npm 无法找到对应版本；且 lib/ 未构建（无 pnpm 无法执行 tsc build）。",
+    "tested_at": "2026-08-14"
+  }
+}

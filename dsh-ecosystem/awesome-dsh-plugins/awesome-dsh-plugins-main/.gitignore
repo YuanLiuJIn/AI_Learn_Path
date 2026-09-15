@@ -1,0 +1,15 @@
+.mainline/
+.clones/
+node_modules/
+*.log
+.cron-state.json
+.scope-current.txt
+.last-changes.json
+.mainline-state.json
+logs/
+*.tmp
+.mainline-build/
+.dsh-radar.env
+generated/*
+!generated/plugins-md-repos.json
+__pycache__/

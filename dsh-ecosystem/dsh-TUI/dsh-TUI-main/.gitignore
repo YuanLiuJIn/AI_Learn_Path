@@ -1,0 +1,10 @@
+node_modules/
+package-lock.json
+/lib/
+*.log
+.DS_Store
+*.tsbuildinfo
+*.tgz
+.tmp/
+AGENTS.md
+.dsh-prompt-debug.json

@@ -422,7 +422,8 @@ attn   = scores.softmax(dim=-1)
 - **接 03（架构）**：本篇第五节补全了"一个 BertLayer = Self-Attention + 残差/LN + FFN"的完整闭环。
 - **→ 08B（本篇续作）**：本篇用"列切片"讲清数学，但 HuggingFace 真正实现是**一次大 matmul + `view/transpose`**。为什么两者等价、以及多头注意力的**分块矩阵视角**，见 [08B_bert_multihead_block_matrix.md](./08B_bert_multihead_block_matrix.md)。
 - **→ 09（本篇后续）**：第五节点到为止的残差连接与 LayerNorm，完整讲解见 [09_bert_add_norm_residual.md](./09_bert_add_norm_residual.md)。
-- **下一步 10 预告**：自注意力只解决"谁跟谁相关"，Add & Norm 只解决"训得动"，都还没编码"位置"——下一个问题就是 Positional Embedding 与绝对/相对位置编码。
+- **→ 10**：08~09 讲的都是 BERT 的"**身体**"（encoder 内部）；[10_bert_pooler_output_and_head.md](./10_bert_pooler_output_and_head.md) 转向"**接口**"——`pooler_output` 与 `BertForXxx` 各种任务头（head），即视频合集第 11 集。
+- **位置编码留到番外**：Positional Embedding 与绝对/相对位置编码，见合集第 24 集。
 
 ---
 

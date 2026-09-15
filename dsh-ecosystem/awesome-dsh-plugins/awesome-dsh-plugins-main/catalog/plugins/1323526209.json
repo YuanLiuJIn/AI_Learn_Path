@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "github:1323526209",
+  "repository": {
+    "full_name": "omdsh-dev/dsh-tool-calculator",
+    "url": "https://github.com/omdsh-dev/dsh-tool-calculator"
+  },
+  "package": {
+    "name": "@deepseek-ai/dsh-tool-calculator",
+    "entry": "lib/index.js"
+  },
+  "curation": {
+    "state": "candidate",
+    "category": "",
+    "description_zh": ""
+  },
+  "ownership": {
+    "method": "auto_discovered",
+    "verified_at": ""
+  },
+  "lifecycle": {
+    "state": "active"
+  },
+  "disclosures": {
+    "risk": "unknown",
+    "network": false,
+    "filesystem": "none",
+    "credentials": [],
+    "data_handling_url": ""
+  },
+  "runtime_test": {
+    "status": "fail",
+    "reason": "FAIL: 只读文件系统无法安装依赖，且 peer 依赖 @deepseek-ai/dsh-tools 未安装导致模块加载失败（需通过 dsh plugin 安装或在 monorepo workspace 环境中使用）",
+    "tested_at": "2026-08-14"
+  }
+}

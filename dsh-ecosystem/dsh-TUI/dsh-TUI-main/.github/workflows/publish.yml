@@ -1,0 +1,100 @@
+name: Publish
+
+# 发版入口：推送 v* 标签（git tag v0.4.2 && git push origin v0.4.2）。
+# 首次发布继续使用仓库 Secrets 中的 NPM_TOKEN 鉴权；标签版本号必须与
+# package.json 的 version 一致。OIDC 仅用于生成 npm provenance。
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    env:
+      # Gate scripts assert zh UI copy (same convention as CI).
+      DSH_TUI_LANG: zh
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # vendor/dsh-std 是 @dsh-std/* workspace 依赖的来源（#308）：
+          # 不拉子模块时 prepare→compile 在空目录上构建出悬空链接，
+          # tsc 全线 TS2307。
+          submodules: recursive
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm compile
+
+      - name: Verify clean compile output
+        run: |
+          test -f lib/types/index.js
+          test -f lib/types/dsh-adapter/invariant.js
+
+      - run: pnpm verify:build
+
+      - run: pnpm verify:package
+      - run: pnpm verify:bun-package
+
+      # 标签与 package.json version 不一致直接失败，防止发错版本。
+      - name: Check tag matches package version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pkg="$(node -p "require('./package.json').version")"
+          [ "$tag" = "$pkg" ] || { echo "tag $tag != package.json $pkg"; exit 1; }
+
+      - run: node --import tsx/esm scripts/repro-askpanel.tsx
+
+      - run: node --import tsx/esm scripts/repro-toolcards.tsx
+
+      # /provider 向导与面板 hideCustomInput 回归（发版门禁同 CI）。
+      - run: node scripts/verify-provider-wizard.mjs
+      - run: node --import tsx/esm scripts/verify-askpanel-hide-custom-input.tsx
+
+      # 用 npm 而非 pnpm 发布：@dsh-std/* 是 bundledDependencies（workspace
+      # 包，#308），pnpm 在 isolated linker 下拒绝。发布包装器只在 npm
+      # pack/publish 期间把 7 个 bundled 包改成精确版本的 optionalDependencies，
+      # 让 Bun 不再解析 workspace:*；退出后恢复源码 manifest。
+      # 本地已先发布过同一版本（tag 补推）时跳过，避免 E403 红 run。
+      - name: Skip when already published
+        id: published
+        run: |
+          if output="$(npm view "@deepseek-harness-tui/dsh-tui@${GITHUB_REF_NAME}" version 2>&1)"; then
+            echo "$output"
+            echo "version ${GITHUB_REF_NAME} already published — skipping"
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            status=$?
+            echo "$output"
+            case "$output" in
+              *E404*|*404\ Not\ Found*)
+                echo "version ${GITHUB_REF_NAME} not published yet — continuing"
+                echo "exists=false" >> "$GITHUB_OUTPUT"
+                ;;
+              *)
+                echo "npm registry query failed (exit $status); refusing to assume unpublished"
+                exit "$status"
+                ;;
+            esac
+          fi
+      - run: node scripts/with-publish-manifest.mjs npm publish --access public --provenance
+        if: steps.published.outputs.exists != 'true'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -320,5 +320,6 @@ for i in range(h):
 - **接 08**：08 用"列切片"讲数学，本篇证明它 ≡ HuggingFace 的 `view/transpose` 实现；08 的坑 5（切行不切列）在这里有完整解释。
 - **接 03**：本篇第七节的参数账，对上 03 的"encoder 占 77.7%"。
 - **→ 09**：本篇的 `BertSelfAttention` 只是引擎，把它装进 BertLayer 的两套 Add & Norm 骨架，见 [09_bert_add_norm_residual.md](./09_bert_add_norm_residual.md)。
-- **下一步 10**：自注意力只解决"谁跟谁相关"，还没编码位置——Positional Embedding 与绝对/相对位置编码。
+- **→ 10**：`pooler_output` 与 BERT head（`BertForXxx` 家族），见 [10_bert_pooler_output_and_head.md](./10_bert_pooler_output_and_head.md)。
+- **位置编码**留到番外（合集第 24 集）。
 - **延伸阅读**：`docs/papers/Attention_Is_All_You_Need.pdf`（3.2.2 Multi-Head Attention 原文）、`docs/papers/FlashAttention.pdf`（分块 tiling 的另一种"block"）。

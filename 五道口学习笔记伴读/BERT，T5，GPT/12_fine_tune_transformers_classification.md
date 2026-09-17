@@ -829,7 +829,8 @@ plt.ylabel("Class probability (%)")
 - **接 07**：07 讲模型输出有哪些"出口"（`last_hidden_state`/`pooler_output`/`hidden_states`）；本篇的 `output.logits` 就是"最后一个出口"在分类任务下的形态，`forward_pass_with_label` 里的 `output.logits` 与 07 的图一一对应。
 - **接 04**：`torch.no_grad()`、`requires_grad`（`get_params` 的 `filter`）都来自 04；本篇把"冻结/不冻结"落成了"参数量对比"这个可观测动作。
 - **接 02 / 06**：`tokenizer.model_input_names`、`token_type_ids` 的有无、subword 切分，都在 02/06 铺过；本集是它们的**下游复用**。
-- **→ 下一阶段**：本集是「BERT、T5、GPT」子系列"微调"的第一集。往后进入 **T5** 家族（text-to-text 统一框架）与 **GPT** 系列（自回归 / 生成式），你会发现同一个 `Trainer`、同样的 `DataCollatorWithPadding` 被反复复用——**先把这一集的数据管线与 Trainer 流程吃透，后面几集几乎就是换模型、换 dataset**。
+- **→ 13**：合集第 14 集 **transformer 架构：scaled dot-product self-attention**，见 [13_transformer_scaled_dot_product_self_attention.md](./13_transformer_scaled_dot_product_self_attention.md)——**从"用模型"转回"拆模型"**：把 12 里当黑盒的注意力打开，从 `query = key = value = input_embeddings` 一路算到 `softmax` 变成**单位矩阵**，从而讲清 `W_q/W_k/W_v` 到底为什么不可省。
+- **→ 更远**：微调这条线并未结束，往后还有 **T5** 家族（text-to-text 统一框架）与 **GPT** 系列（自回归 / 生成式），你会看到同一个 `Trainer`、同样的 `DataCollatorWithPadding` 被反复复用——**先把这一集的数据管线与 Trainer 流程吃透，后面几集几乎就是换模型、换 dataset**。
 
 ---
 

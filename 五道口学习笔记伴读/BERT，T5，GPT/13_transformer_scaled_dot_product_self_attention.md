@@ -575,7 +575,9 @@ torch.allclose(scaled_dot_product_attention(query, key, value), attn_outputs)   
 - **接 03**：`hidden_size=768 / 12 heads / 3072 FFN / 12 layers` 的全景在 03 建过；本篇把 `768 = 64 × 12` 这个"为什么能分头"的等式讲透了。
 - **接 12**：12 是"**用**预训练模型微调"（把注意力当黑盒），本篇是"**拆**注意力的公式"——**先会用、再懂原理**，顺序反过来也成立。
 - **接 02 / 06**：`tokenizer.model_input_names`、`add_special_tokens`、`input_ids` 的数字（`2051=time`、`10029=flies`）都在 02/06 的 tokenizer 章节铺过。
-- **→ 下一集**：`scaled dot-product self-attention` 只差**三块拼图**就完整了——① `W_q/W_k/W_v` 可学习投影；② **分头 / 拼头 / `W_o`**；③ **position encoding + mask**。下一集（`multi-head attention / transformer block`）会把它们全部装上，把这个"退化成恒等的注意力"变成 **BERT 内部真正的 12 头注意力**。
+- **→ 下一集**：`scaled dot-product self-attention` 只差**三块拼图**就完整了——① `W_q/W_k/W_v` 可学习投影；② **分头 / 拼头 / `W_o`**；③ **position encoding + mask**。
+  - **→ [14 · AttentionHead 与 MultiHeadAttention](./14_transformer_multi_head_attention.md)**：把 ① 和 ② 装上。核心是 `768 = 64 × 12`；`AttentionHead` = 三个 `Linear(768→64)`，`MultiHeadAttention` = 12 个头 + `cat` + `W_o`。**本篇那个"softmax ≈ 单位矩阵"的退化，下一集开头就给出成因和修法。**
+  - **→ 更远**：③（`LayerNorm` / 残差 / FFN / position encoding）在 `04_ffn_layer_norm_skip_conn.ipynb` 与 `sin_position_encoding.ipynb`，那时 attention 才真正变成 BERT 里的 **Encoder Layer**。
 
 ---
 

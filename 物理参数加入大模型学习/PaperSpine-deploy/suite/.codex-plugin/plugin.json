@@ -1,0 +1,29 @@
+{
+  "author": {
+    "name": "PaperSpine5 project"
+  },
+  "description": "PaperSpine5 deterministic local candidate adapter for ProductRunner 0.2 generic J1-J11 collaboration and the Web-first workspace; W8 maturity and external submission remain blocked.",
+  "interface": {
+    "brandColor": "#203431",
+    "capabilities": [
+      "Interactive",
+      "Local files",
+      "Write"
+    ],
+    "category": "Productivity",
+    "composerIcon": "./assets/composer-icon.png",
+    "defaultPrompt": [
+      "使用当前本地真源运行 PaperSpine5，并继续当前论文任务。",
+      "检查 PaperSpine5 当前论文、图件、规范主稿与投稿循环状态。"
+    ],
+    "developerName": "PaperSpine5 project",
+    "displayName": "PaperSpine5",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
+    "longDescription": "Exact self-contained candidate bundle for ProductKernel tasks and ProductRunner 0.2 cumulative J1-J11 gates. Domain, subfield, venue, and track preferences are learned by runtime research Agents; the adapter carries only orchestration, permission, state, evidence, review, and fail-closed contracts. W8 and P0 remain blocked, and installation never authorizes external action.",
+    "shortDescription": "canonical paper-spine 的 ProductRunner/Web-first 内部 MCP 后端。"
+  },
+  "mcpServers": "./.mcp.json",
+  "name": "paperspine5",
+  "version": "0.4.0-alpha.3+codex.w7a-81c3d2f2bbf6604b5412"
+}

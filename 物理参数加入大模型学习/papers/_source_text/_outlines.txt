@@ -1,0 +1,93 @@
+
+=== Physics-informed machine learning ===
+
+
+=== Physics-informed neural networks ===
+  p?  1. Introduction
+  p?  2. Problem setup
+  p?  3. Data-driven solutions of partial differential equations
+  p?  3.1. Continuous time models
+  p?  3.1.1. Example (Schrodinger equation)
+  p?  3.2. Discrete time models
+  p?  3.2.1. Example (Allen–Cahn equation)
+  p?  4. Data-driven discovery of partial differential equations
+  p?  4.1. Continuous time models
+  p?  4.1.1. Example (Navier–Stokes equation)
+  p?  4.2. Discrete time models
+  p?  4.2.1. Example (Korteweg–de Vries equation)
+  p?  5. Conclusions
+
+=== Scientific Machine Learning Through Physics–Informed Neural Networks Where we are and What’s Next ===
+  p?  1 Introduction
+  p?  1.1 What the PINNs are
+  p?  1.2 What is this Review About
+  p?  2 TheBuildingBlocksofaPINN
+  p?  2.1 Neural Network Architecture
+  p?  2.1.1 Feed-forward Neural Network
+  p?  2.1.2 Convolutional Neural Networks
+  p?  2.1.3 Recurrent Neural Networks
+  p?  2.1.4 Other Architectures for PINN
+  p?  2.2 Injection of Physical Laws
+  p?  2.3 Model Estimation by Learning Approaches
+  p?  2.4 Learning Theory of PINN
+  p?  2.4.1 Convergence Aspects
+  p?  2.4.2 Statistical Learning Error Analysis
+  p?  2.4.3 Error Analysis Results for PINN
+  p?  3.1 Ordinary Differential Equations
+  p?  3.2 Partial Differential Equations
+  p?  3.2.1 Steady State PDEs
+  p?  3.2.2 Unsteady PDEs
+  p?  3.2.2.2 Flow Problems
+  p?  3.3 Other Problems
+  p?  3.3.1 Differential Equations of Fractional Order
+  p?  3.3.2 Uncertainty Estimation
+  p?  3.4 Solving a Differential Problem with PINN
+  p?  4 PINNs:Data,ApplicationsandSoftware
+  p?  4.1 Data
+  p?  4.2 Applications
+  p?  4.3 Software
+  p?  5 PINNFutureChallengesandDirections
+  p?  5.1 Overcoming Theoretical Difficulties in PINN
+  p?  5.2 Improving Implementation Aspects in PINN
+  p?  5.3 PINN in the SciML Framework
+  p?  5.4 PINN in the AI Framework
+  p?  6 Conclusion
+
+=== Understanding PINNs Techniques, Applications, Trends, and Challenges ===
+  p?  3 Institute for Systems Biology, Seattle, WA 98195, USA
+  p?  1. Introduction
+  p?  2. Background
+  p?  3. Methodologies
+  p?  3.1. Feature Engineering
+  p?  3.2. Model Construction
+  p?  3.3. Incorporating Physical Laws as an Additional Cost Function
+  p?  4. Utility of PINNs
+  p?  4.1. Solving PDEs and ODEs with PINNs
+  p?  3. Boundary Integral Methods: These represent the solution to PDEs as an integral
+  p?  4. Deep Galerkin Methods: These seek to minimize the residual of PDEs or ODEs over
+  p?  5. Time-Stepping Methods: These discretize the temporal domain of time-dependent
+  p?  4.2. Inverse Problems
+  p?  1. Forward Model:
+  p?  2. Parameter Estimation:
+  p?  3. Uncertainty Quantification:
+  p?  4.3. Domain Decomposition
+  p?  5. Applications
+  p?  5.1. Fluid Dynamics
+  p?  5.2. Material Science
+  p?  5.3. Structural Systems
+  p?  5.4. Quantum Mechanics
+  p?  5.5. Geophysics
+  p?  5.6. Energy Systems
+  p?  5.7. Oncology
+  p?  6. Challenges and Limitations
+  p?  6.1. Data-Related Issues
+  p?  6.2. Computational Challenges
+  p?  6.3. Integration of Complex Physics
+  p?  6.4. Generalization and Robustness
+  p?  7. Future Directions
+  p?  7.1. Algorithmic Advancements
+  p?  7.2. Interdisciplinary Collaborations
+  p?  7.3. Enhancements in Interpretability
+  p?  7.4. Digital Twins
+  p?  7.5. Large-Scale and Real-Time Applications
+  p?  8. Conclusions

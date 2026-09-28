@@ -1,0 +1,2658 @@
+[
+  {
+    "query": "physics informed neural networks optimizer preconditioning",
+    "title": "Optimizing the optimizer for physics-informed neural networks and Kolmogorov-Arnold networks",
+    "doi": "10.1016/j.cma.2025.118308",
+    "date": [
+      [
+        2025,
+        11
+      ]
+    ],
+    "online": null,
+    "journal": "Computer Methods in Applied Mechanics and Engineering",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.cma.2025.118308"
+  },
+  {
+    "query": "physics informed neural networks optimizer preconditioning",
+    "title": "A matrix preconditioning framework for physics-informed neural networks based on the adjoint method",
+    "doi": "10.1063/5.0285013",
+    "date": [
+      [
+        2025,
+        9,
+        1
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        9,
+        11
+      ]
+    ],
+    "journal": "Physics of Fluids",
+    "abstract": "<jats:p>Physics-informed neural networks (PINNs) have recently emerged as a popular approach for solving forward and inverse problems involving partial differential equations (PDEs). Compared to fully connected neural networks, PINNs based on convolutional neural networks (PICNNs) offer advantages in the hard enforcement of boundary conditions and in reducing the computational cost of partial derivatives. However, PICNNs still struggle with slow convergence and even failure in some scenarios. In this study, we propose a matrix preconditioning method to improve the convergence of PICNNs. Specifically, we combine automatic differentiation with matrix coloring to compute the Jacobian matrix of the PDE system, which is used to construct the preconditioner via incomplete lower-upper factorization. We subsequently use the preconditioner to scale the PDE residual in the loss function to reduce the condition number of the Jacobian matrix, which is key to improving the convergence of PICNNs. To overcome the incompatibility between automatic differentiation and triangular solves in the preconditioning, we also design a framework based on the adjoint method to compute the gradients of the loss function with respect to the network parameters. By numerical experiments, we validate that the proposed method significantly accelerates the convergence of PICNNs and successfully solves the multi-scale problem and the high Reynolds number problem, in both of which PICNNs fail to produce satisfactory results.</jats:p>",
+    "url": "https://doi.org/10.1063/5.0285013"
+  },
+  {
+    "query": "physics informed neural networks optimizer preconditioning",
+    "title": "Uncertainty-aware physics-informed neural networks",
+    "doi": "10.1016/j.sasc.2026.200489",
+    "date": [
+      [
+        2026,
+        6
+      ]
+    ],
+    "online": null,
+    "journal": "Systems and Soft Computing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.sasc.2026.200489"
+  },
+  {
+    "query": "physics informed neural networks optimizer preconditioning",
+    "title": "Enforcing hidden physics in physics-informed neural networks",
+    "doi": "10.1038/s42005-026-02743-z",
+    "date": [
+      [
+        2026,
+        7,
+        11
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        7,
+        11
+      ]
+    ],
+    "journal": "Communications Physics",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    Physics-informed neural networks (PINNs) represent a promising paradigm for solving partial differential equations (PDEs) by integrating physical laws into the learning process of neural networks. However, ensuring that such frameworks fully reflect the physical structure embedded in the governing equations remains an open challenge. This stems from a fundamental limitation: standard neural networks lack an inherent notion of\n                    <jats:italic>physical admissibility</jats:italic>\n                    , leaving them vulnerable to producing mathematical artifacts that satisfy the training loss but lack physical meaning. In this work, we address this issue by introducing a simple, generalized, yet robust irreversibility-regularized strategy that enforces hidden physical laws as soft constraints during training, thereby recovering the missing physics associated with irreversible processes in the conventional PINN. This approach ensures that the learned solutions consistently respect the intrinsic one-way nature of irreversible physical processes. Across a wide range of benchmarks spanning traveling wave propagation, steady combustion, ice melting, corrosion evolution, and crack growth, we observe substantial performance improvements over state-of-the-art PINN baseline equipped with advanced training techniques, demonstrating that our regularization scheme reduces predictive errors by up to more than one order of magnitude, while requiring only minimal modification to existing PINN frameworks.\n                  </jats:p>",
+    "url": "https://doi.org/10.1038/s42005-026-02743-z"
+  },
+  {
+    "query": "physics informed neural networks optimizer preconditioning",
+    "title": "Quasi-random physics-informed neural networks",
+    "doi": "10.1016/j.neucom.2026.132913",
+    "date": [
+      [
+        2026,
+        4
+      ]
+    ],
+    "online": null,
+    "journal": "Neurocomputing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.neucom.2026.132913"
+  },
+  {
+    "query": "physics informed neural networks optimizer preconditioning",
+    "title": "Physics-informed neural networks for geoid modeling",
+    "doi": "10.1007/s00190-025-02017-6",
+    "date": [
+      [
+        2026,
+        1
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        1,
+        17
+      ]
+    ],
+    "journal": "Journal of Geodesy",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>The accurate modeling of the Earth gravity field and geoid is critical for geodesy, yet traditional methods face limitations in handling the growing complexity and heterogeneity of modern geodetic data. To address these challenges, this study proposes a physics-informed neural network (PINN) framework for high-precision geoid modeling. The PINN employs convolutional neural networks (CNNs) to extract multi-scale features from terrestrial and airborne gravity data, which are then processed by a multilayer perceptron (MLP) to establish an accurate mapping between these features and the disturbing potential. Physical constraints, including Laplace’s equation and differential equations governing gravity anomaly and gravity disturbance, are embedded into the loss function to enhance both accuracy and interpretability. The proposed method is applied to the Colorado 1 cm geoid experiment. Compared to GNSS/leveling data of the Geoid Slope Validation Survey 2017 (GSVS17), the PINN-derived geoid model achieves a standard deviation (STD) of 2.1 cm. This represents a 12.5%–27.6% improvement over traditional methods and purely data-driven networks (DDNs). The PINN exhibits strong generalization under sparse data conditions, achieving 28.5% higher accuracy than the DDN with only 500 samples. Furthermore, analysis of geoid slopes and physical constraint contributions demonstrates that PINN’s dual physical constraints effectively balance global characteristics and localized fidelity of the geoid. This study establishes the PINN as a robust, physically interpretable machine learning approach for geoid modeling, outperforming classical methods and offering a promising pathway for gravity field estimation in regions with sparse or heterogeneous data. By bridging purely data-driven machine learning with fundamental geodetic principles, this work paves the way for future advancements in physics-informed machine learning-based geodetic modeling.</jats:p>",
+    "url": "https://doi.org/10.1007/s00190-025-02017-6"
+  },
+  {
+    "query": "physics informed neural networks optimizer preconditioning",
+    "title": "A Review of Physics-Informed Neural Networks",
+    "doi": "10.54254/2755-2721/2025.20636",
+    "date": [
+      [
+        2025,
+        1,
+        24
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        1,
+        24
+      ]
+    ],
+    "journal": "Applied and Computational Engineering",
+    "abstract": "<jats:p>This article presents Physics-Informed Neural Networks (PINNs), which integrate physical laws into neural network training to model complex systems governed by partial differential equations (PDEs). PINNs enhance data efficiency, allowing for accurate predictions with less training data, and have applications in fields such as biomedical engineering, geophysics, and material science. Despite their advantages, PINNs face challenges like learning high-frequency components and computational overhead. Proposed solutions include causality constraints and improved boundary condition handling. A numerical experiment demonstrates the effectiveness of PINNs in solving the one-dimensional heat conduction equation, showcasing enhanced model stability and accuracy. Overall, PINNs represent a significant advancement in merging machine learning with physics.</jats:p>",
+    "url": "https://doi.org/10.54254/2755-2721/2025.20636"
+  },
+  {
+    "query": "physics informed neural networks optimizer preconditioning",
+    "title": "Theory-informed neural networks for particle physics",
+    "doi": "10.1088/2632-2153/ae47ba",
+    "date": [
+      [
+        2026,
+        2,
+        26
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        2,
+        26
+      ]
+    ],
+    "journal": "Machine Learning: Science and Technology",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    We present a theory-informed reinforcement-learning framework that recasts the combinatorial assignment of final-state particles in hadron collider events as a Markov decision process. A transformer-based deep Q-network, rewarded at each step by the logarithmic change in the magnitude of the tree-level matrix element, learns to map final-state particles to partons. Because the reward derives solely from first-principles theory, the resulting policy is label-free and fully interpretable, allowing every particle to be traced to a definite partonic origin. The method is validated on event reconstruction for\n                    <jats:inline-formula>\n                      <jats:tex-math>\n                        \n                      </jats:tex-math>\n                      <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\">\n                        <mml:mrow>\n                          <mml:mi>t</mml:mi>\n                          <mml:mrow>\n                            <mml:mover>\n                              <mml:mi>t</mml:mi>\n                              <mml:mo stretchy=\"false\">¯</mml:mo>\n                            </mml:mover>\n                          </mml:mrow>\n                        </mml:mrow>\n                      </mml:math>\n                    </jats:inline-formula>\n                    ,\n                    <jats:inline-formula>\n                      <jats:tex-math>\n                        \n                      </jats:tex-math>\n                      <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\">\n                        <mml:mrow>\n                          <mml:mi>t</mml:mi>\n                          <mml:mrow>\n                            <mml:mover>\n                              <mml:mi>t</mml:mi>\n                              <mml:mo stretchy=\"false\">¯</mml:mo>\n                            </mml:mover>\n                          </mml:mrow>\n                          <mml:mi>W</mml:mi>\n                        </mml:mrow>\n                      </mml:math>\n                    </jats:inline-formula>\n                    , and\n                    <jats:inline-formula>\n                      <jats:tex-math>\n                        \n                      </jats:tex-math>\n                      <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\">\n                        <mml:mrow>\n                          <mml:mi>t</mml:mi>\n                          <mml:mrow>\n                            <mml:mover>\n                              <mml:mi>t</mml:mi>\n                              <mml:mo stretchy=\"false\">¯</mml:mo>\n                            </mml:mover>\n                          </mml:mrow>\n                          <mml:mi>t</mml:mi>\n                          <mml:mrow>\n                            <mml:mover>\n                              <mml:mi>t</mml:mi>\n                              <mml:mo stretchy=\"false\">¯</mml:mo>\n                            </mml:mover>\n                          </mml:mrow>\n                        </mml:mrow>\n                      </mml:math>\n                    </jats:inline-formula>\n                    processes at the large hadron collider. At this stage the method is tested on parton-level data only, with tests using momentum smearing used as a proxy for a full simulation. The method maintains robust performance across all processes, demonstrating its scaling with increasing combinatorial complexity. We demonstrate how this method can be used to build a theory-informed classifier for effective discrimination of longitudinal\n                    <jats:inline-formula>\n                      <jats:tex-math>\n                        \n                      </jats:tex-math>\n                      <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\">\n                        <mml:mrow>\n                          <mml:msup>\n                            <mml:mi>W</mml:mi>\n                            <mml:mrow>\n                              <mml:mo>+</mml:mo>\n                            </mml:mrow>\n                          </mml:msup>\n                          <mml:msup>\n                            <mml:mi>W</mml:mi>\n                            <mml:mrow>\n                              <mml:mo>−</mml:mo>\n                            </mml:mrow>\n                          </mml:msup>\n                        </mml:mrow>\n                      </mml:math>\n                    </jats:inline-formula>\n                    pairs, and show that we can construct theory-informed anomaly-detection tools using background process matrix elements. Building on theoretical calculations, this method offers a transparent alternative to black-box classifiers. Being built on the matrix element, the classification and anomaly scores naturally respect all physical symmetries and are much less susceptible to the implicit biases common to other methods. Thus, it provides a framework for precision measurements, hypothesis testing, and anomaly searches at the high-luminosity LHC.\n                  </jats:p>",
+    "url": "https://doi.org/10.1088/2632-2153/ae47ba"
+  },
+  {
+    "query": "physics informed neural networks optimizer preconditioning",
+    "title": "E-PINNs: epistemic physics-informed neural networks",
+    "doi": "10.1007/s44379-026-00086-8",
+    "date": [
+      [
+        2026,
+        8,
+        13
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        8,
+        13
+      ]
+    ],
+    "journal": "Machine Learning for Computational Science and Engineering",
+    "abstract": null,
+    "url": "https://doi.org/10.1007/s44379-026-00086-8"
+  },
+  {
+    "query": "physics informed neural networks optimizer preconditioning",
+    "title": "Distance-based attention physics-informed neural networks",
+    "doi": "10.1063/5.0310163",
+    "date": [
+      [
+        2025,
+        12,
+        1
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        12,
+        16
+      ]
+    ],
+    "journal": "Physics of Fluids",
+    "abstract": "<jats:p>Physics-informed neural networks (PINNs) provide a flexible, mesh-free framework for solving partial differential equations. However, their effectiveness decreases in irregular domains because geometric information is encoded only indirectly through collocation points. This limitation weakens boundary condition enforcement and prevents direct computation of boundary-derived physical quantities. Traditional numerical methods rely on an explicit conditioning of the solution space by the domain geometry, together with interactions between the governing equations and boundary constraints. Inspired by this computational framework, a distance-based attention physics-informed neural network (DBA-PINN) is proposed in this study to provide an explicit geometric conditioning and to guide the interactions between interior and boundary physics. The proposed formulation introduces a normalized approximate distance field (nADF), defined as a projection-based scalar field that provides a smooth representation of proximity to the boundary without requiring any explicit signed-distance computation. Although the nADF is learned implicitly through a neural network, it serves as an explicit geometric descriptor within the overall architecture and provides a geometry-driven attention mechanism that modulates the blending between residual-dominant and boundary-dominant subnetworks. This mechanism effectively reproduces the geometry-driven interactions between interior and boundary physics. This distance-based attention mechanism also improves boundary accuracy and stabilizes training across complex domains. The neural parameterization of the nADF is fully differentiable, enabling direct computation of boundary-normal vectors through automatic differentiation and the evaluation of boundary-related quantities, such as wall shear stress. Numerical experiments on several complex geometries demonstrate that the DBA-PINN improves flow-field prediction accuracy, enhances boundary fidelity, and yields more stable training dynamics.</jats:p>",
+    "url": "https://doi.org/10.1063/5.0310163"
+  },
+  {
+    "query": "physics informed neural networks optimizer preconditioning",
+    "title": "Physics-informed neural networks for aggregation kinetics",
+    "doi": "10.1515/jiip-2025-0073",
+    "date": [
+      [
+        2026,
+        1,
+        30
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        1,
+        30
+      ]
+    ],
+    "journal": "Journal of Inverse and Ill-posed Problems",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>We introduce a physics-informed method for finding numerical solutions of large systems of equations governing aggregation kinetics.\nThe method enables accurate reconstruction of density distributions for both large and small clusters, with notable improvements for small cluster sizes, as compared to previous numerical approaches.\nThe efficiency and accuracy are improved by restricting the physics-informed loss to a small interval, enabling long time horizons with minimal extra computational cost.\nThe superiority of the method has been demonstrated for basic aggregation kernels – constant, additive, multiplicative and generalised Brownian kernel, showing that one simple neural architecture can be used for four distinct kernels.\nIn addition to numerical examples, we provide rigorous mathematical justification for the approach and derive relevant analytical error bounds.\nCombined high efficiency and low error margins of the method indicate strong potential for long-term prediction and integration into broader computational systems.</jats:p>",
+    "url": "https://doi.org/10.1515/jiip-2025-0073"
+  },
+  {
+    "query": "physics informed neural networks optimizer preconditioning",
+    "title": "Quantitative schlieren with physics-informed neural networks",
+    "doi": "10.1007/s00348-026-04268-1",
+    "date": [
+      [
+        2026,
+        7,
+        10
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        7,
+        10
+      ]
+    ],
+    "journal": "Experiments in Fluids",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    This article introduces physics-informed quantitative schlieren (PIQS), a data-assimilation framework that transforms standard qualitative schlieren images into quantitative flow fields. By leveraging physics-informed neural networks (PINNs), the method treats the unknown calibration factor between image intensity and density gradient as a learnable parameter that is inferred during the training process. The solution is anchored using Rankine–Hugoniot jump relations across identified shock waves to solve the inherent scale ambiguity. The framework is validated against a numerical ground truth for inviscid supersonic flow over a rhombus airfoil, where it recovers the true calibration factor and density field with high accuracy (\n                    <jats:inline-formula>\n                      <jats:alternatives>\n                        <jats:tex-math>$$R^2 &gt; 0.99$$</jats:tex-math>\n                        <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\">\n                          <mml:mrow>\n                            <mml:msup>\n                              <mml:mi>R</mml:mi>\n                              <mml:mn>2</mml:mn>\n                            </mml:msup>\n                            <mml:mo>&gt;</mml:mo>\n                            <mml:mn>0.99</mml:mn>\n                          </mml:mrow>\n                        </mml:math>\n                      </jats:alternatives>\n                    </jats:inline-formula>\n                    ). Application to a turbulent Mach 2 shock-wave/boundary-layer interaction (SBLI) demonstrates that PIQS yields reconstructions consistent with independent quantitative background-oriented schlieren (BOS) measurements. Finally, the method is applied to previously published schlieren imagery of a supersonic projectile, successfully recovering quantitative density profiles that match analytical Taylor–Maccoll solutions. These results demonstrate that PIQS offers a robust pathway for extracting quantitative data from both contemporary and historical schlieren visualizations without requiring dedicated calibration hardware.\n                  </jats:p>",
+    "url": "https://doi.org/10.1007/s00348-026-04268-1"
+  },
+  {
+    "query": "physics informed neural networks adaptive sampling weighting",
+    "title": "Self-adaptive weighting and sampling for physics-informed neural networks",
+    "doi": "10.1088/2632-2153/ae556e",
+    "date": [
+      [
+        2026,
+        4,
+        1
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        4,
+        7
+      ]
+    ],
+    "journal": "Machine Learning: Science and Technology",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>Physics-informed deep learning has emerged as a promising framework for solving partial differential equations (PDEs). Nevertheless, training these models on complex problems remains challenging, often leading to limited accuracy and efficiency. In this work, we introduce a hybrid adaptive sampling and weighting method to enhance the performance of physics-informed neural networks (PINNs). The adaptive sampling component identifies training points in regions where the solution exhibits rapid variation, while the adaptive weighting component balances the convergence rate across training points. Numerical experiments show that applying only adaptive sampling or only adaptive weighting is insufficient to consistently achieve accurate predictions, particularly when training points are scarce. Since each method emphasizes different aspects of the solution, their effectiveness is problem dependent. By combining both strategies, the proposed framework consistently improves prediction accuracy and training efficiency, offering a more robust approach for solving PDEs with PINNs.</jats:p>",
+    "url": "https://doi.org/10.1088/2632-2153/ae556e"
+  },
+  {
+    "query": "physics informed neural networks adaptive sampling weighting",
+    "title": "Antiderivative-enhanced adaptive sampling algorithm for physics-informed neural networks",
+    "doi": "10.1088/1402-4896/ae30b5",
+    "date": [
+      [
+        2026,
+        1,
+        6
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        1,
+        6
+      ]
+    ],
+    "journal": "Physica Scripta",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    Physics-informed neural networks (PINNs) effectively integrate physical equation constraints into the model to simultaneously learn data distributions and underlying physical laws. However, conventional uniform sampling is computationally expensive and inefficient for complex systems. The residual-based adaptive refinement distribution (RARD) algorithm, proposed by Wang\n                    <jats:italic>et al</jats:italic>\n                    , improves sampling but relies heavily on residual estimation, neglecting higher-order derivatives and leading to potential suboptimal sampling distributions. To address these issues, this study proposes the Residual-based Adaptive Antiderivative Approximation (RA-ADAF) approach. Within a fully connected neural network (FCNN) framework, RA-ADAF introduces antiderivative approximation layers (ADAF) with integral structure modeling capability, enhancing the representation of both the target function and its derivatives. Unlike the RARD strategy that solely relies on residual estimation for adaptive sampling, RA-ADAF combines residual-driven adaptive sampling with derivative-informed structural modeling. This dual mechanism improves model fitting in error-concentrated regions and enhances the representation of higher-order derivative behavior. The effectiveness of the RA-ADAF method is validated through a series of numerical experiments, including comparisons on the Burgers equation, Allen–Cahn equation, wave equation and 2D Poisson equation, as well as ablation studies. Experimental results demonstrate that RA-ADAF consistently achieves lower relative\n                    <jats:italic>L</jats:italic>\n                    <jats:sup>2</jats:sup>\n                    error compared to the RARD method across multiple test cases. Moreover, it exhibits faster error convergence and more stable training behavior, providing a more reliable strategy for solving partial differential equations (PDEs) involving complex physical phenomena.\n                  </jats:p>",
+    "url": "https://doi.org/10.1088/1402-4896/ae30b5"
+  },
+  {
+    "query": "physics informed neural networks adaptive sampling weighting",
+    "title": "AdaPW: An adaptive point-weighting method for training physics-informed neural networks",
+    "doi": "10.1016/j.camwa.2025.08.026",
+    "date": [
+      [
+        2025,
+        11
+      ]
+    ],
+    "online": null,
+    "journal": "Computers &amp; Mathematics with Applications",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.camwa.2025.08.026"
+  },
+  {
+    "query": "physics informed neural networks adaptive sampling weighting",
+    "title": "TSPINN: Thompson sampling-based adaptive training for physics-informed neural networks",
+    "doi": "10.1007/s11222-026-10824-w",
+    "date": [
+      [
+        2026,
+        1,
+        28
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        1,
+        28
+      ]
+    ],
+    "journal": "Statistics and Computing",
+    "abstract": null,
+    "url": "https://doi.org/10.1007/s11222-026-10824-w"
+  },
+  {
+    "query": "physics informed neural networks adaptive sampling weighting",
+    "title": "Spatiotemporal-dependent reliability analysis with adaptive sampling physics-informed neural networks",
+    "doi": "10.1016/j.ress.2025.111560",
+    "date": [
+      [
+        2026,
+        1
+      ]
+    ],
+    "online": null,
+    "journal": "Reliability Engineering &amp; System Safety",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.ress.2025.111560"
+  },
+  {
+    "query": "physics informed neural networks adaptive sampling weighting",
+    "title": "Adaptive Weighting and Collocation in Physics-Informed Neural Networks for Chemical Process Modeling",
+    "doi": "10.1021/acs.iecr.6c00048",
+    "date": [
+      [
+        2026,
+        3,
+        24
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        3,
+        24
+      ]
+    ],
+    "journal": "Industrial &amp; Engineering Chemistry Research",
+    "abstract": null,
+    "url": "https://doi.org/10.1021/acs.iecr.6c00048"
+  },
+  {
+    "query": "physics informed neural networks adaptive sampling weighting",
+    "title": "Regime-aware time weighting for physics-informed neural networks",
+    "doi": "10.1016/j.cam.2025.116858",
+    "date": [
+      [
+        2026,
+        2
+      ]
+    ],
+    "online": null,
+    "journal": "Journal of Computational and Applied Mathematics",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.cam.2025.116858"
+  },
+  {
+    "query": "physics informed neural networks adaptive sampling weighting",
+    "title": "Operator-Budget Evaluation of Residual-Adaptive Sampling in Physics-Informed Neural Networks",
+    "doi": "10.3390/app16199508",
+    "date": [
+      [
+        2026,
+        9,
+        24
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        9,
+        24
+      ]
+    ],
+    "journal": "Applied Sciences",
+    "abstract": "<jats:p>Residual-adaptive collocation is commonly compared at equal optimizer steps, although maintaining its sampling proposal requires PDE-residual evaluations in addition to those used for training. Such comparisons can obscure whether an apparent gain comes from point placement or from additional information work. We introduce an operator-budget evaluation framework that records training and proposal-maintenance residual calls in a common ledger, distinguishes fixed-update cost from work-matched accuracy, and requires a joint cost–accuracy decision. Amortized residual proposal maintenance (ARPM) serves as a finite-pool case study: it reuses minibatch residuals to repair a persistent proposal cache between periodic global refreshes. In a prospectively specified multi-PDE evaluation, the configuration met the joint primary criterion after maintenance work was charged. Post-review analyses separated writeback from uniform mixing, added a heat-equation family, varied the L-BFGS refinement points and measured implementation overhead. They did not establish a general accuracy advantage of writeback or consistent gains beyond the selected suite. The framework’s practical contribution is an auditable comparison that exposes both useful cost–accuracy trade-offs and competitive simpler schedules. Operator savings must still be assessed alongside elapsed time, memory and problem-specific accuracy requirements.</jats:p>",
+    "url": "https://doi.org/10.3390/app16199508"
+  },
+  {
+    "query": "physics informed neural networks adaptive sampling weighting",
+    "title": "Physics-informed neural networks with adaptive loss weighting algorithm for solving partial differential equations",
+    "doi": "10.1016/j.camwa.2025.01.007",
+    "date": [
+      [
+        2025,
+        3
+      ]
+    ],
+    "online": null,
+    "journal": "Computers &amp; Mathematics with Applications",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.camwa.2025.01.007"
+  },
+  {
+    "query": "physics informed neural networks adaptive sampling weighting",
+    "title": "Gradient-Based Equation Adaptive Weighting in Physics-Informed Neural Networks for Water Hammer Analysis",
+    "doi": "10.3390/w18151900",
+    "date": [
+      [
+        2026,
+        8,
+        4
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        8,
+        4
+      ]
+    ],
+    "journal": "Water",
+    "abstract": "<jats:p>To address the issues of optimization instability and imbalance in the contributions of multiple governing equations in conventional Physics-Informed Neural Networks (PINNs) for hydraulic transient problems, a gradient-based equation adaptive weighting strategy is proposed in this study. This strategy is incorporated into the PINN framework, referred to as GEAW-PINNs (gradient-based equation adaptive weighting in Physics-Informed Neural Networks), for predicting pressure and flow velocity during water hammer events. In GEAW-PINNs, the loss terms associated with different governing equations in the partial differential equation (PDE) constraints are dynamically weighted, thereby enhancing training stability. In the model construction, the classical governing equations of water hammer are employed to establish the PDE constraints, in which the Brunone model is incorporated. Meanwhile, the corresponding model coefficient is treated as a trainable parameter, enabling simultaneous parameter inversion and prediction of pressure and flow velocity. High-accuracy numerical solutions are generated as reference data to validate the proposed framework. The results demonstrate that GEAW-PINN effectively improves the stability of PINNs for the prediction of pressure in water hammer phenomena, thereby enhancing overall optimization performance and prediction accuracy. For the reservoir–pipeline–valve system, the proposed method achieved relative errors of only 0.00742 for pressure and 0.0183 for velocity. And the proposed method can also provide accurate predictions in complex pipe network systems. For the pipeline network system, the absolute prediction errors were approximately 15 for pressure and 0.05 for velocity. Finally, the robustness of the proposed method was evaluated under different random seeds and 25 dB noise. The prediction error exhibited little variation across different random seeds, with a variance of only 1.1429×10−7 and 6.87×10−7. Under 25 dB noise, the prediction error increased only slightly to 9.88×10−3 and 2.5×10−2. This study provides a practical example for achieving stable PINN training in multi-physics coupled problems.</jats:p>",
+    "url": "https://doi.org/10.3390/w18151900"
+  },
+  {
+    "query": "physics informed neural networks adaptive sampling weighting",
+    "title": "Generative point sampling strategies for physics-informed neural networks",
+    "doi": "10.1007/s00366-025-02158-4",
+    "date": [
+      [
+        2025,
+        5,
+        27
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        5,
+        27
+      ]
+    ],
+    "journal": "Engineering with Computers",
+    "abstract": null,
+    "url": "https://doi.org/10.1007/s00366-025-02158-4"
+  },
+  {
+    "query": "physics informed neural networks adaptive sampling weighting",
+    "title": "AsPINN: Adaptive symmetry-recomposition physics-informed neural networks",
+    "doi": "10.1016/j.cma.2024.117405",
+    "date": [
+      [
+        2024,
+        12
+      ]
+    ],
+    "online": null,
+    "journal": "Computer Methods in Applied Mechanics and Engineering",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.cma.2024.117405"
+  },
+  {
+    "query": "physics informed neural networks Kolmogorov Arnold",
+    "title": "SPIKANs: separable physics-informed Kolmogorov–Arnold networks",
+    "doi": "10.1088/2632-2153/ae05af",
+    "date": [
+      [
+        2025,
+        9,
+        22
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        9,
+        22
+      ]
+    ],
+    "journal": "Machine Learning: Science and Technology",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>Physics-Informed Neural Networks (PINNs) have emerged as a promising method for solving partial differential equations (PDEs) in scientific computing. While PINNs typically use multilayer perceptrons (MLPs) as their underlying architecture, recent advancements have explored alternative neural network structures. One such innovation is the Kolmogorov–Arnold Network (KAN), which has demonstrated benefits over traditional MLPs, including faster neural scaling and better interpretability. The application of KANs to physics-informed learning has led to the development of Physics-Informed KANs (PIKANs), enabling the use of KANs to solve PDEs. However, despite their advantages, KANs often suffer from slower training speeds, particularly in higher-dimensional problems where the number of collocation points grows exponentially with the dimensionality of the system. To address this challenge, we introduce Separable Physics-Informed Kolmogorov–Arnold Networks (SPIKANs). This novel architecture applies the principle of separation of variables to PIKANs, decomposing the problem such that each dimension is handled by an individual KAN. This approach drastically reduces the computational complexity of training without sacrificing accuracy, facilitating their application to higher-dimensional PDEs. Through a series of benchmark problems, we demonstrate the effectiveness of SPIKANs, showcasing their superior scalability and performance compared to PIKANs and highlighting their potential for solving complex, high-dimensional PDEs in scientific computing.</jats:p>",
+    "url": "https://doi.org/10.1088/2632-2153/ae05af"
+  },
+  {
+    "query": "physics informed neural networks Kolmogorov Arnold",
+    "title": "Scalable Bayesian Physics-Informed Kolmogorov-Arnold Networks",
+    "doi": "10.1137/25m1729253",
+    "date": [
+      [
+        2025,
+        9,
+        15
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        9,
+        15
+      ]
+    ],
+    "journal": "SIAM/ASA Journal on Uncertainty Quantification",
+    "abstract": "<jats:p>Abstract.</jats:p>\n                  <jats:p>Bayesian physics-informed neural networks serve as important scientific machine learning methods for uncertainty quantification. Although multilayer perceptrons are commonly employed as surrogates, they often suffer from overfitting due to their large number of parameters. Kolmogorov–Arnold networks (KANs) offer an alternative solution with fewer parameters. However, gradient-based inference methods, such as Hamiltonian Monte Carlo (HMC), may result in computational inefficiency when applied to KANs, especially for large-scale datasets, due to the high cost of back-propagation. To address these challenges, we propose a novel approach, combining the dropout Tikhonov ensemble Kalman inversion with Chebyshev KANs. This gradient-free scheme effectively mitigates overfitting and enhances numerical stability. Additionally, we incorporate the active subspace method to reduce the parameter-space dimensionality, allowing us to improve the accuracy of predictions and obtain more reliable uncertainty estimates. Extensive experiments demonstrate the efficacy of our approach in various test cases, including scenarios with large datasets and high noise levels. Our results demonstrate that the new method achieves comparable or better accuracy and much higher efficiency as well as stability compared to HMC, in addition to scalability.</jats:p>",
+    "url": "https://doi.org/10.1137/25m1729253"
+  },
+  {
+    "query": "physics informed neural networks Kolmogorov Arnold",
+    "title": "Training deep physics-informed Kolmogorov–Arnold networks",
+    "doi": "10.1016/j.cma.2026.118761",
+    "date": [
+      [
+        2026,
+        4
+      ]
+    ],
+    "online": null,
+    "journal": "Computer Methods in Applied Mechanics and Engineering",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.cma.2026.118761"
+  },
+  {
+    "query": "physics informed neural networks Kolmogorov Arnold",
+    "title": "Optimizing the optimizer for physics-informed neural networks and Kolmogorov-Arnold networks",
+    "doi": "10.1016/j.cma.2025.118308",
+    "date": [
+      [
+        2025,
+        11
+      ]
+    ],
+    "online": null,
+    "journal": "Computer Methods in Applied Mechanics and Engineering",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.cma.2025.118308"
+  },
+  {
+    "query": "physics informed neural networks Kolmogorov Arnold",
+    "title": "Physics-informed graph Laplacian-augmented Kolmogorov–Arnold networks",
+    "doi": "10.1063/5.0341290",
+    "date": [
+      [
+        2026,
+        8,
+        1
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        8,
+        24
+      ]
+    ],
+    "journal": "Physics of Fluids",
+    "abstract": "<jats:p>Physics-informed approximation of solutions to forward problems governed by partial differential equation on geometrically irregular domains become challenging when geometric representation, residual evaluation, and neural approximation are not consistently integrated. This study proposes a physics-informed graph Laplacian-augmented Kolmogorov–Arnold network (PI-GLaK) for approximating solutions to the steady incompressible Navier–Stokes equations in two-dimensional vascular geometries. The proposed framework establishes a coefficient-based neural parameterization of the velocity and pressure fields within a common mixed finite-element formulation. Mesh-induced graph connectivity, Laplacian-augmented Kolmogorov–Arnold network layers, and Galerkin residual evaluation are defined using the same Taylor–Hood finite-element representation. The proposed PI-GLaK was evaluated on aneurysm–bend, bifurcation, and stenosis–aneurysm configurations, and its performance was compared with that of a conventional physics-informed neural network (PINN) and a physics-informed graph Galerkin network (PI-GGN). The proposed PI-GLaK achieved total relative L2 errors of 0.048–0.069, compared with 0.017–8.98 for the conventional PINN and 1.03–3.24 for PI-GGN. The proposed PI-GLaK exhibited more consistent accuracy across the three configurations than the PINN baseline and substantially lower errors than the graph-based Galerkin baseline. A gradient-based analysis of the residual loss components characterized geometry-dependent interactions during training and their relationship to the optimization behavior of the proposed formulation. These results demonstrate that graph connectivity, neural coefficient parameterization, and Galerkin residual evaluation can be integrated within a common mixed finite-element representation for physics-informed approximation on geometrically irregular domains.</jats:p>",
+    "url": "https://doi.org/10.1063/5.0341290"
+  },
+  {
+    "query": "physics informed neural networks Kolmogorov Arnold",
+    "title": "PHYSICS-INFORMED RADIAL BASIS FUNCTION NETWORKS AND KOLMOGOROV-ARNOLD NETWORKS",
+    "doi": "10.31144/si.2307-6410.2025.n26.p103-122",
+    "date": [
+      [
+        2025,
+        7,
+        17
+      ]
+    ],
+    "online": null,
+    "journal": "System Informatics",
+    "abstract": null,
+    "url": "https://doi.org/10.31144/si.2307-6410.2025.n26.p103-122"
+  },
+  {
+    "query": "physics informed neural networks Kolmogorov Arnold",
+    "title": "Physics-Informed Kolmogorov-Arnold Networks for Power System Dynamics",
+    "doi": "10.1109/oajpe.2025.3529928",
+    "date": [
+      [
+        2025
+      ]
+    ],
+    "online": null,
+    "journal": "IEEE Open Access Journal of Power and Energy",
+    "abstract": null,
+    "url": "https://doi.org/10.1109/oajpe.2025.3529928"
+  },
+  {
+    "query": "physics informed neural networks Kolmogorov Arnold",
+    "title": "Physics-informed Kolmogorov-Arnold networks for sound field estimation",
+    "doi": "10.1016/j.ymssp.2026.114831",
+    "date": [
+      [
+        2026,
+        9
+      ]
+    ],
+    "online": null,
+    "journal": "Mechanical Systems and Signal Processing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.ymssp.2026.114831"
+  },
+  {
+    "query": "physics informed neural networks Kolmogorov Arnold",
+    "title": "Kolmogorov–Arnold-Informed neural network: A physics-informed deep learning framework for solving forward and inverse problems based on Kolmogorov–Arnold Networks",
+    "doi": "10.1016/j.cma.2024.117518",
+    "date": [
+      [
+        2025,
+        1
+      ]
+    ],
+    "online": null,
+    "journal": "Computer Methods in Applied Mechanics and Engineering",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.cma.2024.117518"
+  },
+  {
+    "query": "physics informed neural networks Kolmogorov Arnold",
+    "title": "Physics-based Learning of Quadrotor Crash Area using Kolmogorov-Arnold and Physics-Informed Neural Networks",
+    "doi": "10.1016/j.ast.2025.110359",
+    "date": [
+      [
+        2025,
+        9
+      ]
+    ],
+    "online": null,
+    "journal": "Aerospace Science and Technology",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.ast.2025.110359"
+  },
+  {
+    "query": "physics informed neural networks Kolmogorov Arnold",
+    "title": "Enhancing physics-informed neural networks with a hybrid parallel Kolmogorov-Arnold and MLP architecture",
+    "doi": "10.1016/j.physd.2026.135156",
+    "date": [
+      [
+        2026,
+        5
+      ]
+    ],
+    "online": null,
+    "journal": "Physica D: Nonlinear Phenomena",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.physd.2026.135156"
+  },
+  {
+    "query": "physics informed neural networks Kolmogorov Arnold",
+    "title": "PIKANs: Physics-informed Kolmogorov–Arnold networks for landslide time-to-failure prediction",
+    "doi": "10.1016/j.cageo.2025.106094",
+    "date": [
+      [
+        2026,
+        2
+      ]
+    ],
+    "online": null,
+    "journal": "Computers &amp; Geosciences",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.cageo.2025.106094"
+  },
+  {
+    "query": "physics informed neural networks domain decomposition multiscale",
+    "title": "DADD-PINN: Dual Adaptive Domain Decomposition Physics-Informed Neural Networks",
+    "doi": "10.3390/math14040744",
+    "date": [
+      [
+        2026,
+        2,
+        23
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        2,
+        23
+      ]
+    ],
+    "journal": "Mathematics",
+    "abstract": "<jats:p>When solving partial differential equations (PDEs), traditional Physics-Informed Neural Networks (PINNs) often encounter difficulties in capturing critical physical features and addressing information bias between subdomains. To overcome these limitations, this paper proposes a Dual Adaptive Domain Decomposition Physics-Informed Neural Network (DADD-PINN). The core of this method lies in the construction of a dual-driven architecture that facilitates intra-subdomain feature extraction and inter-subdomain feature coordination. Within each subdomain, the solver’s precision is significantly enhanced by integrating a multi-criterion adaptive sampling strategy with a dynamic weighting mechanism. Experimental results demonstrate that DADD-PINN reduces the optimal L2 error by 1–2 orders of magnitude compared to existing baselines. The model exhibits superior generalization and robustness across various physical fields, offering a new route toward accurate and efficient solutions for complex PDEs.</jats:p>",
+    "url": "https://doi.org/10.3390/math14040744"
+  },
+  {
+    "query": "physics informed neural networks domain decomposition multiscale",
+    "title": "AB-PINNs: adaptive-basis physics-informed neural networks for residual-driven domain decomposition",
+    "doi": "10.1088/2632-2153/ae8638",
+    "date": [
+      [
+        2026,
+        7,
+        17
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        7,
+        17
+      ]
+    ],
+    "journal": "Machine Learning: Science and Technology",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>We introduce adaptive-basis physics-informed neural networks (AB-PINNs), an adaptive domain decomposition framework for PINNs in which learnable subdomains dynamically evolve during training to align with intrinsic features of the unknown solution. Local networks capture fine-scale features within each adaptive subdomain, while a global network learns large-scale solution structures. Furthermore, drawing inspiration from classical adaptive mesh refinement, we also modify the domain decomposition on-the-fly throughout training by introducing new subdomains in regions of high residual loss, thereby providing additional expressive power where needed. Our flexible approach to domain decomposition is well-suited for multiscale problems, as different subdomains can learn to capture different scales of the underlying solution. Moreover, the ability to introduce new subdomains during training helps prevent convergence to unwanted local minima and can reduce the need for extensive hyperparameter tuning compared to static domain decomposition approaches. Throughout, we present comprehensive numerical results demonstrating the rapid convergence of AB-PINNs compared with standard PINNs and existing, static PINN-based domain decompositions when solving multiscale differential equations.</jats:p>",
+    "url": "https://doi.org/10.1088/2632-2153/ae8638"
+  },
+  {
+    "query": "physics informed neural networks domain decomposition multiscale",
+    "title": "ADD-PINN: Adaptive Domain Decomposition Based Physics Informed Neural Networks via Spatial Clustering",
+    "doi": "10.4208/cicp.oa-2025-0132",
+    "date": [
+      [
+        2026,
+        6,
+        25
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        6,
+        25
+      ]
+    ],
+    "journal": "Communications in Computational Physics",
+    "abstract": "<jats:p>Physics-informed neural networks (PINNs) are a class of machine learning methods for solving partial differential equations (PDEs). Integrating domain decomposition with PINNs can alleviate issues such as the spectral bias of neural networks and gradient flow pathology during optimization, thereby improving convergence speed and accuracy. However, existing domain decomposition PINNs depend on manually decomposing the domain and are hindered by complex interface condition configurations and insufficient dynamic adaptability. This research introduces Adaptive Domain Decomposition based Physics-Informed Neural Networks (ADD-PINN) via Spatial Clustering. Firstly, spatial clustering is employed to automatically generate polygonal blocks, enabling shape manipulation of the computational domain. Secondly, the interface conditions and loss function are improved, and an algorithm to control information exchange based on gradient analysis is introduced. Thirdly, the tasks of subdomain initialization and dynamic adjustment are formulated as a graph optimization problem, which can be addressed using heuristic algorithms. Experimental results on PDE cases demonstrate that the proposed method attains superior accuracy and convergence efficiency compared with the baseline method XPINN. Through an analysis of the algorithmic complexity and runtime records, we have also identified the time bottlenecks associated with domain-decomposed PINNs and observed notable improvements in time efficiency achieved by our proposed methods.</jats:p>",
+    "url": "https://doi.org/10.4208/cicp.oa-2025-0132"
+  },
+  {
+    "query": "physics informed neural networks domain decomposition multiscale",
+    "title": "Modeling One-Dimensional Consolidation Problems Using Physics-Informed Neural Networks with Domain Decomposition",
+    "doi": "10.3390/app16126065",
+    "date": [
+      [
+        2026,
+        6,
+        15
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        6,
+        15
+      ]
+    ],
+    "journal": "Applied Sciences",
+    "abstract": "<jats:p>Soil consolidation modeling is essential for estimating settlement and pore-water pressure dissipation, but analytical solutions are limited for layered soils with complex drainage and interface conditions. This study evaluates physics-informed neural networks (PINNs) for one-dimensional consolidation of saturated soils and extends them to a domain-decomposed XPINN framework for two-layered soils. Governing equations, boundary conditions, interface-continuity constraints, and synthetic measurement data are embedded in the loss function. Layer-wise locally adaptive activation functions (L-LAAF) and residual-based adaptive resampling (RAR) are used to improve training stability. For homogeneous soil, the PINN accurately reproduces the analytical solution, although conventional finite difference methods remain more efficient for simple single-query forward analysis. For heterogeneous soil, the full XPINN model achieves a relative L2 error of 0.0173 ± 0.0058, whereas removing RAR, L-LAAF, or domain decomposition increases the error to 0.0578 ± 0.0555, 0.1488 ± 0.0378, and 0.1673 ± 0.0104, respectively. In inverse tests using synthetic noisy measurements, denser and lower-noise observations improve the identification of unknown drainage coefficients. The framework provides a meshless and continuous representation for forward and inverse layered consolidation problems, but validation with laboratory or field data remains necessary.</jats:p>",
+    "url": "https://doi.org/10.3390/app16126065"
+  },
+  {
+    "query": "physics informed neural networks domain decomposition multiscale",
+    "title": "Analysis Model of Load Transfer Method Based on Domain Decomposition Physics-Informed Neural Networks",
+    "doi": "10.3390/buildings16061114",
+    "date": [
+      [
+        2026,
+        3,
+        11
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        3,
+        11
+      ]
+    ],
+    "journal": "Buildings",
+    "abstract": "<jats:p>The load transfer method is important for the settlement prediction of axially loaded piles, but in multi-layered complex soils, it lacks analytical solutions. Traditional numerical methods such as the finite element method suffer from strong dependence on mesh generation, time-consuming iterative calculations, and high computational costs for back-analysis. This paper proposes a load transfer analysis model based on a Domain Decomposition Physics-Informed Neural Network. A multi-subnet parallel architecture is adopted to simulate multi-layered soils, solving the problem of inter-layer stress–strain discontinuity through interface coupling and gradient continuity constraints; a non-dimensionalization system and a hard constraint mechanism are introduced to enhance training efficiency and physical consistency; and a two-stage analysis framework comprising surrogate model forward analysis and field data inversion is established. Numerical experimental results indicate that the forward analysis of this model is in high agreement with FEM simulation results, and computational efficiency is improved by six orders of magnitude; based on a small amount of field static load test data, multi-layer soil parameters are accurately inverted, achieving more precise pile settlement prediction than FEM. Comparative analysis validates the effectiveness of the domain decomposition multi-subnet over a single network, demonstrating extensibility to hyperbolic and exponential multi-soil constitutive models.</jats:p>",
+    "url": "https://doi.org/10.3390/buildings16061114"
+  },
+  {
+    "query": "physics informed neural networks domain decomposition multiscale",
+    "title": "Physics-informed neural networks with domain decomposition for inferring velocity fields from concentration fields",
+    "doi": "10.1016/j.aitf.2026.100037",
+    "date": [
+      [
+        2026,
+        6
+      ]
+    ],
+    "online": null,
+    "journal": "AI Thermal Fluids",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.aitf.2026.100037"
+  },
+  {
+    "query": "physics informed neural networks domain decomposition multiscale",
+    "title": "Initialization-enhanced physics-informed neural network with domain decomposition (IDPINN)",
+    "doi": "10.1016/j.jcp.2025.113914",
+    "date": [
+      [
+        2025,
+        6
+      ]
+    ],
+    "online": null,
+    "journal": "Journal of Computational Physics",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.jcp.2025.113914"
+  },
+  {
+    "query": "physics informed neural networks domain decomposition multiscale",
+    "title": "Frequency-Domain Physics-Informed Neural Networks for Parameter Estimation",
+    "doi": "10.4173/mic.2026.2.1",
+    "date": [
+      [
+        2026
+      ]
+    ],
+    "online": null,
+    "journal": "Modeling, Identification and Control: A Norwegian Research Bulletin",
+    "abstract": null,
+    "url": "https://doi.org/10.4173/mic.2026.2.1"
+  },
+  {
+    "query": "physics informed neural networks domain decomposition multiscale",
+    "title": "Physics-Informed Neural Networks for Multiscale Large Deformation Analysis of Metamaterials",
+    "doi": "10.1016/j.prostr.2026.02.003",
+    "date": [
+      [
+        2026
+      ]
+    ],
+    "online": null,
+    "journal": "Procedia Structural Integrity",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.prostr.2026.02.003"
+  },
+  {
+    "query": "physics informed neural networks domain decomposition multiscale",
+    "title": "Progressive Domain Decomposition for Efficient Training of Physics-Informed Neural Network",
+    "doi": "10.3390/math13091515",
+    "date": [
+      [
+        2025,
+        5,
+        4
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        5,
+        4
+      ]
+    ],
+    "journal": "Mathematics",
+    "abstract": "<jats:p>This study proposes a strategy for decomposing the computational domain to solve differential equations using physics-informed neural networks (PINNs) and progressively saving the trained model in each subdomain. The proposed progressive domain decomposition (PDD) method segments the domain based on the dynamics of residual loss, thereby indicating the complexity of different sections within the entire domain. By analyzing residual loss pointwise and aggregating it over specific intervals, we identify critical regions requiring focused attention. This strategic segmentation allows for the application of tailored neural networks in identified subdomains, each characterized by varying levels of complexity. Additionally, the proposed method trains and saves the model progressively based on performance metrics, thereby conserving computational resources in sections where satisfactory results are achieved during the training process. The effectiveness of PDD is demonstrated through its application to complex PDEs, where it significantly enhances accuracy and conserves computational power by strategically simplifying the computational tasks into manageable segments.</jats:p>",
+    "url": "https://doi.org/10.3390/math13091515"
+  },
+  {
+    "query": "physics informed neural networks domain decomposition multiscale",
+    "title": "Modeling terahertz propagation via frequency-domain physics-informed neural networks",
+    "doi": "10.1063/5.0327994",
+    "date": [
+      [
+        2026,
+        7,
+        20
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        7,
+        20
+      ]
+    ],
+    "journal": "Journal of Applied Physics",
+    "abstract": "<jats:p>Terahertz time-domain spectroscopy (THz-TDS) provides a non-invasive and label-free method for probing the internal structure and electromagnetic response of materials. Numerical simulation of THz-TDS can help in understanding wave–matter interactions, guiding experimental design, and interpreting complex measurement data. However, existing simulation techniques face challenges in accurately modeling THz wave propagation with reduced computational cost during inference. Additionally, conventional simulation solvers often require dense spatial–temporal discretization, which limits their applicability to large-scale and real-time scenarios. Simplified analytical models may neglect dispersion, multiple scattering, and boundary effects. To address these limitations, we establish a novel computational framework that integrates frequency-domain physics-informed neural networks (FD-PINNs) with less data-driven ones. To validate our proposed FD-PINNs, simulation results from finite-difference time-domain and TD-PINNs were used to compare with FD-PINNs. Finally, experimental results from THz-TDS systems were employed to further exhibit accurate reconstruction ability of FD-PINNs.</jats:p>",
+    "url": "https://doi.org/10.1063/5.0327994"
+  },
+  {
+    "query": "physics informed neural networks domain decomposition multiscale",
+    "title": "Symmetry group based domain decomposition to enhance physics-informed neural networks for solving partial differential equations",
+    "doi": "10.1016/j.chaos.2024.115658",
+    "date": [
+      [
+        2024,
+        12
+      ]
+    ],
+    "online": null,
+    "journal": "Chaos, Solitons &amp; Fractals",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.chaos.2024.115658"
+  },
+  {
+    "query": "physics informed neural networks hard constraints conservation",
+    "title": "Physics-informed neural networks with hard linear equality constraints",
+    "doi": "10.1016/j.compchemeng.2024.108764",
+    "date": [
+      [
+        2024,
+        10
+      ]
+    ],
+    "online": null,
+    "journal": "Computers &amp; Chemical Engineering",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.compchemeng.2024.108764"
+  },
+  {
+    "query": "physics informed neural networks hard constraints conservation",
+    "title": "Physics-informed neural networks with hard nonlinear equality and inequality constraints",
+    "doi": "10.1016/j.compchemeng.2025.109418",
+    "date": [
+      [
+        2026,
+        1
+      ]
+    ],
+    "online": null,
+    "journal": "Computers &amp; Chemical Engineering",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.compchemeng.2025.109418"
+  },
+  {
+    "query": "physics informed neural networks hard constraints conservation",
+    "title": "Physics-informed neural network with weighted loss and hard constraints for hyperbolic conservation laws",
+    "doi": "10.1038/s41598-025-34263-1",
+    "date": [
+      [
+        2026,
+        1,
+        6
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        1,
+        6
+      ]
+    ],
+    "journal": "Scientific Reports",
+    "abstract": null,
+    "url": "https://doi.org/10.1038/s41598-025-34263-1"
+  },
+  {
+    "query": "physics informed neural networks hard constraints conservation",
+    "title": "Adversarial physics-informed neural networks with hard constraints for optimal control of PDEs",
+    "doi": "10.1016/j.jcp.2025.114307",
+    "date": [
+      [
+        2025,
+        11
+      ]
+    ],
+    "online": null,
+    "journal": "Journal of Computational Physics",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.jcp.2025.114307"
+  },
+  {
+    "query": "physics informed neural networks hard constraints conservation",
+    "title": "Physics-informed neural networks with dynamical boundary constraints",
+    "doi": "10.1016/j.cnsns.2026.109866",
+    "date": [
+      [
+        2026,
+        7
+      ]
+    ],
+    "online": null,
+    "journal": "Communications in Nonlinear Science and Numerical Simulation",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.cnsns.2026.109866"
+  },
+  {
+    "query": "physics informed neural networks hard constraints conservation",
+    "title": "Optimal power flow using robust physics-informed typed graph neural networks with integrated hard constraints",
+    "doi": "10.1016/j.segan.2026.102370",
+    "date": [
+      [
+        2026,
+        9
+      ]
+    ],
+    "online": null,
+    "journal": "Sustainable Energy, Grids and Networks",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.segan.2026.102370"
+  },
+  {
+    "query": "physics informed neural networks hard constraints conservation",
+    "title": "Physics-Informed Neural Networks with Hard Constraints for Axial Temperature Distribution Estimation of Lithium-Ion Batteries",
+    "doi": "10.3390/wevj17050275",
+    "date": [
+      [
+        2026,
+        5,
+        21
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        5,
+        21
+      ]
+    ],
+    "journal": "World Electric Vehicle Journal",
+    "abstract": "<jats:p>Accurate estimation of the internal spatial-temporal temperature distribution is crucial for the safety and performance management of lithium-ion batteries. However, traditional lumped parameter models overlook spatial gradients, while numerical methods for partial differential equations (PDEs) incur high computational costs. This paper proposes a hard constraint physics-informed neural network (HCPINN) framework for the real-time reconstruction of the axial temperature field in 18,650 cylindrical batteries. By restructuring the neural network’s solution space through distance functions, the Robin boundary conditions are strictly embedded as hard constraints, ensuring exact satisfaction of the prescribed Robin boundary conditions within the mathematical model and eliminating boundary loss terms. An electro-thermal coupled model considering the Arrhenius effect and state-of-charge (SOC) dependent internal resistance is integrated into the loss function to capture the nonlinear heat generation dynamics. Experimental validation across discharge rates from 1C to 4C demonstrates that the HCPINN achieves high estimation accuracy with a mean absolute error (MAE) below 0.34 °C. Furthermore, by leveraging the continuous differentiability of the model, this study quantifies the evolution of spatial temperature gradients and reveals the ideal heat transfer coefficients required for thermal equilibrium are inverted, providing a quantitative basis for the design of advanced battery thermal management systems (BTMS).</jats:p>",
+    "url": "https://doi.org/10.3390/wevj17050275"
+  },
+  {
+    "query": "physics informed neural networks hard constraints conservation",
+    "title": "Physics-Informed\nNeural Networks with Mass Conservation\nConstraints for Predicting Particle Sedimentation in Non-Newtonian\nSuspensions",
+    "doi": "10.1021/acsomega.6c08067",
+    "date": [
+      [
+        2026,
+        9,
+        14
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        9,
+        14
+      ]
+    ],
+    "journal": "ACS Omega",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>To address the challenge of sparse monitoring data for particle sedimentation in non-Newtonian suspensions in stirred tanks and the risk of non-physical solid-phase inventory drift in purely data-driven models during long-term extrapolation, this study proposes a parametrized physics-informed neural network (P-PINN). The method embedded a two-dimensional depth-averaged sedimentation equation and a macroscopic mass conservation constraint into the neural-network framework. Specifically, to reduce the gradient competition between local data fitting and global physical constraints, a ramp strategy was designed to gradually adjust the weight of the conservation term. Furthermore, a log-time mapping was also introduced to improve the resolution of early-stage high-gradient sedimentation dynamics. The model was validated by using nine-point ultrasonic thickness measurements from bench-scale experiments under multiple operating conditions. The results showed that P-PINN successfully reconstructed the continuous spatiotemporal evolution of the sediment bed with a global root-mean-square error (RMSE) of 3.71 mm. It also exhibited stable generalization in leave-one-out tests. Compared with purely data-driven baselines, the ramp strategy substantially reduced solid-phase inventory drift during long-term extrapolation and helped maintain macroscopic mass conservation. This study offers a physically constrained surrogate modeling approach for sediment-bed prediction under sparse observations with potential for online monitoring of complex multiphase flow systems.</jats:p>",
+    "url": "https://doi.org/10.1021/acsomega.6c08067"
+  },
+  {
+    "query": "physics informed neural networks hard constraints conservation",
+    "title": "Including Physics-Informed Atomization Constraints in Neural Networks for Reactive Chemistry",
+    "doi": "10.1021/acs.jcim.5c00341",
+    "date": [
+      [
+        2025,
+        4,
+        29
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        4,
+        29
+      ]
+    ],
+    "journal": "Journal of Chemical Information and Modeling",
+    "abstract": null,
+    "url": "https://doi.org/10.1021/acs.jcim.5c00341"
+  },
+  {
+    "query": "physics informed neural networks hard constraints conservation",
+    "title": "Two-stage projection physics-informed neural networks for preserving conservation laws",
+    "doi": "10.1088/2632-2153/aeab20",
+    "date": [
+      [
+        2026,
+        9,
+        22
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        9,
+        22
+      ]
+    ],
+    "journal": "Machine Learning: Science and Technology",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>Physics-informed neural networks can attain small residuals for partial differential equations while drifting from global invariants. We separate residual-based training from invariant enforcement: a standard physics-informed neural network is trained first, and its output is then projected onto a selected invariant manifold at inference. The correction requires neither retraining nor a conservation penalty in the training objective. We derive explicit projection maps for the Korteweg--de Vries and nonlinear Schr\"odinger equations and for a mean-conserving Kuramoto--Sivashinsky benchmark. Spatial field evaluation and quadrature are accelerated on a graphics processing unit, while one scalar update is computed for each evaluation time. Across these three one-dimensional benchmarks, projection reduces the selected-invariant violation by a factor of approximately $1.1\\times10^{3}$--$1.3\\times10^{4}$ relative to the unprojected physics-informed neural network, while prediction errors against the supplied numerical comparison trajectories change little. These results establish a benchmark-level post-processing correction over a unit time horizon; they do not establish long-horizon stability or generality beyond equations with a tractable scalar invariant.</jats:p>",
+    "url": "https://doi.org/10.1088/2632-2153/aeab20"
+  },
+  {
+    "query": "physics informed neural networks hard constraints conservation",
+    "title": "On physics informed neural networks – imposing constraints in infinitesimal strain continuum mechanics",
+    "doi": "10.21857/mnlqgcpq4y",
+    "date": [
+      [
+        2025
+      ]
+    ],
+    "online": null,
+    "journal": "Rad Hrvatske akademije znanosti i umjetnosti. Tehničke znanosti",
+    "abstract": null,
+    "url": "https://doi.org/10.21857/mnlqgcpq4y"
+  },
+  {
+    "query": "physics informed neural networks hard constraints conservation",
+    "title": "A coordinate transformation-based physics-informed neural networks for hyperbolic conservation laws",
+    "doi": "10.1016/j.jcp.2025.114161",
+    "date": [
+      [
+        2025,
+        10
+      ]
+    ],
+    "online": null,
+    "journal": "Journal of Computational Physics",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.jcp.2025.114161"
+  },
+  {
+    "query": "physics informed neural networks transfer learning parametric",
+    "title": "Multichannel Wavefield Reconstruction With Physics‐Informed Neural Networks and Transfer Learning",
+    "doi": "10.1111/1365-2478.70149",
+    "date": [
+      [
+        2026,
+        3
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        3,
+        2
+      ]
+    ],
+    "journal": "Geophysical Prospecting",
+    "abstract": "<jats:title>ABSTRACT</jats:title>\n                  <jats:p>Multi‐component seismic data contain rich information essential for accurate subsurface imaging, but they are often sparse due to acquisition limitations and include noise. Robust interpolation techniques are therefore crucial to reconstruct missing traces and preserve wavefield integrity for reliable analysis and inversion. Thus, we propose a novel approach for interpolating multi‐component seismic measurements using a slope‐assisted physics‐informed neural network and compare it against a state‐of‐the‐art slope‐regularized sparsity‐promoting inversion algorithm. The performance of the two algorithms is assessed in the process of interpolating regularly subsampled shot gathers of the Mississippi streamer dataset with the proposed physics‐informed neural network framework, delivering slightly better results than those of the sparsity‐promoting inversion. An efficient transfer learning procedure that relies on fine‐tuning the network whilst interpolating consecutive shot gathers is employed to enable fast reconstruction of multiple shots, avoiding the need to fully retrain the network for each shot gather. The transfer learning approach allows the reconstruction across the entire dataset with an accuracy comparable to that of a fully trained physics‐informed neural network on each shot gather across the majority of the dataset. The novel approach yields substantial computational cost savings, enabling the reconstruction of a single shot at only 0.76% of the cost required by a physics‐informed neural network that would be retrained for each shot gather.</jats:p>",
+    "url": "https://doi.org/10.1111/1365-2478.70149"
+  },
+  {
+    "query": "physics informed neural networks transfer learning parametric",
+    "title": "Decentralized federated learning meets Physics-Informed Neural Networks",
+    "doi": "10.1016/j.knosys.2025.113717",
+    "date": [
+      [
+        2025,
+        7
+      ]
+    ],
+    "online": null,
+    "journal": "Knowledge-Based Systems",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.knosys.2025.113717"
+  },
+  {
+    "query": "physics informed neural networks transfer learning parametric",
+    "title": "Hamiltonian learning via inverse physics-informed neural networks",
+    "doi": "10.1103/nx97-zjdf",
+    "date": [
+      [
+        2025,
+        11,
+        5
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        11,
+        5
+      ]
+    ],
+    "journal": "Physical Review Research",
+    "abstract": "<jats:p>Hamiltonian learning (HL), enabling precise estimation of system parameters and underlying dynamics, plays a critical role in characterizing quantum systems. However, conventional HL methods face challenges in noise robustness and resource efficiency, especially under limited measurements. In this work, we present Inverse Physics-Informed Neural Networks for Hamiltonian Learning (iPINN-HL), an approach that incorporates the Schrödinger equation as a soft constraint via a loss function penalty into the ML procedure. This formulation allows the model to integrate both observational data and known physical laws to infer Hamiltonian parameters with greater accuracy and resource efficiency. We benchmark iPINN-HL against a deep-neural-network-based quantum state tomography method [denoted as DNN-HL (Deep Neural Network for Hamiltonian Learning)] and demonstrate its effectiveness across several different scenarios, including one-dimensional spin chains, cross-resonance gate calibration, crosstalk identification, and real-time compensation to parameter drift. Our results show that iPINN-HL can approach the Heisenberg limit and exhibits robustness to noises, while outperforming DNN-HL in accuracy and resource efficiency. Therefore, iPINN-HL is a powerful and flexible framework for quantum system characterization for practical tasks.</jats:p>",
+    "url": "https://doi.org/10.1103/nx97-zjdf"
+  },
+  {
+    "query": "physics informed neural networks transfer learning parametric",
+    "title": "Physics-informed neural networks for modeling atmospheric radiative transfer",
+    "doi": "10.1016/j.jqsrt.2024.109253",
+    "date": [
+      [
+        2025,
+        1
+      ]
+    ],
+    "online": null,
+    "journal": "Journal of Quantitative Spectroscopy and Radiative Transfer",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.jqsrt.2024.109253"
+  },
+  {
+    "query": "physics informed neural networks transfer learning parametric",
+    "title": "Multi-scale wake modeling based on physics-informed neural networks and transfer learning",
+    "doi": "10.1016/j.apenergy.2025.127318",
+    "date": [
+      [
+        2026,
+        3
+      ]
+    ],
+    "online": null,
+    "journal": "Applied Energy",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.apenergy.2025.127318"
+  },
+  {
+    "query": "physics informed neural networks transfer learning parametric",
+    "title": "Modeling parametric uncertainty in PDEs models via Physics-Informed Neural Networks",
+    "doi": "10.1016/j.advwatres.2024.104870",
+    "date": [
+      [
+        2025,
+        1
+      ]
+    ],
+    "online": null,
+    "journal": "Advances in Water Resources",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.advwatres.2024.104870"
+  },
+  {
+    "query": "physics informed neural networks transfer learning parametric",
+    "title": "Transfer learning-driven adaptive physics-informed neural networks acceleration method for aerodynamic identification",
+    "doi": "10.1016/j.engappai.2025.113589",
+    "date": [
+      [
+        2026,
+        2
+      ]
+    ],
+    "online": null,
+    "journal": "Engineering Applications of Artificial Intelligence",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.engappai.2025.113589"
+  },
+  {
+    "query": "physics informed neural networks transfer learning parametric",
+    "title": "Highly efficient nuclear population transfer through physics-informed neural networks",
+    "doi": "10.1103/gdpq-k6lj",
+    "date": [
+      [
+        2026,
+        3,
+        2
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        3,
+        2
+      ]
+    ],
+    "journal": "Physical Review C",
+    "abstract": null,
+    "url": "https://doi.org/10.1103/gdpq-k6lj"
+  },
+  {
+    "query": "physics informed neural networks transfer learning parametric",
+    "title": "Number Theoretic Accelerated Learning of Physics-Informed Neural Networks",
+    "doi": "10.1609/aaai.v39i1.32040",
+    "date": [
+      [
+        2025,
+        4,
+        11
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        4,
+        11
+      ]
+    ],
+    "journal": "Proceedings of the AAAI Conference on Artificial Intelligence",
+    "abstract": "<jats:p>Physics-informed neural networks solve partial differential equations by training neural networks. Since this method approximates infinite-dimensional PDE solutions with finite collocation points, minimizing discretization errors by selecting suitable points is essential for accelerating the learning process. Inspired by number theoretic methods for numerical analysis, we introduce good lattice training and periodization tricks, which ensure the conditions required by the theory. Our experiments demonstrate that GLT requires 2-7 times fewer collocation points, resulting in lower computational cost, while achieving competitive performance compared to typical sampling methods.</jats:p>",
+    "url": "https://doi.org/10.1609/aaai.v39i1.32040"
+  },
+  {
+    "query": "physics informed neural networks transfer learning parametric",
+    "title": "Physics-Informed Neural Networks for Parametric Modeling of Permanent Magnet Synchronous Machines",
+    "doi": "10.1109/tec.2025.3597814",
+    "date": [
+      [
+        2026,
+        3
+      ]
+    ],
+    "online": null,
+    "journal": "IEEE Transactions on Energy Conversion",
+    "abstract": null,
+    "url": "https://doi.org/10.1109/tec.2025.3597814"
+  },
+  {
+    "query": "physics informed neural networks transfer learning parametric",
+    "title": "Physics-Informed neural networks with transfer learning for space charge impedances in particle accelerators",
+    "doi": "10.1177/13835416251329212",
+    "date": [
+      [
+        2025,
+        3,
+        29
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        3,
+        29
+      ]
+    ],
+    "journal": "International Journal of Applied Electromagnetics and Mechanics",
+    "abstract": "<jats:p>The physics-informed neural network (PINN) method, which is a powerful approach for solving partial differential equations with deep learning, has been recently applied to modeling of electrodynamic interaction problems including a relativistic beam in charged particle accelerators. In the present study, the transfer learning (TL) is applied to the PINN based on the total-field (TF) formulation. It is shown that TL can accelerate significantly the training process of the TF-PINN in the simulation of the space charge impedances of an infinitely long beam pipe of elliptical and rectangular cross section.</jats:p>",
+    "url": "https://doi.org/10.1177/13835416251329212"
+  },
+  {
+    "query": "physics informed neural networks transfer learning parametric",
+    "title": "Physics-Informed Neural Networks with Transfer Learning for Tunnel Seepage Prediction Using Sparse Measurements",
+    "doi": "10.3390/math14111846",
+    "date": [
+      [
+        2026,
+        5,
+        26
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        5,
+        26
+      ]
+    ],
+    "journal": "Mathematics",
+    "abstract": "<jats:p>This study proposes an enhanced physics-informed neural network (PINN) framework for predicting seepage fields around deeply buried tunnels with limited field measurements. Hard-constrained boundary enforcement via distance-function trial functions is introduced to exactly satisfy Dirichlet conditions on both the ground surface and tunnel perimeter, and Bayesian optimization automates loss weight tuning to replace costly manual calibration. A systematic evaluation of 15 sensor placement schemes demonstrates that the hydraulic head variance across monitoring points, governed by radial coverage distance, is the primary determinant of prediction accuracy—not the number of sensors or angular density. Remarkably, a strategically designed 12-point configuration outperforms 100 randomly distributed points under the idealized conditions studied, confirming that placement quality can dominate over quantity when physics-informed optimization is applied. Transfer learning experiments across 132 geometric configurations reveal a previously unreported geometric transition zone at D/R ≈ 13–15, where prediction errors exhibit a distinct non-monotonic peak. Finite element benchmarking confirms that this error peak stems from the learning characteristics of PINNs under competing boundary influences rather than from the physical complexity of the problem itself. High-density sampling effectively suppresses this peak error by 32% compared with sparse sampling. These findings establish quantitative sensor deployment guidelines for tunnel seepage monitoring and identify fundamental performance boundaries of physics-informed machine learning under geometry–physics coupling.</jats:p>",
+    "url": "https://doi.org/10.3390/math14111846"
+  },
+  {
+    "query": "physics informed neural networks inverse experimental",
+    "title": "Hamiltonian learning via inverse physics-informed neural networks",
+    "doi": "10.1103/nx97-zjdf",
+    "date": [
+      [
+        2025,
+        11,
+        5
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        11,
+        5
+      ]
+    ],
+    "journal": "Physical Review Research",
+    "abstract": "<jats:p>Hamiltonian learning (HL), enabling precise estimation of system parameters and underlying dynamics, plays a critical role in characterizing quantum systems. However, conventional HL methods face challenges in noise robustness and resource efficiency, especially under limited measurements. In this work, we present Inverse Physics-Informed Neural Networks for Hamiltonian Learning (iPINN-HL), an approach that incorporates the Schrödinger equation as a soft constraint via a loss function penalty into the ML procedure. This formulation allows the model to integrate both observational data and known physical laws to infer Hamiltonian parameters with greater accuracy and resource efficiency. We benchmark iPINN-HL against a deep-neural-network-based quantum state tomography method [denoted as DNN-HL (Deep Neural Network for Hamiltonian Learning)] and demonstrate its effectiveness across several different scenarios, including one-dimensional spin chains, cross-resonance gate calibration, crosstalk identification, and real-time compensation to parameter drift. Our results show that iPINN-HL can approach the Heisenberg limit and exhibits robustness to noises, while outperforming DNN-HL in accuracy and resource efficiency. Therefore, iPINN-HL is a powerful and flexible framework for quantum system characterization for practical tasks.</jats:p>",
+    "url": "https://doi.org/10.1103/nx97-zjdf"
+  },
+  {
+    "query": "physics informed neural networks inverse experimental",
+    "title": "Regularization-Augmented Physics-Informed Neural Networks for Electromagnetic Inverse Scattering",
+    "doi": "10.1109/jmmct.2026.3703705",
+    "date": [
+      [
+        2026
+      ]
+    ],
+    "online": null,
+    "journal": "IEEE Journal on Multiscale and Multiphysics Computational Techniques",
+    "abstract": null,
+    "url": "https://doi.org/10.1109/jmmct.2026.3703705"
+  },
+  {
+    "query": "physics informed neural networks inverse experimental",
+    "title": "Physics-informed and graph neural networks for enhanced inverse analysis",
+    "doi": "10.1108/ec-12-2023-0958",
+    "date": [
+      [
+        2024,
+        11,
+        7
+      ]
+    ],
+    "online": [
+      [
+        2024,
+        11,
+        7
+      ]
+    ],
+    "journal": "Engineering Computations",
+    "abstract": "<jats:sec>\n                    <jats:title>Purpose</jats:title>\n                    <jats:p>This paper presents an original approach for learning models, partially known, of particular interest when performing source identification or structural health monitoring. The proposed procedures employ some amount of knowledge on the system under scrutiny as well as a limited amount of data efficiently assimilated.</jats:p>\n                  </jats:sec>\n                  <jats:sec>\n                    <jats:title>Design/methodology/approach</jats:title>\n                    <jats:p>Two different formulations are explored. The first, based on the use of informed neural networks, leverages data collected at specific locations and times to determine the unknown source term of a parabolic partial differential equation. The second procedure, more challenging, involves learning the unknown model from a single measured field history, enabling the localization of a region where material properties differ.</jats:p>\n                  </jats:sec>\n                  <jats:sec>\n                    <jats:title>Findings</jats:title>\n                    <jats:p>Both procedures assume some kind of sparsity, either in the source distribution or in the region where physical properties differ. This paper proposed two different neural approaches able to learn models in order to perform efficient inverse analyses.</jats:p>\n                  </jats:sec>\n                  <jats:sec>\n                    <jats:title>Originality/value</jats:title>\n                    <jats:p>Two original methodologies are explored to identify hidden property that can be recovered with the right usage of data. Both methodologies are based on neural network architecture.</jats:p>\n                  </jats:sec>",
+    "url": "https://doi.org/10.1108/ec-12-2023-0958"
+  },
+  {
+    "query": "physics informed neural networks inverse experimental",
+    "title": "Fault Classification in Rotating Machinery Using Inverse Physics-Informed Neural Networks",
+    "doi": "10.1109/lcsys.2026.3705294",
+    "date": [
+      [
+        2026
+      ]
+    ],
+    "online": null,
+    "journal": "IEEE Control Systems Letters",
+    "abstract": null,
+    "url": "https://doi.org/10.1109/lcsys.2026.3705294"
+  },
+  {
+    "query": "physics informed neural networks inverse experimental",
+    "title": "Inverse Physics-Informed Neural Networks for transport models in porous materials",
+    "doi": "10.1016/j.cma.2024.117628",
+    "date": [
+      [
+        2025,
+        2
+      ]
+    ],
+    "online": null,
+    "journal": "Computer Methods in Applied Mechanics and Engineering",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.cma.2024.117628"
+  },
+  {
+    "query": "physics informed neural networks inverse experimental",
+    "title": "Inverse analysis for estimating geotechnical parameters using physics-informed neural networks",
+    "doi": "10.1016/j.sandf.2024.101533",
+    "date": [
+      [
+        2024,
+        12
+      ]
+    ],
+    "online": null,
+    "journal": "Soils and Foundations",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.sandf.2024.101533"
+  },
+  {
+    "query": "physics informed neural networks inverse experimental",
+    "title": "PHYSICS-INFORMED NEURAL NETWORKS FOR INVERSE TASKS OF ONE-DIMENSIONAL WAVE PROPAGATION",
+    "doi": "10.30970/eli.31.9",
+    "date": [
+      [
+        2025
+      ]
+    ],
+    "online": [
+      [
+        2025
+      ]
+    ],
+    "journal": "Electronics and Information Technologies",
+    "abstract": null,
+    "url": "https://doi.org/10.30970/eli.31.9"
+  },
+  {
+    "query": "physics informed neural networks inverse experimental",
+    "title": "Physics-informed neural networks for solving steady-state heat conduction inverse problems",
+    "doi": "10.59400/adecp3584",
+    "date": [
+      [
+        2026,
+        3,
+        5
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        3,
+        5
+      ]
+    ],
+    "journal": "Advances in Differential Equations and Control Processes",
+    "abstract": "<jats:p>This paper investigates numerical methods for a class of three-dimensional steady-state heat conduction inverse problems. By employing Physics-Informed Neural Networks (PINNs), the three-dimensional heat conduction inverse problems are reformulated as optimization problems with respect to a properly defined loss function. Two cases with different additional conditions are considered: one incorporates an additional boundary temperature gradient condition, while the other involves an additional partial internal temperature measurement. Corresponding efficient algorithms are developed to solve the resulting optimization problems. To optimize the performance of the proposed numerical framework, systematic sensitivity analyses are performed to rigorously justify the selection of key hyperparameters (e.g., activation functions and network architecture). Additionally, to validate the mathematical effectiveness and noise robustness of the algorithm, this study primarily employs synthetic data with controlled noise levels for quantitative evaluation. Numerical results demonstrate that the proposed method can efficiently and accurately approximate the solutions to the three-dimensional (3D) heat conduction inverse problems for both polynomial and non-polynomial cases. In addition, a theoretical analysis is provided to interpret the method's stability against noise amplification. Future work will focus on applying the proposed framework to real-world field data to further validate its practical engineering value.</jats:p>",
+    "url": "https://doi.org/10.59400/adecp3584"
+  },
+  {
+    "query": "physics informed neural networks inverse experimental",
+    "title": "Modal Physics-Informed Neural Networks for Forward and Inverse Structural Vibration Problems",
+    "doi": "10.1142/s021945542750355x",
+    "date": [
+      [
+        2026,
+        5,
+        19
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        5,
+        19
+      ]
+    ],
+    "journal": "International Journal of Structural Stability and Dynamics",
+    "abstract": "<jats:p>Physics-informed neural networks face significant computational challenges when applied to structural dynamics problems due to spectral bias and high dimensional state spaces. This work proposes a modal physics-informed neural network framework that integrates classical modal decomposition with Fourier feature embeddings to enable efficient learning of high frequency structural responses. By transforming multi degree of freedom and continuous systems into uncoupled modal coordinates, the approach achieves accurate dynamic response prediction while preserving essential physical behavior. The framework is validated through numerical studies on discrete and continuous systems, achieving mean absolute errors of [Formula: see text] m for forward problems. Numerical studies on a cantilever beam with stiffness reductions ranging from 1% to 60% demonstrate stable convergence and consistent identification of modal characteristics. The natural frequency identification exhibits errors between 4% and 14% depending on damage severity, with higher errors corresponding to severe damage cases where absolute frequency values are lower. Validation on a Warren truss with single and two-site damage scenarios yields frequency identification errors of 6.65–10.87% and modal assurance criterion (MAC) values above 0.93, confirming generalization beyond beam structures. Experimental validation on an aluminium cantilever beam with piezoelectric accelerometers confirms the practical applicability of the method, achieving 4.3% identification error using only five sensors. The modal approach achieves 53% reduction in training time compared to direct physics informed neural network formulations while maintaining comparable accuracy. The decoupled modal structure enables parallel training and improves scalability for large scale structural systems. The proposed framework offers a computationally efficient and physically interpretable strategy for structural vibration analysis and damage identification with potential applications in structural health monitoring.</jats:p>",
+    "url": "https://doi.org/10.1142/s021945542750355x"
+  },
+  {
+    "query": "physics informed neural networks inverse experimental",
+    "title": "Deep fuzzy physics-informed neural networks for forward and inverse PDE problems",
+    "doi": "10.1016/j.neunet.2024.106750",
+    "date": [
+      [
+        2025,
+        1
+      ]
+    ],
+    "online": null,
+    "journal": "Neural Networks",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.neunet.2024.106750"
+  },
+  {
+    "query": "physics informed neural networks inverse experimental",
+    "title": "Modified-inverse physics informed neural networks for determination of orthotropic thermal conductivities",
+    "doi": "10.1108/hff-03-2026-0324",
+    "date": [
+      [
+        2026,
+        7,
+        20
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        7,
+        20
+      ]
+    ],
+    "journal": "International Journal of Numerical Methods for Heat &amp; Fluid Flow",
+    "abstract": "<jats:sec>\n                    <jats:title>Purpose</jats:title>\n                    <jats:p>This study aims to propose a modified inverse physics-informed neural network (MIPINN) framework for accurate and efficient simultaneous multiparameter identification in three-dimensional heat conduction problems under sparse experimental data conditions.</jats:p>\n                  </jats:sec>\n                  <jats:sec>\n                    <jats:title>Design/methodology/approach</jats:title>\n                    <jats:p>The proposed MIPINN framework enhances conventional inverse-PINN formulations by integrating finite difference-based pseudo gradient descent optimization within the physics informed architecture. The methodology is systematically validated through five configurations: (i) two-dimensional numerical simulation considering temperature as the exact solution for strict comparison and methodological assessment, (ii) three-dimensional synthetic temperature field reconstruction with prescribed orthotropic thermal conductivity parameters, (iii) isotropic thermal conductivity estimation of AISI 304 stainless steel using experimentally acquired temperature data, (iv) orthotropic thermal conductivity tensor identification of a lithium-ion pouch battery (AMP20M1HD-A) through controlled thermal characterization experiments and (v) extension of the methodology for determination of specific heat capacity of a three-dimensional slab using synthetically generated data.</jats:p>\n                  </jats:sec>\n                  <jats:sec>\n                    <jats:title>Findings</jats:title>\n                    <jats:p>Across all investigated cases, the proposed technique demonstrates improved parameter estimation accuracy and computational efficiency compared to conventional inverse-PINN approach. The MIPINN methodology exhibits enhanced robustness, reduced parameter uncertainty, and stable convergence behavior under sparse data constraints even in three-dimensional multiparameter inverse heat conduction scenarios.</jats:p>\n                  </jats:sec>\n                  <jats:sec>\n                    <jats:title>Originality/value</jats:title>\n                    <jats:p>This study presents a modified inverse-PINN strategy that strengthens constraint enforcement, thereby improving solution stability and convergence under limited observational data for multiparameter inverse heat conduction problems and demonstrates its effectiveness through comprehensive three-dimensional experimental validation.</jats:p>\n                  </jats:sec>",
+    "url": "https://doi.org/10.1108/hff-03-2026-0324"
+  },
+  {
+    "query": "physics informed neural networks inverse experimental",
+    "title": "Inverse physics-informed neural networks for noise detection in open quantum systems",
+    "doi": "10.1016/j.physleta.2026.131548",
+    "date": [
+      [
+        2026,
+        6
+      ]
+    ],
+    "online": null,
+    "journal": "Physics Letters A",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.physleta.2026.131548"
+  },
+  {
+    "query": "physics informed neural networks uncertainty model misspecification",
+    "title": "Uncertainty-aware physics-informed neural networks",
+    "doi": "10.1016/j.sasc.2026.200489",
+    "date": [
+      [
+        2026,
+        6
+      ]
+    ],
+    "online": null,
+    "journal": "Systems and Soft Computing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.sasc.2026.200489"
+  },
+  {
+    "query": "physics informed neural networks uncertainty model misspecification",
+    "title": "Flight  Dynamic Uncertainty Quantification Modeling Using Physics-Informed Neural Networks",
+    "doi": "10.2514/1.j063992",
+    "date": [
+      [
+        2024,
+        11
+      ]
+    ],
+    "online": null,
+    "journal": "AIAA Journal",
+    "abstract": "<jats:p> When attempting to develop aerodynamic models for extreme flight conditions, including high angle of attack, high rotational rates, and tumbling motion, many classical methods have challenges in accurately modeling the highly nonlinear aerodynamic effects present. Physics-informed neural networks (PINNs) have previously been shown to be a potential technique to model these nonlinear aerodynamic effects when framed as a system identification problem. PINNs are well suited to this problem as they benefit from the universal approximation abilities of neural networks while directly incorporating known physical constraints into the training process. One of the main challenges in machine learning algorithms, including PINNs, is quantifying the confidence in a deterministic model prediction. This work expands on the previous development of PINNs as an aerodynamic and system identification tool by incorporating uncertainty quantification through three ensemble methods to provide calibrated confidence intervals on both aerodynamic coefficients and propagated trajectories. This work demonstrates and evaluates these methods on a simulated F16 case study where up to 100 PINN models are trained on varying training datasets. These models provide aerodynamic coefficients directly and are used to propagate trajectories within a six-degree-of-freedom simulation environment. </jats:p>",
+    "url": "https://doi.org/10.2514/1.j063992"
+  },
+  {
+    "query": "physics informed neural networks uncertainty model misspecification",
+    "title": "Towards uncertainty-aware physics-informed neural networks for prognostics in bushings",
+    "doi": "10.1784/cm2025.3f3",
+    "date": [
+      [
+        2025,
+        1,
+        1
+      ]
+    ],
+    "online": null,
+    "journal": "Proceedings of the International Conference on Condition Monitoring and Asset Management",
+    "abstract": "<jats:p>Wear in mechanical joints represents a key factor influencing the reliability and operational lifespan of engineering systems. Revolute clearance joints, in particular, are susceptible to progressive degradation because of inherent gaps that induce dynamic contact and friction. While\n physical and artificial intelligence models exist, accurately predicting wear evolution under real-world conditions remains an open challenge. To address this, a hybrid modeling framework is introduced that integrates physical principles with deep learning techniques. The approach combines\n modified long shortterm memory layers with a final Archard wear equation layer, enabling the modeling of nonlinear temporal dynamics associated with wear processes. Monte Carlo dropout is incorporated for uncertainty quantification. The results obtained on a sensorized crankslider system test\n bench show that the hybrid methodology is capable of predicting the evolution of accumulated wear, offering a significant advance towards prognostics.</jats:p>",
+    "url": "https://doi.org/10.1784/cm2025.3f3"
+  },
+  {
+    "query": "physics informed neural networks uncertainty model misspecification",
+    "title": "Modeling parametric uncertainty in PDEs models via Physics-Informed Neural Networks",
+    "doi": "10.1016/j.advwatres.2024.104870",
+    "date": [
+      [
+        2025,
+        1
+      ]
+    ],
+    "online": null,
+    "journal": "Advances in Water Resources",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.advwatres.2024.104870"
+  },
+  {
+    "query": "physics informed neural networks uncertainty model misspecification",
+    "title": "Uncertainty quantification for noisy inputs–outputs in physics-informed neural networks and neural operators",
+    "doi": "10.1016/j.cma.2024.117479",
+    "date": [
+      [
+        2025,
+        1
+      ]
+    ],
+    "online": null,
+    "journal": "Computer Methods in Applied Mechanics and Engineering",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.cma.2024.117479"
+  },
+  {
+    "query": "physics informed neural networks uncertainty model misspecification",
+    "title": "Data-Efficient and Uncertainty-Aware RUL Prediction Using Physics-Informed Neural Networks",
+    "doi": "10.36001/phmconf.2025.v17i1.4356",
+    "date": [
+      [
+        2025,
+        10,
+        26
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        10,
+        26
+      ]
+    ],
+    "journal": "Annual Conference of the PHM Society",
+    "abstract": "<jats:p>This study presents a prognostic framework that integrates Physics-Informed Neural Network (PINN) with uncertainty quantification (UQ) techniques to enable probabilistic prediction of the Remaining Useful Life (RUL) of rubber components subjected to degradation. The framework utilizes data acquired from thermal Highly Accelerated Life Testing (HALT), replicating long-term material aging behavior under elevated temperature conditions within a shortened time frame. To address the high cost and time consumption of HALT experiments, the proposed approach aims to ensure accurate and reliable predictions even with limited data availability. An empirical degradation model is embedded within the PINN structure, enabling physically consistent and data-efficient estimation of degradation model parameters. The framework employs uncertainty quantification techniques based on Bayesian inference, in which data-driven approaches (e.g., Gaussian Process modeling, Bayesian neural networks) and physics-based methods (e.g., Markov chain Monte Carlo, particle filtering) are separately applied to quantify variations arising from material properties, experimental conditions, and measurement noise. These methods generate posterior distributions from which failure time and probabilistic RUL estimates are derived based on a predefined degradation threshold. Compared to deterministic optimization methods, the proposed approach improves prediction robustness and interpretability, offering a cost-effective and scalable solution for prognostic modeling in engineering systems.</jats:p>",
+    "url": "https://doi.org/10.36001/phmconf.2025.v17i1.4356"
+  },
+  {
+    "query": "physics informed neural networks uncertainty model misspecification",
+    "title": "A conformal prediction framework for uncertainty quantification in physics-informed neural networks",
+    "doi": "10.1016/j.jcp.2026.114979",
+    "date": [
+      [
+        2026,
+        9
+      ]
+    ],
+    "online": null,
+    "journal": "Journal of Computational Physics",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.jcp.2026.114979"
+  },
+  {
+    "query": "physics informed neural networks uncertainty model misspecification",
+    "title": "Quasi-random physics-informed neural networks",
+    "doi": "10.1016/j.neucom.2026.132913",
+    "date": [
+      [
+        2026,
+        4
+      ]
+    ],
+    "online": null,
+    "journal": "Neurocomputing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.neucom.2026.132913"
+  },
+  {
+    "query": "physics informed neural networks uncertainty model misspecification",
+    "title": "Enforcing hidden physics in physics-informed neural networks",
+    "doi": "10.1038/s42005-026-02743-z",
+    "date": [
+      [
+        2026,
+        7,
+        11
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        7,
+        11
+      ]
+    ],
+    "journal": "Communications Physics",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    Physics-informed neural networks (PINNs) represent a promising paradigm for solving partial differential equations (PDEs) by integrating physical laws into the learning process of neural networks. However, ensuring that such frameworks fully reflect the physical structure embedded in the governing equations remains an open challenge. This stems from a fundamental limitation: standard neural networks lack an inherent notion of\n                    <jats:italic>physical admissibility</jats:italic>\n                    , leaving them vulnerable to producing mathematical artifacts that satisfy the training loss but lack physical meaning. In this work, we address this issue by introducing a simple, generalized, yet robust irreversibility-regularized strategy that enforces hidden physical laws as soft constraints during training, thereby recovering the missing physics associated with irreversible processes in the conventional PINN. This approach ensures that the learned solutions consistently respect the intrinsic one-way nature of irreversible physical processes. Across a wide range of benchmarks spanning traveling wave propagation, steady combustion, ice melting, corrosion evolution, and crack growth, we observe substantial performance improvements over state-of-the-art PINN baseline equipped with advanced training techniques, demonstrating that our regularization scheme reduces predictive errors by up to more than one order of magnitude, while requiring only minimal modification to existing PINN frameworks.\n                  </jats:p>",
+    "url": "https://doi.org/10.1038/s42005-026-02743-z"
+  },
+  {
+    "query": "physics informed neural networks uncertainty model misspecification",
+    "title": "Incorporating Nonlocal Traffic Flow Model in Physics-Informed Neural Networks",
+    "doi": "10.1109/tits.2024.3429029",
+    "date": [
+      [
+        2024,
+        11
+      ]
+    ],
+    "online": null,
+    "journal": "IEEE Transactions on Intelligent Transportation Systems",
+    "abstract": null,
+    "url": "https://doi.org/10.1109/tits.2024.3429029"
+  },
+  {
+    "query": "physics informed neural networks uncertainty model misspecification",
+    "title": "Advances on Model Merging for Physics-Informed Neural Networks (PINNs)",
+    "doi": "10.55592/cilamce2025.v5i.14424",
+    "date": [
+      [
+        2026,
+        3,
+        18
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        3,
+        18
+      ]
+    ],
+    "journal": "Ibero-Latin American Congress on Computational Methods in Engineering (CILAMCE)",
+    "abstract": "<jats:p>Physics-Informed Neural Networks (PINNs) have emerged as a powerful paradigm for solving partial differential equations by incorporating physical laws directly into neural network training. However, scaling PINNs to large domains and capturing high-frequency solution components remains challenging due to increased complexity and optimization difficulties. In this work, we introduce a novel nonlinear model merging approach for PINNs that extends beyond traditional linear combinations of model parameters. We demonstrate our approach on the linear damped oscillator problem. The experimental results show consistent improvements over both pretrained baselines and linear merging approaches, suggesting that the novel technique can effectively assist not only PINNs on larger domains but also facilitate integration of specialized submodels for large-scale foundation models.</jats:p>",
+    "url": "https://doi.org/10.55592/cilamce2025.v5i.14424"
+  },
+  {
+    "query": "physics informed neural networks uncertainty model misspecification",
+    "title": "Solving Groundwater Pollutant Transport Model by Physics-Informed Neural Networks",
+    "doi": "10.54254/2753-8818/2026.35310",
+    "date": [
+      [
+        2026,
+        7,
+        14
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        7,
+        14
+      ]
+    ],
+    "journal": "Theoretical and Natural Science",
+    "abstract": "<jats:p>In response to the issue in traditional groundwater pollutant transport models where the convection velocity is treated as a constant, making it difficult to describe actual non-uniform transport processes, this paper establishes an improved diffusion-convection-reaction model that considers the convection velocity as a function of both time and space. Based on this governing equation, a Physics-Informed Neural Network (PINN) framework is constructed to solve the model. The partial differential equations and initial/boundary conditions are embedded into the network training process to solve for the spatiotemporal distribution of pollutant concentrations. The model is validated through vertical infiltration experiments in a soil column. The results show that the pollutant transport trends predicted by the model are in good agreement with the experimental observations, demonstrating the effectiveness of the proposed model and methodology.</jats:p>",
+    "url": "https://doi.org/10.54254/2753-8818/2026.35310"
+  },
+  {
+    "query": "physics informed neural networks weak form discontinuities",
+    "title": "A weak-strong two-stage training strategy for physics-informed neural networks",
+    "doi": "10.1016/j.enganabound.2026.106868",
+    "date": [
+      [
+        2026,
+        9
+      ]
+    ],
+    "online": null,
+    "journal": "Engineering Analysis with Boundary Elements",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.enganabound.2026.106868"
+  },
+  {
+    "query": "physics informed neural networks weak form discontinuities",
+    "title": "FEM-aligned weak-form physics-informed neural networks with Laplace–Beltrami geometry encoding for linear elastic surrogate modeling",
+    "doi": "10.1016/j.acags.2026.100354",
+    "date": [
+      [
+        2026,
+        6
+      ]
+    ],
+    "online": null,
+    "journal": "Applied Computing and Geosciences",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.acags.2026.100354"
+  },
+  {
+    "query": "physics informed neural networks weak form discontinuities",
+    "title": "Uncertainty-aware physics-informed neural networks",
+    "doi": "10.1016/j.sasc.2026.200489",
+    "date": [
+      [
+        2026,
+        6
+      ]
+    ],
+    "online": null,
+    "journal": "Systems and Soft Computing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.sasc.2026.200489"
+  },
+  {
+    "query": "physics informed neural networks weak form discontinuities",
+    "title": "Enforcing hidden physics in physics-informed neural networks",
+    "doi": "10.1038/s42005-026-02743-z",
+    "date": [
+      [
+        2026,
+        7,
+        11
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        7,
+        11
+      ]
+    ],
+    "journal": "Communications Physics",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    Physics-informed neural networks (PINNs) represent a promising paradigm for solving partial differential equations (PDEs) by integrating physical laws into the learning process of neural networks. However, ensuring that such frameworks fully reflect the physical structure embedded in the governing equations remains an open challenge. This stems from a fundamental limitation: standard neural networks lack an inherent notion of\n                    <jats:italic>physical admissibility</jats:italic>\n                    , leaving them vulnerable to producing mathematical artifacts that satisfy the training loss but lack physical meaning. In this work, we address this issue by introducing a simple, generalized, yet robust irreversibility-regularized strategy that enforces hidden physical laws as soft constraints during training, thereby recovering the missing physics associated with irreversible processes in the conventional PINN. This approach ensures that the learned solutions consistently respect the intrinsic one-way nature of irreversible physical processes. Across a wide range of benchmarks spanning traveling wave propagation, steady combustion, ice melting, corrosion evolution, and crack growth, we observe substantial performance improvements over state-of-the-art PINN baseline equipped with advanced training techniques, demonstrating that our regularization scheme reduces predictive errors by up to more than one order of magnitude, while requiring only minimal modification to existing PINN frameworks.\n                  </jats:p>",
+    "url": "https://doi.org/10.1038/s42005-026-02743-z"
+  },
+  {
+    "query": "physics informed neural networks weak form discontinuities",
+    "title": "Quasi-random physics-informed neural networks",
+    "doi": "10.1016/j.neucom.2026.132913",
+    "date": [
+      [
+        2026,
+        4
+      ]
+    ],
+    "online": null,
+    "journal": "Neurocomputing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.neucom.2026.132913"
+  },
+  {
+    "query": "physics informed neural networks weak form discontinuities",
+    "title": "WF-PINNs: solving forward and inverse problems of burgers equation with steep gradients using weak-form physics-informed neural networks",
+    "doi": "10.1038/s41598-025-24427-4",
+    "date": [
+      [
+        2025,
+        11,
+        18
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        11,
+        18
+      ]
+    ],
+    "journal": "Scientific Reports",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>This study tackles the numerical challenges posed by solutions with steep gradients in the Burgers equation, particularly poor stability in high-gradient regions and the ill-posedness of inverse problems in shock wave modeling. We propose a Weak-Form Physics-Informed Neural Network (WF-PINN) that fundamentally enhances both forward and inverse problem solving. Key innovations include: (i) a weak-form integral formulation of the PDE loss, which improves training stability near shocks; (ii) enforcement of an entropy condition to ensure unique and physically consistent shock capture; (iii) a dual-network architecture for inverse problems, where an auxiliary network dedicated to initial condition reconstruction is coupled with the main solver via consistency constraints. Numerical experiments show that WF-PINNs achieve significantly higher accuracy and convergence robustness compared to strong-form PINNs, accurately resolving shock locations and amplitudes while enabling precise identification of unknown initial conditions and viscosity coefficients. The framework offers a unified and generalizable approach for solving conservation laws with discontinuities.</jats:p>",
+    "url": "https://doi.org/10.1038/s41598-025-24427-4"
+  },
+  {
+    "query": "physics informed neural networks weak form discontinuities",
+    "title": "Physics-informed neural networks for geoid modeling",
+    "doi": "10.1007/s00190-025-02017-6",
+    "date": [
+      [
+        2026,
+        1
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        1,
+        17
+      ]
+    ],
+    "journal": "Journal of Geodesy",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>The accurate modeling of the Earth gravity field and geoid is critical for geodesy, yet traditional methods face limitations in handling the growing complexity and heterogeneity of modern geodetic data. To address these challenges, this study proposes a physics-informed neural network (PINN) framework for high-precision geoid modeling. The PINN employs convolutional neural networks (CNNs) to extract multi-scale features from terrestrial and airborne gravity data, which are then processed by a multilayer perceptron (MLP) to establish an accurate mapping between these features and the disturbing potential. Physical constraints, including Laplace’s equation and differential equations governing gravity anomaly and gravity disturbance, are embedded into the loss function to enhance both accuracy and interpretability. The proposed method is applied to the Colorado 1 cm geoid experiment. Compared to GNSS/leveling data of the Geoid Slope Validation Survey 2017 (GSVS17), the PINN-derived geoid model achieves a standard deviation (STD) of 2.1 cm. This represents a 12.5%–27.6% improvement over traditional methods and purely data-driven networks (DDNs). The PINN exhibits strong generalization under sparse data conditions, achieving 28.5% higher accuracy than the DDN with only 500 samples. Furthermore, analysis of geoid slopes and physical constraint contributions demonstrates that PINN’s dual physical constraints effectively balance global characteristics and localized fidelity of the geoid. This study establishes the PINN as a robust, physically interpretable machine learning approach for geoid modeling, outperforming classical methods and offering a promising pathway for gravity field estimation in regions with sparse or heterogeneous data. By bridging purely data-driven machine learning with fundamental geodetic principles, this work paves the way for future advancements in physics-informed machine learning-based geodetic modeling.</jats:p>",
+    "url": "https://doi.org/10.1007/s00190-025-02017-6"
+  },
+  {
+    "query": "physics informed neural networks weak form discontinuities",
+    "title": "A Review of Physics-Informed Neural Networks",
+    "doi": "10.54254/2755-2721/2025.20636",
+    "date": [
+      [
+        2025,
+        1,
+        24
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        1,
+        24
+      ]
+    ],
+    "journal": "Applied and Computational Engineering",
+    "abstract": "<jats:p>This article presents Physics-Informed Neural Networks (PINNs), which integrate physical laws into neural network training to model complex systems governed by partial differential equations (PDEs). PINNs enhance data efficiency, allowing for accurate predictions with less training data, and have applications in fields such as biomedical engineering, geophysics, and material science. Despite their advantages, PINNs face challenges like learning high-frequency components and computational overhead. Proposed solutions include causality constraints and improved boundary condition handling. A numerical experiment demonstrates the effectiveness of PINNs in solving the one-dimensional heat conduction equation, showcasing enhanced model stability and accuracy. Overall, PINNs represent a significant advancement in merging machine learning with physics.</jats:p>",
+    "url": "https://doi.org/10.54254/2755-2721/2025.20636"
+  },
+  {
+    "query": "physics informed neural networks weak form discontinuities",
+    "title": "Theory-informed neural networks for particle physics",
+    "doi": "10.1088/2632-2153/ae47ba",
+    "date": [
+      [
+        2026,
+        2,
+        26
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        2,
+        26
+      ]
+    ],
+    "journal": "Machine Learning: Science and Technology",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    We present a theory-informed reinforcement-learning framework that recasts the combinatorial assignment of final-state particles in hadron collider events as a Markov decision process. A transformer-based deep Q-network, rewarded at each step by the logarithmic change in the magnitude of the tree-level matrix element, learns to map final-state particles to partons. Because the reward derives solely from first-principles theory, the resulting policy is label-free and fully interpretable, allowing every particle to be traced to a definite partonic origin. The method is validated on event reconstruction for\n                    <jats:inline-formula>\n                      <jats:tex-math>\n                        \n                      </jats:tex-math>\n                      <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\">\n                        <mml:mrow>\n                          <mml:mi>t</mml:mi>\n                          <mml:mrow>\n                            <mml:mover>\n                              <mml:mi>t</mml:mi>\n                              <mml:mo stretchy=\"false\">¯</mml:mo>\n                            </mml:mover>\n                          </mml:mrow>\n                        </mml:mrow>\n                      </mml:math>\n                    </jats:inline-formula>\n                    ,\n                    <jats:inline-formula>\n                      <jats:tex-math>\n                        \n                      </jats:tex-math>\n                      <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\">\n                        <mml:mrow>\n                          <mml:mi>t</mml:mi>\n                          <mml:mrow>\n                            <mml:mover>\n                              <mml:mi>t</mml:mi>\n                              <mml:mo stretchy=\"false\">¯</mml:mo>\n                            </mml:mover>\n                          </mml:mrow>\n                          <mml:mi>W</mml:mi>\n                        </mml:mrow>\n                      </mml:math>\n                    </jats:inline-formula>\n                    , and\n                    <jats:inline-formula>\n                      <jats:tex-math>\n                        \n                      </jats:tex-math>\n                      <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\">\n                        <mml:mrow>\n                          <mml:mi>t</mml:mi>\n                          <mml:mrow>\n                            <mml:mover>\n                              <mml:mi>t</mml:mi>\n                              <mml:mo stretchy=\"false\">¯</mml:mo>\n                            </mml:mover>\n                          </mml:mrow>\n                          <mml:mi>t</mml:mi>\n                          <mml:mrow>\n                            <mml:mover>\n                              <mml:mi>t</mml:mi>\n                              <mml:mo stretchy=\"false\">¯</mml:mo>\n                            </mml:mover>\n                          </mml:mrow>\n                        </mml:mrow>\n                      </mml:math>\n                    </jats:inline-formula>\n                    processes at the large hadron collider. At this stage the method is tested on parton-level data only, with tests using momentum smearing used as a proxy for a full simulation. The method maintains robust performance across all processes, demonstrating its scaling with increasing combinatorial complexity. We demonstrate how this method can be used to build a theory-informed classifier for effective discrimination of longitudinal\n                    <jats:inline-formula>\n                      <jats:tex-math>\n                        \n                      </jats:tex-math>\n                      <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\">\n                        <mml:mrow>\n                          <mml:msup>\n                            <mml:mi>W</mml:mi>\n                            <mml:mrow>\n                              <mml:mo>+</mml:mo>\n                            </mml:mrow>\n                          </mml:msup>\n                          <mml:msup>\n                            <mml:mi>W</mml:mi>\n                            <mml:mrow>\n                              <mml:mo>−</mml:mo>\n                            </mml:mrow>\n                          </mml:msup>\n                        </mml:mrow>\n                      </mml:math>\n                    </jats:inline-formula>\n                    pairs, and show that we can construct theory-informed anomaly-detection tools using background process matrix elements. Building on theoretical calculations, this method offers a transparent alternative to black-box classifiers. Being built on the matrix element, the classification and anomaly scores naturally respect all physical symmetries and are much less susceptible to the implicit biases common to other methods. Thus, it provides a framework for precision measurements, hypothesis testing, and anomaly searches at the high-luminosity LHC.\n                  </jats:p>",
+    "url": "https://doi.org/10.1088/2632-2153/ae47ba"
+  },
+  {
+    "query": "physics informed neural networks weak form discontinuities",
+    "title": "E-PINNs: epistemic physics-informed neural networks",
+    "doi": "10.1007/s44379-026-00086-8",
+    "date": [
+      [
+        2026,
+        8,
+        13
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        8,
+        13
+      ]
+    ],
+    "journal": "Machine Learning for Computational Science and Engineering",
+    "abstract": null,
+    "url": "https://doi.org/10.1007/s44379-026-00086-8"
+  },
+  {
+    "query": "physics informed neural networks weak form discontinuities",
+    "title": "Physics-informed neural networks for aggregation kinetics",
+    "doi": "10.1515/jiip-2025-0073",
+    "date": [
+      [
+        2026,
+        1,
+        30
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        1,
+        30
+      ]
+    ],
+    "journal": "Journal of Inverse and Ill-posed Problems",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>We introduce a physics-informed method for finding numerical solutions of large systems of equations governing aggregation kinetics.\nThe method enables accurate reconstruction of density distributions for both large and small clusters, with notable improvements for small cluster sizes, as compared to previous numerical approaches.\nThe efficiency and accuracy are improved by restricting the physics-informed loss to a small interval, enabling long time horizons with minimal extra computational cost.\nThe superiority of the method has been demonstrated for basic aggregation kernels – constant, additive, multiplicative and generalised Brownian kernel, showing that one simple neural architecture can be used for four distinct kernels.\nIn addition to numerical examples, we provide rigorous mathematical justification for the approach and derive relevant analytical error bounds.\nCombined high efficiency and low error margins of the method indicate strong potential for long-term prediction and integration into broader computational systems.</jats:p>",
+    "url": "https://doi.org/10.1515/jiip-2025-0073"
+  },
+  {
+    "query": "physics informed neural networks weak form discontinuities",
+    "title": "Distance-based attention physics-informed neural networks",
+    "doi": "10.1063/5.0310163",
+    "date": [
+      [
+        2025,
+        12,
+        1
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        12,
+        16
+      ]
+    ],
+    "journal": "Physics of Fluids",
+    "abstract": "<jats:p>Physics-informed neural networks (PINNs) provide a flexible, mesh-free framework for solving partial differential equations. However, their effectiveness decreases in irregular domains because geometric information is encoded only indirectly through collocation points. This limitation weakens boundary condition enforcement and prevents direct computation of boundary-derived physical quantities. Traditional numerical methods rely on an explicit conditioning of the solution space by the domain geometry, together with interactions between the governing equations and boundary constraints. Inspired by this computational framework, a distance-based attention physics-informed neural network (DBA-PINN) is proposed in this study to provide an explicit geometric conditioning and to guide the interactions between interior and boundary physics. The proposed formulation introduces a normalized approximate distance field (nADF), defined as a projection-based scalar field that provides a smooth representation of proximity to the boundary without requiring any explicit signed-distance computation. Although the nADF is learned implicitly through a neural network, it serves as an explicit geometric descriptor within the overall architecture and provides a geometry-driven attention mechanism that modulates the blending between residual-dominant and boundary-dominant subnetworks. This mechanism effectively reproduces the geometry-driven interactions between interior and boundary physics. This distance-based attention mechanism also improves boundary accuracy and stabilizes training across complex domains. The neural parameterization of the nADF is fully differentiable, enabling direct computation of boundary-normal vectors through automatic differentiation and the evaluation of boundary-related quantities, such as wall shear stress. Numerical experiments on several complex geometries demonstrate that the DBA-PINN improves flow-field prediction accuracy, enhances boundary fidelity, and yields more stable training dynamics.</jats:p>",
+    "url": "https://doi.org/10.1063/5.0310163"
+  },
+  {
+    "query": "physics informed neural networks causal long time",
+    "title": "Cross-time causal physics-informed neural networks for dynamic time-dependent problems",
+    "doi": "10.1142/s0219691325500316",
+    "date": [
+      [
+        2025,
+        9,
+        30
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        9,
+        30
+      ]
+    ],
+    "journal": "International Journal of Wavelets, Multiresolution and Information Processing",
+    "abstract": "<jats:p>Physics-informed neural networks (PINNs) provide a new paradigm for solving partial differential equations (PDEs) and have made significant progress in scientific computing. By incorporating the physical constraints of the governing equations into the loss function, PINNs enable neural networks to learn and approximate the behavior of physical systems during the optimization process. Despite the considerable potential of the standard formulation, it shows limitations in accurately predicting the dynamic behavior of time-dependent problems. To address this challenge, previous research has proposed dividing the time domain into multiple segments and using different neural networks for each segment; however, this method does not guarantee causality within individual temporal subdomains. Inspired by previous work on causal relationships in PINNs, we propose a Cross-Time Causal PINNs algorithm — a overlapping domain decomposition method that integrates both soft and hard causality constraints. Specifically, within each time subdomain, we employ an exponentially decaying soft causal weighting scheme that prioritizes learning physical patterns at earlier time points. Between subdomains, we establish a hard causality constraint using a parameter transfer operator, which takes the output of the previous network as the initial condition for the next subdomain, thereby ensuring continuous differentiability of the solution across subdomains. Additionally, we introduce a composite loss term over the overlapping regions and use an adaptive penalty coefficient to balance the accuracy and generalizability of the solution, while expanding the receptive field of causality. The proposed method demonstrates superior performance and higher computational efficiency compared to existing methods when solving the Allen–Cahn and Korteweg–de Vries equations.</jats:p>",
+    "url": "https://doi.org/10.1142/s0219691325500316"
+  },
+  {
+    "query": "physics informed neural networks causal long time",
+    "title": "Accelerating space-time methods using physics-informed neural networks",
+    "doi": "10.1016/j.jcp.2025.114124",
+    "date": [
+      [
+        2025,
+        9
+      ]
+    ],
+    "online": null,
+    "journal": "Journal of Computational Physics",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.jcp.2025.114124"
+  },
+  {
+    "query": "physics informed neural networks causal long time",
+    "title": "Regime-aware time weighting for physics-informed neural networks",
+    "doi": "10.1016/j.cam.2025.116858",
+    "date": [
+      [
+        2026,
+        2
+      ]
+    ],
+    "online": null,
+    "journal": "Journal of Computational and Applied Mathematics",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.cam.2025.116858"
+  },
+  {
+    "query": "physics informed neural networks causal long time",
+    "title": "Physics-informed spiking neural networks for continuous-time dynamic systems",
+    "doi": "10.1016/j.neucom.2025.132192",
+    "date": [
+      [
+        2026,
+        2
+      ]
+    ],
+    "online": null,
+    "journal": "Neurocomputing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.neucom.2025.132192"
+  },
+  {
+    "query": "physics informed neural networks causal long time",
+    "title": "VC-fPINNs: A Variational-Causal Fractional Physics-informed Neural Networks Framework for Solving Time-Fractional Differential Equations",
+    "doi": "10.1016/j.cnsns.2026.110886",
+    "date": [
+      [
+        2026,
+        9
+      ]
+    ],
+    "online": null,
+    "journal": "Communications in Nonlinear Science and Numerical Simulation",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.cnsns.2026.110886"
+  },
+  {
+    "query": "physics informed neural networks causal long time",
+    "title": "Uncertainty-aware physics-informed neural networks",
+    "doi": "10.1016/j.sasc.2026.200489",
+    "date": [
+      [
+        2026,
+        6
+      ]
+    ],
+    "online": null,
+    "journal": "Systems and Soft Computing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.sasc.2026.200489"
+  },
+  {
+    "query": "physics informed neural networks causal long time",
+    "title": "Enforcing hidden physics in physics-informed neural networks",
+    "doi": "10.1038/s42005-026-02743-z",
+    "date": [
+      [
+        2026,
+        7,
+        11
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        7,
+        11
+      ]
+    ],
+    "journal": "Communications Physics",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    Physics-informed neural networks (PINNs) represent a promising paradigm for solving partial differential equations (PDEs) by integrating physical laws into the learning process of neural networks. However, ensuring that such frameworks fully reflect the physical structure embedded in the governing equations remains an open challenge. This stems from a fundamental limitation: standard neural networks lack an inherent notion of\n                    <jats:italic>physical admissibility</jats:italic>\n                    , leaving them vulnerable to producing mathematical artifacts that satisfy the training loss but lack physical meaning. In this work, we address this issue by introducing a simple, generalized, yet robust irreversibility-regularized strategy that enforces hidden physical laws as soft constraints during training, thereby recovering the missing physics associated with irreversible processes in the conventional PINN. This approach ensures that the learned solutions consistently respect the intrinsic one-way nature of irreversible physical processes. Across a wide range of benchmarks spanning traveling wave propagation, steady combustion, ice melting, corrosion evolution, and crack growth, we observe substantial performance improvements over state-of-the-art PINN baseline equipped with advanced training techniques, demonstrating that our regularization scheme reduces predictive errors by up to more than one order of magnitude, while requiring only minimal modification to existing PINN frameworks.\n                  </jats:p>",
+    "url": "https://doi.org/10.1038/s42005-026-02743-z"
+  },
+  {
+    "query": "physics informed neural networks causal long time",
+    "title": "Predicting nonlinear dynamic systems by causal physics-informed neural networks with ResNet blocks",
+    "doi": "10.1016/j.neucom.2025.131589",
+    "date": [
+      [
+        2025,
+        12
+      ]
+    ],
+    "online": null,
+    "journal": "Neurocomputing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.neucom.2025.131589"
+  },
+  {
+    "query": "physics informed neural networks causal long time",
+    "title": "Quasi-random physics-informed neural networks",
+    "doi": "10.1016/j.neucom.2026.132913",
+    "date": [
+      [
+        2026,
+        4
+      ]
+    ],
+    "online": null,
+    "journal": "Neurocomputing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.neucom.2026.132913"
+  },
+  {
+    "query": "physics informed neural networks causal long time",
+    "title": "Parallel Time-Domain Simulation Algorithm Based on Physics-Informed Neural Networks",
+    "doi": "10.1109/lmwt.2026.3660921",
+    "date": [
+      [
+        2026,
+        6
+      ]
+    ],
+    "online": null,
+    "journal": "IEEE Microwave and Wireless Technology Letters",
+    "abstract": null,
+    "url": "https://doi.org/10.1109/lmwt.2026.3660921"
+  },
+  {
+    "query": "physics informed neural networks causal long time",
+    "title": "Physics-Embedded Networks: Improving Convergence and Precision of Physics-Informed Neural Networks for Real-Time Applications",
+    "doi": "10.1109/tcyb.2025.3650460",
+    "date": [
+      [
+        2026,
+        5
+      ]
+    ],
+    "online": null,
+    "journal": "IEEE Transactions on Cybernetics",
+    "abstract": null,
+    "url": "https://doi.org/10.1109/tcyb.2025.3650460"
+  },
+  {
+    "query": "physics informed neural networks causal long time",
+    "title": "Physics-informed neural networks for geoid modeling",
+    "doi": "10.1007/s00190-025-02017-6",
+    "date": [
+      [
+        2026,
+        1
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        1,
+        17
+      ]
+    ],
+    "journal": "Journal of Geodesy",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>The accurate modeling of the Earth gravity field and geoid is critical for geodesy, yet traditional methods face limitations in handling the growing complexity and heterogeneity of modern geodetic data. To address these challenges, this study proposes a physics-informed neural network (PINN) framework for high-precision geoid modeling. The PINN employs convolutional neural networks (CNNs) to extract multi-scale features from terrestrial and airborne gravity data, which are then processed by a multilayer perceptron (MLP) to establish an accurate mapping between these features and the disturbing potential. Physical constraints, including Laplace’s equation and differential equations governing gravity anomaly and gravity disturbance, are embedded into the loss function to enhance both accuracy and interpretability. The proposed method is applied to the Colorado 1 cm geoid experiment. Compared to GNSS/leveling data of the Geoid Slope Validation Survey 2017 (GSVS17), the PINN-derived geoid model achieves a standard deviation (STD) of 2.1 cm. This represents a 12.5%–27.6% improvement over traditional methods and purely data-driven networks (DDNs). The PINN exhibits strong generalization under sparse data conditions, achieving 28.5% higher accuracy than the DDN with only 500 samples. Furthermore, analysis of geoid slopes and physical constraint contributions demonstrates that PINN’s dual physical constraints effectively balance global characteristics and localized fidelity of the geoid. This study establishes the PINN as a robust, physically interpretable machine learning approach for geoid modeling, outperforming classical methods and offering a promising pathway for gravity field estimation in regions with sparse or heterogeneous data. By bridging purely data-driven machine learning with fundamental geodetic principles, this work paves the way for future advancements in physics-informed machine learning-based geodetic modeling.</jats:p>",
+    "url": "https://doi.org/10.1007/s00190-025-02017-6"
+  },
+  {
+    "query": "physics informed neural networks battery experimental",
+    "title": "Robust Battery SOC Estimation via Hypernetwork-Based Parameterized Physics-Informed Neural Networks",
+    "doi": "10.5370/kiee.2026.75.4.813",
+    "date": [
+      [
+        2026,
+        4,
+        30
+      ]
+    ],
+    "online": null,
+    "journal": "The transactions of The Korean Institute of Electrical Engineers",
+    "abstract": null,
+    "url": "https://doi.org/10.5370/kiee.2026.75.4.813"
+  },
+  {
+    "query": "physics informed neural networks battery experimental",
+    "title": "Physics‐Informed Neural Networks for Battery Degradation Prediction Under Random Walk Operations",
+    "doi": "10.1002/qre.70186",
+    "date": [
+      [
+        2026,
+        3,
+        11
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        3,
+        11
+      ]
+    ],
+    "journal": "Quality and Reliability Engineering International",
+    "abstract": "<jats:title>ABSTRACT</jats:title>\n                  <jats:p>This study addresses the challenge of predicting the state of health (SoH) and capacity degradation in Battery Energy Storage Systems (BESS) under highly variable conditions induced by frequent control adjustments. In environments where random walk behavior prevails due to stochastic control commands, conventional estimation methods often struggle to capture the degradation dynamics effectively. Our work presents a comprehensive approach that merges advanced feature engineering with state‐of‐the‐art machine learning techniques. Specifically, we introduce a physics‐informed neural network (PINN) model that incorporates domain‐specific physical laws—such as monotonic degradation and a first‐order decay law—into its training, thus limiting the hypothesis space to physically plausible functions. Comparative analysis with traditional methods such as Gaussian process (GP) regression, SVM, Lasso, and Ridge regression shows that the PINN model consistently delivers better predictive performance, evidenced by lower error metrics and improved  values. These results underscore the potential of integrating physics‐based constraints with data‐driven models to enhance the reliability and accuracy of SoH and capacity degradation assessments in BESS, ultimately contributing to more effective battery management and control strategies.</jats:p>",
+    "url": "https://doi.org/10.1002/qre.70186"
+  },
+  {
+    "query": "physics informed neural networks battery experimental",
+    "title": "Bayesian calibrated physics-informed neural networks for second-life battery SOH estimation",
+    "doi": "10.1016/j.ress.2025.111432",
+    "date": [
+      [
+        2025,
+        12
+      ]
+    ],
+    "online": null,
+    "journal": "Reliability Engineering &amp; System Safety",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.ress.2025.111432"
+  },
+  {
+    "query": "physics informed neural networks battery experimental",
+    "title": "Uncertainty-aware physics-informed neural networks",
+    "doi": "10.1016/j.sasc.2026.200489",
+    "date": [
+      [
+        2026,
+        6
+      ]
+    ],
+    "online": null,
+    "journal": "Systems and Soft Computing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.sasc.2026.200489"
+  },
+  {
+    "query": "physics informed neural networks battery experimental",
+    "title": "Enforcing hidden physics in physics-informed neural networks",
+    "doi": "10.1038/s42005-026-02743-z",
+    "date": [
+      [
+        2026,
+        7,
+        11
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        7,
+        11
+      ]
+    ],
+    "journal": "Communications Physics",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    Physics-informed neural networks (PINNs) represent a promising paradigm for solving partial differential equations (PDEs) by integrating physical laws into the learning process of neural networks. However, ensuring that such frameworks fully reflect the physical structure embedded in the governing equations remains an open challenge. This stems from a fundamental limitation: standard neural networks lack an inherent notion of\n                    <jats:italic>physical admissibility</jats:italic>\n                    , leaving them vulnerable to producing mathematical artifacts that satisfy the training loss but lack physical meaning. In this work, we address this issue by introducing a simple, generalized, yet robust irreversibility-regularized strategy that enforces hidden physical laws as soft constraints during training, thereby recovering the missing physics associated with irreversible processes in the conventional PINN. This approach ensures that the learned solutions consistently respect the intrinsic one-way nature of irreversible physical processes. Across a wide range of benchmarks spanning traveling wave propagation, steady combustion, ice melting, corrosion evolution, and crack growth, we observe substantial performance improvements over state-of-the-art PINN baseline equipped with advanced training techniques, demonstrating that our regularization scheme reduces predictive errors by up to more than one order of magnitude, while requiring only minimal modification to existing PINN frameworks.\n                  </jats:p>",
+    "url": "https://doi.org/10.1038/s42005-026-02743-z"
+  },
+  {
+    "query": "physics informed neural networks battery experimental",
+    "title": "Quasi-random physics-informed neural networks",
+    "doi": "10.1016/j.neucom.2026.132913",
+    "date": [
+      [
+        2026,
+        4
+      ]
+    ],
+    "online": null,
+    "journal": "Neurocomputing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.neucom.2026.132913"
+  },
+  {
+    "query": "physics informed neural networks battery experimental",
+    "title": "Physics-Informed Neural Networks for Thermal Anomaly Prediction in Battery Energy Storage Systems",
+    "doi": "10.3390/en19112503",
+    "date": [
+      [
+        2026,
+        5,
+        22
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        5,
+        22
+      ]
+    ],
+    "journal": "Energies",
+    "abstract": "<jats:p>Battery Energy Storage Systems (BESSs) are increasingly deployed in grid-scale applications, electric mobility, and renewable integration, where safety, reliability, and longevity are critical. Thermal runaway remains one of the most severe failure modes in lithium-ion batteries, often triggered by complex interactions between electrochemical, thermal, and mechanical phenomena. This paper presents an extended hybrid Physics-Informed Neural Network (PINN) framework for thermal anomaly prediction and early detection of runaway precursors in BESS. The proposed architecture integrates governing physical laws, specifically the Bernardi heat generation equation and Fick’s diffusion law, within a deep learning pipeline composed of a physics module, a temporal Bi-LSTM, and an attention mechanism for explainability, which may represent an obstacle in the application of deep learning algorithms. Beyond the initial formulation, the extended version presented here provides a deeper theoretical background, an expanded methodological justification, a more comprehensive comparison with state-of-the-art approaches, and a detailed discussion on scalability, uncertainty, and deployment challenges. The results for synthetic yet physically consistent datasets represent a proof of concept of the PINN approach, which can achieve superior generalization, robustness to noise, and interpretability compared to purely data-driven baselines, achieving an accuracy above 90% and an AUC of 0.95. The framework contributes to proactive safety management in cyber-physical energy systems and establishes a foundation for real-time, physics-aware anomaly detection in safety-critical BESS applications, e.g., marine transportation contexts and port environments.</jats:p>",
+    "url": "https://doi.org/10.3390/en19112503"
+  },
+  {
+    "query": "physics informed neural networks battery experimental",
+    "title": "Physics-Informed Recurrent Neural Networks for Deterministic Multi-Step Battery Scheduling in Microgrids",
+    "doi": "10.1080/08839514.2026.2736297",
+    "date": [
+      [
+        2026,
+        9,
+        23
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        9,
+        23
+      ]
+    ],
+    "journal": "Applied Artificial Intelligence",
+    "abstract": null,
+    "url": "https://doi.org/10.1080/08839514.2026.2736297"
+  },
+  {
+    "query": "physics informed neural networks battery experimental",
+    "title": "Forecasting battery capacity for second-life applications using physics-informed recurrent neural networks",
+    "doi": "10.1016/j.etran.2025.100432",
+    "date": [
+      [
+        2025,
+        9
+      ]
+    ],
+    "online": null,
+    "journal": "eTransportation",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.etran.2025.100432"
+  },
+  {
+    "query": "physics informed neural networks battery experimental",
+    "title": "Real-time physics-aware battery health monitoring from partial charging profiles via physics-informed neural networks",
+    "doi": "10.1016/j.etran.2026.100555",
+    "date": [
+      [
+        2026,
+        5
+      ]
+    ],
+    "online": null,
+    "journal": "eTransportation",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.etran.2026.100555"
+  },
+  {
+    "query": "physics informed neural networks battery experimental",
+    "title": "Physics-informed neural networks for geoid modeling",
+    "doi": "10.1007/s00190-025-02017-6",
+    "date": [
+      [
+        2026,
+        1
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        1,
+        17
+      ]
+    ],
+    "journal": "Journal of Geodesy",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>The accurate modeling of the Earth gravity field and geoid is critical for geodesy, yet traditional methods face limitations in handling the growing complexity and heterogeneity of modern geodetic data. To address these challenges, this study proposes a physics-informed neural network (PINN) framework for high-precision geoid modeling. The PINN employs convolutional neural networks (CNNs) to extract multi-scale features from terrestrial and airborne gravity data, which are then processed by a multilayer perceptron (MLP) to establish an accurate mapping between these features and the disturbing potential. Physical constraints, including Laplace’s equation and differential equations governing gravity anomaly and gravity disturbance, are embedded into the loss function to enhance both accuracy and interpretability. The proposed method is applied to the Colorado 1 cm geoid experiment. Compared to GNSS/leveling data of the Geoid Slope Validation Survey 2017 (GSVS17), the PINN-derived geoid model achieves a standard deviation (STD) of 2.1 cm. This represents a 12.5%–27.6% improvement over traditional methods and purely data-driven networks (DDNs). The PINN exhibits strong generalization under sparse data conditions, achieving 28.5% higher accuracy than the DDN with only 500 samples. Furthermore, analysis of geoid slopes and physical constraint contributions demonstrates that PINN’s dual physical constraints effectively balance global characteristics and localized fidelity of the geoid. This study establishes the PINN as a robust, physically interpretable machine learning approach for geoid modeling, outperforming classical methods and offering a promising pathway for gravity field estimation in regions with sparse or heterogeneous data. By bridging purely data-driven machine learning with fundamental geodetic principles, this work paves the way for future advancements in physics-informed machine learning-based geodetic modeling.</jats:p>",
+    "url": "https://doi.org/10.1007/s00190-025-02017-6"
+  },
+  {
+    "query": "physics informed neural networks battery experimental",
+    "title": "A Review of Physics-Informed Neural Networks",
+    "doi": "10.54254/2755-2721/2025.20636",
+    "date": [
+      [
+        2025,
+        1,
+        24
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        1,
+        24
+      ]
+    ],
+    "journal": "Applied and Computational Engineering",
+    "abstract": "<jats:p>This article presents Physics-Informed Neural Networks (PINNs), which integrate physical laws into neural network training to model complex systems governed by partial differential equations (PDEs). PINNs enhance data efficiency, allowing for accurate predictions with less training data, and have applications in fields such as biomedical engineering, geophysics, and material science. Despite their advantages, PINNs face challenges like learning high-frequency components and computational overhead. Proposed solutions include causality constraints and improved boundary condition handling. A numerical experiment demonstrates the effectiveness of PINNs in solving the one-dimensional heat conduction equation, showcasing enhanced model stability and accuracy. Overall, PINNs represent a significant advancement in merging machine learning with physics.</jats:p>",
+    "url": "https://doi.org/10.54254/2755-2721/2025.20636"
+  },
+  {
+    "query": "physics informed neural networks benchmark limitations",
+    "title": "Physics-informed neural networks for complex fluids: opportunities and limitations",
+    "doi": "10.1007/s13367-025-00140-6",
+    "date": [
+      [
+        2025,
+        12
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        12,
+        15
+      ]
+    ],
+    "journal": "Korea-Australia Rheology Journal",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>Physics-informed neural networks (PINNs) offer a transformative alternative to conventional computational fluid dynamics (CFD) by embedding governing physical laws directly into neural network loss functions. While traditional CFD methods face limitations including high computational costs, mesh sensitivity, and extensive data requirements, PINNs overcome these barriers by ensuring solutions inherently satisfy conservation principles during training. This review examines PINN foundations and their dual capability in solving forward problems—predicting complex fluid behaviors—and inverse problems involving parameter identification from limited data. We categorize existing research across three dimensions: canonical flows (Couette, Poiseuille), constitutive models (non-Newtonian, viscoelastic), and mathematical formulations (Burgers, Cahn-Hilliard equations). Building on this framework, we discuss advanced PINN variants addressing limitations in accuracy, efficiency, and generalization. We conclude by outlining future directions in multiscale modeling, irregular geometries, and data-driven discovery of constitutive laws, highlighting PINNs’ potential to revolutionize computational strategies for complex fluids.</jats:p>\n                  <jats:p>\n                    <jats:bold>Graphical abstract</jats:bold>\n                  </jats:p>",
+    "url": "https://doi.org/10.1007/s13367-025-00140-6"
+  },
+  {
+    "query": "physics informed neural networks benchmark limitations",
+    "title": "Benchmark problems for physics-informed neural networks: The Allen–Cahn equation",
+    "doi": "10.3934/math.2025335",
+    "date": [
+      [
+        2025
+      ]
+    ],
+    "online": null,
+    "journal": "AIMS Mathematics",
+    "abstract": null,
+    "url": "https://doi.org/10.3934/math.2025335"
+  },
+  {
+    "query": "physics informed neural networks benchmark limitations",
+    "title": "Uncertainty-aware physics-informed neural networks",
+    "doi": "10.1016/j.sasc.2026.200489",
+    "date": [
+      [
+        2026,
+        6
+      ]
+    ],
+    "online": null,
+    "journal": "Systems and Soft Computing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.sasc.2026.200489"
+  },
+  {
+    "query": "physics informed neural networks benchmark limitations",
+    "title": "Quasi-random physics-informed neural networks",
+    "doi": "10.1016/j.neucom.2026.132913",
+    "date": [
+      [
+        2026,
+        4
+      ]
+    ],
+    "online": null,
+    "journal": "Neurocomputing",
+    "abstract": null,
+    "url": "https://doi.org/10.1016/j.neucom.2026.132913"
+  },
+  {
+    "query": "physics informed neural networks benchmark limitations",
+    "title": "Enforcing hidden physics in physics-informed neural networks",
+    "doi": "10.1038/s42005-026-02743-z",
+    "date": [
+      [
+        2026,
+        7,
+        11
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        7,
+        11
+      ]
+    ],
+    "journal": "Communications Physics",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    Physics-informed neural networks (PINNs) represent a promising paradigm for solving partial differential equations (PDEs) by integrating physical laws into the learning process of neural networks. However, ensuring that such frameworks fully reflect the physical structure embedded in the governing equations remains an open challenge. This stems from a fundamental limitation: standard neural networks lack an inherent notion of\n                    <jats:italic>physical admissibility</jats:italic>\n                    , leaving them vulnerable to producing mathematical artifacts that satisfy the training loss but lack physical meaning. In this work, we address this issue by introducing a simple, generalized, yet robust irreversibility-regularized strategy that enforces hidden physical laws as soft constraints during training, thereby recovering the missing physics associated with irreversible processes in the conventional PINN. This approach ensures that the learned solutions consistently respect the intrinsic one-way nature of irreversible physical processes. Across a wide range of benchmarks spanning traveling wave propagation, steady combustion, ice melting, corrosion evolution, and crack growth, we observe substantial performance improvements over state-of-the-art PINN baseline equipped with advanced training techniques, demonstrating that our regularization scheme reduces predictive errors by up to more than one order of magnitude, while requiring only minimal modification to existing PINN frameworks.\n                  </jats:p>",
+    "url": "https://doi.org/10.1038/s42005-026-02743-z"
+  },
+  {
+    "query": "physics informed neural networks benchmark limitations",
+    "title": "Physics-informed neural networks for geoid modeling",
+    "doi": "10.1007/s00190-025-02017-6",
+    "date": [
+      [
+        2026,
+        1
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        1,
+        17
+      ]
+    ],
+    "journal": "Journal of Geodesy",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>The accurate modeling of the Earth gravity field and geoid is critical for geodesy, yet traditional methods face limitations in handling the growing complexity and heterogeneity of modern geodetic data. To address these challenges, this study proposes a physics-informed neural network (PINN) framework for high-precision geoid modeling. The PINN employs convolutional neural networks (CNNs) to extract multi-scale features from terrestrial and airborne gravity data, which are then processed by a multilayer perceptron (MLP) to establish an accurate mapping between these features and the disturbing potential. Physical constraints, including Laplace’s equation and differential equations governing gravity anomaly and gravity disturbance, are embedded into the loss function to enhance both accuracy and interpretability. The proposed method is applied to the Colorado 1 cm geoid experiment. Compared to GNSS/leveling data of the Geoid Slope Validation Survey 2017 (GSVS17), the PINN-derived geoid model achieves a standard deviation (STD) of 2.1 cm. This represents a 12.5%–27.6% improvement over traditional methods and purely data-driven networks (DDNs). The PINN exhibits strong generalization under sparse data conditions, achieving 28.5% higher accuracy than the DDN with only 500 samples. Furthermore, analysis of geoid slopes and physical constraint contributions demonstrates that PINN’s dual physical constraints effectively balance global characteristics and localized fidelity of the geoid. This study establishes the PINN as a robust, physically interpretable machine learning approach for geoid modeling, outperforming classical methods and offering a promising pathway for gravity field estimation in regions with sparse or heterogeneous data. By bridging purely data-driven machine learning with fundamental geodetic principles, this work paves the way for future advancements in physics-informed machine learning-based geodetic modeling.</jats:p>",
+    "url": "https://doi.org/10.1007/s00190-025-02017-6"
+  },
+  {
+    "query": "physics informed neural networks benchmark limitations",
+    "title": "A Review of Physics-Informed Neural Networks",
+    "doi": "10.54254/2755-2721/2025.20636",
+    "date": [
+      [
+        2025,
+        1,
+        24
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        1,
+        24
+      ]
+    ],
+    "journal": "Applied and Computational Engineering",
+    "abstract": "<jats:p>This article presents Physics-Informed Neural Networks (PINNs), which integrate physical laws into neural network training to model complex systems governed by partial differential equations (PDEs). PINNs enhance data efficiency, allowing for accurate predictions with less training data, and have applications in fields such as biomedical engineering, geophysics, and material science. Despite their advantages, PINNs face challenges like learning high-frequency components and computational overhead. Proposed solutions include causality constraints and improved boundary condition handling. A numerical experiment demonstrates the effectiveness of PINNs in solving the one-dimensional heat conduction equation, showcasing enhanced model stability and accuracy. Overall, PINNs represent a significant advancement in merging machine learning with physics.</jats:p>",
+    "url": "https://doi.org/10.54254/2755-2721/2025.20636"
+  },
+  {
+    "query": "physics informed neural networks benchmark limitations",
+    "title": "Theory-informed neural networks for particle physics",
+    "doi": "10.1088/2632-2153/ae47ba",
+    "date": [
+      [
+        2026,
+        2,
+        26
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        2,
+        26
+      ]
+    ],
+    "journal": "Machine Learning: Science and Technology",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    We present a theory-informed reinforcement-learning framework that recasts the combinatorial assignment of final-state particles in hadron collider events as a Markov decision process. A transformer-based deep Q-network, rewarded at each step by the logarithmic change in the magnitude of the tree-level matrix element, learns to map final-state particles to partons. Because the reward derives solely from first-principles theory, the resulting policy is label-free and fully interpretable, allowing every particle to be traced to a definite partonic origin. The method is validated on event reconstruction for\n                    <jats:inline-formula>\n                      <jats:tex-math>\n                        \n                      </jats:tex-math>\n                      <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\">\n                        <mml:mrow>\n                          <mml:mi>t</mml:mi>\n                          <mml:mrow>\n                            <mml:mover>\n                              <mml:mi>t</mml:mi>\n                              <mml:mo stretchy=\"false\">¯</mml:mo>\n                            </mml:mover>\n                          </mml:mrow>\n                        </mml:mrow>\n                      </mml:math>\n                    </jats:inline-formula>\n                    ,\n                    <jats:inline-formula>\n                      <jats:tex-math>\n                        \n                      </jats:tex-math>\n                      <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\">\n                        <mml:mrow>\n                          <mml:mi>t</mml:mi>\n                          <mml:mrow>\n                            <mml:mover>\n                              <mml:mi>t</mml:mi>\n                              <mml:mo stretchy=\"false\">¯</mml:mo>\n                            </mml:mover>\n                          </mml:mrow>\n                          <mml:mi>W</mml:mi>\n                        </mml:mrow>\n                      </mml:math>\n                    </jats:inline-formula>\n                    , and\n                    <jats:inline-formula>\n                      <jats:tex-math>\n                        \n                      </jats:tex-math>\n                      <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\">\n                        <mml:mrow>\n                          <mml:mi>t</mml:mi>\n                          <mml:mrow>\n                            <mml:mover>\n                              <mml:mi>t</mml:mi>\n                              <mml:mo stretchy=\"false\">¯</mml:mo>\n                            </mml:mover>\n                          </mml:mrow>\n                          <mml:mi>t</mml:mi>\n                          <mml:mrow>\n                            <mml:mover>\n                              <mml:mi>t</mml:mi>\n                              <mml:mo stretchy=\"false\">¯</mml:mo>\n                            </mml:mover>\n                          </mml:mrow>\n                        </mml:mrow>\n                      </mml:math>\n                    </jats:inline-formula>\n                    processes at the large hadron collider. At this stage the method is tested on parton-level data only, with tests using momentum smearing used as a proxy for a full simulation. The method maintains robust performance across all processes, demonstrating its scaling with increasing combinatorial complexity. We demonstrate how this method can be used to build a theory-informed classifier for effective discrimination of longitudinal\n                    <jats:inline-formula>\n                      <jats:tex-math>\n                        \n                      </jats:tex-math>\n                      <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\">\n                        <mml:mrow>\n                          <mml:msup>\n                            <mml:mi>W</mml:mi>\n                            <mml:mrow>\n                              <mml:mo>+</mml:mo>\n                            </mml:mrow>\n                          </mml:msup>\n                          <mml:msup>\n                            <mml:mi>W</mml:mi>\n                            <mml:mrow>\n                              <mml:mo>−</mml:mo>\n                            </mml:mrow>\n                          </mml:msup>\n                        </mml:mrow>\n                      </mml:math>\n                    </jats:inline-formula>\n                    pairs, and show that we can construct theory-informed anomaly-detection tools using background process matrix elements. Building on theoretical calculations, this method offers a transparent alternative to black-box classifiers. Being built on the matrix element, the classification and anomaly scores naturally respect all physical symmetries and are much less susceptible to the implicit biases common to other methods. Thus, it provides a framework for precision measurements, hypothesis testing, and anomaly searches at the high-luminosity LHC.\n                  </jats:p>",
+    "url": "https://doi.org/10.1088/2632-2153/ae47ba"
+  },
+  {
+    "query": "physics informed neural networks benchmark limitations",
+    "title": "E-PINNs: epistemic physics-informed neural networks",
+    "doi": "10.1007/s44379-026-00086-8",
+    "date": [
+      [
+        2026,
+        8,
+        13
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        8,
+        13
+      ]
+    ],
+    "journal": "Machine Learning for Computational Science and Engineering",
+    "abstract": null,
+    "url": "https://doi.org/10.1007/s44379-026-00086-8"
+  },
+  {
+    "query": "physics informed neural networks benchmark limitations",
+    "title": "Physics-informed neural networks for aggregation kinetics",
+    "doi": "10.1515/jiip-2025-0073",
+    "date": [
+      [
+        2026,
+        1,
+        30
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        1,
+        30
+      ]
+    ],
+    "journal": "Journal of Inverse and Ill-posed Problems",
+    "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>We introduce a physics-informed method for finding numerical solutions of large systems of equations governing aggregation kinetics.\nThe method enables accurate reconstruction of density distributions for both large and small clusters, with notable improvements for small cluster sizes, as compared to previous numerical approaches.\nThe efficiency and accuracy are improved by restricting the physics-informed loss to a small interval, enabling long time horizons with minimal extra computational cost.\nThe superiority of the method has been demonstrated for basic aggregation kernels – constant, additive, multiplicative and generalised Brownian kernel, showing that one simple neural architecture can be used for four distinct kernels.\nIn addition to numerical examples, we provide rigorous mathematical justification for the approach and derive relevant analytical error bounds.\nCombined high efficiency and low error margins of the method indicate strong potential for long-term prediction and integration into broader computational systems.</jats:p>",
+    "url": "https://doi.org/10.1515/jiip-2025-0073"
+  },
+  {
+    "query": "physics informed neural networks benchmark limitations",
+    "title": "Distance-based attention physics-informed neural networks",
+    "doi": "10.1063/5.0310163",
+    "date": [
+      [
+        2025,
+        12,
+        1
+      ]
+    ],
+    "online": [
+      [
+        2025,
+        12,
+        16
+      ]
+    ],
+    "journal": "Physics of Fluids",
+    "abstract": "<jats:p>Physics-informed neural networks (PINNs) provide a flexible, mesh-free framework for solving partial differential equations. However, their effectiveness decreases in irregular domains because geometric information is encoded only indirectly through collocation points. This limitation weakens boundary condition enforcement and prevents direct computation of boundary-derived physical quantities. Traditional numerical methods rely on an explicit conditioning of the solution space by the domain geometry, together with interactions between the governing equations and boundary constraints. Inspired by this computational framework, a distance-based attention physics-informed neural network (DBA-PINN) is proposed in this study to provide an explicit geometric conditioning and to guide the interactions between interior and boundary physics. The proposed formulation introduces a normalized approximate distance field (nADF), defined as a projection-based scalar field that provides a smooth representation of proximity to the boundary without requiring any explicit signed-distance computation. Although the nADF is learned implicitly through a neural network, it serves as an explicit geometric descriptor within the overall architecture and provides a geometry-driven attention mechanism that modulates the blending between residual-dominant and boundary-dominant subnetworks. This mechanism effectively reproduces the geometry-driven interactions between interior and boundary physics. This distance-based attention mechanism also improves boundary accuracy and stabilizes training across complex domains. The neural parameterization of the nADF is fully differentiable, enabling direct computation of boundary-normal vectors through automatic differentiation and the evaluation of boundary-related quantities, such as wall shear stress. Numerical experiments on several complex geometries demonstrate that the DBA-PINN improves flow-field prediction accuracy, enhances boundary fidelity, and yields more stable training dynamics.</jats:p>",
+    "url": "https://doi.org/10.1063/5.0310163"
+  },
+  {
+    "query": "physics informed neural networks benchmark limitations",
+    "title": "Bayesian reasoning for physics-informed neural networks",
+    "doi": "10.1103/29bd-jfhz",
+    "date": [
+      [
+        2026,
+        5,
+        27
+      ]
+    ],
+    "online": [
+      [
+        2026,
+        5,
+        27
+      ]
+    ],
+    "journal": "Physical Review E",
+    "abstract": null,
+    "url": "https://doi.org/10.1103/29bd-jfhz"
+  }
+]

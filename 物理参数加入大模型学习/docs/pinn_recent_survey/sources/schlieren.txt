@@ -1,0 +1,475 @@
+Quantitative schlieren with physics-informed neural networks | Experiments in Fluids | Springer Nature Link
+Skip to main content
+Advertisement
+Log in
+Menu
+Find a journal
+Publish with us
+Track your research
+Search
+Saved research
+Cart
+Home
+Experiments in Fluids
+Article
+Quantitative schlieren with physics-informed neural networks
+Research Article
+Open access
+Published: 10 July 2026
+Volume 67, article number 108 (2026)
+Cite this article
+You have full access to this open access article
+Download PDF
+Save article
+View saved research
+Experiments in Fluids
+Aims and scope
+Submit manuscript
+Quantitative schlieren with physics-informed neural networks
+Download PDF
+Lennart Rohlfs
+ORCID: orcid.org/0009-0008-9903-42301 & Julien Weiss1
+966 Accesses
+Explore all metrics
+Abstract
+This article introduces physics-informed quantitative schlieren (PIQS), a data-assimilation framework that transforms standard qualitative schlieren images into quantitative flow fields. By leveraging physics-informed neural networks (PINNs), the method treats the unknown calibration factor between image intensity and density gradient as a learnable parameter that is inferred during the training process. The solution is anchored using Rankine–Hugoniot jump relations across identified shock waves to solve the inherent scale ambiguity. The framework is validated against a numerical ground truth for inviscid supersonic flow over a rhombus airfoil, where it recovers the true calibration factor and density field with high accuracy (\(R^2 > 0.99\)). Application to a turbulent Mach 2 shock-wave/boundary-layer interaction (SBLI) demonstrates that PIQS yields reconstructions consistent with independent quantitative background-oriented schlieren (BOS) measurements. Finally, the method is applied to previously published schlieren imagery of a supersonic projectile, successfully recovering quantitative density profiles that match analytical Taylor–Maccoll solutions. These results demonstrate that PIQS offers a robust pathway for extracting quantitative data from both contemporary and historical schlieren visualizations without requiring dedicated calibration hardware.
+Similar content being viewed by others
+Background-oriented schlieren imaging of flow around a circular cylinder at low Mach numbers
+Article
+02 August 2017
+Quantitative Flow Visualization of Underexpanded Elliptic Jets by Rainbow Schlieren Tomography
+Article
+04 August 2025
+Super-resolution reconstruction of schlieren images of supersonic free jets based on machine learning with bubble shadowgraphy data
+Article
+31 May 2023
+Explore related subjects
+Discover the latest articles, books and news in related subjects, suggested using machine learning.
+Aeroacoustics
+Fluidics
+Fluid- and Aerodynamics
+Fluid Mechanics
+Measurement Science and Instrumentation
+Engineering Fluid Dynamics
+Schlieren Imaging Techniques for Flow Field Visualization
+1 Introduction
+Schlieren visualization has served as a cornerstone diagnostic technique for experimental investigation of compressible flows since the pioneering work of Toepler and its subsequent application to supersonic flows by Ernst Mach in the late nineteenth century (Toepler 1864; Mach and Salcher 1887). The technique’s fundamental working principle is based on the relation between light refraction and fluid density through the Gladstone–Dale equation, which enables the visualization of density gradients as intensity variations in the captured image (Settles 2001). Although this has been invaluable for the analysis of shock waves and other complex flow structures in supersonic and hypersonic flows, traditional schlieren imaging remains fundamentally qualitative. This is due to the dependence of the calibration factor relating observed intensity patterns to actual density-gradient magnitudes on the optical configuration, which is generally unknown.
+The challenge of achieving quantitative schlieren measurements has motivated a range of approaches, including lens-based systems and color schlieren techniques (Hargather and Settles 2012) that require in situ calibration of the optical system. More recently, background-oriented schlieren (BOS) has emerged as a more practical alternative that provides quantitative density-gradient measurements using a comparatively simple optical configuration (Richard and Raffel 2001; Meier 2002). BOS infers ray deflection angles by tracking the apparent displacement of features in a background pattern induced by refractive-index gradients, enabling the direct reconstruction of path-integrated density gradients. The technique has matured substantially over the past two decades and has been applied to a wide range of experimental configurations, including free-flight measurements and tomographic reconstructions (Heineck et al. 2016; Nicolas et al. 2016; Grauer and Steinberg 2020; Schmidt et al. 2025).
+Despite its success, BOS is not universally superior to classical schlieren in every experimental setting. In many standard single-view implementations, the quantitative interpretation relies on paraxial and small-deflection approximations and may become less accurate in near-field configurations or in the presence of strong geometric blur, motivating ongoing development of correction methodologies (Hinsberg and Rösgen 2014; Molnar et al. 2024). In addition, BOS requires displacement estimation from the raw image pairs, which can introduce biases depending on the processing algorithm such as spatial averaging or gradient regularization, particularly for weak gradients and sharp structures. This need for postprocessing limits adjustments to the experimental setup during a wind-tunnel run, although real-time BOS implementations are now available (Wernet 2020). Finally, the achievable temporal resolution in BOS experiments is often limited compared to classical schlieren systems due to the available illumination budget, especially in small or optically constrained wind-tunnel tests. These limitations motivate a revisiting of classical schlieren as a quantitative measurement technique, provided that the unknown intensity-to-gradient mapping can be resolved without complex optical calibration.
+Recent advances in data-driven machine learning, specifically the development of physics-informed neural networks (PINNs) (Raissi et al. 2019; Karniadakis et al. 2021), offer a promising path for addressing this challenge. In fluid-mechanical applications, PINNs act as a data-assimilation framework that approximates flow fields while regularizing the ill-posed inverse problems by enforcing consistency with the underlying conservation equations, such as the Euler or Navier–Stokes equations (Cai et al. 2021a; Eivazi et al. 2022; Steinfurth and Weiss 2024). For high-speed flows, several studies have successfully used PINNs to reconstruct flow fields from BOS measurements (Cai et al. 2021b; Molnar et al. 2023; Rohlfs and Weiss 2024), but in all cases, the inputs are calibrated. The more fundamental problem of recovering absolute physical scales from uncalibrated, qualitative measurements remains largely unexplored.
+The present work extends this framework to enable the assimilation of classical schlieren visualizations by integrating calibration factor learning directly into the PINN training process. Rather than requiring calibrated measurements a priori, the method treats the calibration factor as a learnable parameter inferred during training. In this case, the unknown proportionality between measured intensity and density gradient introduces a scale ambiguity that allows an infinite number of density fields to satisfy the optical measurements and the conservation laws. Resolving this ambiguity requires additional physical information to anchor the solution. Thus, our primary objective is to investigate whether the proposed physics-informed quantitative schlieren (PIQS) framework can recover the absolute density scale from solely qualitative images, and which additional physical constraints are required to enable robust reconstructions. To evaluate the validity and versatility of this approach, we consider three distinct test cases. First, we perform a validation against numerical ground truth for inviscid supersonic flow (Ma = 3) over a rhombus airfoil to assess calibration recovery and reconstruction accuracy. Second, we compare schlieren-assimilated flow fields with established BOS-assimilated results for a turbulent Mach 2 shock-wave/boundary-layer interaction (SBLI). Finally, we include an application to a set of published schlieren images of a supersonic projectile to evaluate generalization and retrospective quantitative analysis.
+The remainder of this article is structured as follows: Sect. 2 summarizes the theoretical foundations of schlieren imaging and details our PIQS methodology, including the PINN framework and the three test cases. In Sect. 3, we present the results for each case and discuss the method’s capabilities and limitations. Section 4 concludes with a summary of the main findings and directions for future work.
+2 Methodology
+2.1 Theoretical foundations of schlieren imaging
+Schlieren imaging is fundamentally based on the linear relationship between the fluid density \(\rho \) and the refractive index n that is established through the Gladstone–Dale equation:
+$$\begin{aligned} n - 1 = K \rho \end{aligned}$$
+(1)
+where K is the Gladstone–Dale constant, with \(K \approx 2.27 \times 10^{-4}\) \(\hbox {m}^3\)/kg for air at standard conditions. This implies that gradients in the refractive-index field are directly proportional to the density gradients. In a typical schlieren experiment, parallel light rays with uniform intensity passing through a schlieren object are deflected according to gradients in the refractive-index field. A knife edge placed at the focal plane of the imaging lens or mirror blocks a portion of the deflected light, converting the angular deflections into intensity variations in the recorded image (Settles 2001). Within the measuring range of the schlieren system, the knife-edge transfer function can be assumed to be linear (Hargather and Settles 2012). In this case, the background-corrected intensity \(I_{exp}\) at an image pixel (i, j) is proportional to the line-of-sight integral along the optical axis z of the density-gradient component normal to the knife edge:
+$$\begin{aligned} I_{exp} = C \int \frac{\partial \rho }{\partial x_i} dz \end{aligned}$$
+(2)
+where \(x_i\) is the in-plane coordinate normal to the knife edge and C is a constant calibration factor that depends on the optical setup (light source intensity, knife-edge transfer function, camera sensitivity, etc.). This calibration factor C is typically unknown, which has historically prevented the quantitative interpretation of schlieren images.
+For comparison, background-oriented schlieren (BOS) measures the displacements \(\delta \) of features in a background pattern caused by light deflection through the refractive-index field (Raffel 2015). By performing a geometric calibration, this displacement can be related to the ray deflection angles \(\varepsilon \) via \(\delta _{x_i}=Z_DM\varepsilon _{x_i}\), where M is the background magnification and \(Z_D\) is the distance between the mid-plane of the test section and the background pattern. Assuming straight-line propagation through the flow, the deflection is integrated along the optical path:
+$$\begin{aligned} \varepsilon _{x_i} = \frac{K}{n_0} \int \frac{\partial \rho }{\partial x_i} \ dz \end{aligned}$$
+(3)
+where \(n_0\) is the ambient refractive index.
+Displacement vectors can be extracted from raw BOS images using either traditional cross-correlation methods or optical flow (OF) techniques (Atcheson et al. 2009; Rohlfs and Weiss 2023). Optical flow provides higher spatial resolution by estimating one displacement vector per pixel rather than window-averaged values. However, the optical flow problem is ill-posed and requires additional constraints. Many approaches formulate the estimation as a global variational minimization problem with weighted regularization terms to promote smoothness of the solution (Horn and Schunck 1981). For applications in fluid flows, regularization strategies range from simple first-order gradient smoothing to physics-based higher-order constraints (Corpetti et al. 2006; Schmidt and Sutton 2021).
+2.2 Physics-informed neural network framework
+The backbone of our method is a physics-informed neural network (PINN), that is designed to map spatial coordinates to a set of flow variables. Unlike traditional supervised learning approaches that rely solely on labeled data, PINNs are trained with composite loss functions to yield predictions that are not only consistent with a set of measurements, but also satisfy the governing physical laws of the system (Karniadakis et al. 2021).
+Fig. 1
+Full size image
+Sketch of the PINN architecture where the MLP maps spatial coordinates to physical variables. The loss term is composed of a data term, a physics term based on the residuals of the implemented PDEs, and a set of boundary conditions to anchor the solution
+The PINN architecture employed in this work is illustrated in Fig. 1. To ensure numerical stability and proper scaling of the loss terms, all input coordinates and output variables are non-dimensionalized. Spatial coordinates are scaled by a characteristic length \(L_{ref}\), while flow variables are non-dimensionalized by freestream density \(\rho _\infty \) and velocity \(u_\infty \). The network inputs are Cartesian coordinates \((x^*,y^*)\) for the planar cases or \((x^*,r^*)\) for the axisymmetric case, while the outputs are 2D velocity components \((u^*,v^*)\), density \(\rho ^*\), and total energy \(E^*\). The output neurons for the total energy and density are wrapped in an exponential function to ensure positive values and prevent nonphysical solutions. For the viscous SBLI case, the turbulent eddy viscosity \(\mu _T^*\) is also predicted by the PINN to provide an implicit form of turbulence modeling (Pioch et al. 2023).
+The input coordinates are first modulated through a Fourier feature embedding layer (Tancik et al. 2020) to increase convergence speed and mitigate spectral bias:
+$$\begin{aligned} \phi (\textbf{x}) = \left[ \cos (2\pi \textbf{B}\textbf{x}), \sin (2\pi \textbf{B}\textbf{x})\right] \end{aligned}$$
+(4)
+where \(\textbf{B}(0,\sigma ) \in \mathbb {R}^{n \times 2}\) is a random Gaussian matrix with \(n=128\) features and standard deviation of \(\sigma =0.1\). The embedded features are then passed through L fully connected hidden layers, each containing N neurons with a nonlinear activation function \(\eta \):
+$$\begin{aligned} \textbf{h}^{(l+1)} = \eta \left( \textbf{W}^{(l)} \textbf{h}^{(l)} + \textbf{b}^{(l)}\right) \end{aligned}$$
+(5)
+where \(\textbf{h}^{(l)}\) is the activation of layer l, and \(\textbf{W}^{(l)}\) and \(\textbf{b}^{(l)}\) are the weights and biases. The weight matrices are initialized using random weight factorization following the recommended procedure of Wang et al. (2022) to further improve the convergence of the training. If not reported otherwise, we employ networks with \(L=4\) hidden layers and \(N=128\) neurons per layer as well as the swish activation function.
+The PINN is trained by minimizing a composite loss function \(\mathcal {L}_{total}\) that enforces multiple constraints:
+$$\begin{aligned} \mathcal {L}_{total} = \lambda _{data} \mathcal {L}_{data} + \lambda _{PDE} \mathcal {L}_{PDE} + \lambda _{BC} \mathcal {L}_{BC} \end{aligned}$$
+(6)
+The data term \(\mathcal {L}_{data}\) penalizes the mismatch between the training data and the predicted density-gradient field of the PINN at \(N_d\) discrete points. If calibrated measurements, such as BOS experiments, are available, it can be defined as:
+$$\begin{aligned} \mathcal {L}_{data} = \frac{1}{N_d}\sum _{n=1}^{N_d} |\frac{\partial \rho }{\partial x_i} (x^{(n)},y^{(n)}) - \frac{\partial \rho }{\partial x_i}(x^{(n)},y^{(n)})_{data} |^2 \end{aligned}$$
+(7)
+where \(\frac{\partial \rho }{\partial x_i} (x^{(n)},y^{(n)})\) is the predicted density gradient in the direction \(x_i\) and \(\frac{\partial \rho }{\partial x_i}(x^{(n)},y^{(n)})_{data}\) is the corresponding measurement. For qualitative schlieren data, where \(\partial \rho /\partial x_i\) is not directly available, the data term is modified as detailed in Sec 2.3. The physics residual term \(\mathcal {L}_{PDE}\) enforces compliance with the governing equations throughout the domain:
+$$\begin{aligned} \mathcal {L}_{PDE} = \frac{1}{N_c}\sum _{i=1}^{N_{eq}} \sum _{n=1}^{N_c} |r_i(x^{(n)},y^{(n)}) |^2 \end{aligned}$$
+(8)
+where \(r_i(x^{(n)},y^{(n)})\) denotes the residual of the i-th governing equation evaluated at \(N_c\) collocation points. The specific form of the PDE residuals depends on the flow physics of each test case. For inviscid supersonic flows (Cases 1 and 3), we employ the steady, compressible Euler equations, detailed in Appendix A.1. For the turbulent SBLI configuration (Case 2), a steady Reynolds-averaged Navier–Stokes (RANS) formulation with eddy-viscosity modeling is required, as described in Appendix A.2. All spatial derivatives appearing in these governing equations are obtained directly from the PINN by computing automatic differentiation of the neural network outputs with respect to the input coordinates. The collocation points \((x^{(n)},y^{(n)})\) are sampled using Latin hypercube sampling to ensure uniform coverage of the computational domain.
+Finally, the boundary condition term \(\mathcal {L}_{BC}\) enforces physical constraints at known domain features such as inlets, walls, and shock waves. For example, a freestream inlet condition for the inviscid cases that is evaluated at \(N_b\) locations can be written as:
+$$\begin{aligned} \mathcal {L}_{BC} = \frac{1}{N_b}\sum _{n=1}^{N_b} |(u,v,E,\rho )(x^n,y^n) - (u_\infty ,v_\infty ,E_\infty ,\rho _\infty ))|^2\nonumber \\ \end{aligned}$$
+(9)
+Such an inlet condition is required for all considered cases, since the training data only contain gradient information. The relative weights \(\lambda _{data}\), \(\lambda _{PDE}\), and \(\lambda _{BC}\) determine the influence of each loss term. Proper tuning of these weights is required to balance the gradient magnitudes. There are several approaches proposed in the literature for determining their optimal values automatically (e.g., Wang et al. (2023); Anagnostopoulos et al. (2024)), but they can be unstable in the presence of measurement noise. Therefore, until more robust algorithms are available, it is still necessary to tune the loss weights by hand for each case to maximize the reconstruction accuracy. At the same time, when following best practices such as using non-dimensional variables and PDEs, uniform weights often already yield acceptable solutions. The total loss, as defined in Eq. (6), is minimized using the SOAP optimizer, a recently introduced improvement over the classical Adam optimizer that incorporates higher-order preconditioning (Vyas et al. 2025). This reduces the need for the two-step optimization procedure (Adam followed by L-BFGS) that has been a standard for PINN training in fluid mechanics applications, thereby enabling a substantially reduced computational cost (Wang et al. 2025). Combined with recent improvements in the TensorFlow/Keras framework, a typical training for the experimental SBLI case (Sect. 2.4.2) converges in approximately 1 h on a NVIDIA A100 GPU, which is an order of magnitude faster than previous studies (Rohlfs and Weiss 2024). The inviscid cases (Sects. 2.4.1 and 2.4.3), which solve the simpler Euler equations, converge much faster in approximately 10 min. We use a batch size of 4096 points and run the training for 1e5 gradient descent steps. For the learning rate scheduler, we use cosine decay from \(lr=1e-3\) to \(lr=1e-5\).
+2.3 Physics-informed Quantitative Schlieren (PIQS) framework
+2.3.1 Calibration factor learning
+The core of the PIQS method is the assimilation of qualitative schlieren intensity I by treating the calibration factor C in Eq. (2) as a learnable parameter. This enables the assimilation of quantitative density fields from qualitative schlieren images without requiring prior calibration of the optical system. For quasi two-dimensional configurations with approximately spanwise-uniform mean fields, the line-of-sight integral in Eq. (2) is reduced to the product of the local gradient and a constant effective optical path length so that the measured schlieren signal can be related locally to the corresponding density-gradient component. In contrast, for axisymmetric flows, the measurement is formally a line-of-sight projection of the underlying density-gradient field, and a complete optical forward model would require an Abel-type projection operator (Sipkens et al. 2022). In the present work, we nevertheless employ the same local relation as a pragmatic approximation for the axisymmetric case. The corresponding reconstructions should therefore be interpreted as approximate axisymmetric inversions rather than exact solutions of the full optical forward problem. In all considered cases, the data loss term for a horizontal knife edge is thus defined as:
+$$\begin{aligned} \mathcal {L}_{data} = \frac{1}{N_{d}} \sum _{n=1}^{N_{d}} \left| I_{exp}(x^n, y^n) - C \cdot \frac{\partial \rho }{\partial y}(x^n, y^n) \right| ^2 \end{aligned}$$
+(10)
+where \(I_{exp}\) is the experimentally observed schlieren intensity corrected by the background luminance (\(I_{exp}=I-I_0\)). As a result, \(I_{exp}\) may take positive or negative values depending on the sign of the local ray deflection relative to the knife-edge orientation. For vertical knife edges, the streamwise density gradient \(\partial \rho / \partial x\) would be used instead. To ensure a positive calibration factor and maintain numerical stability during optimization, C is parameterized as:
+$$\begin{aligned} C = C_{0} \cdot \alpha ^\xi \end{aligned}$$
+(11)
+where \(C_{0}\) represents an initial guess for C, \(\xi \) is the learnable parameter that is optimized by the PINN, and \(\alpha \) is a fixed base controlling the sensitivity of C to changes in \(\xi \). This exponential parameterization enables a variation across multiple orders of magnitude in \(C_0\) without requiring careful tuning of learning rates. In this study, we found a base of \(\alpha =2\) to provide robust convergence for initial guesses spanning two orders of magnitude (see Sect. 2.4.1). If both density-gradient components are available, C is configured as a vector with two entries so the calibration for each component can be learned individually. In future work, this parameterization could be generalized to include additional learnable parameters representing a nonlinear knife-edge transfer function.
+2.3.2 Supplementary physical constraints
+By treating the calibration factor as unknown, the data fidelity term (Eq. (10)) provides only relative density gradient information, introducing a scale ambiguity. While the governing equations constrain the structure of the solution, they do not uniquely determine its absolute scale. This necessitates supplementary physical constraints in addition to the standard inlet and wall boundary conditions that anchor the density magnitude. For flows containing oblique shocks with known upstream conditions, as is the case for many wind-tunnel experiments, the Rankine–Hugoniot relations provide powerful constraints (Liepmann and Roshko 2001). In this case, the shock angle \(\beta \) and upstream Mach number \(M_1\) uniquely determine the downstream conditions through:
+$$\begin{aligned} \frac{\rho _2}{\rho _1}&= \frac{(\gamma +1)M_1^2\sin ^2\beta }{2+(\gamma -1)M_1^2\sin ^2\beta } \end{aligned}$$
+(12)
+$$\begin{aligned} \frac{p_2}{p_1}&= 1 + \frac{2\gamma }{\gamma +1}\left( M_1^2\sin ^2\beta - 1\right) \end{aligned}$$
+(13)
+$$\begin{aligned} M_{2,n}^2&= \frac{2+(\gamma -1)M_1^2\sin ^2\beta }{2\gamma M_1^2\sin ^2\beta - (\gamma -1)} \end{aligned}$$
+(14)
+These relations can be enforced as soft constraints in \(\mathcal {L}_{BC}\) at collocation points \(N_s\) distributed along shock lines of the input schlieren image:
+$$\begin{aligned} \begin{aligned} \mathcal {L}_{Shock} = \frac{1}{N_s}\sum _{n=1}^{N_s}|&\left( \frac{\rho _2}{\rho _1},\frac{p_2}{p_1},\frac{M_{2,n}}{M_{1,n}}\right) (x^{(n)},y^{(n)})\\ -&\left( \frac{\rho _2}{\rho _1},\frac{p_2}{p_1},\frac{M_{2,n}}{M_{1,n}}\right) _{b}^{(n)}|^2 \end{aligned} \end{aligned}$$
+(15)
+Here, \(M_{1,n}=M_1\sin (\beta )\) and \(M_{2,n}\) denote the upstream and downstream Mach numbers normal to the shock, respectively, and subscript b indicates the theoretical ratios from the jump relations. The incident shock locations are extracted from the raw schlieren images using gradient thresholding prior to the PINN training. For each shock collocation point, the upstream and downstream states are sampled at fixed offsets along the local normal direction to the detected shock line. The offset must be large enough to account for the thickness of the shock in the source images. To ensure accurate results, it is also important to only include point pairs that are free of other flow features that cause density gradients such as expansion fans or boundary layers. If these requirements are fulfilled, the approach is robust toward the spatial distribution of the shock collocation points. A sensitivity study is reported in App. B.1. If implemented properly, these jump conditions fix the absolute density ratio across the shock, enabling a unique determination of C. In cases without shock structures, similar constraints can be derived for Prandtl–Meyer expansion corners or other regions where isentropic expansion or compression can be assumed. For viscous, wall-bound flows, a no-slip, adiabatic wall boundary condition serves as an additional weak regularization for the near-wall flow field. Finally, additional measurements such as wall-pressure distributions also provide further regularization, but we found their effect alone to be not strong enough for robust convergence.
+2.4 Experimental and numerical test cases
+To assess the performance and versatility of the proposed PIQS framework, we consider three complementary cases. The first case is a numerically generated benchmark that provides a well-controlled environment with access to the full flow field as ground truth, enabling validation of the calibration learning and reconstruction accuracy. The second case applies the method to experimental data where PIQS reconstructions are compared with independently obtained BOS measurements. The third case illustrates the capability of the framework to generalize to archival schlieren data by revisiting previously published images of a supersonic projectile.
+2.4.1 Supersonic rhombus
+For the first case, we select the inviscid, supersonic flow over a 2D, symmetric rhombus airfoil, a textbook example in classical gas dynamics. The ground-truth dataset is generated using the OpenFOAM solver rhoCentralFoam, a density-based compressible solver employing central-upwind schemes for the convective fluxes. The rhombus has a chord length \(L_c\) as characteristic length, a half-angle of \(\theta =15^\circ \) and the freestream Mach number is set to \(Ma=3\), which creates a leading edge shock angle of \(\beta =32.2^\circ \). The computational domain extends from \(-0.5L_c\) to \(3L_c\) in the streamwise and up to \(1.5L_c\) in the normal direction. We use a structured mesh with \(1860\times 320\) cells that features refinement near the leading and trailing edge of the rhombus as well as a moderate cell growth rate in the normal direction. We run the simulation with a maximum Courant number of \(CFL=0.4\) until the trailing edge shock pressure ratio converges to steady state.
+Fig. 2
+Full size image
+Normal density-gradient field with overlaid scatter of the imposed boundary conditions
+To simulate a schlieren experiment, we extract the density-gradient fields from the CFD solution and apply a known calibration factor C to produce synthetic schlieren images. This approach allows us to use the exact flow-field solutions as ground truth for assessing the reconstruction accuracy, and the known calibration factor enables the direct evaluation of the PIQS calibration learning capability. For comparison, BOS-equivalent quantitative data are obtained by setting \(C_{\text {true}} = 1.0\), which establishes an accuracy ceiling that represents the best possible outcome for the chosen PINN architecture when the calibration is known a priori.
+Since the CFD solution is inviscid, the PINN is constrained by the two-dimensional steady Euler equations as detailed in Appendix A.1. As indicated in Fig. 2, freestream conditions are imposed at the inlet boundaries and a slip-wall condition is set along the rhombus surface by enforcing a vanishing wall-normal velocity component to prevent nonphysical mass flow through the wall. To avoid reconstruction artifacts, we exclude a small circle (\(r^*=0.02\)) around the expansion corner from the training data and the wall boundary points, respectively, and only compute the physics residual in this region, as suggested by Molnar et al. (2023). Loss weights for this case are \(\lambda _{data}, \lambda _{PDE}, \lambda _{BC} = (1.0,0.01,1.0)\).
+Fig. 3
+Full size image
+Schematic diagram of the TU Berlin supersonic wind tunnel and the 2D test section with a \(8^\circ \) shock generator
+2.4.2 Turbulent shock-wave/boundary-layer interaction
+The second test case applies the PIQS method to experimental data from a turbulent SBLI configuration. As depicted in Fig. 3, the facility is an indraft wind tunnel that is powered by a downstream radial compressor to enable continuous operation up to a Mach number of \(Ma=2.2\) at ambient stagnation conditions. The test section features a fixed Laval nozzle designed for an outflow Mach number of \(Ma=2.0\), with a cross section of \(150\,\textrm{mm} \times 150\,\textrm{mm}\) and a length of \(544\,\textrm{mm}\). The naturally turbulent boundary layer inside the test section has a thickness of \(\delta _{99}\approx 7\,\textrm{mm}\) and a Reynolds number based on the displacement thickness of \(Re_\theta \approx 6600\). To generate an incident oblique shock wave, a wedge with a deflection angle of \(8^\circ \) is mounted inside the test section. The wedge has a \(5\,\textrm{mm}\) gap on each side to reduce the interaction with the sidewall boundary layer and thus create a more two-dimensional flow field (Grossman and Bruce 2019) although some three-dimensional effects remain. The resulting incident SBLI on the tunnel floor is classified, according to the separation criterion of Souverein et al. (2013), as a medium-sized interaction with incipient flow separation but no reverse flow in the mean velocity field. Further details on the spatiotemporal organization of the SBLI can be found in Rohlfs et al. (2022).
+Classical schlieren images for this configuration are acquired using a Toepler Z-type optical setup with a pulsed high-power LED light source (Willert et al. 2012) equipped with a condenser lens and adjustable aperture, synchronized with a HS Vision VEO 710 high-speed camera (1 Mpx, 12 bit, \(20\,\mu \textrm{m}\) pixel pitch). Both density-gradient components are recorded in succession by placing horizontal and vertical knife edges in the focal plane, each with an effective cutoff of \(\approx 50\%\). Image sequences are captured with an exposure time of \(1\,\mu s\) at a sampling rate of 20kHz over a duration of \(0.25\,s\) and averaged to obtain mean schlieren intensity fields. A separate background image is recorded and subtracted from the data to mitigate remaining optical artifacts.
+To provide an independent quantitative reference, single-view BOS measurements are conducted using the same optical access but with a different set of components and a simplified optical setup. The background is a high-resolution LCD display serving as a self-illuminating patterned target (Wernet 2020). It is placed close to the test section with \(Z_D\approx 110\,\textrm{mm}\) and displays a static two-dimensional sine pattern, which has been shown to yield increased reconstruction accuracy compared to random-dot patterns due to the well-defined spatial frequency content (Grauer and Steinberg 2020). The imaging system consists of a pco.edge sCMOS camera (5.5 Mpx, 16 bit, \(6.5,\mu \textrm{m}\) pixel pitch) equipped with a \(100\,\textrm{mm}\) macro lens at f/11 to provide sufficient depth of focus and minimize distortions. Pixel binning (\(2\times 2\)) is applied to improve light sensitivity and reduce image noise. Displacement fields are computed from the BOS image pairs using the TV-L1 optical flow algorithm (Zach et al. 2007) as implemented in the OpenCV library, which yields smooth displacement maps while preserving sharp gradients due to the total-variation-based regularization (Grauer et al. 2018; Rohlfs and Weiss 2024). The resulting pixel displacements are converted into ray deflection angles using the geometric calibration, and the density gradients are recovered via the line-of-sight integration in Eq. (3).
+Fig. 4
+Full size image
+BOS measurement (top) and schlieren image (bottom) of normal density gradient with overlaid scatter of the imposed boundary conditions
+In contrast to the inviscid rhombus case, the SBLI configuration requires a viscous description of the mean flow to capture the boundary layer and interaction region. The governing equations used to constrain the PINN are therefore based on a steady Reynolds-averaged Navier–Stokes (RANS) formulation with \(L_{ref}=\delta _{99}\) for non-dimensionalization (see Appendix A.2). Turbulent transport is modeled through an implicit eddy-viscosity approach, where the turbulent viscosity \(\mu _T\) is included as an additional network output and linked to the Reynolds stresses via the Boussinesq hypothesis (Pioch et al. 2023; Molnar et al. 2023). Boundary conditions follow the setup of our previous study (Rohlfs and Weiss 2024) and are illustrated in Fig. 4: Freestream conditions are prescribed at the inlet above the boundary layer (\(y^*>1.1\)), no-slip and adiabatic wall conditions are enforced at the tunnel floor, and the measured mean wall-pressure distribution is imposed at 26 sensor locations as an additional constraint to anchor the pressure field. The wall conditions and added pressure measurements are not strictly required for the method, but including them improves the accuracy of the assimilated flow fields (Rohlfs and Weiss 2024). The PINN size is increased to \(L\times N = 6\times 128\) and the loss weights are set to \(\lambda _{data}, \lambda _{PDE},\lambda _{BC} = (0.01,0.1,1.0)\).
+2.4.3 Axisymmetric projectile
+The third test case demonstrates the applicability of our method to existing schlieren images from published literature, showcasing the potential for retroactively transforming qualitative schlieren visualizations into quantitative measurements.
+Fig. 5
+Full size image
+Streamwise (a) and radial (b) schlieren intensity fields for the first image set with overlaid scatter of the imposed boundary conditions. The wake is masked to satisfy the inviscid flow assumption
+Two complementary sets of schlieren images that contain a conical–cylindrical projectile with a half-cone angle of \(10^\circ \) and a diameter of \(12.7\,\textrm{mm}\) (\(0.50\,\textrm{inch}\)) were obtained. In both cases, the projectile was imaged in free flight at a Mach number of \(Ma\approx 2.09\) using a triggered high-speed schlieren system. The first set of images was provided by Cooke et al. (2025) and has a smaller field of view, but both density gradient components were recorded (see Fig. 5). The second dataset is a single, high-resolution image from Violante et al. (2021) with a larger horizontal field of view where only the radial density-gradient component is available (see Fig. 6).
+A key advantage of the axisymmetric projectile case over other purely qualitative historical examples is the availability of multiple validation metrics. In addition to a qualitative comparison with the schlieren results from Cooke et al. (2025), the density profile over the conical section of the projectile can be validated with the analytical Taylor–Maccoll solution for supersonic flow over a cone (Taylor and Maccoll 1933). This provides an additional physics-based benchmark independent of experimental uncertainties. In their original analysis, Cooke et al. (2025) employed a weak-lens calibration followed by an Abel transform to recover the density field, which is a multi-step process that is susceptible to error propagation. In the PIQS framework, calibration and inversion are instead combined within a single data-assimilation framework. As discussed in Sect. 2.3, the current data term uses a local approximation of the schlieren observation model for the axisymmetric case. Implementing an explicit line-of-sight projection operator is a promising direction for future work.
+Fig. 6
+Full size image
+Radial schlieren intensity field for the second image set with overlaid scatter of the imposed boundary conditions. The wake is masked to satisfy the inviscid flow assumption
+Fig. 7
+Full size image
+Top: Predicted density fields in comparison with CFD ground truth for the different training setups. Bottom: Error distribution with \(\Delta \rho =\rho _{CFD}-\rho _{PIQS}\)
+For this case, the PINN operates in cylindrical coordinates (x, r) with \(\lambda _{data}, \lambda _{PDE},\lambda _{BC} = (0.001,1.0,1.0)\) and is constrained by the axisymmetric formulation of the Euler equations (see Appendix A.1), as viscous effects are negligible outside the wake region (which is excluded from the assimilation domain). As highlighted in Figs. 5–6, Freestream conditions are enforced at the inlet, while slip-wall conditions are applied on the projectile surface together with a symmetry condition along the centerline. Similar to the rhombus case, we exclude a small area around the expansion corners from the training data and wall points (\(r^*=0.1\)) and only compute the physics residual in this region. For the shock boundary condition, the downstream collocation points are placed very close to the shock to ensure the Rankine–Hugoniot relations remain valid.
+3 Results
+This section presents and discusses the results obtained with the PIQS framework for the three test cases introduced in Sect. 2.4, focusing on reconstruction accuracy, robustness of calibration learning, and consistency with independent reference data.
+3.1 Method validation with numerical ground truth
+To validate our PIQS method, we compare the predicted flow fields with the known ground truth from the CFD solution of the supersonic rhombus airfoil case. We consider three distinct training setups to isolate the effects of the calibration factor learning with and without supplementary physical constraints. The first setup, referred to as Simulated BOS, utilizes the ground-truth calibration factor (\(C_{true}=1.0\)) and treats the input data as quantitative density gradients. This establishes an accuracy ceiling, representing the best possible reconstruction performance achievable given the network architecture and grid resolution. The second setup utilizes the synthetic qualitative schlieren images with a trainable calibration factor and a starting value of \(C_0=2\) but without the additional shock constraints. The third setup represents the full PIQS methodology where we use the same qualitative inputs as the second case but enforce the Rankine–Hugoniot jump conditions across the leading edge shock wave as indicated in Fig. 2.
+Fig. 8
+Full size image
+Parity plot of the density for the different training setups where the \(R^2\) score indicates the quality of the prediction
+In Fig. 7, we compare the PIQS predictions against the CFD reference for the three training setups with the reconstructed density fields in the top row and the corresponding error maps in the bottom row. Because the shock and expansion locations are directly constrained by the imposed density-gradient data, all reconstructions reproduce the overall wave topology with good qualitative agreement. However, only the simulated BOS case and the full PIQS configuration (Setup 3) recover the correct density levels with some small deviations remaining in the region around the shocks and at the expansion corner. The unconstrained, qualitative setup (Setup 2) has systematically weaker gradients and reduced density magnitudes as indicated by the large deviations in the error map. This behavior is also evident in the parity plots shown in Fig. 8, where the simulated BOS and full PIQS cases collapse tightly onto the reference line with \(R^2 > 0.99\), while the unconstrained case shows a clear deviation from unity slope. The quantitative impact of these differences on the reconstruction errors is summarized in Table 1, which reports the range-normalized RMS errors (NRMSE) for velocity, pressure, and density:
+$$\begin{aligned} NRMSE = \frac{1}{y^*_{max}-y^*_{min}}\sqrt{\frac{1}{N}\sum _{i=1}^N(y^*_i-\hat{y}^*_i)^2} \end{aligned}$$
+(16)
+where \(y^*_i\) is the CFD reference and \(\hat{y}^*_i\) denotes the PINN predictions. For the unconstrained PIQS case, the error is significantly increased relative to both the Simulated BOS and the constrained PIQS configurations, with density errors rising from \(\mathcal {O}(10^{-3})\) to \(\mathcal {O}(10^{-2})\) and comparable degradation observed in velocity and pressure. In contrast, the constrained PIQS setup achieves error levels that are very similar to the quantitative BOS baseline across all variables. These results highlight the necessity of additional physical constraints in the absence of quantitative gradient information for anchoring the calibration factor and achieving accurate reconstructions.
+Table 1 Range normalized RMS errors of the PINN predictions for the different cases
+Full size table
+Fig. 9
+Full size image
+Feature importance analysis of the Rankine–Hugoniot jump conditions, illustrating the relative impact of density, pressure, and Mach number constraints on the reconstruction error
+To further understand the contribution of the shock constraints to the predicted flow fields, we perform a parametric sensitivity analysis by varying the weighting parameters associated with the jump conditions for pressure (\(\lambda _{p21}\)), density (\(\lambda _{\rho 21}\)), and Mach number (\(\lambda _{Ma21}\)) over the range [0, 1] for a total of 125 sampled weight combinations. A random forest based feature-importance metric (Pedregosa et al. 2011) derived from the resulting normalized RMS errors for velocity, pressure, and density is summarized in Fig. 9. One may assume that enforcing the density ratio alone should be sufficient to anchor the density scaling when the calibration factor is unknown. The present results indicate that this assumption holds only for the density field itself. While the density constraint dominates the accuracy of the reconstructed density, recovery of the pressure and velocity fields is also influenced by the Mach number constraint and, in particular, by the pressure ratio across the shock. Based on this sensitivity analysis, all three jump conditions are retained in the shock constraint to ensure balanced accuracy across all flow variables with a small bias toward density. Thus, we set the weights to \(\lambda _{Ma21}, \lambda _{p21}, \lambda _{\rho 21} = (0.1, 0.1, 1.0)\) for all cases considered in this study.
+Fig. 10
+Full size image
+Robustness analysis of the calibration factor initialization. Top: Evolution of the learned calibration factor over training epochs for varying initial guesses \(C_0\). Bottom: Final normalized root-mean-square error of the density field as a function of \(C_0\)
+Finally, we assess the robustness of the method with respect to initialization of the unknown calibration factor C. Since the true calibration is inherently unknown in practical applications, reliable performance requires limited sensitivity to the initial guess \(C_0\). We therefore test a wide range of initial values, varying the ratio \(C_0/C_{\text {true}}\) from 0.1 to 10, where \(C_{\text {true}} = 1\). Figure 10 summarizes the convergence behavior of the learned calibration factor (top) together with the final reconstruction error of the density field (\(NRMSE(\rho )\), bottom). For the entire range of initializations, the learned calibration factor converges toward the true value within the prescribed number of training epochs. Consistent with this behavior, the final density error remains at a low level comparable to the Simulated BOS baseline. These results define a broad operationally robust range for initializing the calibration factor in practical experimental applications.
+Fig. 11
+Full size image
+Top: Predicted density fields from BOS-based and schlieren-based data assimilation for the SBLI configuration. Bottom left: Parity plot of the density. Bottom right: Normalized deviation between the predictions with \(\Delta \rho =\rho _{BOS} - \rho _{PIQS}\)
+3.2 Comparison with quantitative BOS data assimilation
+Having established the accuracy of the calibration learning under controlled conditions, we next evaluate the performance of our method in a turbulent wind-tunnel flow where viscosity, three-dimensional effects, and measurement uncertainties introduce additional complexity. The incident SBLI represents a particularly demanding test case due to the complex shock topology and large spatial variations of the density gradient. In the absence of ground-truth density fields for this experiment, the objective is to assess whether flow fields assimilated from qualitative schlieren measurements are comparable to those obtained from independently acquired BOS measurements that have demonstrated competitive performance in previous studies.
+Figure 11 compares the PIQS-reconstructed density field obtained from schlieren-based data assimilation with the corresponding density field obtained from BOS-based assimilation for the same configuration. Each case uses both density gradient components in the training data. Overall, the two reconstructions are consistent at the domain scale, with the shock and expansion patterns recovered at comparable locations and the parity plot indicating good agreement (\(R^2 = 0.89\)). The spatial deviation map (bottom right) shows that the largest discrepancies are localized near the wall and in the immediate vicinity of the shock and expansion structures where the PIQS reconstruction appears smoother than the BOS-based solution. This is likely due to the different temporal averaging of the training data (see Sec. 2.4.2) which causes the spanwise non-uniform shock structures that are inherent to the SBLI flow to be smeared in the classical schlieren data. The edge-preserving regularization of the BOS reconstruction yields sharper shock structures, which is more plausible for the quasi-2D solution. In the outer flow, the PIQS solution exhibits slightly reduced density across expansion regions relative to the BOS-based reconstruction. In contrast, the near-wall region shows systematically larger inferred density gradients in the schlieren-assimilated case, leading to substantial differences in the reconstructed boundary-layer and interaction-region density fields.
+There are two plausible explanations for these differences. First, the BOS setup was operated at a comparatively low sensitivity with a small background distance to maintain sufficient depth of focus and stay within the small-displacement regime required by the linearized optical flow formulation. This reduces the effective signal-to-noise ratio for the weaker gradients in the boundary layer and can bias reconstructed gradients toward smaller magnitudes. The total-variation regularization inherent to the TV-\(L_1\) algorithm further promotes the attenuation of low-amplitude signals. Second, although the schlieren system was tuned to avoid saturation, the optical response may depart from the assumed linear regime of the knife-edge transfer function in regions of very large deflection, particularly across the strong and predominantly stationary incident shock. In SBLI flows, the incident shock remains spatially stable in the mean, producing a thinner and more sharply defined line in time-averaged schlieren images compared to the highly unsteady reflected shock, which increases the likelihood of local nonlinear response. In this case, the true shock strength may be underestimated in the training data, increasing the learned calibration factor through the enforced shock relations. This effectively redistributes the error to other regions of the flow, leading to increased inferred near-wall gradients and lower density values at the wall. To determine which estimate is more plausible, a theoretical reference can be computed for the boundary layer upstream of the interaction using the freestream pressure and the adiabatic wall temperature. At \(x^*=-4\), this reference density is \(\rho ^*_{ref}=0.578\), which is closer to the schlieren-based wall density of \(\rho ^*_{ref}\approx 0.55\) compared to the BOS-based estimate of \(\rho ^*_{BOS}\approx 0.76\).
+Fig. 12
+Full size image
+Top: Predicted streamwise velocity fields from BOS-based and schlieren-based data assimilation for the SBLI configuration. Bottom right: Normalized deviation between the predictions
+The corresponding comparison for the streamwise velocity field is shown in Fig. 12. Here, the agreement between PIQS and BOS assimilation is substantially stronger than for density, with the parity plot indicating \(R^2 > 0.97\) and only minor localized deviations. The remaining differences are primarily concentrated in the near-wall region, where the interaction between the shock system and the turbulent boundary layer yields the largest spatial gradients and where the discrepancies in density propagate into differences in the reconstructed velocity. In particular, the magnitude of these deviations is comparable to the previously reported discrepancies between BOS-based assimilation and independent PIV measurements for the same facility (Rohlfs and Weiss 2024), suggesting that the additional uncertainty introduced by replacing quantitative BOS gradients with qualitative schlieren intensity is limited for velocity inference in the present mean-flow setting.
+Together, these results demonstrate that PIQS yields flow-field reconstructions consistent with established BOS-based assimilation in a challenging turbulent SBLI, particularly in the outer flow region.
+3.3 Generalization to published schlieren data
+The third test case evaluates the ability of the PIQS framework to generalize to published schlieren data acquired outside the present experimental campaign. The dataset corresponds to a supersonic axisymmetric projectile configuration reported by Cooke et al. (2025), for which in situ calibrated quantitative schlieren reconstructions have been published by Cooke et al. (2025), providing a qualitative reference for comparison. This case therefore provides an opportunity to assess whether a physics-informed inversion applied directly to qualitative schlieren imagery can recover comparable flow-field information without explicit optical calibration. As introduced in Sect. 2.4.3, two datasets are available: a smaller field-of-view image set in which both density-gradient components are measured and a larger field-of-view image set for which only the radial density-gradient component is available.
+Fig. 13
+Full size image
+PIQS-reconstructed density-gradient field and quantitative density contours for the small field-of-view projectile dataset reported by Cooke et al. (2025)
+Fig. 14
+Full size image
+PIQS-reconstructed density-gradient field and quantitative density contours for the large field-of-view projectile dataset reported by Violante et al. (2021)
+Figures 13 and 14 show representative PIQS reconstructions for both datasets. In each case, the reconstructed density-gradient fields closely resemble the original schlieren intensity patterns, and the inferred density fields reproduce the expected wave topology surrounding the projectile, including secondary shock structures. The resulting density distributions are qualitatively consistent with the quantitative schlieren reconstructions reported by Cooke et al. (2025) and Violante et al. (2021). Notably, no systematic improvement is observed when both gradient components are assimilated (Set 1) compared to the single-component radial gradient case (Set 2). This indicates that for this flow regime, the governing equations and boundary constraints provide sufficient regularization to compensate for the missing gradient component and the error from the simplified optical model (2.3). By contrast, the larger field-of-view dataset exhibits finer reconstructed details which can be attributed to the higher source image resolution.
+Fig. 15
+Full size image
+PIQS-predicted wall-normal density profiles at \(x^*= 5.0\) compared with the analytical Taylor–Maccoll solution for steady supersonic flow over a cone. The black curve is extracted along the dashed line from Fig. 13 and the blue curve from Fig. 14
+Beyond qualitative agreement in the flow topology, an additional physics-based validation is obtained by comparing the reconstructed wall-normal density profile along the conical section of the projectile with the analytical Taylor–Maccoll solution for steady supersonic flow over a cone. Figure 15 shows the PIQS-predicted density profiles for both datasets at the normalized axial location \(x^*= 5.0\) together with the corresponding analytical solution. In addition, Table 2 reports the local relative deviations inside the shock cone for both cases as well as an average deviation over the entire conical section of the projectile in the interval \(0.5 \lesssim x^*\lesssim 5.73\). The tip is excluded from the average due to the occurring double shock phenomenon and limited spatial resolution of the source images. The close agreement (\(<1\%\) relative deviation in the considered interval) confirms that the inversion recovers physically consistent density magnitudes in addition to the correct shock structure. The level of agreement is comparable to the original quantitative schlieren analysis of Cooke et al. (2025) who reported an agreement of better than \(5\%\) inside the shock cone.
+Table 2 Relative deviation of the predicted density profiles from the analytical Taylor–Maccoll solution at \(x^*= 5.0\) and averaged in the interval \(0.5 \lesssim x^*\lesssim 5.73\)
+Full size table
+These results highlight the potential of PIQS to retroactively extract quantitative flow information from historical schlieren imagery, provided that several basic experimental conditions are satisfied. In particular, the approach assumes approximately uniform illumination or reliable background correction, operation within the linear response range of the schlieren system to avoid saturation-induced bias in the learned calibration, and a flow configuration that can be reasonably approximated as two-dimensional or axisymmetric for the purpose of line-of-sight integration. These conditions are consistent with the requirements for robust BOS-based assimilation and with long-established best practices for high-quality schlieren measurements (Settles 2001).
+4 Conclusions and future work
+The present work demonstrates that classical schlieren visualization can be transformed into a quantitative flow diagnostic by embedding optical calibration directly into a physics-informed data-assimilation framework. By treating the schlieren calibration factor as a learnable parameter and coupling brightness intensity information to the governing compressible flow equations, the proposed PIQS methodology removes the need for a separate in situ calibration of the schlieren intensity response, while retaining the optical simplicity and robustness that make schlieren attractive for high-speed experimental aerodynamics.
+The capability of the approach was established for three scenarios. In a controlled numerical benchmark of supersonic flow over a rhombus airfoil, PIQS accurately recovered absolute density levels and calibration factors when supplemented by physically consistent shock constraints, achieving reconstruction accuracy comparable to quantitative BOS assimilation. Sensitivity studies further showed that multiple jump-condition constraints are beneficial for reliably reconstructing the pressure and velocity fields in addition to density and that calibration learning remains robust over a wide range of initialization values. Application to a turbulent Mach 2 shock-wave/boundary-layer interaction showed that the flow fields obtained from qualitative schlieren data are consistent with established BOS-based assimilation under realistic experimental conditions, while the density discrepancies remain localized and are in agreement with the experimental limitations. Finally, the application to published imagery of a supersonic projectile illustrated the capability of the method to generalize to existing published schlieren data. Notably, the method successfully reconstructed the quantitative density field using only a single density-gradient component, suggesting that the physics-based regularization can compensate for incomplete optical data in historical datasets.
+The present formulation assumes approximately two-dimensional mean flows as well as the availability of physically meaningful constraints to ensure the correct identification of the calibration factor. Within these bounds, the results indicate that PIQS provides a practical pathway for extending quantitative flow-field reconstruction to experimental configurations where conventional calibrated schlieren instruments are impractical or unavailable retroactively. Future developments should focus on extending the framework with a more complete optical forward model for axisymmetric flows and toward time-resolved unsteady flows to leverage the high temporal resolution that classical schlieren offers. Other promising directions include the extension to stereo or even tomographic schlieren configurations using multi-view data, and more explicit treatment of measurement and model uncertainty. Together, these directions position physics-informed quantitative schlieren as a versatile tool for quantitative analysis of both contemporary and legacy high-speed flow experiments.
+Data Availability
+The code required to reproduce the results presented in this study is publicly available at https://github.com/AeroTUBerlin/PINN_funcs. The repository also includes a subset of the data used in this work. Additional data supporting the findings of this study are available from the corresponding author upon reasonable request.
+References
+Anagnostopoulos SJ, Toscano JD, Stergiopulos N, Karniadakis GE (2024) Residual-based attention in physics-informed neural networks. Comput Methods Appl Mech Eng 421:116805. https://doi.org/10.1016/j.cma.2024.116805
+Article
+MathSciNet
+Google Scholar
+Atcheson B, Heidrich W, Ihrke I (2009) An evaluation of optical flow algorithms for background oriented schlieren imaging. Exp Fluids 46:467–476. https://doi.org/10.1007/s00348-008-0572-7
+Article
+Google Scholar
+Cai S, Mao Z, Wang Z, Yin M, Karniadakis GE (2021) Physics-informed neural networks (pinns) for fluid mechanics: a review. Acta Mechanica Sinica/Lixue Xuebao 37:1727–1738. https://doi.org/10.1007/s10409-021-01148-1
+Article
+MathSciNet
+Google Scholar
+Cai S, Wang Z, Fuest F, Jeon YJ, Gray C, Karniadakis GE (2021) Flow over an espresso cup: Inferring 3-d velocity and pressure fields from tomographic background oriented schlieren via physics-informed neural networks. J Fluid Mech 915:1–17. https://doi.org/10.1017/jfm.2021.135
+Article
+MathSciNet
+Google Scholar
+Cooke J, Falls J, Strebe K, Campos A, Salari K, Morrow D, Harris E, Hargather MJ (2025) Analysis of the density field around a supersonic conical projectile using quantitative schlieren. Meas Sci Technol 36:085208. https://doi.org/10.1088/1361-6501/adf985
+Article
+Google Scholar
+Corpetti T, Heitz D, Arroyo G, Mémin E, Santa-Cruz A (2006) Fluid experimental flow estimation based on an optical-flow scheme. Exp Fluids 40:80–97. https://doi.org/10.1007/s00348-005-0048-y
+Article
+Google Scholar
+Eivazi H, Tahani M, Schlatter P, Vinuesa R (2022) Physics-informed neural networks for solving reynolds-averaged navier–stokes equations. Physics of Fluids 34 https://doi.org/10.1063/5.0095270
+Grauer SJ, Steinberg AM (2020) Fast and robust volumetric refractive index measurement by unified background-oriented schlieren tomography. Exp Fluids 61:1–17. https://doi.org/10.1007/s00348-020-2912-1
+Article
+Google Scholar
+Grauer SJ, Unterberger A, Rittler A, Daun KJ, Kempf AM, Mohri K (2018) Instantaneous 3d flame imaging by background-oriented schlieren tomography. Combust Flame 196:284–299. https://doi.org/10.1016/j.combustflame.2018.06.022
+Article
+Google Scholar
+Grossman IJ, Bruce PJK (2019) Sidewall gap effects on oblique shock-wave/boundary-layer interactions. AIAA J 57:2649–2652. https://doi.org/10.2514/1.J057952
+Article
+Google Scholar
+Hargather MJ, Settles GS (2012) A comparison of three quantitative schlieren techniques. Opt Lasers Eng 50:8–17. https://doi.org/10.1016/j.optlaseng.2011.05.012
+Article
+Google Scholar
+Heineck JT, Banks D, Schairer ET, Haering EA, Bean P (2016) Background oriented schlieren (BOS) of a supersonic aircraft in flight. In: AIAA Flight Testing Conference. American Institute of Aeronautics and Astronautics. https://doi.org/10.2514/6.2016-3356
+Hinsberg NP, Rösgen T (2014) Density measurements using near-field background-oriented schlieren. Exp Fluids 55:1–11. https://doi.org/10.1007/s00348-014-1720-x
+Article
+Google Scholar
+Horn BKP, Schunck BG (1981) Determining optical flow. Artif Intell 17:185–203. https://doi.org/10.1016/0004-3702(81)90024-2
+Article
+Google Scholar
+Karniadakis GE, Kevrekidis IG, Lu L, Perdikaris P, Wang S, Yang L (2021) Physics-informed machine learning. Nature Reviews Physics 3:422–440. https://doi.org/10.1038/s42254-021-00314-5
+Article
+Google Scholar
+Liepmann HW, Roshko A (2001) Elements of Gasdynamics. Dover Books on Aeronautical Engineering Series. Dover Publications
+Mach E, Salcher P (1887) Photographische fixirung der durch projectile in der luft eingeleiteten vorgänge. Ann Phys 268:277–291. https://doi.org/10.1002/andp.18872681008
+Article
+Google Scholar
+Meier G (2002) Computerized background-oriented schlieren. Exp Fluids 33:181–187. https://doi.org/10.1007/s00348-002-0450-7
+Article
+Google Scholar
+Molnar JP, Grauer SJ, Léon O, Donjat D, Nicolas F (2023) Physics-informed background-oriented schlieren of turbulent underexpanded jets. In: AIAA SCITECH 2023 Forum, pp. 1–15. American Institute of Aeronautics and Astronautics. https://doi.org/10.2514/6.2023-2441
+Molnar JP, Venkatakrishnan L, Schmidt BE, Sipkens TA, Grauer SJ (2023) Estimating density, velocity, and pressure fields in supersonic flows using physics-informed BOS. Exp Fluids 64:1–24. https://doi.org/10.1007/s00348-022-03554-y
+Article
+Google Scholar
+Molnar JP, Lalonde EJ, Combs CS, Léon O, Donjat D, Grauer SJ (2024) Forward and inverse modeling of depth-of-field effects in background-oriented schlieren. AIAA J 62:4316–4329. https://doi.org/10.2514/1.J064095
+Article
+Google Scholar
+Nicolas F, Todoroff V, Plyer A, Besnerais GL, Donjat D, Micheli F, Champagnat F, Cornic P, Sant YL (2016) A direct approach for instantaneous 3d density field reconstruction from background-oriented schlieren (BOS) measurements. Exp Fluids 57:1–21. https://doi.org/10.1007/s00348-015-2100-x
+Article
+Google Scholar
+Pedregosa F, Varoquaux G, Gramfort A, Michel V, Thirion B, Grisel O, Blondel M, Prettenhofer P, Weiss R, Dubourg V, Vanderplas J, Passos A, Cournapeau D, Brucher M, Perrot M, Duchesnay E (2011) Scikit-learn: Machine learning in Python. J Mach Learn Res 12:2825–2830
+MathSciNet
+Google Scholar
+Pioch F, Harmening JH, Müller AM, Peitzmann FJ, Schramm D, Moctar O (2023) Turbulence modeling for physics-informed neural networks: Comparison of different rans models for the backward-facing step flow. Fluids, vol 8. https://doi.org/10.3390/fluids8020043
+Raffel M (2015) Background-oriented schlieren (BOS) techniques. Exp Fluids 56:1–17. https://doi.org/10.1007/s00348-015-1927-5
+Article
+Google Scholar
+Raissi M, Perdikaris P, Karniadakis GE (2019) Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations. J Comput Phys 378:686–707. https://doi.org/10.1016/j.jcp.2018.10.045
+Article
+MathSciNet
+Google Scholar
+Richard H, Raffel M (2001) Principle and applications of the background oriented schlieren (BOS) method. Meas Sci Technol 12:1576–1585. https://doi.org/10.1088/0957-0233/12/9/325
+Article
+Google Scholar
+Rohlfs L, Stab I, Weiss J (2022) Experimental investigations of incident shockwave boundary layer interactions in a continuously operating supersonic wind tunnel. In: AIAA AVIATION 2022 Forum. American Institute of Aeronautics and Astronautics, ???. https://doi.org/10.2514/6.2022-4134
+Rohlfs L, Weiss J (2023) Assimilating velocity fields from bos measurements in supersonic flows using physics informed neural networks. In: AIAA Aviation and Aeronautics Forum and Exposition, AIAA AVIATION Forum 2023. American Institute of Aeronautics and Astronautics, ???. https://doi.org/10.2514/6.2023-4363
+Rohlfs L, Weiss J (2024) Assimilating mean velocity fields of a shockwave-boundary layer interaction from background-oriented schlieren measurements using physics-informed neural networks. Phys Fluids 36: https://doi.org/10.1063/5.0208040
+Schmidt BE, Sutton JA (2021) A physical interpretation of regularization for optical flow methods in fluids. Exp Fluids 62:1–6. https://doi.org/10.1007/s00348-021-03147-1
+Article
+Google Scholar
+Schmidt BE, Bathel BF, Grauer SJ, Hargather MJ, Heineck JT, Raffel M (2025) Twenty-five years of background-oriented schlieren: Advances and novel applications. AIAA Science and Technology Forum and Exposition AIAA SciTech Forum 2025:1–44. https://doi.org/10.2514/6.2025-1627
+Article
+Google Scholar
+Settles GS (2001) Schlieren and Shadowgraph Techniques. Springer, ???. https://doi.org/10.1007/978-3-642-56640-0
+Sipkens TA, Grauer SJ, Steinberg AM, Rogak SN, Kirchen P (2022) New transform to project axisymmetric deflection fields along arbitrary rays. Meas Sci Technol 33:035201. https://doi.org/10.1088/1361-6501/ac3f83
+Article
+Google Scholar
+Souverein LJ, Bakker PG, Dupont P (2013) A scaling analysis for turbulent shock-wave/boundary-layer interactions. J Fluid Mech 714:505–535. https://doi.org/10.1017/jfm.2012.495
+Article
+MathSciNet
+Google Scholar
+Steinfurth B, Weiss J (2024) Assimilating experimental data of a mean three-dimensional separated flow using physics-informed neural networks. Phys Fluids 36: https://doi.org/10.1063/5.0183463
+Tancik M, Srinivasan PP, Mildenhall B, Fridovich-Keil S, Raghavan N, Singhal U, Ramamoorthi R, Barron JT, Ng R (2020) Fourier features let networks learn high frequency functions in low dimensional domains. Advances in Neural Information Processing Systems 2020-Decem. pp 1–11
+Taylor GI, Maccoll JW (1933) The air pressure on a cone moving at high speeds.\(-\)ii. Proceedings of the Royal Society of London Series A Containing Papers of a Mathematical and Physical Character 139:298–311. https://doi.org/10.1098/rspa.1933.0018
+Article
+Google Scholar
+Toepler A (1864) Beobachtungen Nach Einer Neuen Optischen Methode, p. 50. Bonn, Cohen & Son, ???
+Violante DA, Falls J, Hargather M, Delaney M (2021) Poster: Experimental streak and quantitative schlieren imaging. In: 74th Annual Meeting of the APS Division of Fluid Dynamics - Gallery of Fluid Motion. American Physical Society. https://doi.org/10.1103/APS.DFD.2021.GFM.P0025
+Vyas N, Morwani D, Zhao R, Kwun M, Shapira I, Brandfonbrener D, Janson L, Kakade S (2025) SOAP: Improving and Stabilizing Shampoo using Adam. http://arxiv.org/abs/2409.11321
+Wang S, Bhartari AK, Li B, Perdikaris P (2025) Gradient Alignment in Physics-informed Neural Networks: A Second-Order Optimization Perspective. https://arxiv.org/abs/2502.00604
+Wang S, Sankaran S, Wang H, Perdikaris P (2023) An Expert’s Guide to Training Physics-informed Neural Networks. http://arxiv.org/abs/2308.08468
+Wang S, Wang H, Seidman JH, Perdikaris P (2022) Random Weight Factorization Improves the Training of Continuous Neural Representations. http://arxiv.org/abs/2210.01274
+Wernet MP (2020) Real-time background oriented schlieren with self-illuminated speckle background. Meas Sci Technol 31: https://doi.org/10.1088/1361-6501/ab4211
+Willert CE, Mitchell DM, Soria J (2012) An assessment of high-power light-emitting diodes for high frame rate schlieren imaging. Exp Fluids 53:413–421. https://doi.org/10.1007/s00348-012-1297-1
+Article
+Google Scholar
+Zach C, Pock T, Bischof H (2007) A Duality Based Approach for Realtime TV-L 1 Optical Flow, vol. 4713 LNCS, pp. 214–223. Springer, ???. https://doi.org/10.1007/978-3-540-74936-3_22
+Download references
+Acknowledgements
+The authors thank Dr. Hargather and his colleague, Jessica Cooke, for generously providing their original schlieren images, which were used in the development and evaluation of the algorithm presented in this work.
+Funding
+Open Access funding enabled and organized by Projekt DEAL.
+Author information
+Authors and Affiliations
+Chair of Aerodynamics, TU Berlin, Marchstr. 12-14, 10587, Berlin, Germany
+Lennart Rohlfs & Julien Weiss
+AuthorsLennart Rohlfs
+View author publications
+Search author on:PubMed Google Scholar
+Julien Weiss
+View author publications
+Search author on:PubMed Google Scholar
+Contributions
+L. R. was responsible for the data acquisition and processing as well as the development of the algorithm. He also wrote the original draft. J.W. was responsible for resources and supervision as well as reviewing and editing the draft.
+Corresponding author
+Correspondence to
+Lennart Rohlfs.
+Ethics declarations
+Conflict of interest
+The authors declare no conflict of interest.
+Additional information
+Publisher's Note
+Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.
+Appendices
+Appendix A Governing equations
+1.1 A.1 Compressible Euler equations
+Here, we define the steady, compressible Euler equations in their conservative, non-dimensional form. The velocity components \(u_i^*\), density \(\rho ^*\), and total energy \(E^*\) are normalized with the freestream velocity \(u_\infty \) and density \(\rho _\infty \).
+The temperature is calculated from the total energy, the velocity, and the freestream Mach number Ma with
+$$\begin{aligned} T^* = (\gamma ^2 - \gamma )Ma^2 \left( E^* - \frac{1}{2}(u^{*2} + v^{*2})\right) , \end{aligned}$$
+(A1)
+and the pressure is computed using the dimensionless equation of state:
+$$\begin{aligned} p^* = \frac{\rho ^*T^*}{\gamma Ma^2} \end{aligned}$$
+(A2)
+The heat capacity ratio \(\gamma \) is set to a constant \(\gamma =1.4\). Using these variables, the conservation laws can be defined as:
+$$\begin{aligned} \frac{\partial }{\partial x_i^*} (\rho ^* u_i^*) = 0 \end{aligned}$$
+(A3a)
+$$\begin{aligned} \frac{\partial }{\partial x_j^*}(\rho ^* u_i^* u_j^*) + \frac{\partial }{\partial x_i^*} p^* = 0\end{aligned}$$
+(A3b)
+$$\begin{aligned} \frac{\partial }{\partial x_j^*} u_j^*(\rho ^* E^* + p^*) = 0 \end{aligned}$$
+(A3c)
+For the axisymmetric formulation, the equations are transformed to cylindrical coordinates where the radial fluxes are multiplied with and the radial momentum equation contains an extra geometric source term :
+$$\begin{aligned} \frac{\partial }{\partial x^*} (\rho ^* u_x^*) + \frac{1}{r^*}\frac{\partial }{\partial r^*} (r^*\rho ^* u_r^*) = 0\end{aligned}$$
+(A4a)
+$$\begin{aligned} \frac{\partial }{\partial x^*}(\rho ^* u_x^* u_x^*+p^*) + \frac{1}{r^*}\frac{\partial }{\partial r^*}(r^*\rho ^* u_x^* u_r^*)= 0\end{aligned}$$
+(A4b)
+$$\begin{aligned} \frac{\partial }{\partial x^*}(\rho ^* u_x^* u_r^*) + \frac{1}{r^*}\frac{\partial }{\partial r^*}(r^*(\rho ^* u_r^* u_r^*+p^*)) - \frac{p^*}{r^*}= 0\end{aligned}$$
+(A4c)
+$$\begin{aligned} \frac{\partial }{\partial x^*} u_x^*(\rho ^* E^* + p^*) + \frac{1}{r^*}\frac{\partial }{\partial r^*} \left( r^*u_r^*(\rho ^* E^* + p^*)\right) = 0\nonumber \\ \end{aligned}$$
+(A4d)
+In addition to the conservation laws, we enforce a constant total temperature \(T_0^*\) throughout the entire domain, which increases the stability of the PINN training and prevents nonphysical solutions. We also include this constraint for the viscous case, but only compute a residual in the inviscid regions of the flow field. Finally, we compute a residual for the out-of-plane vorticity to prevent artificial rotation in the velocity field behind shocks and expansion waves:
+$$\begin{aligned} \frac{\partial u_x^*}{\partial y^*} - \frac{\partial u_y^*}{\partial x^*}=0 \ \ \textrm{or} \ \ \frac{\partial u_x^*}{\partial r^*} - \frac{\partial u_r^*}{\partial x^*}=0 \end{aligned}$$
+(A5)
+1.2 A.2 Compressible Reynolds-averaged Navier–Stokes equations
+For the viscous SBLI case, the Reynolds stresses are added to the conservation laws in (A3). The length \(x^*\) is scaled with the boundary layer thickness \(\delta _\infty \) at the domain inlet and the corresponding Reynolds number is computed with:
+$$\begin{aligned} Re = \frac{u_\infty \delta _\infty \rho _\infty }{\mu _\infty } \end{aligned}$$
+(A6)
+where \(\mu _\infty \) is the dynamic viscosity.
+Then, the 2D, steady, compressible Reynolds-averaged Navier–Stokes equations can be defined as:
+$$\begin{aligned} \frac{\partial }{\partial x_i^*} (\rho ^* u_i^*) = 0 \end{aligned}$$
+(A7a)
+$$\begin{aligned} \frac{\partial }{\partial x_j^*}(\rho ^* u_i^* u_j^*) + \frac{\partial }{\partial x_i^*} p^* - \frac{1}{Re} \frac{\partial }{\partial x_j} \tau _{ij}^* = 0\nonumber \\ \frac{\partial }{\partial x_j^*} u_j^*(\rho ^* E^* + p^*) - \frac{1}{Re} \frac{\partial }{\partial x_i^*}u_j^* \tau _{ij}^*\end{aligned}$$
+(A7b)
+$$\begin{aligned} - \frac{1}{(\gamma - 1) Ma^2 Re} \frac{\partial }{\partial x_j} q_j^* = 0 \end{aligned}$$
+(A7c)
+Using the Boussinesq approximation for the Reynolds stresses, the eddy viscosity \(\mu _T^*\) is considered additive to the molecular viscosity and the stress tensor \(\tau _{ij}^*\) can be calculated with:
+$$\begin{aligned} \tau _{ij}^* = 2 (\mu ^* + \mu _T^*) S_{ij}^* \end{aligned}$$
+(A8)
+where the viscous strain rate tensor \(S_{ij}^*\) can be expressed as:
+$$\begin{aligned} S_{ij}^* = \frac{1}{2}\left( \frac{\partial u_i^*}{\partial x_j} + \frac{\partial u_j^*}{\partial x_i}\right) - \frac{1}{3}\delta _{ij}\frac{\partial u_k^*}{\partial x_k^*} \end{aligned}$$
+(A9)
+The turbulent heat fluxes are modeled using a Reynolds analogy with a turbulent Prandtl number so that:
+$$\begin{aligned} q_j^* = \left( \frac{\mu ^*}{Pr} + \frac{\mu _T^*}{Pr_T}\right) \frac{\partial T^*}{\partial x_j} \end{aligned}$$
+(A10)
+The Prandtl number is set \(Pr = 0.72\) and the turbulent equivalent to \(Pr_T = 0.9\).
+Appendix B Supplementary results
+1.1 B.1 Sensitivity of the shock collocation point distribution
+Fig. 16
+Full size image
+Normal density-gradient field with a scatter of the different shock collocation point setups. The shock-normal offset dN is varied as well as the spatial extent of the collocation points
+To study the robustness of the proposed method toward the spatial distribution of the shock collocation points, we perform a sensitivity analysis for the Rhombus case. We vary the normal offset parameter (dN in Fig. 16) as well as the spatial extent of the shock BC and compute the NRMSE (Eq. (16)) for density and velocity. The resulting reconstruction errors for the density are summarized in Fig. 17. For \(dN>0.01\), there is only a small effect of the spatial distribution of the BC points and even a much lower number of points (\(dN=0.025\), quarter) is sufficient to anchor the density-gradient magnitude. The higher error for \(dN=0.01\) can be explained with the numerical grid-induced thickening of the incident shock that overlaps with the tightly spaced shock BC points in this case. These results suggest that the approach is insensitive to the point distribution for 2D cases as long as the upstream and downstream points are truly outside of the shock in the schlieren image and free of other flow features.
+Fig. 17
+Full size image
+Density error relative to the base case (\(dN=0.015\)) for the different shock collocation point setups
+Rights and permissions
+Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images or other third party material in this article are included in the article's Creative Commons licence, unless indicated otherwise in a credit line to the material. If material is not included in the article's Creative Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this licence, visit http://creativecommons.org/licenses/by/4.0/.
+Reprints and permissions
+About this article
+Cite this article
+Rohlfs, L., Weiss, J. Quantitative schlieren with physics-informed neural networks.
+Exp Fluids 67, 108 (2026). https://doi.org/10.1007/s00348-026-04268-1
+Download citation
+Received: 16 February 2026
+Revised: 18 May 2026
+Accepted: 12 June 2026
+Published: 10 July 2026
+Version of record: 10 July 2026
+DOI: https://doi.org/10.1007/s00348-026-04268-1
+Share this article
+Anyone you share the following link with will be able to read this content:
+Get shareable link
+Sorry, a shareable link is not currently available for this article.
+Copy shareable link to clipboard
+Provided by the Springer Nature SharedIt content-sharing initiative
+Profiles
+Lennart Rohlfs
+View author profile
+Associated Content
+Part of a collection:
+Data-driven methods for image-based flow diagnostics
+Advertisement
+Search
+Search by keyword or author
+Search
+Navigation
+Find a journal
+Publish with us
+Track your research
+Footer Navigation
+Discover content
+Journals A-Z
+Books A-Z
+Subjects A-Z
+Publish with us
+Journal finder
+Publish your research
+Language editing
+Open access publishing
+Products and services
+Our products
+Librarians
+Societies
+Partners and advertisers
+Our brands
+Springer
+Nature Portfolio
+BMC
+Palgrave Macmillan
+Apress
+Discover
+Corporate Navigation
+Your privacy choices/Manage cookies
+Your US state privacy rights
+Accessibility statement
+Terms and conditions
+Privacy policy
+Help and support
+Legal notice
+Cancel contracts here
+183.217.155.123
+Not affiliated
+© 2026 Springer Nature

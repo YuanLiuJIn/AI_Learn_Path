@@ -1,0 +1,260 @@
+<!-- ============ P1 · 封面 · SWISS-COVER-ASCII · 白底 + 蓝线锚点 ============ -->
+<section class="slide" data-slide-id="cover" data-layout="SWISS-COVER-ASCII">
+  <div class="canvas-card deck-safe">
+    <div class="chrome-min">
+      <div class="l">JEV · DECISION MODEL · FIELD NOTE</div>
+      <div class="r">刘晋元 · 26.10.05 · 01 / 06</div>
+    </div>
+
+    <div style="flex:1;padding:0;display:grid;grid-template-rows:auto 1fr auto;gap:2.6vh">
+      <div class="t-meta" style="color:var(--accent);letter-spacing:.22em">SYSTEM ONE · DECISION MODEL</div>
+
+      <h1 style="align-self:center;font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(7vw,11.4vh);line-height:.98;letter-spacing:-.025em;color:var(--text-primary);white-space:nowrap;border-left:5px solid var(--accent);padding-left:1.8vw">一场模型的<span style="font-style:italic;font-weight:300;color:var(--accent)">文艺复兴</span>：Jev</h1>
+
+      <div style="display:grid;grid-template-rows:auto auto;gap:1.6vh;border-top:1px solid var(--border-subtle);padding-top:2vh">
+        <div class="lead" style="max-width:78ch;color:var(--text-secondary)">输入非结构化状态，输出带类型的概率化判断 —— 一个不生成文本、只回答判断的模型。</div>
+        <div style="display:flex;justify-content:space-between;align-items:end">
+          <div class="t-meta">汇报人 刘晋元 · 2026.10.05</div>
+          <div class="t-meta">06 PAGES · ≈14 MIN</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ P2 · 什么是 Jev · S04 六格卡片 ============ -->
+<section class="slide" data-slide-id="what-is-jev" data-layout="S04">
+  <div class="canvas-card deck-safe">
+    <div class="chrome-min">
+      <div class="l">什么是 JEV · WHAT IS JEV</div>
+      <div class="r">02 / 06 · DECISION MODEL</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1.4vh">
+      <div style="width:80px;height:2px;background:var(--accent)"></div>
+      <h2 class="h-xl-zh">一个只回答判断的模型</h2>
+      <p class="lead" style="max-width:80ch;color:var(--text-secondary)">官方定义：<span class="mark">a frontier-intelligence function call</span>，即「前沿智能的函数调用」</p>
+    </div>
+
+    <div class="sub-grid-3-2">
+      <div class="sub-card">
+        <div class="nb-corner">01</div>
+        <div class="t-cat">WHAT IT IS</div>
+        <div class="ttl">官方定义</div>
+        <div class="desc">a frontier-intelligence function call（前沿智能的函数调用）：输入非结构化状态，输出带类型的概率判断。</div>
+      </div>
+      <div class="sub-card">
+        <div class="nb-corner">02</div>
+        <div class="t-cat">INPUT</div>
+        <div class="ttl">输入</div>
+        <div class="desc">一个共享 state（字符串 / JSON / 数组）+ 若干 typed questions，一次请求可混用三类原语。</div>
+      </div>
+      <div class="sub-card">
+        <div class="nb-corner">03</div>
+        <div class="t-cat">OUTPUT</div>
+        <div class="ttl">输出</div>
+        <div class="desc">类型化值 + 概率分布（Choice / Score 另给 confidence），无字符串输出。</div>
+      </div>
+      <div class="sub-card">
+        <div class="nb-corner">04</div>
+        <div class="t-cat">三类原语 01</div>
+        <div class="ttl">Choice</div>
+        <div class="desc">在你给的封闭选项里选一项（最多 255 项），返回完整概率分布。</div>
+      </div>
+      <div class="sub-card">
+        <div class="nb-corner">05</div>
+        <div class="t-cat">三类原语 02</div>
+        <div class="ttl">Score</div>
+        <div class="desc">按你自定义的有序量表打分，返回分值 + 落入的档位。</div>
+      </div>
+      <div class="sub-card accent">
+        <div class="nb-corner">06</div>
+        <div class="t-cat">三类原语 03</div>
+        <div class="ttl">Noul</div>
+        <div class="desc">是 / 否 二值判断，返回一个 0–1 的概率。</div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;gap:2.4vw;border-top:1px solid var(--border-subtle);padding-top:1.6vh;margin-top:2vh">
+      <div class="t-meta">技术优势 01 · 并行求值</div>
+      <div class="t-meta">技术优势 02 · 问题互相隔离</div>
+      <div class="t-meta">技术优势 03 · 结构即契约</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ P3 · 训练范式 · S20 纵向账本 ============ -->
+<section class="slide" data-slide-id="training-paradigm" data-layout="S20">
+  <div class="canvas-card deck-safe">
+    <div class="chrome-min">
+      <div class="l">JEV 训练范式 · TRAINING PARADIGM</div>
+      <div class="r">03 / 06 · RLHF → RLVR → RLCD</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1.4vh">
+      <div style="width:80px;height:2px;background:var(--accent)"></div>
+      <h2 class="h-xl-zh">从「讨喜」到「说到做到」</h2>
+      <p class="lead" style="max-width:76ch;color:var(--text-secondary)">奖励信号决定模型学会什么：人类偏好、可验证对错，还是置信度本身。</p>
+    </div>
+
+    <div class="stacked-ledger">
+      <div class="ledger-head">
+        <div class="t-cat">范式</div>
+        <div class="t-cat">奖励信号</div>
+        <div class="t-cat">解决了什么</div>
+        <div class="t-cat">没解决什么</div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="ledger-num">RLHF</div>
+        <div class="ledger-label">
+          <div class="ledger-cell">人类偏好</div>
+          <div class="ledger-cell">流畅、讨喜</div>
+          <div class="ledger-cell">置信度毫无保证</div>
+        </div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="ledger-num">RLVR</div>
+        <div class="ledger-label">
+          <div class="ledger-cell">可验证对错</div>
+          <div class="ledger-cell">客观对错</div>
+          <div class="ledger-cell">只告诉你对不对，不告诉你多确定</div>
+        </div>
+      </div>
+
+      <div class="ledger-row hl">
+        <div class="ledger-num">RLCD</div>
+        <div class="ledger-label">
+          <div class="ledger-cell">真值 + Brier 类校准指标</div>
+          <div class="ledger-cell">「说到做到」：说 0.8，长期约 80% 命中</div>
+          <div class="ledger-cell">需要真值；OOD（分布外数据）下能否守住未知</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ P4 · 训练详解 · S09 Dot Matrix Statement ============ -->
+<section class="slide grey" data-slide-id="training-details" data-layout="S09">
+  <div class="canvas-card deck-safe">
+    <div class="chrome-min">
+      <div class="l">训练详解 · TRAINING DETAILS</div>
+      <div class="r">04 / 06 · SEE FIELD NOTE</div>
+    </div>
+
+    <div class="stmt-wrap">
+      <div class="stmt-kicker">TRAINING DETAILS</div>
+      <div class="h-statement">训练详解：见《Jev 研究笔记》<span style="font-weight:300;opacity:.55">（助眠）</span></div>
+      <p class="stmt-note">完整的 RLCD 训练流程、奖励信号设计与消融对照都在笔记里，这一页只留一句话。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ P5 · 我的思考 · S05 三层色块 ============ -->
+<section class="slide" data-slide-id="reflections" data-layout="S05">
+  <div class="canvas-card deck-safe">
+    <div class="chrome-min">
+      <div class="l">NOTES · 我的思考</div>
+      <div class="r">05 / 06 · REFLECTIONS</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1.4vh">
+      <div style="width:80px;height:2px;background:var(--accent)"></div>
+      <h2 class="h-xl-zh">边界 · 迷雾 · 可做</h2>
+    </div>
+
+    <div class="stack-row">
+      <div class="stack-block b-grey">
+        <div class="layer-nb">01 / LIMITS</div>
+        <div class="layer-ttl">能力边界</div>
+        <div class="layer-desc" style="display:flex;flex-direction:column;gap:1.1vh">
+          <div>只给判断不给理由 → 不可审计、不可追溯</div>
+          <div>问题之间无共享推理 → 不能让 Q2 依赖 Q1 的结论，没有链式判断</div>
+          <div>不做扩展推理 → 单个问题不能是「长链思考」，只能是 gut-check 级判断</div>
+        </div>
+        <div class="layer-tag">WHERE IT STOPS</div>
+      </div>
+
+      <div class="stack-block b-deep">
+        <div class="layer-nb">02 / MISSING</div>
+        <div class="layer-ttl">官方隐藏了什么？</div>
+        <div class="layer-desc" style="display:flex;flex-direction:column;gap:1.1vh">
+          <div>架构细节 → 只说「new model architecture + parallel sampler」，无规模、无 tokenizer、无数据来源</div>
+          <div>confidence 的确切定义 → Choice 同时返回 probabilities 和 confidence，但 confidence 是 max p、熵还是二阶量——未定义；你无法设阈值，也就无法做置信度门控</div>
+        </div>
+        <div class="layer-tag">WHAT'S MISSING</div>
+      </div>
+
+      <div class="stack-block b-accent">
+        <div class="layer-nb">03 / TAKEAWAY</div>
+        <div class="layer-ttl">我们能用来做什么？</div>
+        <div class="layer-desc" style="display:flex;flex-direction:column;gap:1.1vh">
+          <div>参考架构，改进地质或者定制软件的 confidence，解决黑盒问题</div>
+          <div>参考 DeepSeek 加上多模态组件，增强 VLA 判断功能</div>
+        </div>
+        <div class="layer-tag">WHAT WE CAN TAKE</div>
+      </div>
+    </div>
+
+    <div class="t-meta" style="margin-top:2.4vh">边界决定能不能用 · 迷雾决定敢不敢信 · 可做决定从哪一步开始</div>
+  </div>
+</section>
+
+<!-- ============ P6 · 收尾 · SWISS-CLOSING-ASCII ============ -->
+<section class="slide split" data-slide-id="closing" data-layout="SWISS-CLOSING-ASCII">
+  <div class="canvas-card">
+    <div class="split-half">
+      <div class="half b-grey" style="padding:5.6vh 3.6vw 8.6vh;justify-content:space-between;position:relative;overflow:hidden">
+        <div class="chrome-min" style="margin-bottom:0">
+          <div class="l">06 / 06</div>
+          <div class="r">CLOSING</div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:2vh">
+          <div class="t-meta" style="color:var(--accent);letter-spacing:.22em;margin-bottom:1.6vh">MANIFESTO</div>
+          <h2 style="font-family:var(--sans),var(--sans-zh);font-size:min(8vw,14vh);line-height:.94;letter-spacing:-.025em;font-weight:200;color:var(--text-primary)">先校准，<br/>再<span style="font-style:italic;font-weight:300;color:var(--accent)">相信</span>。</h2>
+          <div style="font-family:var(--sans),var(--sans-zh);font-size:max(14px,1vw);line-height:1.6;color:var(--text-secondary);font-weight:400;max-width:36ch;margin-top:1.4vh">概率必须被校准过一次才算数。模型本身可以打折，这条验收标准不会。</div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:end;border-top:1px solid var(--border-subtle);padding-top:2vh">
+          <div class="t-meta">汇报人 · 刘晋元</div>
+          <div class="t-meta">26.10.05</div>
+        </div>
+      </div>
+
+      <div class="half" style="padding:5.6vh 3.6vw 8.6vh;justify-content:space-between">
+        <div class="chrome-min">
+          <div class="l">TAKEAWAYS</div>
+          <div class="r">03 RULES</div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:0">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:2vw;align-items:start;padding:2.6vh 0;border-top:1px solid var(--border-subtle)">
+            <div style="font-family:var(--sans);font-weight:200;font-size:min(4.4vw,7.8vh);line-height:.9;color:var(--text-primary)">01</div>
+            <div>
+              <h3 style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(18px,1.8vw);line-height:1.2;letter-spacing:-.015em;color:var(--text-primary);margin-bottom:1vh">能力边界</h3>
+              <p style="font-family:var(--sans),var(--sans-zh);font-size:max(16px,.94vw);line-height:1.6;color:var(--text-secondary);font-weight:400">它只回答 gut-check 级的判断，不给理由，也没有链式推理。</p>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:2vw;align-items:start;padding:2.6vh 0;border-top:1px solid var(--border-subtle)">
+            <div style="font-family:var(--sans);font-weight:200;font-size:min(4.4vw,7.8vh);line-height:.9;color:var(--text-primary)">02</div>
+            <div>
+              <h3 style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(18px,1.8vw);line-height:1.2;letter-spacing:-.015em;color:var(--text-primary);margin-bottom:1vh">官方隐藏了什么</h3>
+              <p style="font-family:var(--sans),var(--sans-zh);font-size:max(16px,.94vw);line-height:1.6;color:var(--text-secondary);font-weight:400">校准是它唯一的第一优化目标，却是唯一没有公开数字的指标；confidence 的定义也从未给出。</p>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:2vw;align-items:start;padding:2.6vh 0;border-top:1px solid var(--border-subtle);border-bottom:2px solid var(--accent)">
+            <div style="font-family:var(--sans);font-weight:200;font-size:min(4.4vw,7.8vh);line-height:.9;color:var(--accent)">03</div>
+            <div>
+              <h3 style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(18px,1.8vw);line-height:1.2;letter-spacing:-.015em;color:var(--accent);margin-bottom:1vh">我们能用来做什么</h3>
+              <p style="font-family:var(--sans),var(--sans-zh);font-size:max(16px,.94vw);line-height:1.6;color:var(--text-secondary);font-weight:400">参考架构改进地质与定制软件的 confidence，解决黑盒问题；参考 DeepSeek 加多模态组件，增强 VLA 判断。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-meta" style="color:var(--text-helper);text-align:right">→ 完 · END OF FIELD NOTE</div>
+      </div>
+    </div>
+  </div>
+</section>

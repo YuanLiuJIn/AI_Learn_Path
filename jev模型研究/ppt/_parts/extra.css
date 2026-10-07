@@ -1,0 +1,55 @@
+  /* ============================================================
+     本次 Deck 补全 · 模板未内置的版式类（只新增类，不覆盖任何基座类）
+     ============================================================ */
+
+  /* 底部安全线：为底部分页组件留出空间，避免内容压到 nav */
+  .canvas-card.deck-safe{padding-bottom:8.6vh}
+  /* split 页由 .half 自己控制内边距，canvas-card 保持 0 */
+  .slide.split .canvas-card.deck-safe{padding:0}
+  /* 收尾页：两半同宽（已全浅底，分页点在任何一侧都可见） */
+  .slide.split .split-half{grid-template-columns:1fr 1fr}
+
+  /* 三层色块第三档：深蓝，替代原纯黑块，统一到白蓝体系 */
+  .stack-block.b-deep{background:#001A5C;color:#ffffff}
+
+  /* 三层色块内部：编号与标题紧贴（原 margin-bottom:auto 会把编号孤悬在顶部），
+     弹性空白下移到「描述 ↔ 底部标签」之间 */
+  .stack-block .layer-nb{margin-bottom:.5vh}
+  .stack-block .layer-ttl{margin-top:0}
+  .stack-block .layer-tag{margin-top:auto}
+
+  /* 强调底卡片 / 账本表头的文字对比度修正 */
+  .sub-card.accent .t-cat{color:rgba(255,255,255,.82)}
+  .ledger-head .t-cat{color:var(--text-secondary)}
+
+  /* 瑞士风格：卡片一律直角（基座默认 3px 圆角，这里拉平） */
+  .sub-card{border-radius:0}
+
+  /* 小字对比度补强：角标与分类标签达到 AA(4.5:1) */
+  .sub-card .t-cat{color:#6B6B6B}
+  .sub-card .nb-corner{opacity:.72}
+  .sub-card.accent .nb-corner{opacity:.82}
+
+  /* 浅灰底(#F0F0EE)上的辅助小字同样补强到 AA */
+  .slide.grey .chrome-min,
+  .slide.grey .t-meta,
+  .split-half > .half.b-grey .chrome-min,
+  .split-half > .half.b-grey .t-meta{color:#6B6B6B}
+
+  /* ---------- S09 · Dot Matrix Statement ---------- */
+  .stmt-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8.6vh;text-align:center}
+  .stmt-kicker{font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--accent)}
+  .slide.dark .stmt-kicker{color:var(--accent-bright)}
+  .h-statement{font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(4.8vw,8vh);line-height:1.06;letter-spacing:-.03em;white-space:nowrap}
+  .stmt-note{font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:min(2.3vw,3.7vh);line-height:1.9;opacity:.72;max-width:none;white-space:nowrap}
+
+  /* ---------- S20 · Stacked Ledger（纵向账本） ---------- */
+  .stacked-ledger{display:flex;flex-direction:column;flex:1;margin-top:4vh}
+  .ledger-head{display:grid;grid-template-columns:1.15fr 1fr 1fr 1.1fr;gap:1.6vw;padding-bottom:1.8vh}
+  .ledger-row{display:grid;grid-template-columns:1.15fr 1fr 1fr 1.1fr;gap:1.6vw;align-items:start;flex:1;padding:3.2vh 0;border-top:1px solid var(--border-subtle)}
+  .ledger-row:last-child{border-bottom:2px solid var(--accent)}
+  .ledger-row > .ledger-label{grid-column:2 / 5;display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:1.6vw;align-items:start}
+  .ledger-num{font-family:var(--sans);font-weight:250;font-size:min(2.4vw,4.2vh);line-height:1;letter-spacing:-.03em;color:var(--text-primary)}
+  .ledger-row.hl .ledger-num{color:var(--accent)}
+  .ledger-cell{font-family:var(--sans),var(--sans-zh);font-size:max(16px,.96vw);line-height:1.5;color:var(--text-secondary);font-weight:400}
+  .ledger-row.hl .ledger-cell{color:var(--text-primary)}

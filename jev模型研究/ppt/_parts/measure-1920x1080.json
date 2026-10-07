@@ -1,0 +1,313 @@
+[
+  {
+    "idx": 0,
+    "id": "cover",
+    "layout": "SWISS-COVER-ASCII",
+    "size": [
+      1920,
+      1080
+    ],
+    "cardBox": [
+      1920,
+      1080
+    ],
+    "flexInfo": {
+      "card": "flex/column box=border-box pad 60.48px,92.88px gap normal justify normal",
+      "box": "clientH 1080 scrollH 1080 rectH 1080",
+      "kids": [
+        "chrome-min|0/0/auto|h21|offT60 offH21 mB48px",
+        "DIV|1/1/0%|h858|offT129 offH858 mB0px"
+      ]
+    },
+    "top": 60,
+    "bottom": 987,
+    "bottomPct": 91.4,
+    "topPct": 5.6,
+    "l": 96,
+    "r": 1824,
+    "vFill": 85.8,
+    "hFill": 90,
+    "chars": 182,
+    "clipped": [],
+    "tiny": [],
+    "invisible": [],
+    "outX": [],
+    "collide": [],
+    "nowrapOver": [],
+    "chromeInfo": [
+      "nav y 1052..1058 x 911..1009",
+      "hint y 1031..1054 x 1487..1872"
+    ],
+    "navConflict": "",
+    "scrollOverflow": false,
+    "gridDetail": {},
+    "slideCount": 6
+  },
+  {
+    "idx": 1,
+    "id": "what-is-jev",
+    "layout": "S04",
+    "size": [
+      1920,
+      1080
+    ],
+    "cardBox": [
+      1920,
+      1080
+    ],
+    "flexInfo": {
+      "card": "flex/column box=border-box pad 60.48px,92.88px gap normal justify normal",
+      "box": "clientH 1080 scrollH 1080 rectH 1080",
+      "kids": [
+        "chrome-min|0/0/auto|h21|offT60 offH21 mB48px",
+        "DIV|0/1/auto|h175|offT129 offH175 mB0px",
+        "sub-grid-3-2|1/1/0%|h590|offT337 offH590 mB0px",
+        "DIV|0/1/auto|h39|offT949 offH39 mB0px"
+      ]
+    },
+    "top": 60,
+    "bottom": 987,
+    "bottomPct": 91.4,
+    "topPct": 5.6,
+    "l": 96,
+    "r": 1824,
+    "vFill": 85.8,
+    "hFill": 90,
+    "chars": 522,
+    "clipped": [],
+    "tiny": [],
+    "invisible": [],
+    "outX": [],
+    "collide": [],
+    "nowrapOver": [],
+    "chromeInfo": [
+      "nav y 1052..1058 x 911..1009",
+      "hint y 1031..1054 x 1487..1872"
+    ],
+    "navConflict": "",
+    "scrollOverflow": false,
+    "gridDetail": {
+      ".sub-grid-3-2": {
+        "box": [
+          1728,
+          590
+        ],
+        "scroll": 590,
+        "children": [
+          "288/288",
+          "288/288",
+          "288/288",
+          "288/288",
+          "288/288",
+          "288/288"
+        ]
+      }
+    },
+    "slideCount": 6
+  },
+  {
+    "idx": 2,
+    "id": "training-paradigm",
+    "layout": "S20",
+    "size": [
+      1920,
+      1080
+    ],
+    "cardBox": [
+      1920,
+      1080
+    ],
+    "flexInfo": {
+      "card": "flex/column box=border-box pad 60.48px,92.88px gap normal justify normal",
+      "box": "clientH 1080 scrollH 1080 rectH 1080",
+      "kids": [
+        "chrome-min|0/0/auto|h21|offT60 offH21 mB48px",
+        "DIV|0/1/auto|h175|offT129 offH175 mB0px",
+        "stacked-ledger|1/1/0%|h640|offT347 offH640 mB0px"
+      ]
+    },
+    "top": 60,
+    "bottom": 866,
+    "bottomPct": 80.2,
+    "topPct": 5.6,
+    "l": 96,
+    "r": 1824,
+    "vFill": 74.6,
+    "hFill": 90,
+    "chars": 248,
+    "clipped": [],
+    "tiny": [],
+    "invisible": [],
+    "outX": [],
+    "collide": [],
+    "nowrapOver": [],
+    "chromeInfo": [
+      "nav y 1052..1058 x 911..1009",
+      "hint y 1031..1054 x 1487..1872"
+    ],
+    "navConflict": "",
+    "scrollOverflow": false,
+    "gridDetail": {
+      ".stacked-ledger": {
+        "box": [
+          1728,
+          640
+        ],
+        "scroll": 640,
+        "children": [
+          "38/38",
+          "200/199*b",
+          "200/199*b",
+          "202/199*b"
+        ]
+      }
+    },
+    "slideCount": 6
+  },
+  {
+    "idx": 3,
+    "id": "training-details",
+    "layout": "S09",
+    "size": [
+      1920,
+      1080
+    ],
+    "cardBox": [
+      1920,
+      1080
+    ],
+    "flexInfo": {
+      "card": "flex/column box=border-box pad 60.48px,92.88px gap normal justify normal",
+      "box": "clientH 1080 scrollH 1080 rectH 1080",
+      "kids": [
+        "chrome-min|0/0/auto|h21|offT60 offH21 mB48px",
+        "stmt-wrap|1/1/0%|h858|offT129 offH858 mB0px"
+      ]
+    },
+    "top": 60,
+    "bottom": 744,
+    "bottomPct": 68.9,
+    "topPct": 5.6,
+    "l": 96,
+    "r": 1824,
+    "vFill": 63.3,
+    "hFill": 90,
+    "chars": 127,
+    "clipped": [],
+    "tiny": [],
+    "invisible": [],
+    "outX": [],
+    "collide": [],
+    "nowrapOver": [],
+    "chromeInfo": [
+      "nav y 1052..1058 x 911..1009",
+      "hint y 1031..1054 x 1487..1872"
+    ],
+    "navConflict": "",
+    "scrollOverflow": false,
+    "gridDetail": {},
+    "slideCount": 6
+  },
+  {
+    "idx": 4,
+    "id": "reflections",
+    "layout": "S05",
+    "size": [
+      1920,
+      1080
+    ],
+    "cardBox": [
+      1920,
+      1080
+    ],
+    "flexInfo": {
+      "card": "flex/column box=border-box pad 60.48px,92.88px gap normal justify normal",
+      "box": "clientH 1080 scrollH 1080 rectH 1080",
+      "kids": [
+        "chrome-min|0/0/auto|h21|offT60 offH21 mB48px",
+        "DIV|0/1/auto|h118|offT129 offH118 mB0px",
+        "stack-row|1/1/0%|h629|offT312 offH629 mB0px",
+        "t-meta|0/1/auto|h20|offT967 offH20 mB0px"
+      ]
+    },
+    "top": 60,
+    "bottom": 987,
+    "bottomPct": 91.4,
+    "topPct": 5.6,
+    "l": 96,
+    "r": 1824,
+    "vFill": 85.8,
+    "hFill": 90,
+    "chars": 539,
+    "clipped": [],
+    "tiny": [],
+    "invisible": [],
+    "outX": [],
+    "collide": [],
+    "nowrapOver": [],
+    "chromeInfo": [
+      "nav y 1052..1058 x 911..1009",
+      "hint y 1031..1054 x 1487..1872"
+    ],
+    "navConflict": "",
+    "scrollOverflow": false,
+    "gridDetail": {
+      ".stack-row": {
+        "box": [
+          1728,
+          629
+        ],
+        "scroll": 629,
+        "children": [
+          "629/629",
+          "629/629",
+          "629/629"
+        ]
+      }
+    },
+    "slideCount": 6
+  },
+  {
+    "idx": 5,
+    "id": "closing",
+    "layout": "SWISS-CLOSING-ASCII",
+    "size": [
+      1920,
+      1080
+    ],
+    "cardBox": [
+      1920,
+      1080
+    ],
+    "flexInfo": {
+      "card": "flex/row box=border-box pad 0px,0px gap normal justify normal",
+      "box": "clientH 1080 scrollH 1080 rectH 1080",
+      "kids": [
+        "split-half|1/1/0%|h1080|offT0 offH1080 mB0px"
+      ]
+    },
+    "top": 60,
+    "bottom": 987,
+    "bottomPct": 91.4,
+    "topPct": 5.6,
+    "l": 69,
+    "r": 1851,
+    "vFill": 85.8,
+    "hFill": 92.8,
+    "chars": 307,
+    "clipped": [],
+    "tiny": [],
+    "invisible": [],
+    "outX": [],
+    "collide": [],
+    "nowrapOver": [],
+    "chromeInfo": [
+      "nav y 1052..1058 x 911..1009",
+      "hint y 1031..1054 x 1487..1872"
+    ],
+    "navConflict": "",
+    "scrollOverflow": false,
+    "gridDetail": {},
+    "slideCount": 6
+  }
+]
